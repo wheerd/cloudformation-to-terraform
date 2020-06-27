@@ -1,72 +1,72 @@
 from . import *
 
 class AWS_Transfer_User_HomeDirectoryMapEntry(CloudFormationProperty):
-  entity = "AWS::Transfer::User"
-  tf_block_type = "home_directory_map_entry"
+  def write(self, w):
+    with w.block("home_directory_map_entry"):
+      self.property(w, "Entry", "entry", StringValueConverter())
+      self.property(w, "Target", "target", StringValueConverter())
 
-  props = {
-    "Entry": (StringValueConverter(), "entry"),
-    "Target": (StringValueConverter(), "target"),
-  }
 
 class AWS_Transfer_User_SshPublicKey(CloudFormationProperty):
-  entity = "AWS::Transfer::User"
-  tf_block_type = "ssh_public_key"
+  def write(self, w):
+    with w.block("ssh_public_key"):
+      pass
+
 
 class AWS_Transfer_Server_IdentityProviderDetails(CloudFormationProperty):
-  entity = "AWS::Transfer::Server"
-  tf_block_type = "identity_provider_details"
+  def write(self, w):
+    with w.block("identity_provider_details"):
+      self.property(w, "InvocationRole", "invocation_role", StringValueConverter())
+      self.property(w, "Url", "url", StringValueConverter())
 
-  props = {
-    "InvocationRole": (StringValueConverter(), "invocation_role"),
-    "Url": (StringValueConverter(), "url"),
-  }
 
 class AWS_Transfer_Server_EndpointDetails(CloudFormationProperty):
-  entity = "AWS::Transfer::Server"
-  tf_block_type = "endpoint_details"
+  def write(self, w):
+    with w.block("endpoint_details"):
+      self.property(w, "AddressAllocationIds", "address_allocation_ids", ListValueConverter(StringValueConverter()))
+      self.property(w, "VpcId", "vpc_id", StringValueConverter())
+      self.property(w, "VpcEndpointId", "vpc_endpoint_id", StringValueConverter())
+      self.property(w, "SubnetIds", "subnet_ids", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "AddressAllocationIds": (ListValueConverter(StringValueConverter()), "address_allocation_ids"),
-    "VpcId": (StringValueConverter(), "vpc_id"),
-    "VpcEndpointId": (StringValueConverter(), "vpc_endpoint_id"),
-    "SubnetIds": (ListValueConverter(StringValueConverter()), "subnet_ids"),
-  }
 
 class AWS_Transfer_Server_Protocol(CloudFormationProperty):
-  entity = "AWS::Transfer::Server"
-  tf_block_type = "protocol"
+  def write(self, w):
+    with w.block("protocol"):
+      pass
+
 
 class AWS_Transfer_Server(CloudFormationResource):
-  terraform_resource = "aws_transfer_server"
+  cfn_type = "AWS::Transfer::Server"
+  tf_type = "aws_transfer_server"
+  ref = "arn"
 
-  resource_type = "AWS::Transfer::Server"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "LoggingRole", "logging_role", StringValueConverter())
+      self.repeated_block(w, "Protocols", AWS_Transfer_Server_Protocol)
+      self.block(w, "IdentityProviderDetails", AWS_Transfer_Server_IdentityProviderDetails)
+      self.property(w, "EndpointType", "endpoint_type", StringValueConverter())
+      self.block(w, "EndpointDetails", AWS_Transfer_Server_EndpointDetails)
+      self.property(w, "IdentityProviderType", "identity_provider_type", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "Certificate", "certificate", StringValueConverter())
 
-  props = {
-    "LoggingRole": (StringValueConverter(), "logging_role"),
-    "Protocols": (BlockValueConverter(AWS_Transfer_Server_Protocol), None),
-    "IdentityProviderDetails": (AWS_Transfer_Server_IdentityProviderDetails, "identity_provider_details"),
-    "EndpointType": (StringValueConverter(), "endpoint_type"),
-    "EndpointDetails": (AWS_Transfer_Server_EndpointDetails, "endpoint_details"),
-    "IdentityProviderType": (StringValueConverter(), "identity_provider_type"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "Certificate": (StringValueConverter(), "certificate"),
-  }
 
 class AWS_Transfer_User(CloudFormationResource):
-  terraform_resource = "aws_transfer_user"
+  cfn_type = "AWS::Transfer::User"
+  tf_type = "aws_transfer_user"
+  ref = "arn"
 
-  resource_type = "AWS::Transfer::User"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Policy", "policy", StringValueConverter())
+      self.property(w, "Role", "role", StringValueConverter())
+      self.property(w, "HomeDirectory", "home_directory", StringValueConverter())
+      self.property(w, "HomeDirectoryType", "home_directory_type", StringValueConverter())
+      self.property(w, "ServerId", "server_id", StringValueConverter())
+      self.property(w, "UserName", "user_name", StringValueConverter())
+      self.repeated_block(w, "HomeDirectoryMappings", AWS_Transfer_User_HomeDirectoryMapEntry)
+      self.repeated_block(w, "SshPublicKeys", AWS_Transfer_User_SshPublicKey)
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "Policy": (StringValueConverter(), "policy"),
-    "Role": (StringValueConverter(), "role"),
-    "HomeDirectory": (StringValueConverter(), "home_directory"),
-    "HomeDirectoryType": (StringValueConverter(), "home_directory_type"),
-    "ServerId": (StringValueConverter(), "server_id"),
-    "UserName": (StringValueConverter(), "user_name"),
-    "HomeDirectoryMappings": (BlockValueConverter(AWS_Transfer_User_HomeDirectoryMapEntry), None),
-    "SshPublicKeys": (BlockValueConverter(AWS_Transfer_User_SshPublicKey), None),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 

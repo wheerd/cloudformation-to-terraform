@@ -1,32 +1,34 @@
 from . import *
 
 class AWS_SQS_Queue(CloudFormationResource):
-  terraform_resource = "aws_sqs_queue"
+  cfn_type = "AWS::SQS::Queue"
+  tf_type = "aws_sqs_queue"
+  ref = "arn"
 
-  resource_type = "AWS::SQS::Queue"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ContentBasedDeduplication", "content_based_deduplication", BasicValueConverter())
+      self.property(w, "DelaySeconds", "delay_seconds", BasicValueConverter())
+      self.property(w, "FifoQueue", "fifo_queue", BasicValueConverter())
+      self.property(w, "KmsDataKeyReusePeriodSeconds", "kms_data_key_reuse_period_seconds", BasicValueConverter())
+      self.property(w, "KmsMasterKeyId", "kms_master_key_id", StringValueConverter())
+      self.property(w, "MaximumMessageSize", "maximum_message_size", BasicValueConverter())
+      self.property(w, "MessageRetentionPeriod", "message_retention_period", BasicValueConverter())
+      self.property(w, "QueueName", "queue_name", StringValueConverter())
+      self.property(w, "ReceiveMessageWaitTimeSeconds", "receive_message_wait_time_seconds", BasicValueConverter())
+      self.property(w, "RedrivePolicy", "redrive_policy", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "VisibilityTimeout", "visibility_timeout", BasicValueConverter())
 
-  props = {
-    "ContentBasedDeduplication": (BasicValueConverter(), "content_based_deduplication"),
-    "DelaySeconds": (BasicValueConverter(), "delay_seconds"),
-    "FifoQueue": (BasicValueConverter(), "fifo_queue"),
-    "KmsDataKeyReusePeriodSeconds": (BasicValueConverter(), "kms_data_key_reuse_period_seconds"),
-    "KmsMasterKeyId": (StringValueConverter(), "kms_master_key_id"),
-    "MaximumMessageSize": (BasicValueConverter(), "maximum_message_size"),
-    "MessageRetentionPeriod": (BasicValueConverter(), "message_retention_period"),
-    "QueueName": (StringValueConverter(), "queue_name"),
-    "ReceiveMessageWaitTimeSeconds": (BasicValueConverter(), "receive_message_wait_time_seconds"),
-    "RedrivePolicy": (StringValueConverter(), "redrive_policy"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "VisibilityTimeout": (BasicValueConverter(), "visibility_timeout"),
-  }
 
 class AWS_SQS_QueuePolicy(CloudFormationResource):
-  terraform_resource = "aws_sqs_queue_policy"
+  cfn_type = "AWS::SQS::QueuePolicy"
+  tf_type = "aws_sqs_queue_policy"
+  ref = "arn"
 
-  resource_type = "AWS::SQS::QueuePolicy"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "PolicyDocument", "policy_document", StringValueConverter())
+      self.property(w, "Queues", "queues", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "PolicyDocument": (StringValueConverter(), "policy_document"),
-    "Queues": (ListValueConverter(StringValueConverter()), "queues"),
-  }
 

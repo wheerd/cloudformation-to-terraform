@@ -1,267 +1,220 @@
 from . import *
 
 class AWS_KinesisAnalytics_ApplicationOutput_KinesisFirehoseOutput(CloudFormationProperty):
-  entity = "AWS::KinesisAnalytics::ApplicationOutput"
-  tf_block_type = "kinesis_firehose_output"
+  def write(self, w):
+    with w.block("kinesis_firehose_output"):
+      self.property(w, "ResourceARN", "resource_arn", StringValueConverter())
+      self.property(w, "RoleARN", "role_arn", StringValueConverter())
 
-  props = {
-    "ResourceARN": (StringValueConverter(), "resource_arn"),
-    "RoleARN": (StringValueConverter(), "role_arn"),
-  }
 
 class AWS_KinesisAnalytics_Application_CSVMappingParameters(CloudFormationProperty):
-  entity = "AWS::KinesisAnalytics::Application"
-  tf_block_type = "csv_mapping_parameters"
+  def write(self, w):
+    with w.block("csv_mapping_parameters"):
+      self.property(w, "RecordRowDelimiter", "record_row_delimiter", StringValueConverter())
+      self.property(w, "RecordColumnDelimiter", "record_column_delimiter", StringValueConverter())
 
-  props = {
-    "RecordRowDelimiter": (StringValueConverter(), "record_row_delimiter"),
-    "RecordColumnDelimiter": (StringValueConverter(), "record_column_delimiter"),
-  }
 
 class AWS_KinesisAnalytics_ApplicationReferenceDataSource_CSVMappingParameters(CloudFormationProperty):
-  entity = "AWS::KinesisAnalytics::ApplicationReferenceDataSource"
-  tf_block_type = "csv_mapping_parameters"
+  def write(self, w):
+    with w.block("csv_mapping_parameters"):
+      self.property(w, "RecordRowDelimiter", "record_row_delimiter", StringValueConverter())
+      self.property(w, "RecordColumnDelimiter", "record_column_delimiter", StringValueConverter())
 
-  props = {
-    "RecordRowDelimiter": (StringValueConverter(), "record_row_delimiter"),
-    "RecordColumnDelimiter": (StringValueConverter(), "record_column_delimiter"),
-  }
 
 class AWS_KinesisAnalytics_Application_JSONMappingParameters(CloudFormationProperty):
-  entity = "AWS::KinesisAnalytics::Application"
-  tf_block_type = "json_mapping_parameters"
+  def write(self, w):
+    with w.block("json_mapping_parameters"):
+      self.property(w, "RecordRowPath", "record_row_path", StringValueConverter())
 
-  props = {
-    "RecordRowPath": (StringValueConverter(), "record_row_path"),
-  }
 
 class AWS_KinesisAnalytics_ApplicationOutput_DestinationSchema(CloudFormationProperty):
-  entity = "AWS::KinesisAnalytics::ApplicationOutput"
-  tf_block_type = "destination_schema"
+  def write(self, w):
+    with w.block("destination_schema"):
+      self.property(w, "RecordFormatType", "record_format_type", StringValueConverter())
 
-  props = {
-    "RecordFormatType": (StringValueConverter(), "record_format_type"),
-  }
 
 class AWS_KinesisAnalytics_ApplicationReferenceDataSource_S3ReferenceDataSource(CloudFormationProperty):
-  entity = "AWS::KinesisAnalytics::ApplicationReferenceDataSource"
-  tf_block_type = "s3_reference_data_source"
+  def write(self, w):
+    with w.block("s3_reference_data_source"):
+      self.property(w, "BucketARN", "bucket_arn", StringValueConverter())
+      self.property(w, "FileKey", "file_key", StringValueConverter())
+      self.property(w, "ReferenceRoleARN", "reference_role_arn", StringValueConverter())
 
-  props = {
-    "BucketARN": (StringValueConverter(), "bucket_arn"),
-    "FileKey": (StringValueConverter(), "file_key"),
-    "ReferenceRoleARN": (StringValueConverter(), "reference_role_arn"),
-  }
 
 class AWS_KinesisAnalytics_Application_MappingParameters(CloudFormationProperty):
-  entity = "AWS::KinesisAnalytics::Application"
-  tf_block_type = "mapping_parameters"
+  def write(self, w):
+    with w.block("mapping_parameters"):
+      self.block(w, "JSONMappingParameters", AWS_KinesisAnalytics_Application_JSONMappingParameters)
+      self.block(w, "CSVMappingParameters", AWS_KinesisAnalytics_Application_CSVMappingParameters)
 
-  props = {
-    "JSONMappingParameters": (AWS_KinesisAnalytics_Application_JSONMappingParameters, "json_mapping_parameters"),
-    "CSVMappingParameters": (AWS_KinesisAnalytics_Application_CSVMappingParameters, "csv_mapping_parameters"),
-  }
 
 class AWS_KinesisAnalytics_ApplicationOutput_KinesisStreamsOutput(CloudFormationProperty):
-  entity = "AWS::KinesisAnalytics::ApplicationOutput"
-  tf_block_type = "kinesis_streams_output"
+  def write(self, w):
+    with w.block("kinesis_streams_output"):
+      self.property(w, "ResourceARN", "resource_arn", StringValueConverter())
+      self.property(w, "RoleARN", "role_arn", StringValueConverter())
 
-  props = {
-    "ResourceARN": (StringValueConverter(), "resource_arn"),
-    "RoleARN": (StringValueConverter(), "role_arn"),
-  }
 
 class AWS_KinesisAnalytics_Application_KinesisStreamsInput(CloudFormationProperty):
-  entity = "AWS::KinesisAnalytics::Application"
-  tf_block_type = "kinesis_streams_input"
+  def write(self, w):
+    with w.block("kinesis_streams_input"):
+      self.property(w, "ResourceARN", "resource_arn", StringValueConverter())
+      self.property(w, "RoleARN", "role_arn", StringValueConverter())
 
-  props = {
-    "ResourceARN": (StringValueConverter(), "resource_arn"),
-    "RoleARN": (StringValueConverter(), "role_arn"),
-  }
 
 class AWS_KinesisAnalytics_ApplicationReferenceDataSource_JSONMappingParameters(CloudFormationProperty):
-  entity = "AWS::KinesisAnalytics::ApplicationReferenceDataSource"
-  tf_block_type = "json_mapping_parameters"
+  def write(self, w):
+    with w.block("json_mapping_parameters"):
+      self.property(w, "RecordRowPath", "record_row_path", StringValueConverter())
 
-  props = {
-    "RecordRowPath": (StringValueConverter(), "record_row_path"),
-  }
 
 class AWS_KinesisAnalytics_Application_RecordColumn(CloudFormationProperty):
-  entity = "AWS::KinesisAnalytics::Application"
-  tf_block_type = "record_column"
+  def write(self, w):
+    with w.block("record_column"):
+      self.property(w, "Mapping", "mapping", StringValueConverter())
+      self.property(w, "SqlType", "sql_type", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Mapping": (StringValueConverter(), "mapping"),
-    "SqlType": (StringValueConverter(), "sql_type"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_KinesisAnalytics_ApplicationReferenceDataSource_RecordColumn(CloudFormationProperty):
-  entity = "AWS::KinesisAnalytics::ApplicationReferenceDataSource"
-  tf_block_type = "record_column"
+  def write(self, w):
+    with w.block("record_column"):
+      self.property(w, "Mapping", "mapping", StringValueConverter())
+      self.property(w, "SqlType", "sql_type", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Mapping": (StringValueConverter(), "mapping"),
-    "SqlType": (StringValueConverter(), "sql_type"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_KinesisAnalytics_Application_RecordFormat(CloudFormationProperty):
-  entity = "AWS::KinesisAnalytics::Application"
-  tf_block_type = "record_format"
+  def write(self, w):
+    with w.block("record_format"):
+      self.block(w, "MappingParameters", AWS_KinesisAnalytics_Application_MappingParameters)
+      self.property(w, "RecordFormatType", "record_format_type", StringValueConverter())
 
-  props = {
-    "MappingParameters": (AWS_KinesisAnalytics_Application_MappingParameters, "mapping_parameters"),
-    "RecordFormatType": (StringValueConverter(), "record_format_type"),
-  }
 
 class AWS_KinesisAnalytics_Application_KinesisFirehoseInput(CloudFormationProperty):
-  entity = "AWS::KinesisAnalytics::Application"
-  tf_block_type = "kinesis_firehose_input"
+  def write(self, w):
+    with w.block("kinesis_firehose_input"):
+      self.property(w, "ResourceARN", "resource_arn", StringValueConverter())
+      self.property(w, "RoleARN", "role_arn", StringValueConverter())
 
-  props = {
-    "ResourceARN": (StringValueConverter(), "resource_arn"),
-    "RoleARN": (StringValueConverter(), "role_arn"),
-  }
 
 class AWS_KinesisAnalytics_Application_InputParallelism(CloudFormationProperty):
-  entity = "AWS::KinesisAnalytics::Application"
-  tf_block_type = "input_parallelism"
+  def write(self, w):
+    with w.block("input_parallelism"):
+      self.property(w, "Count", "count", BasicValueConverter())
 
-  props = {
-    "Count": (BasicValueConverter(), "count"),
-  }
 
 class AWS_KinesisAnalytics_Application_InputLambdaProcessor(CloudFormationProperty):
-  entity = "AWS::KinesisAnalytics::Application"
-  tf_block_type = "input_lambda_processor"
+  def write(self, w):
+    with w.block("input_lambda_processor"):
+      self.property(w, "ResourceARN", "resource_arn", StringValueConverter())
+      self.property(w, "RoleARN", "role_arn", StringValueConverter())
 
-  props = {
-    "ResourceARN": (StringValueConverter(), "resource_arn"),
-    "RoleARN": (StringValueConverter(), "role_arn"),
-  }
 
 class AWS_KinesisAnalytics_ApplicationOutput_LambdaOutput(CloudFormationProperty):
-  entity = "AWS::KinesisAnalytics::ApplicationOutput"
-  tf_block_type = "lambda_output"
+  def write(self, w):
+    with w.block("lambda_output"):
+      self.property(w, "ResourceARN", "resource_arn", StringValueConverter())
+      self.property(w, "RoleARN", "role_arn", StringValueConverter())
 
-  props = {
-    "ResourceARN": (StringValueConverter(), "resource_arn"),
-    "RoleARN": (StringValueConverter(), "role_arn"),
-  }
 
 class AWS_KinesisAnalytics_ApplicationOutput_Output(CloudFormationProperty):
-  entity = "AWS::KinesisAnalytics::ApplicationOutput"
-  tf_block_type = "output"
+  def write(self, w):
+    with w.block("output"):
+      self.block(w, "DestinationSchema", AWS_KinesisAnalytics_ApplicationOutput_DestinationSchema)
+      self.block(w, "LambdaOutput", AWS_KinesisAnalytics_ApplicationOutput_LambdaOutput)
+      self.block(w, "KinesisFirehoseOutput", AWS_KinesisAnalytics_ApplicationOutput_KinesisFirehoseOutput)
+      self.block(w, "KinesisStreamsOutput", AWS_KinesisAnalytics_ApplicationOutput_KinesisStreamsOutput)
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "DestinationSchema": (AWS_KinesisAnalytics_ApplicationOutput_DestinationSchema, "destination_schema"),
-    "LambdaOutput": (AWS_KinesisAnalytics_ApplicationOutput_LambdaOutput, "lambda_output"),
-    "KinesisFirehoseOutput": (AWS_KinesisAnalytics_ApplicationOutput_KinesisFirehoseOutput, "kinesis_firehose_output"),
-    "KinesisStreamsOutput": (AWS_KinesisAnalytics_ApplicationOutput_KinesisStreamsOutput, "kinesis_streams_output"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_KinesisAnalytics_Application_InputSchema(CloudFormationProperty):
-  entity = "AWS::KinesisAnalytics::Application"
-  tf_block_type = "input_schema"
+  def write(self, w):
+    with w.block("input_schema"):
+      self.property(w, "RecordEncoding", "record_encoding", StringValueConverter())
+      self.repeated_block(w, "RecordColumns", AWS_KinesisAnalytics_Application_RecordColumn)
+      self.block(w, "RecordFormat", AWS_KinesisAnalytics_Application_RecordFormat)
 
-  props = {
-    "RecordEncoding": (StringValueConverter(), "record_encoding"),
-    "RecordColumns": (BlockValueConverter(AWS_KinesisAnalytics_Application_RecordColumn), None),
-    "RecordFormat": (AWS_KinesisAnalytics_Application_RecordFormat, "record_format"),
-  }
 
 class AWS_KinesisAnalytics_ApplicationReferenceDataSource_MappingParameters(CloudFormationProperty):
-  entity = "AWS::KinesisAnalytics::ApplicationReferenceDataSource"
-  tf_block_type = "mapping_parameters"
+  def write(self, w):
+    with w.block("mapping_parameters"):
+      self.block(w, "JSONMappingParameters", AWS_KinesisAnalytics_ApplicationReferenceDataSource_JSONMappingParameters)
+      self.block(w, "CSVMappingParameters", AWS_KinesisAnalytics_ApplicationReferenceDataSource_CSVMappingParameters)
 
-  props = {
-    "JSONMappingParameters": (AWS_KinesisAnalytics_ApplicationReferenceDataSource_JSONMappingParameters, "json_mapping_parameters"),
-    "CSVMappingParameters": (AWS_KinesisAnalytics_ApplicationReferenceDataSource_CSVMappingParameters, "csv_mapping_parameters"),
-  }
 
 class AWS_KinesisAnalytics_Application_InputProcessingConfiguration(CloudFormationProperty):
-  entity = "AWS::KinesisAnalytics::Application"
-  tf_block_type = "input_processing_configuration"
+  def write(self, w):
+    with w.block("input_processing_configuration"):
+      self.block(w, "InputLambdaProcessor", AWS_KinesisAnalytics_Application_InputLambdaProcessor)
 
-  props = {
-    "InputLambdaProcessor": (AWS_KinesisAnalytics_Application_InputLambdaProcessor, "input_lambda_processor"),
-  }
 
 class AWS_KinesisAnalytics_ApplicationOutput(CloudFormationResource):
-  terraform_resource = "aws_kinesis_analytics_application_output"
+  cfn_type = "AWS::KinesisAnalytics::ApplicationOutput"
+  tf_type = "aws_kinesis_analytics_application_output"
+  ref = "arn"
 
-  resource_type = "AWS::KinesisAnalytics::ApplicationOutput"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ApplicationName", "application_name", StringValueConverter())
+      self.block(w, "Output", AWS_KinesisAnalytics_ApplicationOutput_Output)
 
-  props = {
-    "ApplicationName": (StringValueConverter(), "application_name"),
-    "Output": (AWS_KinesisAnalytics_ApplicationOutput_Output, "output"),
-  }
 
 class AWS_KinesisAnalytics_Application_Input(CloudFormationProperty):
-  entity = "AWS::KinesisAnalytics::Application"
-  tf_block_type = "input"
+  def write(self, w):
+    with w.block("input"):
+      self.property(w, "NamePrefix", "name_prefix", StringValueConverter())
+      self.block(w, "InputSchema", AWS_KinesisAnalytics_Application_InputSchema)
+      self.block(w, "KinesisStreamsInput", AWS_KinesisAnalytics_Application_KinesisStreamsInput)
+      self.block(w, "KinesisFirehoseInput", AWS_KinesisAnalytics_Application_KinesisFirehoseInput)
+      self.block(w, "InputProcessingConfiguration", AWS_KinesisAnalytics_Application_InputProcessingConfiguration)
+      self.block(w, "InputParallelism", AWS_KinesisAnalytics_Application_InputParallelism)
 
-  props = {
-    "NamePrefix": (StringValueConverter(), "name_prefix"),
-    "InputSchema": (AWS_KinesisAnalytics_Application_InputSchema, "input_schema"),
-    "KinesisStreamsInput": (AWS_KinesisAnalytics_Application_KinesisStreamsInput, "kinesis_streams_input"),
-    "KinesisFirehoseInput": (AWS_KinesisAnalytics_Application_KinesisFirehoseInput, "kinesis_firehose_input"),
-    "InputProcessingConfiguration": (AWS_KinesisAnalytics_Application_InputProcessingConfiguration, "input_processing_configuration"),
-    "InputParallelism": (AWS_KinesisAnalytics_Application_InputParallelism, "input_parallelism"),
-  }
 
 class AWS_KinesisAnalytics_ApplicationReferenceDataSource_RecordFormat(CloudFormationProperty):
-  entity = "AWS::KinesisAnalytics::ApplicationReferenceDataSource"
-  tf_block_type = "record_format"
+  def write(self, w):
+    with w.block("record_format"):
+      self.block(w, "MappingParameters", AWS_KinesisAnalytics_ApplicationReferenceDataSource_MappingParameters)
+      self.property(w, "RecordFormatType", "record_format_type", StringValueConverter())
 
-  props = {
-    "MappingParameters": (AWS_KinesisAnalytics_ApplicationReferenceDataSource_MappingParameters, "mapping_parameters"),
-    "RecordFormatType": (StringValueConverter(), "record_format_type"),
-  }
 
 class AWS_KinesisAnalytics_ApplicationReferenceDataSource_ReferenceSchema(CloudFormationProperty):
-  entity = "AWS::KinesisAnalytics::ApplicationReferenceDataSource"
-  tf_block_type = "reference_schema"
+  def write(self, w):
+    with w.block("reference_schema"):
+      self.property(w, "RecordEncoding", "record_encoding", StringValueConverter())
+      self.repeated_block(w, "RecordColumns", AWS_KinesisAnalytics_ApplicationReferenceDataSource_RecordColumn)
+      self.block(w, "RecordFormat", AWS_KinesisAnalytics_ApplicationReferenceDataSource_RecordFormat)
 
-  props = {
-    "RecordEncoding": (StringValueConverter(), "record_encoding"),
-    "RecordColumns": (BlockValueConverter(AWS_KinesisAnalytics_ApplicationReferenceDataSource_RecordColumn), None),
-    "RecordFormat": (AWS_KinesisAnalytics_ApplicationReferenceDataSource_RecordFormat, "record_format"),
-  }
 
 class AWS_KinesisAnalytics_ApplicationReferenceDataSource_ReferenceDataSource(CloudFormationProperty):
-  entity = "AWS::KinesisAnalytics::ApplicationReferenceDataSource"
-  tf_block_type = "reference_data_source"
+  def write(self, w):
+    with w.block("reference_data_source"):
+      self.block(w, "ReferenceSchema", AWS_KinesisAnalytics_ApplicationReferenceDataSource_ReferenceSchema)
+      self.property(w, "TableName", "table_name", StringValueConverter())
+      self.block(w, "S3ReferenceDataSource", AWS_KinesisAnalytics_ApplicationReferenceDataSource_S3ReferenceDataSource)
 
-  props = {
-    "ReferenceSchema": (AWS_KinesisAnalytics_ApplicationReferenceDataSource_ReferenceSchema, "reference_schema"),
-    "TableName": (StringValueConverter(), "table_name"),
-    "S3ReferenceDataSource": (AWS_KinesisAnalytics_ApplicationReferenceDataSource_S3ReferenceDataSource, "s3_reference_data_source"),
-  }
 
 class AWS_KinesisAnalytics_ApplicationReferenceDataSource(CloudFormationResource):
-  terraform_resource = "aws_kinesis_analytics_application_reference_data_source"
+  cfn_type = "AWS::KinesisAnalytics::ApplicationReferenceDataSource"
+  tf_type = "aws_kinesis_analytics_application_reference_data_source"
+  ref = "arn"
 
-  resource_type = "AWS::KinesisAnalytics::ApplicationReferenceDataSource"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ApplicationName", "application_name", StringValueConverter())
+      self.block(w, "ReferenceDataSource", AWS_KinesisAnalytics_ApplicationReferenceDataSource_ReferenceDataSource)
 
-  props = {
-    "ApplicationName": (StringValueConverter(), "application_name"),
-    "ReferenceDataSource": (AWS_KinesisAnalytics_ApplicationReferenceDataSource_ReferenceDataSource, "reference_data_source"),
-  }
 
 class AWS_KinesisAnalytics_Application(CloudFormationResource):
-  terraform_resource = "aws_kinesis_analytics_application"
+  cfn_type = "AWS::KinesisAnalytics::Application"
+  tf_type = "aws_kinesis_analytics_application"
+  ref = "arn"
 
-  resource_type = "AWS::KinesisAnalytics::Application"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ApplicationName", "application_name", StringValueConverter())
+      self.repeated_block(w, "Inputs", AWS_KinesisAnalytics_Application_Input)
+      self.property(w, "ApplicationDescription", "application_description", StringValueConverter())
+      self.property(w, "ApplicationCode", "application_code", StringValueConverter())
 
-  props = {
-    "ApplicationName": (StringValueConverter(), "application_name"),
-    "Inputs": (BlockValueConverter(AWS_KinesisAnalytics_Application_Input), None),
-    "ApplicationDescription": (StringValueConverter(), "application_description"),
-    "ApplicationCode": (StringValueConverter(), "application_code"),
-  }
 

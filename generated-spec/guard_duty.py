@@ -1,98 +1,100 @@
 from . import *
 
 class AWS_GuardDuty_Filter_Condition(CloudFormationProperty):
-  entity = "AWS::GuardDuty::Filter"
-  tf_block_type = "condition"
+  def write(self, w):
+    with w.block("condition"):
+      self.property(w, "Lt", "lt", BasicValueConverter())
+      self.property(w, "Gte", "gte", BasicValueConverter())
+      self.property(w, "Neq", "neq", ListValueConverter(StringValueConverter()))
+      self.property(w, "Eq", "eq", ListValueConverter(StringValueConverter()))
+      self.property(w, "Lte", "lte", BasicValueConverter())
 
-  props = {
-    "Lt": (BasicValueConverter(), "lt"),
-    "Gte": (BasicValueConverter(), "gte"),
-    "Neq": (ListValueConverter(StringValueConverter()), "neq"),
-    "Eq": (ListValueConverter(StringValueConverter()), "eq"),
-    "Lte": (BasicValueConverter(), "lte"),
-  }
 
 class AWS_GuardDuty_ThreatIntelSet(CloudFormationResource):
-  terraform_resource = "aws_guard_duty_threat_intel_set"
+  cfn_type = "AWS::GuardDuty::ThreatIntelSet"
+  tf_type = "aws_guard_duty_threat_intel_set"
+  ref = "arn"
 
-  resource_type = "AWS::GuardDuty::ThreatIntelSet"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Format", "format", StringValueConverter())
+      self.property(w, "Activate", "activate", BasicValueConverter())
+      self.property(w, "DetectorId", "detector_id", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Location", "location", StringValueConverter())
 
-  props = {
-    "Format": (StringValueConverter(), "format"),
-    "Activate": (BasicValueConverter(), "activate"),
-    "DetectorId": (StringValueConverter(), "detector_id"),
-    "Name": (StringValueConverter(), "name"),
-    "Location": (StringValueConverter(), "location"),
-  }
 
 class AWS_GuardDuty_Member(CloudFormationResource):
-  terraform_resource = "aws_guard_duty_member"
+  cfn_type = "AWS::GuardDuty::Member"
+  tf_type = "aws_guard_duty_member"
+  ref = "arn"
 
-  resource_type = "AWS::GuardDuty::Member"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Status", "status", StringValueConverter())
+      self.property(w, "MemberId", "member_id", StringValueConverter())
+      self.property(w, "Email", "email", StringValueConverter())
+      self.property(w, "Message", "message", StringValueConverter())
+      self.property(w, "DisableEmailNotification", "disable_email_notification", BasicValueConverter())
+      self.property(w, "DetectorId", "detector_id", StringValueConverter())
 
-  props = {
-    "Status": (StringValueConverter(), "status"),
-    "MemberId": (StringValueConverter(), "member_id"),
-    "Email": (StringValueConverter(), "email"),
-    "Message": (StringValueConverter(), "message"),
-    "DisableEmailNotification": (BasicValueConverter(), "disable_email_notification"),
-    "DetectorId": (StringValueConverter(), "detector_id"),
-  }
 
 class AWS_GuardDuty_Detector(CloudFormationResource):
-  terraform_resource = "aws_guard_duty_detector"
+  cfn_type = "AWS::GuardDuty::Detector"
+  tf_type = "aws_guard_duty_detector"
+  ref = "arn"
 
-  resource_type = "AWS::GuardDuty::Detector"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "FindingPublishingFrequency", "finding_publishing_frequency", StringValueConverter())
+      self.property(w, "Enable", "enable", BasicValueConverter())
 
-  props = {
-    "FindingPublishingFrequency": (StringValueConverter(), "finding_publishing_frequency"),
-    "Enable": (BasicValueConverter(), "enable"),
-  }
 
 class AWS_GuardDuty_Master(CloudFormationResource):
-  terraform_resource = "aws_guard_duty_master"
+  cfn_type = "AWS::GuardDuty::Master"
+  tf_type = "aws_guard_duty_master"
+  ref = "arn"
 
-  resource_type = "AWS::GuardDuty::Master"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "DetectorId", "detector_id", StringValueConverter())
+      self.property(w, "MasterId", "master_id", StringValueConverter())
+      self.property(w, "InvitationId", "invitation_id", StringValueConverter())
 
-  props = {
-    "DetectorId": (StringValueConverter(), "detector_id"),
-    "MasterId": (StringValueConverter(), "master_id"),
-    "InvitationId": (StringValueConverter(), "invitation_id"),
-  }
 
 class AWS_GuardDuty_IPSet(CloudFormationResource):
-  terraform_resource = "aws_guard_duty_ip_set"
+  cfn_type = "AWS::GuardDuty::IPSet"
+  tf_type = "aws_guard_duty_ip_set"
+  ref = "arn"
 
-  resource_type = "AWS::GuardDuty::IPSet"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Format", "format", StringValueConverter())
+      self.property(w, "Activate", "activate", BasicValueConverter())
+      self.property(w, "DetectorId", "detector_id", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Location", "location", StringValueConverter())
 
-  props = {
-    "Format": (StringValueConverter(), "format"),
-    "Activate": (BasicValueConverter(), "activate"),
-    "DetectorId": (StringValueConverter(), "detector_id"),
-    "Name": (StringValueConverter(), "name"),
-    "Location": (StringValueConverter(), "location"),
-  }
 
 class AWS_GuardDuty_Filter_FindingCriteria(CloudFormationProperty):
-  entity = "AWS::GuardDuty::Filter"
-  tf_block_type = "finding_criteria"
+  def write(self, w):
+    with w.block("finding_criteria"):
+      self.property(w, "Criterion", "criterion", StringValueConverter())
+      self.block(w, "ItemType", AWS_GuardDuty_Filter_Condition)
 
-  props = {
-    "Criterion": (StringValueConverter(), "criterion"),
-    "ItemType": (AWS_GuardDuty_Filter_Condition, "item_type"),
-  }
 
 class AWS_GuardDuty_Filter(CloudFormationResource):
-  terraform_resource = "aws_guard_duty_filter"
+  cfn_type = "AWS::GuardDuty::Filter"
+  tf_type = "aws_guard_duty_filter"
+  ref = "arn"
 
-  resource_type = "AWS::GuardDuty::Filter"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Action", "action", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "DetectorId", "detector_id", StringValueConverter())
+      self.block(w, "FindingCriteria", AWS_GuardDuty_Filter_FindingCriteria)
+      self.property(w, "Rank", "rank", BasicValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Action": (StringValueConverter(), "action"),
-    "Description": (StringValueConverter(), "description"),
-    "DetectorId": (StringValueConverter(), "detector_id"),
-    "FindingCriteria": (AWS_GuardDuty_Filter_FindingCriteria, "finding_criteria"),
-    "Rank": (BasicValueConverter(), "rank"),
-    "Name": (StringValueConverter(), "name"),
-  }
 

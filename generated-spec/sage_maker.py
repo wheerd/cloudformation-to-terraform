@@ -1,183 +1,172 @@
 from . import *
 
 class AWS_SageMaker_Workteam_CognitoMemberDefinition(CloudFormationProperty):
-  entity = "AWS::SageMaker::Workteam"
-  tf_block_type = "cognito_member_definition"
+  def write(self, w):
+    with w.block("cognito_member_definition"):
+      self.property(w, "CognitoUserPool", "cognito_user_pool", StringValueConverter())
+      self.property(w, "CognitoClientId", "cognito_client_id", StringValueConverter())
+      self.property(w, "CognitoUserGroup", "cognito_user_group", StringValueConverter())
 
-  props = {
-    "CognitoUserPool": (StringValueConverter(), "cognito_user_pool"),
-    "CognitoClientId": (StringValueConverter(), "cognito_client_id"),
-    "CognitoUserGroup": (StringValueConverter(), "cognito_user_group"),
-  }
 
 class AWS_SageMaker_CodeRepository_GitConfig(CloudFormationProperty):
-  entity = "AWS::SageMaker::CodeRepository"
-  tf_block_type = "git_config"
+  def write(self, w):
+    with w.block("git_config"):
+      self.property(w, "SecretArn", "secret_arn", StringValueConverter())
+      self.property(w, "Branch", "branch", StringValueConverter())
+      self.property(w, "RepositoryUrl", "repository_url", StringValueConverter())
 
-  props = {
-    "SecretArn": (StringValueConverter(), "secret_arn"),
-    "Branch": (StringValueConverter(), "branch"),
-    "RepositoryUrl": (StringValueConverter(), "repository_url"),
-  }
 
 class AWS_SageMaker_Endpoint_VariantProperty(CloudFormationProperty):
-  entity = "AWS::SageMaker::Endpoint"
-  tf_block_type = "variant_property"
+  def write(self, w):
+    with w.block("variant_property"):
+      self.property(w, "VariantPropertyType", "variant_property_type", StringValueConverter())
 
-  props = {
-    "VariantPropertyType": (StringValueConverter(), "variant_property_type"),
-  }
 
 class AWS_SageMaker_Model_VpcConfig(CloudFormationProperty):
-  entity = "AWS::SageMaker::Model"
-  tf_block_type = "vpc_config"
+  def write(self, w):
+    with w.block("vpc_config"):
+      self.property(w, "Subnets", "subnets", ListValueConverter(StringValueConverter()))
+      self.property(w, "SecurityGroupIds", "security_group_ids", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "Subnets": (ListValueConverter(StringValueConverter()), "subnets"),
-    "SecurityGroupIds": (ListValueConverter(StringValueConverter()), "security_group_ids"),
-  }
 
 class AWS_SageMaker_Workteam_MemberDefinition(CloudFormationProperty):
-  entity = "AWS::SageMaker::Workteam"
-  tf_block_type = "member_definition"
+  def write(self, w):
+    with w.block("member_definition"):
+      self.block(w, "CognitoMemberDefinition", AWS_SageMaker_Workteam_CognitoMemberDefinition)
 
-  props = {
-    "CognitoMemberDefinition": (AWS_SageMaker_Workteam_CognitoMemberDefinition, "cognito_member_definition"),
-  }
 
 class AWS_SageMaker_EndpointConfig_ProductionVariant(CloudFormationProperty):
-  entity = "AWS::SageMaker::EndpointConfig"
-  tf_block_type = "production_variant"
+  def write(self, w):
+    with w.block("production_variant"):
+      self.property(w, "ModelName", "model_name", StringValueConverter())
+      self.property(w, "VariantName", "variant_name", StringValueConverter())
+      self.property(w, "InitialInstanceCount", "initial_instance_count", BasicValueConverter())
+      self.property(w, "InstanceType", "instance_type", StringValueConverter())
+      self.property(w, "AcceleratorType", "accelerator_type", StringValueConverter())
+      self.property(w, "InitialVariantWeight", "initial_variant_weight", BasicValueConverter())
 
-  props = {
-    "ModelName": (StringValueConverter(), "model_name"),
-    "VariantName": (StringValueConverter(), "variant_name"),
-    "InitialInstanceCount": (BasicValueConverter(), "initial_instance_count"),
-    "InstanceType": (StringValueConverter(), "instance_type"),
-    "AcceleratorType": (StringValueConverter(), "accelerator_type"),
-    "InitialVariantWeight": (BasicValueConverter(), "initial_variant_weight"),
-  }
 
 class AWS_SageMaker_Workteam_NotificationConfiguration(CloudFormationProperty):
-  entity = "AWS::SageMaker::Workteam"
-  tf_block_type = "notification_configuration"
+  def write(self, w):
+    with w.block("notification_configuration"):
+      self.property(w, "NotificationTopicArn", "notification_topic_arn", StringValueConverter())
 
-  props = {
-    "NotificationTopicArn": (StringValueConverter(), "notification_topic_arn"),
-  }
 
 class AWS_SageMaker_NotebookInstanceLifecycleConfig_NotebookInstanceLifecycleHook(CloudFormationProperty):
-  entity = "AWS::SageMaker::NotebookInstanceLifecycleConfig"
-  tf_block_type = "notebook_instance_lifecycle_hook"
+  def write(self, w):
+    with w.block("notebook_instance_lifecycle_hook"):
+      self.property(w, "Content", "content", StringValueConverter())
 
-  props = {
-    "Content": (StringValueConverter(), "content"),
-  }
 
 class AWS_SageMaker_Model_ContainerDefinition(CloudFormationProperty):
-  entity = "AWS::SageMaker::Model"
-  tf_block_type = "container_definition"
+  def write(self, w):
+    with w.block("container_definition"):
+      self.property(w, "ContainerHostname", "container_hostname", StringValueConverter())
+      self.property(w, "Mode", "mode", StringValueConverter())
+      self.property(w, "Environment", "environment", StringValueConverter())
+      self.property(w, "ModelDataUrl", "model_data_url", StringValueConverter())
+      self.property(w, "Image", "image", StringValueConverter())
 
-  props = {
-    "ContainerHostname": (StringValueConverter(), "container_hostname"),
-    "Mode": (StringValueConverter(), "mode"),
-    "Environment": (StringValueConverter(), "environment"),
-    "ModelDataUrl": (StringValueConverter(), "model_data_url"),
-    "Image": (StringValueConverter(), "image"),
-  }
 
 class AWS_SageMaker_Workteam(CloudFormationResource):
-  terraform_resource = "aws_sage_maker_workteam"
+  cfn_type = "AWS::SageMaker::Workteam"
+  tf_type = "aws_sage_maker_workteam"
+  ref = "arn"
 
-  resource_type = "AWS::SageMaker::Workteam"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.block(w, "NotificationConfiguration", AWS_SageMaker_Workteam_NotificationConfiguration)
+      self.property(w, "WorkteamName", "workteam_name", StringValueConverter())
+      self.repeated_block(w, "MemberDefinitions", AWS_SageMaker_Workteam_MemberDefinition)
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "NotificationConfiguration": (AWS_SageMaker_Workteam_NotificationConfiguration, "notification_configuration"),
-    "WorkteamName": (StringValueConverter(), "workteam_name"),
-    "MemberDefinitions": (BlockValueConverter(AWS_SageMaker_Workteam_MemberDefinition), None),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 
 class AWS_SageMaker_NotebookInstanceLifecycleConfig(CloudFormationResource):
-  terraform_resource = "aws_sage_maker_notebook_instance_lifecycle_config"
+  cfn_type = "AWS::SageMaker::NotebookInstanceLifecycleConfig"
+  tf_type = "aws_sage_maker_notebook_instance_lifecycle_config"
+  ref = "arn"
 
-  resource_type = "AWS::SageMaker::NotebookInstanceLifecycleConfig"
+  def write(self, w):
+    with self.resource_block(w):
+      self.repeated_block(w, "OnStart", AWS_SageMaker_NotebookInstanceLifecycleConfig_NotebookInstanceLifecycleHook)
+      self.property(w, "NotebookInstanceLifecycleConfigName", "notebook_instance_lifecycle_config_name", StringValueConverter())
+      self.repeated_block(w, "OnCreate", AWS_SageMaker_NotebookInstanceLifecycleConfig_NotebookInstanceLifecycleHook)
 
-  props = {
-    "OnStart": (BlockValueConverter(AWS_SageMaker_NotebookInstanceLifecycleConfig_NotebookInstanceLifecycleHook), None),
-    "NotebookInstanceLifecycleConfigName": (StringValueConverter(), "notebook_instance_lifecycle_config_name"),
-    "OnCreate": (BlockValueConverter(AWS_SageMaker_NotebookInstanceLifecycleConfig_NotebookInstanceLifecycleHook), None),
-  }
 
 class AWS_SageMaker_EndpointConfig(CloudFormationResource):
-  terraform_resource = "aws_sage_maker_endpoint_config"
+  cfn_type = "AWS::SageMaker::EndpointConfig"
+  tf_type = "aws_sage_maker_endpoint_config"
+  ref = "arn"
 
-  resource_type = "AWS::SageMaker::EndpointConfig"
+  def write(self, w):
+    with self.resource_block(w):
+      self.repeated_block(w, "ProductionVariants", AWS_SageMaker_EndpointConfig_ProductionVariant)
+      self.property(w, "KmsKeyId", "kms_key_id", StringValueConverter())
+      self.property(w, "EndpointConfigName", "endpoint_config_name", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "ProductionVariants": (BlockValueConverter(AWS_SageMaker_EndpointConfig_ProductionVariant), None),
-    "KmsKeyId": (StringValueConverter(), "kms_key_id"),
-    "EndpointConfigName": (StringValueConverter(), "endpoint_config_name"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 
 class AWS_SageMaker_Endpoint(CloudFormationResource):
-  terraform_resource = "aws_sage_maker_endpoint"
+  cfn_type = "AWS::SageMaker::Endpoint"
+  tf_type = "aws_sage_maker_endpoint"
+  ref = "arn"
 
-  resource_type = "AWS::SageMaker::Endpoint"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "RetainAllVariantProperties", "retain_all_variant_properties", BasicValueConverter())
+      self.property(w, "EndpointName", "endpoint_name", StringValueConverter())
+      self.repeated_block(w, "ExcludeRetainedVariantProperties", AWS_SageMaker_Endpoint_VariantProperty)
+      self.property(w, "EndpointConfigName", "endpoint_config_name", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "RetainAllVariantProperties": (BasicValueConverter(), "retain_all_variant_properties"),
-    "EndpointName": (StringValueConverter(), "endpoint_name"),
-    "ExcludeRetainedVariantProperties": (BlockValueConverter(AWS_SageMaker_Endpoint_VariantProperty), None),
-    "EndpointConfigName": (StringValueConverter(), "endpoint_config_name"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 
 class AWS_SageMaker_NotebookInstance(CloudFormationResource):
-  terraform_resource = "aws_sage_maker_notebook_instance"
+  cfn_type = "AWS::SageMaker::NotebookInstance"
+  tf_type = "aws_sage_maker_notebook_instance"
+  ref = "arn"
 
-  resource_type = "AWS::SageMaker::NotebookInstance"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "KmsKeyId", "kms_key_id", StringValueConverter())
+      self.property(w, "VolumeSizeInGB", "volume_size_in_gb", BasicValueConverter())
+      self.property(w, "AdditionalCodeRepositories", "additional_code_repositories", ListValueConverter(StringValueConverter()))
+      self.property(w, "DefaultCodeRepository", "default_code_repository", StringValueConverter())
+      self.property(w, "DirectInternetAccess", "direct_internet_access", StringValueConverter())
+      self.property(w, "AcceleratorTypes", "accelerator_types", ListValueConverter(StringValueConverter()))
+      self.property(w, "SubnetId", "subnet_id", StringValueConverter())
+      self.property(w, "SecurityGroupIds", "security_group_ids", ListValueConverter(StringValueConverter()))
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
+      self.property(w, "RootAccess", "root_access", StringValueConverter())
+      self.property(w, "NotebookInstanceName", "notebook_instance_name", StringValueConverter())
+      self.property(w, "InstanceType", "instance_type", StringValueConverter())
+      self.property(w, "LifecycleConfigName", "lifecycle_config_name", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "KmsKeyId": (StringValueConverter(), "kms_key_id"),
-    "VolumeSizeInGB": (BasicValueConverter(), "volume_size_in_gb"),
-    "AdditionalCodeRepositories": (ListValueConverter(StringValueConverter()), "additional_code_repositories"),
-    "DefaultCodeRepository": (StringValueConverter(), "default_code_repository"),
-    "DirectInternetAccess": (StringValueConverter(), "direct_internet_access"),
-    "AcceleratorTypes": (ListValueConverter(StringValueConverter()), "accelerator_types"),
-    "SubnetId": (StringValueConverter(), "subnet_id"),
-    "SecurityGroupIds": (ListValueConverter(StringValueConverter()), "security_group_ids"),
-    "RoleArn": (StringValueConverter(), "role_arn"),
-    "RootAccess": (StringValueConverter(), "root_access"),
-    "NotebookInstanceName": (StringValueConverter(), "notebook_instance_name"),
-    "InstanceType": (StringValueConverter(), "instance_type"),
-    "LifecycleConfigName": (StringValueConverter(), "lifecycle_config_name"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 
 class AWS_SageMaker_CodeRepository(CloudFormationResource):
-  terraform_resource = "aws_sage_maker_code_repository"
+  cfn_type = "AWS::SageMaker::CodeRepository"
+  tf_type = "aws_sage_maker_code_repository"
+  ref = "arn"
 
-  resource_type = "AWS::SageMaker::CodeRepository"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "CodeRepositoryName", "code_repository_name", StringValueConverter())
+      self.block(w, "GitConfig", AWS_SageMaker_CodeRepository_GitConfig)
 
-  props = {
-    "CodeRepositoryName": (StringValueConverter(), "code_repository_name"),
-    "GitConfig": (AWS_SageMaker_CodeRepository_GitConfig, "git_config"),
-  }
 
 class AWS_SageMaker_Model(CloudFormationResource):
-  terraform_resource = "aws_sage_maker_model"
+  cfn_type = "AWS::SageMaker::Model"
+  tf_type = "aws_sage_maker_model"
+  ref = "arn"
 
-  resource_type = "AWS::SageMaker::Model"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ExecutionRoleArn", "execution_role_arn", StringValueConverter())
+      self.block(w, "PrimaryContainer", AWS_SageMaker_Model_ContainerDefinition)
+      self.property(w, "ModelName", "model_name", StringValueConverter())
+      self.block(w, "VpcConfig", AWS_SageMaker_Model_VpcConfig)
+      self.repeated_block(w, "Containers", AWS_SageMaker_Model_ContainerDefinition)
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "ExecutionRoleArn": (StringValueConverter(), "execution_role_arn"),
-    "PrimaryContainer": (AWS_SageMaker_Model_ContainerDefinition, "primary_container"),
-    "ModelName": (StringValueConverter(), "model_name"),
-    "VpcConfig": (AWS_SageMaker_Model_VpcConfig, "vpc_config"),
-    "Containers": (BlockValueConverter(AWS_SageMaker_Model_ContainerDefinition), None),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 

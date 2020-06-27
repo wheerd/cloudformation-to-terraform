@@ -1,34 +1,34 @@
 from . import *
 
 class AWS_Kinesis_Stream_StreamEncryption(CloudFormationProperty):
-  entity = "AWS::Kinesis::Stream"
-  tf_block_type = "stream_encryption"
+  def write(self, w):
+    with w.block("stream_encryption"):
+      self.property(w, "EncryptionType", "encryption_type", StringValueConverter())
+      self.property(w, "KeyId", "key_id", StringValueConverter())
 
-  props = {
-    "EncryptionType": (StringValueConverter(), "encryption_type"),
-    "KeyId": (StringValueConverter(), "key_id"),
-  }
 
 class AWS_Kinesis_Stream(CloudFormationResource):
-  terraform_resource = "aws_kinesis_stream"
+  cfn_type = "AWS::Kinesis::Stream"
+  tf_type = "aws_kinesis_stream"
+  ref = "arn"
 
-  resource_type = "AWS::Kinesis::Stream"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "RetentionPeriodHours", "retention_period_hours", BasicValueConverter())
+      self.property(w, "ShardCount", "shard_count", BasicValueConverter())
+      self.block(w, "StreamEncryption", AWS_Kinesis_Stream_StreamEncryption)
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-    "RetentionPeriodHours": (BasicValueConverter(), "retention_period_hours"),
-    "ShardCount": (BasicValueConverter(), "shard_count"),
-    "StreamEncryption": (AWS_Kinesis_Stream_StreamEncryption, "stream_encryption"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 
 class AWS_Kinesis_StreamConsumer(CloudFormationResource):
-  terraform_resource = "aws_kinesis_stream_consumer"
+  cfn_type = "AWS::Kinesis::StreamConsumer"
+  tf_type = "aws_kinesis_stream_consumer"
+  ref = "arn"
 
-  resource_type = "AWS::Kinesis::StreamConsumer"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ConsumerName", "consumer_name", StringValueConverter())
+      self.property(w, "StreamARN", "stream_arn", StringValueConverter())
 
-  props = {
-    "ConsumerName": (StringValueConverter(), "consumer_name"),
-    "StreamARN": (StringValueConverter(), "stream_arn"),
-  }
 

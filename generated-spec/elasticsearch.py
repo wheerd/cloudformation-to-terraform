@@ -1,110 +1,93 @@
 from . import *
 
 class AWS_Elasticsearch_Domain_NodeToNodeEncryptionOptions(CloudFormationProperty):
-  entity = "AWS::Elasticsearch::Domain"
-  tf_block_type = "node_to_node_encryption_options"
+  def write(self, w):
+    with w.block("node_to_node_encryption_options"):
+      self.property(w, "Enabled", "enabled", BasicValueConverter())
 
-  props = {
-    "Enabled": (BasicValueConverter(), "enabled"),
-  }
 
 class AWS_Elasticsearch_Domain_SnapshotOptions(CloudFormationProperty):
-  entity = "AWS::Elasticsearch::Domain"
-  tf_block_type = "snapshot_options"
+  def write(self, w):
+    with w.block("snapshot_options"):
+      self.property(w, "AutomatedSnapshotStartHour", "automated_snapshot_start_hour", BasicValueConverter())
 
-  props = {
-    "AutomatedSnapshotStartHour": (BasicValueConverter(), "automated_snapshot_start_hour"),
-  }
 
 class AWS_Elasticsearch_Domain_CognitoOptions(CloudFormationProperty):
-  entity = "AWS::Elasticsearch::Domain"
-  tf_block_type = "cognito_options"
+  def write(self, w):
+    with w.block("cognito_options"):
+      self.property(w, "Enabled", "enabled", BasicValueConverter())
+      self.property(w, "IdentityPoolId", "identity_pool_id", StringValueConverter())
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
+      self.property(w, "UserPoolId", "user_pool_id", StringValueConverter())
 
-  props = {
-    "Enabled": (BasicValueConverter(), "enabled"),
-    "IdentityPoolId": (StringValueConverter(), "identity_pool_id"),
-    "RoleArn": (StringValueConverter(), "role_arn"),
-    "UserPoolId": (StringValueConverter(), "user_pool_id"),
-  }
 
 class AWS_Elasticsearch_Domain_VPCOptions(CloudFormationProperty):
-  entity = "AWS::Elasticsearch::Domain"
-  tf_block_type = "vpc_options"
+  def write(self, w):
+    with w.block("vpc_options"):
+      self.property(w, "SecurityGroupIds", "security_group_ids", ListValueConverter(StringValueConverter()))
+      self.property(w, "SubnetIds", "subnet_ids", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "SecurityGroupIds": (ListValueConverter(StringValueConverter()), "security_group_ids"),
-    "SubnetIds": (ListValueConverter(StringValueConverter()), "subnet_ids"),
-  }
 
 class AWS_Elasticsearch_Domain_LogPublishingOption(CloudFormationProperty):
-  entity = "AWS::Elasticsearch::Domain"
-  tf_block_type = "log_publishing_option"
+  def write(self, w):
+    with w.block("log_publishing_option"):
+      self.property(w, "CloudWatchLogsLogGroupArn", "cloud_watch_logs_log_group_arn", StringValueConverter())
+      self.property(w, "Enabled", "enabled", BasicValueConverter())
 
-  props = {
-    "CloudWatchLogsLogGroupArn": (StringValueConverter(), "cloud_watch_logs_log_group_arn"),
-    "Enabled": (BasicValueConverter(), "enabled"),
-  }
 
 class AWS_Elasticsearch_Domain_ZoneAwarenessConfig(CloudFormationProperty):
-  entity = "AWS::Elasticsearch::Domain"
-  tf_block_type = "zone_awareness_config"
+  def write(self, w):
+    with w.block("zone_awareness_config"):
+      self.property(w, "AvailabilityZoneCount", "availability_zone_count", BasicValueConverter())
 
-  props = {
-    "AvailabilityZoneCount": (BasicValueConverter(), "availability_zone_count"),
-  }
 
 class AWS_Elasticsearch_Domain_EBSOptions(CloudFormationProperty):
-  entity = "AWS::Elasticsearch::Domain"
-  tf_block_type = "ebs_options"
+  def write(self, w):
+    with w.block("ebs_options"):
+      self.property(w, "EBSEnabled", "ebs_enabled", BasicValueConverter())
+      self.property(w, "Iops", "iops", BasicValueConverter())
+      self.property(w, "VolumeSize", "volume_size", BasicValueConverter())
+      self.property(w, "VolumeType", "volume_type", StringValueConverter())
 
-  props = {
-    "EBSEnabled": (BasicValueConverter(), "ebs_enabled"),
-    "Iops": (BasicValueConverter(), "iops"),
-    "VolumeSize": (BasicValueConverter(), "volume_size"),
-    "VolumeType": (StringValueConverter(), "volume_type"),
-  }
 
 class AWS_Elasticsearch_Domain_EncryptionAtRestOptions(CloudFormationProperty):
-  entity = "AWS::Elasticsearch::Domain"
-  tf_block_type = "encryption_at_rest_options"
+  def write(self, w):
+    with w.block("encryption_at_rest_options"):
+      self.property(w, "Enabled", "enabled", BasicValueConverter())
+      self.property(w, "KmsKeyId", "kms_key_id", StringValueConverter())
 
-  props = {
-    "Enabled": (BasicValueConverter(), "enabled"),
-    "KmsKeyId": (StringValueConverter(), "kms_key_id"),
-  }
 
 class AWS_Elasticsearch_Domain_ElasticsearchClusterConfig(CloudFormationProperty):
-  entity = "AWS::Elasticsearch::Domain"
-  tf_block_type = "elasticsearch_cluster_config"
+  def write(self, w):
+    with w.block("elasticsearch_cluster_config"):
+      self.property(w, "DedicatedMasterCount", "dedicated_master_count", BasicValueConverter())
+      self.property(w, "DedicatedMasterEnabled", "dedicated_master_enabled", BasicValueConverter())
+      self.property(w, "DedicatedMasterType", "dedicated_master_type", StringValueConverter())
+      self.property(w, "InstanceCount", "instance_count", BasicValueConverter())
+      self.property(w, "InstanceType", "instance_type", StringValueConverter())
+      self.block(w, "ZoneAwarenessConfig", AWS_Elasticsearch_Domain_ZoneAwarenessConfig)
+      self.property(w, "ZoneAwarenessEnabled", "zone_awareness_enabled", BasicValueConverter())
 
-  props = {
-    "DedicatedMasterCount": (BasicValueConverter(), "dedicated_master_count"),
-    "DedicatedMasterEnabled": (BasicValueConverter(), "dedicated_master_enabled"),
-    "DedicatedMasterType": (StringValueConverter(), "dedicated_master_type"),
-    "InstanceCount": (BasicValueConverter(), "instance_count"),
-    "InstanceType": (StringValueConverter(), "instance_type"),
-    "ZoneAwarenessConfig": (AWS_Elasticsearch_Domain_ZoneAwarenessConfig, "zone_awareness_config"),
-    "ZoneAwarenessEnabled": (BasicValueConverter(), "zone_awareness_enabled"),
-  }
 
 class AWS_Elasticsearch_Domain(CloudFormationResource):
-  terraform_resource = "aws_elasticsearch_domain"
+  cfn_type = "AWS::Elasticsearch::Domain"
+  tf_type = "aws_elasticsearch_domain"
+  ref = "arn"
 
-  resource_type = "AWS::Elasticsearch::Domain"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "AccessPolicies", "access_policies", StringValueConverter())
+      self.property(w, "AdvancedOptions", "advanced_options", MapValueConverter(StringValueConverter()))
+      self.block(w, "CognitoOptions", AWS_Elasticsearch_Domain_CognitoOptions)
+      self.property(w, "DomainName", "domain_name", StringValueConverter())
+      self.block(w, "EBSOptions", AWS_Elasticsearch_Domain_EBSOptions)
+      self.block(w, "ElasticsearchClusterConfig", AWS_Elasticsearch_Domain_ElasticsearchClusterConfig)
+      self.property(w, "ElasticsearchVersion", "elasticsearch_version", StringValueConverter())
+      self.block(w, "EncryptionAtRestOptions", AWS_Elasticsearch_Domain_EncryptionAtRestOptions)
+      self.property(w, "LogPublishingOptions", "log_publishing_options", MapValueConverter(AWS_Elasticsearch_Domain_LogPublishingOption))
+      self.block(w, "NodeToNodeEncryptionOptions", AWS_Elasticsearch_Domain_NodeToNodeEncryptionOptions)
+      self.block(w, "SnapshotOptions", AWS_Elasticsearch_Domain_SnapshotOptions)
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.block(w, "VPCOptions", AWS_Elasticsearch_Domain_VPCOptions)
 
-  props = {
-    "AccessPolicies": (StringValueConverter(), "access_policies"),
-    "AdvancedOptions": (MapValueConverter(StringValueConverter()), "advanced_options"),
-    "CognitoOptions": (AWS_Elasticsearch_Domain_CognitoOptions, "cognito_options"),
-    "DomainName": (StringValueConverter(), "domain_name"),
-    "EBSOptions": (AWS_Elasticsearch_Domain_EBSOptions, "ebs_options"),
-    "ElasticsearchClusterConfig": (AWS_Elasticsearch_Domain_ElasticsearchClusterConfig, "elasticsearch_cluster_config"),
-    "ElasticsearchVersion": (StringValueConverter(), "elasticsearch_version"),
-    "EncryptionAtRestOptions": (AWS_Elasticsearch_Domain_EncryptionAtRestOptions, "encryption_at_rest_options"),
-    "LogPublishingOptions": (MapValueConverter(AWS_Elasticsearch_Domain_LogPublishingOption), "log_publishing_options"),
-    "NodeToNodeEncryptionOptions": (AWS_Elasticsearch_Domain_NodeToNodeEncryptionOptions, "node_to_node_encryption_options"),
-    "SnapshotOptions": (AWS_Elasticsearch_Domain_SnapshotOptions, "snapshot_options"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "VPCOptions": (AWS_Elasticsearch_Domain_VPCOptions, "vpc_options"),
-  }
 

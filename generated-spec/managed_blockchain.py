@@ -1,108 +1,92 @@
 from . import *
 
 class AWS_ManagedBlockchain_Member_ApprovalThresholdPolicy(CloudFormationProperty):
-  entity = "AWS::ManagedBlockchain::Member"
-  tf_block_type = "approval_threshold_policy"
+  def write(self, w):
+    with w.block("approval_threshold_policy"):
+      self.property(w, "ThresholdComparator", "threshold_comparator", StringValueConverter())
+      self.property(w, "ThresholdPercentage", "threshold_percentage", BasicValueConverter())
+      self.property(w, "ProposalDurationInHours", "proposal_duration_in_hours", BasicValueConverter())
 
-  props = {
-    "ThresholdComparator": (StringValueConverter(), "threshold_comparator"),
-    "ThresholdPercentage": (BasicValueConverter(), "threshold_percentage"),
-    "ProposalDurationInHours": (BasicValueConverter(), "proposal_duration_in_hours"),
-  }
 
 class AWS_ManagedBlockchain_Node_NodeConfiguration(CloudFormationProperty):
-  entity = "AWS::ManagedBlockchain::Node"
-  tf_block_type = "node_configuration"
+  def write(self, w):
+    with w.block("node_configuration"):
+      self.property(w, "AvailabilityZone", "availability_zone", StringValueConverter())
+      self.property(w, "InstanceType", "instance_type", StringValueConverter())
 
-  props = {
-    "AvailabilityZone": (StringValueConverter(), "availability_zone"),
-    "InstanceType": (StringValueConverter(), "instance_type"),
-  }
 
 class AWS_ManagedBlockchain_Member_NetworkFabricConfiguration(CloudFormationProperty):
-  entity = "AWS::ManagedBlockchain::Member"
-  tf_block_type = "network_fabric_configuration"
+  def write(self, w):
+    with w.block("network_fabric_configuration"):
+      self.property(w, "Edition", "edition", StringValueConverter())
 
-  props = {
-    "Edition": (StringValueConverter(), "edition"),
-  }
 
 class AWS_ManagedBlockchain_Member_VotingPolicy(CloudFormationProperty):
-  entity = "AWS::ManagedBlockchain::Member"
-  tf_block_type = "voting_policy"
+  def write(self, w):
+    with w.block("voting_policy"):
+      self.block(w, "ApprovalThresholdPolicy", AWS_ManagedBlockchain_Member_ApprovalThresholdPolicy)
 
-  props = {
-    "ApprovalThresholdPolicy": (AWS_ManagedBlockchain_Member_ApprovalThresholdPolicy, "approval_threshold_policy"),
-  }
 
 class AWS_ManagedBlockchain_Member_MemberFabricConfiguration(CloudFormationProperty):
-  entity = "AWS::ManagedBlockchain::Member"
-  tf_block_type = "member_fabric_configuration"
+  def write(self, w):
+    with w.block("member_fabric_configuration"):
+      self.property(w, "AdminUsername", "admin_username", StringValueConverter())
+      self.property(w, "AdminPassword", "admin_password", StringValueConverter())
 
-  props = {
-    "AdminUsername": (StringValueConverter(), "admin_username"),
-    "AdminPassword": (StringValueConverter(), "admin_password"),
-  }
 
 class AWS_ManagedBlockchain_Node(CloudFormationResource):
-  terraform_resource = "aws_managed_blockchain_node"
+  cfn_type = "AWS::ManagedBlockchain::Node"
+  tf_type = "aws_managed_blockchain_node"
+  ref = "arn"
 
-  resource_type = "AWS::ManagedBlockchain::Node"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "MemberId", "member_id", StringValueConverter())
+      self.property(w, "NetworkId", "network_id", StringValueConverter())
+      self.block(w, "NodeConfiguration", AWS_ManagedBlockchain_Node_NodeConfiguration)
 
-  props = {
-    "MemberId": (StringValueConverter(), "member_id"),
-    "NetworkId": (StringValueConverter(), "network_id"),
-    "NodeConfiguration": (AWS_ManagedBlockchain_Node_NodeConfiguration, "node_configuration"),
-  }
 
 class AWS_ManagedBlockchain_Member_NetworkFrameworkConfiguration(CloudFormationProperty):
-  entity = "AWS::ManagedBlockchain::Member"
-  tf_block_type = "network_framework_configuration"
+  def write(self, w):
+    with w.block("network_framework_configuration"):
+      self.block(w, "NetworkFabricConfiguration", AWS_ManagedBlockchain_Member_NetworkFabricConfiguration)
 
-  props = {
-    "NetworkFabricConfiguration": (AWS_ManagedBlockchain_Member_NetworkFabricConfiguration, "network_fabric_configuration"),
-  }
 
 class AWS_ManagedBlockchain_Member_NetworkConfiguration(CloudFormationProperty):
-  entity = "AWS::ManagedBlockchain::Member"
-  tf_block_type = "network_configuration"
+  def write(self, w):
+    with w.block("network_configuration"):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "FrameworkVersion", "framework_version", StringValueConverter())
+      self.block(w, "VotingPolicy", AWS_ManagedBlockchain_Member_VotingPolicy)
+      self.property(w, "Framework", "framework", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
+      self.block(w, "NetworkFrameworkConfiguration", AWS_ManagedBlockchain_Member_NetworkFrameworkConfiguration)
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "FrameworkVersion": (StringValueConverter(), "framework_version"),
-    "VotingPolicy": (AWS_ManagedBlockchain_Member_VotingPolicy, "voting_policy"),
-    "Framework": (StringValueConverter(), "framework"),
-    "Name": (StringValueConverter(), "name"),
-    "NetworkFrameworkConfiguration": (AWS_ManagedBlockchain_Member_NetworkFrameworkConfiguration, "network_framework_configuration"),
-  }
 
 class AWS_ManagedBlockchain_Member_MemberFrameworkConfiguration(CloudFormationProperty):
-  entity = "AWS::ManagedBlockchain::Member"
-  tf_block_type = "member_framework_configuration"
+  def write(self, w):
+    with w.block("member_framework_configuration"):
+      self.block(w, "MemberFabricConfiguration", AWS_ManagedBlockchain_Member_MemberFabricConfiguration)
 
-  props = {
-    "MemberFabricConfiguration": (AWS_ManagedBlockchain_Member_MemberFabricConfiguration, "member_fabric_configuration"),
-  }
 
 class AWS_ManagedBlockchain_Member_MemberConfiguration(CloudFormationProperty):
-  entity = "AWS::ManagedBlockchain::Member"
-  tf_block_type = "member_configuration"
+  def write(self, w):
+    with w.block("member_configuration"):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.block(w, "MemberFrameworkConfiguration", AWS_ManagedBlockchain_Member_MemberFrameworkConfiguration)
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "MemberFrameworkConfiguration": (AWS_ManagedBlockchain_Member_MemberFrameworkConfiguration, "member_framework_configuration"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_ManagedBlockchain_Member(CloudFormationResource):
-  terraform_resource = "aws_managed_blockchain_member"
+  cfn_type = "AWS::ManagedBlockchain::Member"
+  tf_type = "aws_managed_blockchain_member"
+  ref = "arn"
 
-  resource_type = "AWS::ManagedBlockchain::Member"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "MemberConfiguration", AWS_ManagedBlockchain_Member_MemberConfiguration)
+      self.block(w, "NetworkConfiguration", AWS_ManagedBlockchain_Member_NetworkConfiguration)
+      self.property(w, "NetworkId", "network_id", StringValueConverter())
+      self.property(w, "InvitationId", "invitation_id", StringValueConverter())
 
-  props = {
-    "MemberConfiguration": (AWS_ManagedBlockchain_Member_MemberConfiguration, "member_configuration"),
-    "NetworkConfiguration": (AWS_ManagedBlockchain_Member_NetworkConfiguration, "network_configuration"),
-    "NetworkId": (StringValueConverter(), "network_id"),
-    "InvitationId": (StringValueConverter(), "invitation_id"),
-  }
 

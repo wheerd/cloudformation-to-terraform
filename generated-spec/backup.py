@@ -1,107 +1,96 @@
 from . import *
 
 class AWS_Backup_BackupPlan_LifecycleResourceType(CloudFormationProperty):
-  entity = "AWS::Backup::BackupPlan"
-  tf_block_type = "lifecycle_resource_type"
+  def write(self, w):
+    with w.block("lifecycle_resource_type"):
+      self.property(w, "DeleteAfterDays", "delete_after_days", BasicValueConverter())
+      self.property(w, "MoveToColdStorageAfterDays", "move_to_cold_storage_after_days", BasicValueConverter())
 
-  props = {
-    "DeleteAfterDays": (BasicValueConverter(), "delete_after_days"),
-    "MoveToColdStorageAfterDays": (BasicValueConverter(), "move_to_cold_storage_after_days"),
-  }
 
 class AWS_Backup_BackupSelection_ConditionResourceType(CloudFormationProperty):
-  entity = "AWS::Backup::BackupSelection"
-  tf_block_type = "condition_resource_type"
+  def write(self, w):
+    with w.block("condition_resource_type"):
+      self.property(w, "ConditionValue", "condition_value", StringValueConverter())
+      self.property(w, "ConditionKey", "condition_key", StringValueConverter())
+      self.property(w, "ConditionType", "condition_type", StringValueConverter())
 
-  props = {
-    "ConditionValue": (StringValueConverter(), "condition_value"),
-    "ConditionKey": (StringValueConverter(), "condition_key"),
-    "ConditionType": (StringValueConverter(), "condition_type"),
-  }
 
 class AWS_Backup_BackupVault_NotificationObjectType(CloudFormationProperty):
-  entity = "AWS::Backup::BackupVault"
-  tf_block_type = "notification_object_type"
+  def write(self, w):
+    with w.block("notification_object_type"):
+      self.property(w, "SNSTopicArn", "sns_topic_arn", StringValueConverter())
+      self.property(w, "BackupVaultEvents", "backup_vault_events", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "SNSTopicArn": (StringValueConverter(), "sns_topic_arn"),
-    "BackupVaultEvents": (ListValueConverter(StringValueConverter()), "backup_vault_events"),
-  }
 
 class AWS_Backup_BackupVault(CloudFormationResource):
-  terraform_resource = "aws_backup_backup_vault"
+  cfn_type = "AWS::Backup::BackupVault"
+  tf_type = "aws_backup_backup_vault"
+  ref = "arn"
 
-  resource_type = "AWS::Backup::BackupVault"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "BackupVaultTags", "backup_vault_tags", StringValueConverter())
+      self.property(w, "BackupVaultName", "backup_vault_name", StringValueConverter())
+      self.property(w, "EncryptionKeyArn", "encryption_key_arn", StringValueConverter())
+      self.block(w, "Notifications", AWS_Backup_BackupVault_NotificationObjectType)
+      self.property(w, "AccessPolicy", "access_policy", StringValueConverter())
 
-  props = {
-    "BackupVaultTags": (StringValueConverter(), "backup_vault_tags"),
-    "BackupVaultName": (StringValueConverter(), "backup_vault_name"),
-    "EncryptionKeyArn": (StringValueConverter(), "encryption_key_arn"),
-    "Notifications": (AWS_Backup_BackupVault_NotificationObjectType, "notifications"),
-    "AccessPolicy": (StringValueConverter(), "access_policy"),
-  }
 
 class AWS_Backup_BackupPlan_CopyActionResourceType(CloudFormationProperty):
-  entity = "AWS::Backup::BackupPlan"
-  tf_block_type = "copy_action_resource_type"
+  def write(self, w):
+    with w.block("copy_action_resource_type"):
+      self.block(w, "Lifecycle", AWS_Backup_BackupPlan_LifecycleResourceType)
+      self.property(w, "DestinationBackupVaultArn", "destination_backup_vault_arn", StringValueConverter())
 
-  props = {
-    "Lifecycle": (AWS_Backup_BackupPlan_LifecycleResourceType, "lifecycle"),
-    "DestinationBackupVaultArn": (StringValueConverter(), "destination_backup_vault_arn"),
-  }
 
 class AWS_Backup_BackupSelection_BackupSelectionResourceType(CloudFormationProperty):
-  entity = "AWS::Backup::BackupSelection"
-  tf_block_type = "backup_selection_resource_type"
+  def write(self, w):
+    with w.block("backup_selection_resource_type"):
+      self.repeated_block(w, "ListOfTags", AWS_Backup_BackupSelection_ConditionResourceType)
+      self.property(w, "SelectionName", "selection_name", StringValueConverter())
+      self.property(w, "IamRoleArn", "iam_role_arn", StringValueConverter())
+      self.property(w, "Resources", "resources", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "ListOfTags": (BlockValueConverter(AWS_Backup_BackupSelection_ConditionResourceType), None),
-    "SelectionName": (StringValueConverter(), "selection_name"),
-    "IamRoleArn": (StringValueConverter(), "iam_role_arn"),
-    "Resources": (ListValueConverter(StringValueConverter()), "resources"),
-  }
 
 class AWS_Backup_BackupPlan_BackupRuleResourceType(CloudFormationProperty):
-  entity = "AWS::Backup::BackupPlan"
-  tf_block_type = "backup_rule_resource_type"
+  def write(self, w):
+    with w.block("backup_rule_resource_type"):
+      self.property(w, "CompletionWindowMinutes", "completion_window_minutes", BasicValueConverter())
+      self.property(w, "ScheduleExpression", "schedule_expression", StringValueConverter())
+      self.property(w, "RecoveryPointTags", "recovery_point_tags", StringValueConverter())
+      self.repeated_block(w, "CopyActions", AWS_Backup_BackupPlan_CopyActionResourceType)
+      self.block(w, "Lifecycle", AWS_Backup_BackupPlan_LifecycleResourceType)
+      self.property(w, "TargetBackupVault", "target_backup_vault", StringValueConverter())
+      self.property(w, "StartWindowMinutes", "start_window_minutes", BasicValueConverter())
+      self.property(w, "RuleName", "rule_name", StringValueConverter())
 
-  props = {
-    "CompletionWindowMinutes": (BasicValueConverter(), "completion_window_minutes"),
-    "ScheduleExpression": (StringValueConverter(), "schedule_expression"),
-    "RecoveryPointTags": (StringValueConverter(), "recovery_point_tags"),
-    "CopyActions": (BlockValueConverter(AWS_Backup_BackupPlan_CopyActionResourceType), None),
-    "Lifecycle": (AWS_Backup_BackupPlan_LifecycleResourceType, "lifecycle"),
-    "TargetBackupVault": (StringValueConverter(), "target_backup_vault"),
-    "StartWindowMinutes": (BasicValueConverter(), "start_window_minutes"),
-    "RuleName": (StringValueConverter(), "rule_name"),
-  }
 
 class AWS_Backup_BackupPlan_BackupPlanResourceType(CloudFormationProperty):
-  entity = "AWS::Backup::BackupPlan"
-  tf_block_type = "backup_plan_resource_type"
+  def write(self, w):
+    with w.block("backup_plan_resource_type"):
+      self.property(w, "BackupPlanName", "backup_plan_name", StringValueConverter())
+      self.repeated_block(w, "BackupPlanRule", AWS_Backup_BackupPlan_BackupRuleResourceType)
 
-  props = {
-    "BackupPlanName": (StringValueConverter(), "backup_plan_name"),
-    "BackupPlanRule": (BlockValueConverter(AWS_Backup_BackupPlan_BackupRuleResourceType), None),
-  }
 
 class AWS_Backup_BackupPlan(CloudFormationResource):
-  terraform_resource = "aws_backup_backup_plan"
+  cfn_type = "AWS::Backup::BackupPlan"
+  tf_type = "aws_backup_backup_plan"
+  ref = "arn"
 
-  resource_type = "AWS::Backup::BackupPlan"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "BackupPlan", AWS_Backup_BackupPlan_BackupPlanResourceType)
+      self.property(w, "BackupPlanTags", "backup_plan_tags", StringValueConverter())
 
-  props = {
-    "BackupPlan": (AWS_Backup_BackupPlan_BackupPlanResourceType, "backup_plan"),
-    "BackupPlanTags": (StringValueConverter(), "backup_plan_tags"),
-  }
 
 class AWS_Backup_BackupSelection(CloudFormationResource):
-  terraform_resource = "aws_backup_backup_selection"
+  cfn_type = "AWS::Backup::BackupSelection"
+  tf_type = "aws_backup_backup_selection"
+  ref = "arn"
 
-  resource_type = "AWS::Backup::BackupSelection"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "BackupSelection", AWS_Backup_BackupSelection_BackupSelectionResourceType)
+      self.property(w, "BackupPlanId", "backup_plan_id", StringValueConverter())
 
-  props = {
-    "BackupSelection": (AWS_Backup_BackupSelection_BackupSelectionResourceType, "backup_selection"),
-    "BackupPlanId": (StringValueConverter(), "backup_plan_id"),
-  }
 

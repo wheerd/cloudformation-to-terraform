@@ -1,11 +1,12 @@
 from . import *
 
 class AWS_SecurityHub_Hub(CloudFormationResource):
-  terraform_resource = "aws_security_hub_hub"
+  cfn_type = "AWS::SecurityHub::Hub"
+  tf_type = "aws_security_hub_hub"
+  ref = "arn"
 
-  resource_type = "AWS::SecurityHub::Hub"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Tags", "tags", StringValueConverter())
 
-  props = {
-    "Tags": (StringValueConverter(), "tags"),
-  }
 

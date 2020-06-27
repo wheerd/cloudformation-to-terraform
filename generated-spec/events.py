@@ -1,180 +1,155 @@
 from . import *
 
 class AWS_Events_Rule_RunCommandTarget(CloudFormationProperty):
-  entity = "AWS::Events::Rule"
-  tf_block_type = "run_command_target"
+  def write(self, w):
+    with w.block("run_command_target"):
+      self.property(w, "Key", "key", StringValueConverter())
+      self.property(w, "Values", "values", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "Key": (StringValueConverter(), "key"),
-    "Values": (ListValueConverter(StringValueConverter()), "values"),
-  }
 
 class AWS_Events_Rule_InputTransformer(CloudFormationProperty):
-  entity = "AWS::Events::Rule"
-  tf_block_type = "input_transformer"
+  def write(self, w):
+    with w.block("input_transformer"):
+      self.property(w, "InputPathsMap", "input_paths_map", MapValueConverter(StringValueConverter()))
+      self.property(w, "InputTemplate", "input_template", StringValueConverter())
 
-  props = {
-    "InputPathsMap": (MapValueConverter(StringValueConverter()), "input_paths_map"),
-    "InputTemplate": (StringValueConverter(), "input_template"),
-  }
 
 class AWS_Events_Rule_BatchRetryStrategy(CloudFormationProperty):
-  entity = "AWS::Events::Rule"
-  tf_block_type = "batch_retry_strategy"
+  def write(self, w):
+    with w.block("batch_retry_strategy"):
+      self.property(w, "Attempts", "attempts", BasicValueConverter())
 
-  props = {
-    "Attempts": (BasicValueConverter(), "attempts"),
-  }
 
 class AWS_Events_Rule_SqsParameters(CloudFormationProperty):
-  entity = "AWS::Events::Rule"
-  tf_block_type = "sqs_parameters"
+  def write(self, w):
+    with w.block("sqs_parameters"):
+      self.property(w, "MessageGroupId", "message_group_id", StringValueConverter())
 
-  props = {
-    "MessageGroupId": (StringValueConverter(), "message_group_id"),
-  }
 
 class AWS_Events_Rule_HttpParameters(CloudFormationProperty):
-  entity = "AWS::Events::Rule"
-  tf_block_type = "http_parameters"
+  def write(self, w):
+    with w.block("http_parameters"):
+      self.property(w, "HeaderParameters", "header_parameters", MapValueConverter(StringValueConverter()))
+      self.property(w, "PathParameterValues", "path_parameter_values", ListValueConverter(StringValueConverter()))
+      self.property(w, "QueryStringParameters", "query_string_parameters", MapValueConverter(StringValueConverter()))
 
-  props = {
-    "HeaderParameters": (MapValueConverter(StringValueConverter()), "header_parameters"),
-    "PathParameterValues": (ListValueConverter(StringValueConverter()), "path_parameter_values"),
-    "QueryStringParameters": (MapValueConverter(StringValueConverter()), "query_string_parameters"),
-  }
 
 class AWS_Events_EventBusPolicy_Condition(CloudFormationProperty):
-  entity = "AWS::Events::EventBusPolicy"
-  tf_block_type = "condition"
+  def write(self, w):
+    with w.block("condition"):
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "Value", "value", StringValueConverter())
+      self.property(w, "Key", "key", StringValueConverter())
 
-  props = {
-    "Type": (StringValueConverter(), "type"),
-    "Value": (StringValueConverter(), "value"),
-    "Key": (StringValueConverter(), "key"),
-  }
 
 class AWS_Events_Rule_KinesisParameters(CloudFormationProperty):
-  entity = "AWS::Events::Rule"
-  tf_block_type = "kinesis_parameters"
+  def write(self, w):
+    with w.block("kinesis_parameters"):
+      self.property(w, "PartitionKeyPath", "partition_key_path", StringValueConverter())
 
-  props = {
-    "PartitionKeyPath": (StringValueConverter(), "partition_key_path"),
-  }
 
 class AWS_Events_Rule_BatchArrayProperties(CloudFormationProperty):
-  entity = "AWS::Events::Rule"
-  tf_block_type = "batch_array_properties"
+  def write(self, w):
+    with w.block("batch_array_properties"):
+      self.property(w, "Size", "size", BasicValueConverter())
 
-  props = {
-    "Size": (BasicValueConverter(), "size"),
-  }
 
 class AWS_Events_Rule_AwsVpcConfiguration(CloudFormationProperty):
-  entity = "AWS::Events::Rule"
-  tf_block_type = "aws_vpc_configuration"
+  def write(self, w):
+    with w.block("aws_vpc_configuration"):
+      self.property(w, "AssignPublicIp", "assign_public_ip", StringValueConverter())
+      self.property(w, "SecurityGroups", "security_groups", ListValueConverter(StringValueConverter()))
+      self.property(w, "Subnets", "subnets", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "AssignPublicIp": (StringValueConverter(), "assign_public_ip"),
-    "SecurityGroups": (ListValueConverter(StringValueConverter()), "security_groups"),
-    "Subnets": (ListValueConverter(StringValueConverter()), "subnets"),
-  }
 
 class AWS_Events_Rule_BatchParameters(CloudFormationProperty):
-  entity = "AWS::Events::Rule"
-  tf_block_type = "batch_parameters"
+  def write(self, w):
+    with w.block("batch_parameters"):
+      self.block(w, "ArrayProperties", AWS_Events_Rule_BatchArrayProperties)
+      self.property(w, "JobDefinition", "job_definition", StringValueConverter())
+      self.property(w, "JobName", "job_name", StringValueConverter())
+      self.block(w, "RetryStrategy", AWS_Events_Rule_BatchRetryStrategy)
 
-  props = {
-    "ArrayProperties": (AWS_Events_Rule_BatchArrayProperties, "array_properties"),
-    "JobDefinition": (StringValueConverter(), "job_definition"),
-    "JobName": (StringValueConverter(), "job_name"),
-    "RetryStrategy": (AWS_Events_Rule_BatchRetryStrategy, "retry_strategy"),
-  }
 
 class AWS_Events_EventBusPolicy(CloudFormationResource):
-  terraform_resource = "aws_events_event_bus_policy"
+  cfn_type = "AWS::Events::EventBusPolicy"
+  tf_type = "aws_events_event_bus_policy"
+  ref = "arn"
 
-  resource_type = "AWS::Events::EventBusPolicy"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "EventBusName", "event_bus_name", StringValueConverter())
+      self.block(w, "Condition", AWS_Events_EventBusPolicy_Condition)
+      self.property(w, "Action", "action", StringValueConverter())
+      self.property(w, "StatementId", "statement_id", StringValueConverter())
+      self.property(w, "Principal", "principal", StringValueConverter())
 
-  props = {
-    "EventBusName": (StringValueConverter(), "event_bus_name"),
-    "Condition": (AWS_Events_EventBusPolicy_Condition, "condition"),
-    "Action": (StringValueConverter(), "action"),
-    "StatementId": (StringValueConverter(), "statement_id"),
-    "Principal": (StringValueConverter(), "principal"),
-  }
 
 class AWS_Events_EventBus(CloudFormationResource):
-  terraform_resource = "aws_events_event_bus"
+  cfn_type = "AWS::Events::EventBus"
+  tf_type = "aws_events_event_bus"
+  ref = "arn"
 
-  resource_type = "AWS::Events::EventBus"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "EventSourceName", "event_source_name", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "EventSourceName": (StringValueConverter(), "event_source_name"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_Events_Rule_RunCommandParameters(CloudFormationProperty):
-  entity = "AWS::Events::Rule"
-  tf_block_type = "run_command_parameters"
+  def write(self, w):
+    with w.block("run_command_parameters"):
+      self.repeated_block(w, "RunCommandTargets", AWS_Events_Rule_RunCommandTarget)
 
-  props = {
-    "RunCommandTargets": (BlockValueConverter(AWS_Events_Rule_RunCommandTarget), None),
-  }
 
 class AWS_Events_Rule_NetworkConfiguration(CloudFormationProperty):
-  entity = "AWS::Events::Rule"
-  tf_block_type = "network_configuration"
+  def write(self, w):
+    with w.block("network_configuration"):
+      self.block(w, "AwsVpcConfiguration", AWS_Events_Rule_AwsVpcConfiguration)
 
-  props = {
-    "AwsVpcConfiguration": (AWS_Events_Rule_AwsVpcConfiguration, "aws_vpc_configuration"),
-  }
 
 class AWS_Events_Rule_EcsParameters(CloudFormationProperty):
-  entity = "AWS::Events::Rule"
-  tf_block_type = "ecs_parameters"
+  def write(self, w):
+    with w.block("ecs_parameters"):
+      self.property(w, "Group", "group", StringValueConverter())
+      self.property(w, "LaunchType", "launch_type", StringValueConverter())
+      self.block(w, "NetworkConfiguration", AWS_Events_Rule_NetworkConfiguration)
+      self.property(w, "PlatformVersion", "platform_version", StringValueConverter())
+      self.property(w, "TaskCount", "task_count", BasicValueConverter())
+      self.property(w, "TaskDefinitionArn", "task_definition_arn", StringValueConverter())
 
-  props = {
-    "Group": (StringValueConverter(), "group"),
-    "LaunchType": (StringValueConverter(), "launch_type"),
-    "NetworkConfiguration": (AWS_Events_Rule_NetworkConfiguration, "network_configuration"),
-    "PlatformVersion": (StringValueConverter(), "platform_version"),
-    "TaskCount": (BasicValueConverter(), "task_count"),
-    "TaskDefinitionArn": (StringValueConverter(), "task_definition_arn"),
-  }
 
 class AWS_Events_Rule_Target(CloudFormationProperty):
-  entity = "AWS::Events::Rule"
-  tf_block_type = "target"
+  def write(self, w):
+    with w.block("target"):
+      self.property(w, "Arn", "arn", StringValueConverter())
+      self.block(w, "BatchParameters", AWS_Events_Rule_BatchParameters)
+      self.block(w, "EcsParameters", AWS_Events_Rule_EcsParameters)
+      self.block(w, "HttpParameters", AWS_Events_Rule_HttpParameters)
+      self.property(w, "Id", "id", StringValueConverter())
+      self.property(w, "Input", "input", StringValueConverter())
+      self.property(w, "InputPath", "input_path", StringValueConverter())
+      self.block(w, "InputTransformer", AWS_Events_Rule_InputTransformer)
+      self.block(w, "KinesisParameters", AWS_Events_Rule_KinesisParameters)
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
+      self.block(w, "RunCommandParameters", AWS_Events_Rule_RunCommandParameters)
+      self.block(w, "SqsParameters", AWS_Events_Rule_SqsParameters)
 
-  props = {
-    "Arn": (StringValueConverter(), "arn"),
-    "BatchParameters": (AWS_Events_Rule_BatchParameters, "batch_parameters"),
-    "EcsParameters": (AWS_Events_Rule_EcsParameters, "ecs_parameters"),
-    "HttpParameters": (AWS_Events_Rule_HttpParameters, "http_parameters"),
-    "Id": (StringValueConverter(), "id"),
-    "Input": (StringValueConverter(), "input"),
-    "InputPath": (StringValueConverter(), "input_path"),
-    "InputTransformer": (AWS_Events_Rule_InputTransformer, "input_transformer"),
-    "KinesisParameters": (AWS_Events_Rule_KinesisParameters, "kinesis_parameters"),
-    "RoleArn": (StringValueConverter(), "role_arn"),
-    "RunCommandParameters": (AWS_Events_Rule_RunCommandParameters, "run_command_parameters"),
-    "SqsParameters": (AWS_Events_Rule_SqsParameters, "sqs_parameters"),
-  }
 
 class AWS_Events_Rule(CloudFormationResource):
-  terraform_resource = "aws_events_rule"
+  cfn_type = "AWS::Events::Rule"
+  tf_type = "aws_events_rule"
+  ref = "arn"
 
-  resource_type = "AWS::Events::Rule"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "EventBusName", "event_bus_name", StringValueConverter())
+      self.property(w, "EventPattern", "event_pattern", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
+      self.property(w, "ScheduleExpression", "schedule_expression", StringValueConverter())
+      self.property(w, "State", "state", StringValueConverter())
+      self.repeated_block(w, "Targets", AWS_Events_Rule_Target)
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "EventBusName": (StringValueConverter(), "event_bus_name"),
-    "EventPattern": (StringValueConverter(), "event_pattern"),
-    "Name": (StringValueConverter(), "name"),
-    "RoleArn": (StringValueConverter(), "role_arn"),
-    "ScheduleExpression": (StringValueConverter(), "schedule_expression"),
-    "State": (StringValueConverter(), "state"),
-    "Targets": (BlockValueConverter(AWS_Events_Rule_Target), None),
-  }
 

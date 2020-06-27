@@ -1,53 +1,52 @@
 from . import *
 
 class AWS_IoT1Click_Project_DeviceTemplate(CloudFormationProperty):
-  entity = "AWS::IoT1Click::Project"
-  tf_block_type = "device_template"
+  def write(self, w):
+    with w.block("device_template"):
+      self.property(w, "DeviceType", "device_type", StringValueConverter())
+      self.property(w, "CallbackOverrides", "callback_overrides", StringValueConverter())
 
-  props = {
-    "DeviceType": (StringValueConverter(), "device_type"),
-    "CallbackOverrides": (StringValueConverter(), "callback_overrides"),
-  }
 
 class AWS_IoT1Click_Project_PlacementTemplate(CloudFormationProperty):
-  entity = "AWS::IoT1Click::Project"
-  tf_block_type = "placement_template"
+  def write(self, w):
+    with w.block("placement_template"):
+      self.property(w, "DeviceTemplates", "device_templates", StringValueConverter())
+      self.property(w, "DefaultAttributes", "default_attributes", StringValueConverter())
 
-  props = {
-    "DeviceTemplates": (StringValueConverter(), "device_templates"),
-    "DefaultAttributes": (StringValueConverter(), "default_attributes"),
-  }
 
 class AWS_IoT1Click_Project(CloudFormationResource):
-  terraform_resource = "aws_io_t1_click_project"
+  cfn_type = "AWS::IoT1Click::Project"
+  tf_type = "aws_io_t1_click_project"
+  ref = "arn"
 
-  resource_type = "AWS::IoT1Click::Project"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.block(w, "PlacementTemplate", AWS_IoT1Click_Project_PlacementTemplate)
+      self.property(w, "ProjectName", "project_name", StringValueConverter())
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "PlacementTemplate": (AWS_IoT1Click_Project_PlacementTemplate, "placement_template"),
-    "ProjectName": (StringValueConverter(), "project_name"),
-  }
 
 class AWS_IoT1Click_Placement(CloudFormationResource):
-  terraform_resource = "aws_io_t1_click_placement"
+  cfn_type = "AWS::IoT1Click::Placement"
+  tf_type = "aws_io_t1_click_placement"
+  ref = "arn"
 
-  resource_type = "AWS::IoT1Click::Placement"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "PlacementName", "placement_name", StringValueConverter())
+      self.property(w, "ProjectName", "project_name", StringValueConverter())
+      self.property(w, "AssociatedDevices", "associated_devices", StringValueConverter())
+      self.property(w, "Attributes", "attributes", StringValueConverter())
 
-  props = {
-    "PlacementName": (StringValueConverter(), "placement_name"),
-    "ProjectName": (StringValueConverter(), "project_name"),
-    "AssociatedDevices": (StringValueConverter(), "associated_devices"),
-    "Attributes": (StringValueConverter(), "attributes"),
-  }
 
 class AWS_IoT1Click_Device(CloudFormationResource):
-  terraform_resource = "aws_io_t1_click_device"
+  cfn_type = "AWS::IoT1Click::Device"
+  tf_type = "aws_io_t1_click_device"
+  ref = "arn"
 
-  resource_type = "AWS::IoT1Click::Device"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "DeviceId", "device_id", StringValueConverter())
+      self.property(w, "Enabled", "enabled", BasicValueConverter())
 
-  props = {
-    "DeviceId": (StringValueConverter(), "device_id"),
-    "Enabled": (BasicValueConverter(), "enabled"),
-  }
 

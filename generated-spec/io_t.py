@@ -1,386 +1,335 @@
 from . import *
 
 class AWS_IoT_TopicRule_AssetPropertyVariant(CloudFormationProperty):
-  entity = "AWS::IoT::TopicRule"
-  tf_block_type = "asset_property_variant"
+  def write(self, w):
+    with w.block("asset_property_variant"):
+      self.property(w, "BooleanValue", "boolean_value", StringValueConverter())
+      self.property(w, "DoubleValue", "double_value", StringValueConverter())
+      self.property(w, "IntegerValue", "integer_value", StringValueConverter())
+      self.property(w, "StringValue", "string_value", StringValueConverter())
 
-  props = {
-    "BooleanValue": (StringValueConverter(), "boolean_value"),
-    "DoubleValue": (StringValueConverter(), "double_value"),
-    "IntegerValue": (StringValueConverter(), "integer_value"),
-    "StringValue": (StringValueConverter(), "string_value"),
-  }
 
 class AWS_IoT_TopicRule_S3Action(CloudFormationProperty):
-  entity = "AWS::IoT::TopicRule"
-  tf_block_type = "s3_action"
+  def write(self, w):
+    with w.block("s3_action"):
+      self.property(w, "BucketName", "bucket_name", StringValueConverter())
+      self.property(w, "Key", "key", StringValueConverter())
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
 
-  props = {
-    "BucketName": (StringValueConverter(), "bucket_name"),
-    "Key": (StringValueConverter(), "key"),
-    "RoleArn": (StringValueConverter(), "role_arn"),
-  }
 
 class AWS_IoT_TopicRule_SigV4Authorization(CloudFormationProperty):
-  entity = "AWS::IoT::TopicRule"
-  tf_block_type = "sig_v4_authorization"
+  def write(self, w):
+    with w.block("sig_v4_authorization"):
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
+      self.property(w, "ServiceName", "service_name", StringValueConverter())
+      self.property(w, "SigningRegion", "signing_region", StringValueConverter())
 
-  props = {
-    "RoleArn": (StringValueConverter(), "role_arn"),
-    "ServiceName": (StringValueConverter(), "service_name"),
-    "SigningRegion": (StringValueConverter(), "signing_region"),
-  }
 
 class AWS_IoT_TopicRule_SqsAction(CloudFormationProperty):
-  entity = "AWS::IoT::TopicRule"
-  tf_block_type = "sqs_action"
+  def write(self, w):
+    with w.block("sqs_action"):
+      self.property(w, "QueueUrl", "queue_url", StringValueConverter())
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
+      self.property(w, "UseBase64", "use_base64", BasicValueConverter())
 
-  props = {
-    "QueueUrl": (StringValueConverter(), "queue_url"),
-    "RoleArn": (StringValueConverter(), "role_arn"),
-    "UseBase64": (BasicValueConverter(), "use_base64"),
-  }
 
 class AWS_IoT_TopicRule_PutItemInput(CloudFormationProperty):
-  entity = "AWS::IoT::TopicRule"
-  tf_block_type = "put_item_input"
+  def write(self, w):
+    with w.block("put_item_input"):
+      self.property(w, "TableName", "table_name", StringValueConverter())
 
-  props = {
-    "TableName": (StringValueConverter(), "table_name"),
-  }
 
 class AWS_IoT_TopicRule_SnsAction(CloudFormationProperty):
-  entity = "AWS::IoT::TopicRule"
-  tf_block_type = "sns_action"
+  def write(self, w):
+    with w.block("sns_action"):
+      self.property(w, "MessageFormat", "message_format", StringValueConverter())
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
+      self.property(w, "TargetArn", "target_arn", StringValueConverter())
 
-  props = {
-    "MessageFormat": (StringValueConverter(), "message_format"),
-    "RoleArn": (StringValueConverter(), "role_arn"),
-    "TargetArn": (StringValueConverter(), "target_arn"),
-  }
 
 class AWS_IoT_TopicRule_FirehoseAction(CloudFormationProperty):
-  entity = "AWS::IoT::TopicRule"
-  tf_block_type = "firehose_action"
+  def write(self, w):
+    with w.block("firehose_action"):
+      self.property(w, "DeliveryStreamName", "delivery_stream_name", StringValueConverter())
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
+      self.property(w, "Separator", "separator", StringValueConverter())
 
-  props = {
-    "DeliveryStreamName": (StringValueConverter(), "delivery_stream_name"),
-    "RoleArn": (StringValueConverter(), "role_arn"),
-    "Separator": (StringValueConverter(), "separator"),
-  }
 
 class AWS_IoT_TopicRule_LambdaAction(CloudFormationProperty):
-  entity = "AWS::IoT::TopicRule"
-  tf_block_type = "lambda_action"
+  def write(self, w):
+    with w.block("lambda_action"):
+      self.property(w, "FunctionArn", "function_arn", StringValueConverter())
 
-  props = {
-    "FunctionArn": (StringValueConverter(), "function_arn"),
-  }
 
 class AWS_IoT_TopicRule_AssetPropertyTimestamp(CloudFormationProperty):
-  entity = "AWS::IoT::TopicRule"
-  tf_block_type = "asset_property_timestamp"
+  def write(self, w):
+    with w.block("asset_property_timestamp"):
+      self.property(w, "OffsetInNanos", "offset_in_nanos", StringValueConverter())
+      self.property(w, "TimeInSeconds", "time_in_seconds", StringValueConverter())
 
-  props = {
-    "OffsetInNanos": (StringValueConverter(), "offset_in_nanos"),
-    "TimeInSeconds": (StringValueConverter(), "time_in_seconds"),
-  }
 
 class AWS_IoT_TopicRule_AssetPropertyValue(CloudFormationProperty):
-  entity = "AWS::IoT::TopicRule"
-  tf_block_type = "asset_property_value"
+  def write(self, w):
+    with w.block("asset_property_value"):
+      self.property(w, "Quality", "quality", StringValueConverter())
+      self.block(w, "Timestamp", AWS_IoT_TopicRule_AssetPropertyTimestamp)
+      self.block(w, "Value", AWS_IoT_TopicRule_AssetPropertyVariant)
 
-  props = {
-    "Quality": (StringValueConverter(), "quality"),
-    "Timestamp": (AWS_IoT_TopicRule_AssetPropertyTimestamp, "timestamp"),
-    "Value": (AWS_IoT_TopicRule_AssetPropertyVariant, "value"),
-  }
 
 class AWS_IoT_TopicRule_ElasticsearchAction(CloudFormationProperty):
-  entity = "AWS::IoT::TopicRule"
-  tf_block_type = "elasticsearch_action"
+  def write(self, w):
+    with w.block("elasticsearch_action"):
+      self.property(w, "Endpoint", "endpoint", StringValueConverter())
+      self.property(w, "Id", "id", StringValueConverter())
+      self.property(w, "Index", "index", StringValueConverter())
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
+      self.property(w, "Type", "type", StringValueConverter())
 
-  props = {
-    "Endpoint": (StringValueConverter(), "endpoint"),
-    "Id": (StringValueConverter(), "id"),
-    "Index": (StringValueConverter(), "index"),
-    "RoleArn": (StringValueConverter(), "role_arn"),
-    "Type": (StringValueConverter(), "type"),
-  }
 
 class AWS_IoT_TopicRule_DynamoDBAction(CloudFormationProperty):
-  entity = "AWS::IoT::TopicRule"
-  tf_block_type = "dynamo_db_action"
+  def write(self, w):
+    with w.block("dynamo_db_action"):
+      self.property(w, "HashKeyField", "hash_key_field", StringValueConverter())
+      self.property(w, "HashKeyType", "hash_key_type", StringValueConverter())
+      self.property(w, "HashKeyValue", "hash_key_value", StringValueConverter())
+      self.property(w, "PayloadField", "payload_field", StringValueConverter())
+      self.property(w, "RangeKeyField", "range_key_field", StringValueConverter())
+      self.property(w, "RangeKeyType", "range_key_type", StringValueConverter())
+      self.property(w, "RangeKeyValue", "range_key_value", StringValueConverter())
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
+      self.property(w, "TableName", "table_name", StringValueConverter())
 
-  props = {
-    "HashKeyField": (StringValueConverter(), "hash_key_field"),
-    "HashKeyType": (StringValueConverter(), "hash_key_type"),
-    "HashKeyValue": (StringValueConverter(), "hash_key_value"),
-    "PayloadField": (StringValueConverter(), "payload_field"),
-    "RangeKeyField": (StringValueConverter(), "range_key_field"),
-    "RangeKeyType": (StringValueConverter(), "range_key_type"),
-    "RangeKeyValue": (StringValueConverter(), "range_key_value"),
-    "RoleArn": (StringValueConverter(), "role_arn"),
-    "TableName": (StringValueConverter(), "table_name"),
-  }
 
 class AWS_IoT_TopicRule_KinesisAction(CloudFormationProperty):
-  entity = "AWS::IoT::TopicRule"
-  tf_block_type = "kinesis_action"
+  def write(self, w):
+    with w.block("kinesis_action"):
+      self.property(w, "PartitionKey", "partition_key", StringValueConverter())
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
+      self.property(w, "StreamName", "stream_name", StringValueConverter())
 
-  props = {
-    "PartitionKey": (StringValueConverter(), "partition_key"),
-    "RoleArn": (StringValueConverter(), "role_arn"),
-    "StreamName": (StringValueConverter(), "stream_name"),
-  }
 
 class AWS_IoT_TopicRule_HttpAuthorization(CloudFormationProperty):
-  entity = "AWS::IoT::TopicRule"
-  tf_block_type = "http_authorization"
+  def write(self, w):
+    with w.block("http_authorization"):
+      self.block(w, "Sigv4", AWS_IoT_TopicRule_SigV4Authorization)
 
-  props = {
-    "Sigv4": (AWS_IoT_TopicRule_SigV4Authorization, "sigv4"),
-  }
 
 class AWS_IoT_TopicRule_IotAnalyticsAction(CloudFormationProperty):
-  entity = "AWS::IoT::TopicRule"
-  tf_block_type = "iot_analytics_action"
+  def write(self, w):
+    with w.block("iot_analytics_action"):
+      self.property(w, "ChannelName", "channel_name", StringValueConverter())
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
 
-  props = {
-    "ChannelName": (StringValueConverter(), "channel_name"),
-    "RoleArn": (StringValueConverter(), "role_arn"),
-  }
 
 class AWS_IoT_TopicRule_IotEventsAction(CloudFormationProperty):
-  entity = "AWS::IoT::TopicRule"
-  tf_block_type = "iot_events_action"
+  def write(self, w):
+    with w.block("iot_events_action"):
+      self.property(w, "InputName", "input_name", StringValueConverter())
+      self.property(w, "MessageId", "message_id", StringValueConverter())
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
 
-  props = {
-    "InputName": (StringValueConverter(), "input_name"),
-    "MessageId": (StringValueConverter(), "message_id"),
-    "RoleArn": (StringValueConverter(), "role_arn"),
-  }
 
 class AWS_IoT_TopicRule_HttpActionHeader(CloudFormationProperty):
-  entity = "AWS::IoT::TopicRule"
-  tf_block_type = "http_action_header"
+  def write(self, w):
+    with w.block("http_action_header"):
+      self.property(w, "Key", "key", StringValueConverter())
+      self.property(w, "Value", "value", StringValueConverter())
 
-  props = {
-    "Key": (StringValueConverter(), "key"),
-    "Value": (StringValueConverter(), "value"),
-  }
 
 class AWS_IoT_TopicRule_RepublishAction(CloudFormationProperty):
-  entity = "AWS::IoT::TopicRule"
-  tf_block_type = "republish_action"
+  def write(self, w):
+    with w.block("republish_action"):
+      self.property(w, "Qos", "qos", BasicValueConverter())
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
+      self.property(w, "Topic", "topic", StringValueConverter())
 
-  props = {
-    "Qos": (BasicValueConverter(), "qos"),
-    "RoleArn": (StringValueConverter(), "role_arn"),
-    "Topic": (StringValueConverter(), "topic"),
-  }
 
 class AWS_IoT_TopicRule_StepFunctionsAction(CloudFormationProperty):
-  entity = "AWS::IoT::TopicRule"
-  tf_block_type = "step_functions_action"
+  def write(self, w):
+    with w.block("step_functions_action"):
+      self.property(w, "ExecutionNamePrefix", "execution_name_prefix", StringValueConverter())
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
+      self.property(w, "StateMachineName", "state_machine_name", StringValueConverter())
 
-  props = {
-    "ExecutionNamePrefix": (StringValueConverter(), "execution_name_prefix"),
-    "RoleArn": (StringValueConverter(), "role_arn"),
-    "StateMachineName": (StringValueConverter(), "state_machine_name"),
-  }
 
 class AWS_IoT_ProvisioningTemplate_ProvisioningHook(CloudFormationProperty):
-  entity = "AWS::IoT::ProvisioningTemplate"
-  tf_block_type = "provisioning_hook"
+  def write(self, w):
+    with w.block("provisioning_hook"):
+      self.property(w, "TargetArn", "target_arn", StringValueConverter())
+      self.property(w, "PayloadVersion", "payload_version", StringValueConverter())
 
-  props = {
-    "TargetArn": (StringValueConverter(), "target_arn"),
-    "PayloadVersion": (StringValueConverter(), "payload_version"),
-  }
 
 class AWS_IoT_TopicRule_DynamoDBv2Action(CloudFormationProperty):
-  entity = "AWS::IoT::TopicRule"
-  tf_block_type = "dynamo_d_bv2_action"
+  def write(self, w):
+    with w.block("dynamo_d_bv2_action"):
+      self.block(w, "PutItem", AWS_IoT_TopicRule_PutItemInput)
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
 
-  props = {
-    "PutItem": (AWS_IoT_TopicRule_PutItemInput, "put_item"),
-    "RoleArn": (StringValueConverter(), "role_arn"),
-  }
 
 class AWS_IoT_TopicRule_CloudwatchAlarmAction(CloudFormationProperty):
-  entity = "AWS::IoT::TopicRule"
-  tf_block_type = "cloudwatch_alarm_action"
+  def write(self, w):
+    with w.block("cloudwatch_alarm_action"):
+      self.property(w, "AlarmName", "alarm_name", StringValueConverter())
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
+      self.property(w, "StateReason", "state_reason", StringValueConverter())
+      self.property(w, "StateValue", "state_value", StringValueConverter())
 
-  props = {
-    "AlarmName": (StringValueConverter(), "alarm_name"),
-    "RoleArn": (StringValueConverter(), "role_arn"),
-    "StateReason": (StringValueConverter(), "state_reason"),
-    "StateValue": (StringValueConverter(), "state_value"),
-  }
 
 class AWS_IoT_Thing_AttributePayload(CloudFormationProperty):
-  entity = "AWS::IoT::Thing"
-  tf_block_type = "attribute_payload"
+  def write(self, w):
+    with w.block("attribute_payload"):
+      self.property(w, "Attributes", "attributes", MapValueConverter(StringValueConverter()))
 
-  props = {
-    "Attributes": (MapValueConverter(StringValueConverter()), "attributes"),
-  }
 
 class AWS_IoT_TopicRule_CloudwatchMetricAction(CloudFormationProperty):
-  entity = "AWS::IoT::TopicRule"
-  tf_block_type = "cloudwatch_metric_action"
+  def write(self, w):
+    with w.block("cloudwatch_metric_action"):
+      self.property(w, "MetricName", "metric_name", StringValueConverter())
+      self.property(w, "MetricNamespace", "metric_namespace", StringValueConverter())
+      self.property(w, "MetricTimestamp", "metric_timestamp", StringValueConverter())
+      self.property(w, "MetricUnit", "metric_unit", StringValueConverter())
+      self.property(w, "MetricValue", "metric_value", StringValueConverter())
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
 
-  props = {
-    "MetricName": (StringValueConverter(), "metric_name"),
-    "MetricNamespace": (StringValueConverter(), "metric_namespace"),
-    "MetricTimestamp": (StringValueConverter(), "metric_timestamp"),
-    "MetricUnit": (StringValueConverter(), "metric_unit"),
-    "MetricValue": (StringValueConverter(), "metric_value"),
-    "RoleArn": (StringValueConverter(), "role_arn"),
-  }
 
 class AWS_IoT_ProvisioningTemplate(CloudFormationResource):
-  terraform_resource = "aws_io_t_provisioning_template"
+  cfn_type = "AWS::IoT::ProvisioningTemplate"
+  tf_type = "aws_io_t_provisioning_template"
+  ref = "arn"
 
-  resource_type = "AWS::IoT::ProvisioningTemplate"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "TemplateName", "template_name", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "Enabled", "enabled", BasicValueConverter())
+      self.property(w, "ProvisioningRoleArn", "provisioning_role_arn", StringValueConverter())
+      self.property(w, "TemplateBody", "template_body", StringValueConverter())
+      self.block(w, "PreProvisioningHook", AWS_IoT_ProvisioningTemplate_ProvisioningHook)
+      self.property(w, "Tags", "tags", ListValueConverter("json"))
 
-  props = {
-    "TemplateName": (StringValueConverter(), "template_name"),
-    "Description": (StringValueConverter(), "description"),
-    "Enabled": (BasicValueConverter(), "enabled"),
-    "ProvisioningRoleArn": (StringValueConverter(), "provisioning_role_arn"),
-    "TemplateBody": (StringValueConverter(), "template_body"),
-    "PreProvisioningHook": (AWS_IoT_ProvisioningTemplate_ProvisioningHook, "pre_provisioning_hook"),
-    "Tags": (ListValueConverter("json"), "tags"),
-  }
 
 class AWS_IoT_Thing(CloudFormationResource):
-  terraform_resource = "aws_io_t_thing"
+  cfn_type = "AWS::IoT::Thing"
+  tf_type = "aws_io_t_thing"
+  ref = "arn"
 
-  resource_type = "AWS::IoT::Thing"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "AttributePayload", AWS_IoT_Thing_AttributePayload)
+      self.property(w, "ThingName", "thing_name", StringValueConverter())
 
-  props = {
-    "AttributePayload": (AWS_IoT_Thing_AttributePayload, "attribute_payload"),
-    "ThingName": (StringValueConverter(), "thing_name"),
-  }
 
 class AWS_IoT_Policy(CloudFormationResource):
-  terraform_resource = "aws_io_t_policy"
+  cfn_type = "AWS::IoT::Policy"
+  tf_type = "aws_io_t_policy"
+  ref = "arn"
 
-  resource_type = "AWS::IoT::Policy"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "PolicyDocument", "policy_document", StringValueConverter())
+      self.property(w, "PolicyName", "policy_name", StringValueConverter())
 
-  props = {
-    "PolicyDocument": (StringValueConverter(), "policy_document"),
-    "PolicyName": (StringValueConverter(), "policy_name"),
-  }
 
 class AWS_IoT_PolicyPrincipalAttachment(CloudFormationResource):
-  terraform_resource = "aws_io_t_policy_principal_attachment"
+  cfn_type = "AWS::IoT::PolicyPrincipalAttachment"
+  tf_type = "aws_io_t_policy_principal_attachment"
+  ref = "arn"
 
-  resource_type = "AWS::IoT::PolicyPrincipalAttachment"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "PolicyName", "policy_name", StringValueConverter())
+      self.property(w, "Principal", "principal", StringValueConverter())
 
-  props = {
-    "PolicyName": (StringValueConverter(), "policy_name"),
-    "Principal": (StringValueConverter(), "principal"),
-  }
 
 class AWS_IoT_ThingPrincipalAttachment(CloudFormationResource):
-  terraform_resource = "aws_io_t_thing_principal_attachment"
+  cfn_type = "AWS::IoT::ThingPrincipalAttachment"
+  tf_type = "aws_io_t_thing_principal_attachment"
+  ref = "arn"
 
-  resource_type = "AWS::IoT::ThingPrincipalAttachment"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Principal", "principal", StringValueConverter())
+      self.property(w, "ThingName", "thing_name", StringValueConverter())
 
-  props = {
-    "Principal": (StringValueConverter(), "principal"),
-    "ThingName": (StringValueConverter(), "thing_name"),
-  }
 
 class AWS_IoT_Certificate(CloudFormationResource):
-  terraform_resource = "aws_io_t_certificate"
+  cfn_type = "AWS::IoT::Certificate"
+  tf_type = "aws_io_t_certificate"
+  ref = "arn"
 
-  resource_type = "AWS::IoT::Certificate"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "CertificateSigningRequest", "certificate_signing_request", StringValueConverter())
+      self.property(w, "Status", "status", StringValueConverter())
 
-  props = {
-    "CertificateSigningRequest": (StringValueConverter(), "certificate_signing_request"),
-    "Status": (StringValueConverter(), "status"),
-  }
 
 class AWS_IoT_TopicRule_HttpAction(CloudFormationProperty):
-  entity = "AWS::IoT::TopicRule"
-  tf_block_type = "http_action"
+  def write(self, w):
+    with w.block("http_action"):
+      self.block(w, "Auth", AWS_IoT_TopicRule_HttpAuthorization)
+      self.property(w, "ConfirmationUrl", "confirmation_url", StringValueConverter())
+      self.repeated_block(w, "Headers", AWS_IoT_TopicRule_HttpActionHeader)
+      self.property(w, "Url", "url", StringValueConverter())
 
-  props = {
-    "Auth": (AWS_IoT_TopicRule_HttpAuthorization, "auth"),
-    "ConfirmationUrl": (StringValueConverter(), "confirmation_url"),
-    "Headers": (BlockValueConverter(AWS_IoT_TopicRule_HttpActionHeader), None),
-    "Url": (StringValueConverter(), "url"),
-  }
 
 class AWS_IoT_TopicRule_PutAssetPropertyValueEntry(CloudFormationProperty):
-  entity = "AWS::IoT::TopicRule"
-  tf_block_type = "put_asset_property_value_entry"
+  def write(self, w):
+    with w.block("put_asset_property_value_entry"):
+      self.property(w, "AssetId", "asset_id", StringValueConverter())
+      self.property(w, "EntryId", "entry_id", StringValueConverter())
+      self.property(w, "PropertyAlias", "property_alias", StringValueConverter())
+      self.property(w, "PropertyId", "property_id", StringValueConverter())
+      self.repeated_block(w, "PropertyValues", AWS_IoT_TopicRule_AssetPropertyValue)
 
-  props = {
-    "AssetId": (StringValueConverter(), "asset_id"),
-    "EntryId": (StringValueConverter(), "entry_id"),
-    "PropertyAlias": (StringValueConverter(), "property_alias"),
-    "PropertyId": (StringValueConverter(), "property_id"),
-    "PropertyValues": (BlockValueConverter(AWS_IoT_TopicRule_AssetPropertyValue), None),
-  }
 
 class AWS_IoT_TopicRule_IotSiteWiseAction(CloudFormationProperty):
-  entity = "AWS::IoT::TopicRule"
-  tf_block_type = "iot_site_wise_action"
+  def write(self, w):
+    with w.block("iot_site_wise_action"):
+      self.repeated_block(w, "PutAssetPropertyValueEntries", AWS_IoT_TopicRule_PutAssetPropertyValueEntry)
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
 
-  props = {
-    "PutAssetPropertyValueEntries": (BlockValueConverter(AWS_IoT_TopicRule_PutAssetPropertyValueEntry), None),
-    "RoleArn": (StringValueConverter(), "role_arn"),
-  }
 
 class AWS_IoT_TopicRule_Action(CloudFormationProperty):
-  entity = "AWS::IoT::TopicRule"
-  tf_block_type = "action"
+  def write(self, w):
+    with w.block("action"):
+      self.block(w, "CloudwatchAlarm", AWS_IoT_TopicRule_CloudwatchAlarmAction)
+      self.block(w, "CloudwatchMetric", AWS_IoT_TopicRule_CloudwatchMetricAction)
+      self.block(w, "DynamoDB", AWS_IoT_TopicRule_DynamoDBAction)
+      self.block(w, "DynamoDBv2", AWS_IoT_TopicRule_DynamoDBv2Action)
+      self.block(w, "Elasticsearch", AWS_IoT_TopicRule_ElasticsearchAction)
+      self.block(w, "Firehose", AWS_IoT_TopicRule_FirehoseAction)
+      self.block(w, "Http", AWS_IoT_TopicRule_HttpAction)
+      self.block(w, "IotAnalytics", AWS_IoT_TopicRule_IotAnalyticsAction)
+      self.block(w, "IotEvents", AWS_IoT_TopicRule_IotEventsAction)
+      self.block(w, "IotSiteWise", AWS_IoT_TopicRule_IotSiteWiseAction)
+      self.block(w, "Kinesis", AWS_IoT_TopicRule_KinesisAction)
+      self.block(w, "Lambda", AWS_IoT_TopicRule_LambdaAction)
+      self.block(w, "Republish", AWS_IoT_TopicRule_RepublishAction)
+      self.block(w, "S3", AWS_IoT_TopicRule_S3Action)
+      self.block(w, "Sns", AWS_IoT_TopicRule_SnsAction)
+      self.block(w, "Sqs", AWS_IoT_TopicRule_SqsAction)
+      self.block(w, "StepFunctions", AWS_IoT_TopicRule_StepFunctionsAction)
 
-  props = {
-    "CloudwatchAlarm": (AWS_IoT_TopicRule_CloudwatchAlarmAction, "cloudwatch_alarm"),
-    "CloudwatchMetric": (AWS_IoT_TopicRule_CloudwatchMetricAction, "cloudwatch_metric"),
-    "DynamoDB": (AWS_IoT_TopicRule_DynamoDBAction, "dynamo_db"),
-    "DynamoDBv2": (AWS_IoT_TopicRule_DynamoDBv2Action, "dynamo_d_bv2"),
-    "Elasticsearch": (AWS_IoT_TopicRule_ElasticsearchAction, "elasticsearch"),
-    "Firehose": (AWS_IoT_TopicRule_FirehoseAction, "firehose"),
-    "Http": (AWS_IoT_TopicRule_HttpAction, "http"),
-    "IotAnalytics": (AWS_IoT_TopicRule_IotAnalyticsAction, "iot_analytics"),
-    "IotEvents": (AWS_IoT_TopicRule_IotEventsAction, "iot_events"),
-    "IotSiteWise": (AWS_IoT_TopicRule_IotSiteWiseAction, "iot_site_wise"),
-    "Kinesis": (AWS_IoT_TopicRule_KinesisAction, "kinesis"),
-    "Lambda": (AWS_IoT_TopicRule_LambdaAction, "lambda"),
-    "Republish": (AWS_IoT_TopicRule_RepublishAction, "republish"),
-    "S3": (AWS_IoT_TopicRule_S3Action, "s3"),
-    "Sns": (AWS_IoT_TopicRule_SnsAction, "sns"),
-    "Sqs": (AWS_IoT_TopicRule_SqsAction, "sqs"),
-    "StepFunctions": (AWS_IoT_TopicRule_StepFunctionsAction, "step_functions"),
-  }
 
 class AWS_IoT_TopicRule_TopicRulePayload(CloudFormationProperty):
-  entity = "AWS::IoT::TopicRule"
-  tf_block_type = "topic_rule_payload"
+  def write(self, w):
+    with w.block("topic_rule_payload"):
+      self.repeated_block(w, "Actions", AWS_IoT_TopicRule_Action)
+      self.property(w, "AwsIotSqlVersion", "aws_iot_sql_version", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.block(w, "ErrorAction", AWS_IoT_TopicRule_Action)
+      self.property(w, "RuleDisabled", "rule_disabled", BasicValueConverter())
+      self.property(w, "Sql", "sql", StringValueConverter())
 
-  props = {
-    "Actions": (BlockValueConverter(AWS_IoT_TopicRule_Action), None),
-    "AwsIotSqlVersion": (StringValueConverter(), "aws_iot_sql_version"),
-    "Description": (StringValueConverter(), "description"),
-    "ErrorAction": (AWS_IoT_TopicRule_Action, "error_action"),
-    "RuleDisabled": (BasicValueConverter(), "rule_disabled"),
-    "Sql": (StringValueConverter(), "sql"),
-  }
 
 class AWS_IoT_TopicRule(CloudFormationResource):
-  terraform_resource = "aws_io_t_topic_rule"
+  cfn_type = "AWS::IoT::TopicRule"
+  tf_type = "aws_io_t_topic_rule"
+  ref = "arn"
 
-  resource_type = "AWS::IoT::TopicRule"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "RuleName", "rule_name", StringValueConverter())
+      self.block(w, "TopicRulePayload", AWS_IoT_TopicRule_TopicRulePayload)
 
-  props = {
-    "RuleName": (StringValueConverter(), "rule_name"),
-    "TopicRulePayload": (AWS_IoT_TopicRule_TopicRulePayload, "topic_rule_payload"),
-  }
 

@@ -1,146 +1,132 @@
 from . import *
 
 class AWS_ElasticBeanstalk_Environment_OptionSetting(CloudFormationProperty):
-  entity = "AWS::ElasticBeanstalk::Environment"
-  tf_block_type = "option_setting"
+  def write(self, w):
+    with w.block("option_setting"):
+      self.property(w, "Namespace", "namespace", StringValueConverter())
+      self.property(w, "OptionName", "option_name", StringValueConverter())
+      self.property(w, "ResourceName", "resource_name", StringValueConverter())
+      self.property(w, "Value", "value", StringValueConverter())
 
-  props = {
-    "Namespace": (StringValueConverter(), "namespace"),
-    "OptionName": (StringValueConverter(), "option_name"),
-    "ResourceName": (StringValueConverter(), "resource_name"),
-    "Value": (StringValueConverter(), "value"),
-  }
 
 class AWS_ElasticBeanstalk_ApplicationVersion_SourceBundle(CloudFormationProperty):
-  entity = "AWS::ElasticBeanstalk::ApplicationVersion"
-  tf_block_type = "source_bundle"
+  def write(self, w):
+    with w.block("source_bundle"):
+      self.property(w, "S3Bucket", "s3_bucket", StringValueConverter())
+      self.property(w, "S3Key", "s3_key", StringValueConverter())
 
-  props = {
-    "S3Bucket": (StringValueConverter(), "s3_bucket"),
-    "S3Key": (StringValueConverter(), "s3_key"),
-  }
 
 class AWS_ElasticBeanstalk_Application_MaxAgeRule(CloudFormationProperty):
-  entity = "AWS::ElasticBeanstalk::Application"
-  tf_block_type = "max_age_rule"
+  def write(self, w):
+    with w.block("max_age_rule"):
+      self.property(w, "DeleteSourceFromS3", "delete_source_from_s3", BasicValueConverter())
+      self.property(w, "Enabled", "enabled", BasicValueConverter())
+      self.property(w, "MaxAgeInDays", "max_age_in_days", BasicValueConverter())
 
-  props = {
-    "DeleteSourceFromS3": (BasicValueConverter(), "delete_source_from_s3"),
-    "Enabled": (BasicValueConverter(), "enabled"),
-    "MaxAgeInDays": (BasicValueConverter(), "max_age_in_days"),
-  }
 
 class AWS_ElasticBeanstalk_ConfigurationTemplate_SourceConfiguration(CloudFormationProperty):
-  entity = "AWS::ElasticBeanstalk::ConfigurationTemplate"
-  tf_block_type = "source_configuration"
+  def write(self, w):
+    with w.block("source_configuration"):
+      self.property(w, "ApplicationName", "application_name", StringValueConverter())
+      self.property(w, "TemplateName", "template_name", StringValueConverter())
 
-  props = {
-    "ApplicationName": (StringValueConverter(), "application_name"),
-    "TemplateName": (StringValueConverter(), "template_name"),
-  }
 
 class AWS_ElasticBeanstalk_Environment_Tier(CloudFormationProperty):
-  entity = "AWS::ElasticBeanstalk::Environment"
-  tf_block_type = "tier"
+  def write(self, w):
+    with w.block("tier"):
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "Version", "version", StringValueConverter())
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-    "Type": (StringValueConverter(), "type"),
-    "Version": (StringValueConverter(), "version"),
-  }
 
 class AWS_ElasticBeanstalk_ConfigurationTemplate_ConfigurationOptionSetting(CloudFormationProperty):
-  entity = "AWS::ElasticBeanstalk::ConfigurationTemplate"
-  tf_block_type = "configuration_option_setting"
+  def write(self, w):
+    with w.block("configuration_option_setting"):
+      self.property(w, "Namespace", "namespace", StringValueConverter())
+      self.property(w, "OptionName", "option_name", StringValueConverter())
+      self.property(w, "ResourceName", "resource_name", StringValueConverter())
+      self.property(w, "Value", "value", StringValueConverter())
 
-  props = {
-    "Namespace": (StringValueConverter(), "namespace"),
-    "OptionName": (StringValueConverter(), "option_name"),
-    "ResourceName": (StringValueConverter(), "resource_name"),
-    "Value": (StringValueConverter(), "value"),
-  }
 
 class AWS_ElasticBeanstalk_Application_MaxCountRule(CloudFormationProperty):
-  entity = "AWS::ElasticBeanstalk::Application"
-  tf_block_type = "max_count_rule"
+  def write(self, w):
+    with w.block("max_count_rule"):
+      self.property(w, "DeleteSourceFromS3", "delete_source_from_s3", BasicValueConverter())
+      self.property(w, "Enabled", "enabled", BasicValueConverter())
+      self.property(w, "MaxCount", "max_count", BasicValueConverter())
 
-  props = {
-    "DeleteSourceFromS3": (BasicValueConverter(), "delete_source_from_s3"),
-    "Enabled": (BasicValueConverter(), "enabled"),
-    "MaxCount": (BasicValueConverter(), "max_count"),
-  }
 
 class AWS_ElasticBeanstalk_ConfigurationTemplate(CloudFormationResource):
-  terraform_resource = "aws_elastic_beanstalk_configuration_template"
+  cfn_type = "AWS::ElasticBeanstalk::ConfigurationTemplate"
+  tf_type = "aws_elastic_beanstalk_configuration_template"
+  ref = "arn"
 
-  resource_type = "AWS::ElasticBeanstalk::ConfigurationTemplate"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ApplicationName", "application_name", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "EnvironmentId", "environment_id", StringValueConverter())
+      self.repeated_block(w, "OptionSettings", AWS_ElasticBeanstalk_ConfigurationTemplate_ConfigurationOptionSetting)
+      self.property(w, "PlatformArn", "platform_arn", StringValueConverter())
+      self.property(w, "SolutionStackName", "solution_stack_name", StringValueConverter())
+      self.block(w, "SourceConfiguration", AWS_ElasticBeanstalk_ConfigurationTemplate_SourceConfiguration)
 
-  props = {
-    "ApplicationName": (StringValueConverter(), "application_name"),
-    "Description": (StringValueConverter(), "description"),
-    "EnvironmentId": (StringValueConverter(), "environment_id"),
-    "OptionSettings": (BlockValueConverter(AWS_ElasticBeanstalk_ConfigurationTemplate_ConfigurationOptionSetting), None),
-    "PlatformArn": (StringValueConverter(), "platform_arn"),
-    "SolutionStackName": (StringValueConverter(), "solution_stack_name"),
-    "SourceConfiguration": (AWS_ElasticBeanstalk_ConfigurationTemplate_SourceConfiguration, "source_configuration"),
-  }
 
 class AWS_ElasticBeanstalk_Environment(CloudFormationResource):
-  terraform_resource = "aws_elastic_beanstalk_environment"
+  cfn_type = "AWS::ElasticBeanstalk::Environment"
+  tf_type = "aws_elastic_beanstalk_environment"
+  ref = "arn"
 
-  resource_type = "AWS::ElasticBeanstalk::Environment"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ApplicationName", "application_name", StringValueConverter())
+      self.property(w, "CNAMEPrefix", "cname_prefix", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "EnvironmentName", "environment_name", StringValueConverter())
+      self.repeated_block(w, "OptionSettings", AWS_ElasticBeanstalk_Environment_OptionSetting)
+      self.property(w, "PlatformArn", "platform_arn", StringValueConverter())
+      self.property(w, "SolutionStackName", "solution_stack_name", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "TemplateName", "template_name", StringValueConverter())
+      self.block(w, "Tier", AWS_ElasticBeanstalk_Environment_Tier)
+      self.property(w, "VersionLabel", "version_label", StringValueConverter())
 
-  props = {
-    "ApplicationName": (StringValueConverter(), "application_name"),
-    "CNAMEPrefix": (StringValueConverter(), "cname_prefix"),
-    "Description": (StringValueConverter(), "description"),
-    "EnvironmentName": (StringValueConverter(), "environment_name"),
-    "OptionSettings": (BlockValueConverter(AWS_ElasticBeanstalk_Environment_OptionSetting), None),
-    "PlatformArn": (StringValueConverter(), "platform_arn"),
-    "SolutionStackName": (StringValueConverter(), "solution_stack_name"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "TemplateName": (StringValueConverter(), "template_name"),
-    "Tier": (AWS_ElasticBeanstalk_Environment_Tier, "tier"),
-    "VersionLabel": (StringValueConverter(), "version_label"),
-  }
 
 class AWS_ElasticBeanstalk_ApplicationVersion(CloudFormationResource):
-  terraform_resource = "aws_elastic_beanstalk_application_version"
+  cfn_type = "AWS::ElasticBeanstalk::ApplicationVersion"
+  tf_type = "aws_elastic_beanstalk_application_version"
+  ref = "arn"
 
-  resource_type = "AWS::ElasticBeanstalk::ApplicationVersion"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ApplicationName", "application_name", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.block(w, "SourceBundle", AWS_ElasticBeanstalk_ApplicationVersion_SourceBundle)
 
-  props = {
-    "ApplicationName": (StringValueConverter(), "application_name"),
-    "Description": (StringValueConverter(), "description"),
-    "SourceBundle": (AWS_ElasticBeanstalk_ApplicationVersion_SourceBundle, "source_bundle"),
-  }
 
 class AWS_ElasticBeanstalk_Application_ApplicationVersionLifecycleConfig(CloudFormationProperty):
-  entity = "AWS::ElasticBeanstalk::Application"
-  tf_block_type = "application_version_lifecycle_config"
+  def write(self, w):
+    with w.block("application_version_lifecycle_config"):
+      self.block(w, "MaxAgeRule", AWS_ElasticBeanstalk_Application_MaxAgeRule)
+      self.block(w, "MaxCountRule", AWS_ElasticBeanstalk_Application_MaxCountRule)
 
-  props = {
-    "MaxAgeRule": (AWS_ElasticBeanstalk_Application_MaxAgeRule, "max_age_rule"),
-    "MaxCountRule": (AWS_ElasticBeanstalk_Application_MaxCountRule, "max_count_rule"),
-  }
 
 class AWS_ElasticBeanstalk_Application_ApplicationResourceLifecycleConfig(CloudFormationProperty):
-  entity = "AWS::ElasticBeanstalk::Application"
-  tf_block_type = "application_resource_lifecycle_config"
+  def write(self, w):
+    with w.block("application_resource_lifecycle_config"):
+      self.property(w, "ServiceRole", "service_role", StringValueConverter())
+      self.block(w, "VersionLifecycleConfig", AWS_ElasticBeanstalk_Application_ApplicationVersionLifecycleConfig)
 
-  props = {
-    "ServiceRole": (StringValueConverter(), "service_role"),
-    "VersionLifecycleConfig": (AWS_ElasticBeanstalk_Application_ApplicationVersionLifecycleConfig, "version_lifecycle_config"),
-  }
 
 class AWS_ElasticBeanstalk_Application(CloudFormationResource):
-  terraform_resource = "aws_elastic_beanstalk_application"
+  cfn_type = "AWS::ElasticBeanstalk::Application"
+  tf_type = "aws_elastic_beanstalk_application"
+  ref = "arn"
 
-  resource_type = "AWS::ElasticBeanstalk::Application"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ApplicationName", "application_name", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.block(w, "ResourceLifecycleConfig", AWS_ElasticBeanstalk_Application_ApplicationResourceLifecycleConfig)
 
-  props = {
-    "ApplicationName": (StringValueConverter(), "application_name"),
-    "Description": (StringValueConverter(), "description"),
-    "ResourceLifecycleConfig": (AWS_ElasticBeanstalk_Application_ApplicationResourceLifecycleConfig, "resource_lifecycle_config"),
-  }
 

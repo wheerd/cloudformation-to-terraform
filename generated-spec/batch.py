@@ -1,214 +1,185 @@
 from . import *
 
 class AWS_Batch_ComputeEnvironment_LaunchTemplateSpecification(CloudFormationProperty):
-  entity = "AWS::Batch::ComputeEnvironment"
-  tf_block_type = "launch_template_specification"
+  def write(self, w):
+    with w.block("launch_template_specification"):
+      self.property(w, "LaunchTemplateName", "launch_template_name", StringValueConverter())
+      self.property(w, "Version", "version", StringValueConverter())
+      self.property(w, "LaunchTemplateId", "launch_template_id", StringValueConverter())
 
-  props = {
-    "LaunchTemplateName": (StringValueConverter(), "launch_template_name"),
-    "Version": (StringValueConverter(), "version"),
-    "LaunchTemplateId": (StringValueConverter(), "launch_template_id"),
-  }
 
 class AWS_Batch_ComputeEnvironment_ComputeResources(CloudFormationProperty):
-  entity = "AWS::Batch::ComputeEnvironment"
-  tf_block_type = "compute_resources"
+  def write(self, w):
+    with w.block("compute_resources"):
+      self.property(w, "SpotIamFleetRole", "spot_iam_fleet_role", StringValueConverter())
+      self.property(w, "MaxvCpus", "maxv_cpus", BasicValueConverter())
+      self.property(w, "BidPercentage", "bid_percentage", BasicValueConverter())
+      self.property(w, "SecurityGroupIds", "security_group_ids", ListValueConverter(StringValueConverter()))
+      self.property(w, "Subnets", "subnets", ListValueConverter(StringValueConverter()))
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "AllocationStrategy", "allocation_strategy", StringValueConverter())
+      self.property(w, "MinvCpus", "minv_cpus", BasicValueConverter())
+      self.block(w, "LaunchTemplate", AWS_Batch_ComputeEnvironment_LaunchTemplateSpecification)
+      self.property(w, "ImageId", "image_id", StringValueConverter())
+      self.property(w, "InstanceRole", "instance_role", StringValueConverter())
+      self.property(w, "InstanceTypes", "instance_types", ListValueConverter(StringValueConverter()))
+      self.property(w, "Ec2KeyPair", "ec2_key_pair", StringValueConverter())
+      self.property(w, "PlacementGroup", "placement_group", StringValueConverter())
+      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "DesiredvCpus", "desiredv_cpus", BasicValueConverter())
 
-  props = {
-    "SpotIamFleetRole": (StringValueConverter(), "spot_iam_fleet_role"),
-    "MaxvCpus": (BasicValueConverter(), "maxv_cpus"),
-    "BidPercentage": (BasicValueConverter(), "bid_percentage"),
-    "SecurityGroupIds": (ListValueConverter(StringValueConverter()), "security_group_ids"),
-    "Subnets": (ListValueConverter(StringValueConverter()), "subnets"),
-    "Type": (StringValueConverter(), "type"),
-    "AllocationStrategy": (StringValueConverter(), "allocation_strategy"),
-    "MinvCpus": (BasicValueConverter(), "minv_cpus"),
-    "LaunchTemplate": (AWS_Batch_ComputeEnvironment_LaunchTemplateSpecification, "launch_template"),
-    "ImageId": (StringValueConverter(), "image_id"),
-    "InstanceRole": (StringValueConverter(), "instance_role"),
-    "InstanceTypes": (ListValueConverter(StringValueConverter()), "instance_types"),
-    "Ec2KeyPair": (StringValueConverter(), "ec2_key_pair"),
-    "PlacementGroup": (StringValueConverter(), "placement_group"),
-    "Tags": (StringValueConverter(), "tags"),
-    "DesiredvCpus": (BasicValueConverter(), "desiredv_cpus"),
-  }
 
 class AWS_Batch_JobDefinition_ResourceRequirement(CloudFormationProperty):
-  entity = "AWS::Batch::JobDefinition"
-  tf_block_type = "resource_requirement"
+  def write(self, w):
+    with w.block("resource_requirement"):
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "Value", "value", StringValueConverter())
 
-  props = {
-    "Type": (StringValueConverter(), "type"),
-    "Value": (StringValueConverter(), "value"),
-  }
 
 class AWS_Batch_JobDefinition_MountPoints(CloudFormationProperty):
-  entity = "AWS::Batch::JobDefinition"
-  tf_block_type = "mount_points"
+  def write(self, w):
+    with w.block("mount_points"):
+      self.property(w, "ReadOnly", "read_only", BasicValueConverter())
+      self.property(w, "SourceVolume", "source_volume", StringValueConverter())
+      self.property(w, "ContainerPath", "container_path", StringValueConverter())
 
-  props = {
-    "ReadOnly": (BasicValueConverter(), "read_only"),
-    "SourceVolume": (StringValueConverter(), "source_volume"),
-    "ContainerPath": (StringValueConverter(), "container_path"),
-  }
 
 class AWS_Batch_JobDefinition_Environment(CloudFormationProperty):
-  entity = "AWS::Batch::JobDefinition"
-  tf_block_type = "environment"
+  def write(self, w):
+    with w.block("environment"):
+      self.property(w, "Value", "value", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Value": (StringValueConverter(), "value"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_Batch_JobDefinition_Ulimit(CloudFormationProperty):
-  entity = "AWS::Batch::JobDefinition"
-  tf_block_type = "ulimit"
+  def write(self, w):
+    with w.block("ulimit"):
+      self.property(w, "SoftLimit", "soft_limit", BasicValueConverter())
+      self.property(w, "HardLimit", "hard_limit", BasicValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "SoftLimit": (BasicValueConverter(), "soft_limit"),
-    "HardLimit": (BasicValueConverter(), "hard_limit"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_Batch_JobDefinition_VolumesHost(CloudFormationProperty):
-  entity = "AWS::Batch::JobDefinition"
-  tf_block_type = "volumes_host"
+  def write(self, w):
+    with w.block("volumes_host"):
+      self.property(w, "SourcePath", "source_path", StringValueConverter())
 
-  props = {
-    "SourcePath": (StringValueConverter(), "source_path"),
-  }
 
 class AWS_Batch_JobQueue_ComputeEnvironmentOrder(CloudFormationProperty):
-  entity = "AWS::Batch::JobQueue"
-  tf_block_type = "compute_environment_order"
+  def write(self, w):
+    with w.block("compute_environment_order"):
+      self.property(w, "ComputeEnvironment", "compute_environment", StringValueConverter())
+      self.property(w, "Order", "order", BasicValueConverter())
 
-  props = {
-    "ComputeEnvironment": (StringValueConverter(), "compute_environment"),
-    "Order": (BasicValueConverter(), "order"),
-  }
 
 class AWS_Batch_JobDefinition_RetryStrategy(CloudFormationProperty):
-  entity = "AWS::Batch::JobDefinition"
-  tf_block_type = "retry_strategy"
+  def write(self, w):
+    with w.block("retry_strategy"):
+      self.property(w, "Attempts", "attempts", BasicValueConverter())
 
-  props = {
-    "Attempts": (BasicValueConverter(), "attempts"),
-  }
 
 class AWS_Batch_JobDefinition_Timeout(CloudFormationProperty):
-  entity = "AWS::Batch::JobDefinition"
-  tf_block_type = "timeout"
+  def write(self, w):
+    with w.block("timeout"):
+      self.property(w, "AttemptDurationSeconds", "attempt_duration_seconds", BasicValueConverter())
 
-  props = {
-    "AttemptDurationSeconds": (BasicValueConverter(), "attempt_duration_seconds"),
-  }
 
 class AWS_Batch_JobDefinition_Device(CloudFormationProperty):
-  entity = "AWS::Batch::JobDefinition"
-  tf_block_type = "device"
+  def write(self, w):
+    with w.block("device"):
+      self.property(w, "HostPath", "host_path", StringValueConverter())
+      self.property(w, "Permissions", "permissions", ListValueConverter(StringValueConverter()))
+      self.property(w, "ContainerPath", "container_path", StringValueConverter())
 
-  props = {
-    "HostPath": (StringValueConverter(), "host_path"),
-    "Permissions": (ListValueConverter(StringValueConverter()), "permissions"),
-    "ContainerPath": (StringValueConverter(), "container_path"),
-  }
 
 class AWS_Batch_JobQueue(CloudFormationResource):
-  terraform_resource = "aws_batch_job_queue"
+  cfn_type = "AWS::Batch::JobQueue"
+  tf_type = "aws_batch_job_queue"
+  ref = "arn"
 
-  resource_type = "AWS::Batch::JobQueue"
+  def write(self, w):
+    with self.resource_block(w):
+      self.repeated_block(w, "ComputeEnvironmentOrder", AWS_Batch_JobQueue_ComputeEnvironmentOrder)
+      self.property(w, "Priority", "priority", BasicValueConverter())
+      self.property(w, "State", "state", StringValueConverter())
+      self.property(w, "JobQueueName", "job_queue_name", StringValueConverter())
 
-  props = {
-    "ComputeEnvironmentOrder": (BlockValueConverter(AWS_Batch_JobQueue_ComputeEnvironmentOrder), None),
-    "Priority": (BasicValueConverter(), "priority"),
-    "State": (StringValueConverter(), "state"),
-    "JobQueueName": (StringValueConverter(), "job_queue_name"),
-  }
 
 class AWS_Batch_ComputeEnvironment(CloudFormationResource):
-  terraform_resource = "aws_batch_compute_environment"
+  cfn_type = "AWS::Batch::ComputeEnvironment"
+  tf_type = "aws_batch_compute_environment"
+  ref = "arn"
 
-  resource_type = "AWS::Batch::ComputeEnvironment"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "ServiceRole", "service_role", StringValueConverter())
+      self.property(w, "ComputeEnvironmentName", "compute_environment_name", StringValueConverter())
+      self.block(w, "ComputeResources", AWS_Batch_ComputeEnvironment_ComputeResources)
+      self.property(w, "State", "state", StringValueConverter())
 
-  props = {
-    "Type": (StringValueConverter(), "type"),
-    "ServiceRole": (StringValueConverter(), "service_role"),
-    "ComputeEnvironmentName": (StringValueConverter(), "compute_environment_name"),
-    "ComputeResources": (AWS_Batch_ComputeEnvironment_ComputeResources, "compute_resources"),
-    "State": (StringValueConverter(), "state"),
-  }
 
 class AWS_Batch_JobDefinition_Volumes(CloudFormationProperty):
-  entity = "AWS::Batch::JobDefinition"
-  tf_block_type = "volumes"
+  def write(self, w):
+    with w.block("volumes"):
+      self.block(w, "Host", AWS_Batch_JobDefinition_VolumesHost)
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Host": (AWS_Batch_JobDefinition_VolumesHost, "host"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_Batch_JobDefinition_LinuxParameters(CloudFormationProperty):
-  entity = "AWS::Batch::JobDefinition"
-  tf_block_type = "linux_parameters"
+  def write(self, w):
+    with w.block("linux_parameters"):
+      self.repeated_block(w, "Devices", AWS_Batch_JobDefinition_Device)
 
-  props = {
-    "Devices": (BlockValueConverter(AWS_Batch_JobDefinition_Device), None),
-  }
 
 class AWS_Batch_JobDefinition_ContainerProperties(CloudFormationProperty):
-  entity = "AWS::Batch::JobDefinition"
-  tf_block_type = "container_properties"
+  def write(self, w):
+    with w.block("container_properties"):
+      self.property(w, "User", "user", StringValueConverter())
+      self.property(w, "Memory", "memory", BasicValueConverter())
+      self.property(w, "Privileged", "privileged", BasicValueConverter())
+      self.block(w, "LinuxParameters", AWS_Batch_JobDefinition_LinuxParameters)
+      self.property(w, "JobRoleArn", "job_role_arn", StringValueConverter())
+      self.property(w, "ReadonlyRootFilesystem", "readonly_root_filesystem", BasicValueConverter())
+      self.property(w, "Vcpus", "vcpus", BasicValueConverter())
+      self.property(w, "Image", "image", StringValueConverter())
+      self.repeated_block(w, "ResourceRequirements", AWS_Batch_JobDefinition_ResourceRequirement)
+      self.repeated_block(w, "MountPoints", AWS_Batch_JobDefinition_MountPoints)
+      self.repeated_block(w, "Volumes", AWS_Batch_JobDefinition_Volumes)
+      self.property(w, "Command", "command", ListValueConverter(StringValueConverter()))
+      self.repeated_block(w, "Environment", AWS_Batch_JobDefinition_Environment)
+      self.repeated_block(w, "Ulimits", AWS_Batch_JobDefinition_Ulimit)
+      self.property(w, "InstanceType", "instance_type", StringValueConverter())
 
-  props = {
-    "User": (StringValueConverter(), "user"),
-    "Memory": (BasicValueConverter(), "memory"),
-    "Privileged": (BasicValueConverter(), "privileged"),
-    "LinuxParameters": (AWS_Batch_JobDefinition_LinuxParameters, "linux_parameters"),
-    "JobRoleArn": (StringValueConverter(), "job_role_arn"),
-    "ReadonlyRootFilesystem": (BasicValueConverter(), "readonly_root_filesystem"),
-    "Vcpus": (BasicValueConverter(), "vcpus"),
-    "Image": (StringValueConverter(), "image"),
-    "ResourceRequirements": (BlockValueConverter(AWS_Batch_JobDefinition_ResourceRequirement), None),
-    "MountPoints": (BlockValueConverter(AWS_Batch_JobDefinition_MountPoints), None),
-    "Volumes": (BlockValueConverter(AWS_Batch_JobDefinition_Volumes), None),
-    "Command": (ListValueConverter(StringValueConverter()), "command"),
-    "Environment": (BlockValueConverter(AWS_Batch_JobDefinition_Environment), None),
-    "Ulimits": (BlockValueConverter(AWS_Batch_JobDefinition_Ulimit), None),
-    "InstanceType": (StringValueConverter(), "instance_type"),
-  }
 
 class AWS_Batch_JobDefinition_NodeRangeProperty(CloudFormationProperty):
-  entity = "AWS::Batch::JobDefinition"
-  tf_block_type = "node_range_property"
+  def write(self, w):
+    with w.block("node_range_property"):
+      self.block(w, "Container", AWS_Batch_JobDefinition_ContainerProperties)
+      self.property(w, "TargetNodes", "target_nodes", StringValueConverter())
 
-  props = {
-    "Container": (AWS_Batch_JobDefinition_ContainerProperties, "container"),
-    "TargetNodes": (StringValueConverter(), "target_nodes"),
-  }
 
 class AWS_Batch_JobDefinition_NodeProperties(CloudFormationProperty):
-  entity = "AWS::Batch::JobDefinition"
-  tf_block_type = "node_properties"
+  def write(self, w):
+    with w.block("node_properties"):
+      self.property(w, "MainNode", "main_node", BasicValueConverter())
+      self.repeated_block(w, "NodeRangeProperties", AWS_Batch_JobDefinition_NodeRangeProperty)
+      self.property(w, "NumNodes", "num_nodes", BasicValueConverter())
 
-  props = {
-    "MainNode": (BasicValueConverter(), "main_node"),
-    "NodeRangeProperties": (BlockValueConverter(AWS_Batch_JobDefinition_NodeRangeProperty), None),
-    "NumNodes": (BasicValueConverter(), "num_nodes"),
-  }
 
 class AWS_Batch_JobDefinition(CloudFormationResource):
-  terraform_resource = "aws_batch_job_definition"
+  cfn_type = "AWS::Batch::JobDefinition"
+  tf_type = "aws_batch_job_definition"
+  ref = "arn"
 
-  resource_type = "AWS::Batch::JobDefinition"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "Parameters", "parameters", StringValueConverter())
+      self.block(w, "NodeProperties", AWS_Batch_JobDefinition_NodeProperties)
+      self.block(w, "Timeout", AWS_Batch_JobDefinition_Timeout)
+      self.block(w, "ContainerProperties", AWS_Batch_JobDefinition_ContainerProperties)
+      self.property(w, "JobDefinitionName", "job_definition_name", StringValueConverter())
+      self.block(w, "RetryStrategy", AWS_Batch_JobDefinition_RetryStrategy)
 
-  props = {
-    "Type": (StringValueConverter(), "type"),
-    "Parameters": (StringValueConverter(), "parameters"),
-    "NodeProperties": (AWS_Batch_JobDefinition_NodeProperties, "node_properties"),
-    "Timeout": (AWS_Batch_JobDefinition_Timeout, "timeout"),
-    "ContainerProperties": (AWS_Batch_JobDefinition_ContainerProperties, "container_properties"),
-    "JobDefinitionName": (StringValueConverter(), "job_definition_name"),
-    "RetryStrategy": (AWS_Batch_JobDefinition_RetryStrategy, "retry_strategy"),
-  }
 

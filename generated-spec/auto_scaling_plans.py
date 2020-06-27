@@ -1,116 +1,99 @@
 from . import *
 
 class AWS_AutoScalingPlans_ScalingPlan_TagFilter(CloudFormationProperty):
-  entity = "AWS::AutoScalingPlans::ScalingPlan"
-  tf_block_type = "tag_filter"
+  def write(self, w):
+    with w.block("tag_filter"):
+      self.property(w, "Values", "values", ListValueConverter(StringValueConverter()))
+      self.property(w, "Key", "key", StringValueConverter())
 
-  props = {
-    "Values": (ListValueConverter(StringValueConverter()), "values"),
-    "Key": (StringValueConverter(), "key"),
-  }
 
 class AWS_AutoScalingPlans_ScalingPlan_ApplicationSource(CloudFormationProperty):
-  entity = "AWS::AutoScalingPlans::ScalingPlan"
-  tf_block_type = "application_source"
+  def write(self, w):
+    with w.block("application_source"):
+      self.property(w, "CloudFormationStackARN", "cloud_formation_stack_arn", StringValueConverter())
+      self.repeated_block(w, "TagFilters", AWS_AutoScalingPlans_ScalingPlan_TagFilter)
 
-  props = {
-    "CloudFormationStackARN": (StringValueConverter(), "cloud_formation_stack_arn"),
-    "TagFilters": (BlockValueConverter(AWS_AutoScalingPlans_ScalingPlan_TagFilter), None),
-  }
 
 class AWS_AutoScalingPlans_ScalingPlan_MetricDimension(CloudFormationProperty):
-  entity = "AWS::AutoScalingPlans::ScalingPlan"
-  tf_block_type = "metric_dimension"
+  def write(self, w):
+    with w.block("metric_dimension"):
+      self.property(w, "Value", "value", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Value": (StringValueConverter(), "value"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_AutoScalingPlans_ScalingPlan_PredefinedScalingMetricSpecification(CloudFormationProperty):
-  entity = "AWS::AutoScalingPlans::ScalingPlan"
-  tf_block_type = "predefined_scaling_metric_specification"
+  def write(self, w):
+    with w.block("predefined_scaling_metric_specification"):
+      self.property(w, "ResourceLabel", "resource_label", StringValueConverter())
+      self.property(w, "PredefinedScalingMetricType", "predefined_scaling_metric_type", StringValueConverter())
 
-  props = {
-    "ResourceLabel": (StringValueConverter(), "resource_label"),
-    "PredefinedScalingMetricType": (StringValueConverter(), "predefined_scaling_metric_type"),
-  }
 
 class AWS_AutoScalingPlans_ScalingPlan_PredefinedLoadMetricSpecification(CloudFormationProperty):
-  entity = "AWS::AutoScalingPlans::ScalingPlan"
-  tf_block_type = "predefined_load_metric_specification"
+  def write(self, w):
+    with w.block("predefined_load_metric_specification"):
+      self.property(w, "PredefinedLoadMetricType", "predefined_load_metric_type", StringValueConverter())
+      self.property(w, "ResourceLabel", "resource_label", StringValueConverter())
 
-  props = {
-    "PredefinedLoadMetricType": (StringValueConverter(), "predefined_load_metric_type"),
-    "ResourceLabel": (StringValueConverter(), "resource_label"),
-  }
 
 class AWS_AutoScalingPlans_ScalingPlan_CustomizedScalingMetricSpecification(CloudFormationProperty):
-  entity = "AWS::AutoScalingPlans::ScalingPlan"
-  tf_block_type = "customized_scaling_metric_specification"
+  def write(self, w):
+    with w.block("customized_scaling_metric_specification"):
+      self.property(w, "MetricName", "metric_name", StringValueConverter())
+      self.property(w, "Statistic", "statistic", StringValueConverter())
+      self.repeated_block(w, "Dimensions", AWS_AutoScalingPlans_ScalingPlan_MetricDimension)
+      self.property(w, "Unit", "unit", StringValueConverter())
+      self.property(w, "Namespace", "namespace", StringValueConverter())
 
-  props = {
-    "MetricName": (StringValueConverter(), "metric_name"),
-    "Statistic": (StringValueConverter(), "statistic"),
-    "Dimensions": (BlockValueConverter(AWS_AutoScalingPlans_ScalingPlan_MetricDimension), None),
-    "Unit": (StringValueConverter(), "unit"),
-    "Namespace": (StringValueConverter(), "namespace"),
-  }
 
 class AWS_AutoScalingPlans_ScalingPlan_CustomizedLoadMetricSpecification(CloudFormationProperty):
-  entity = "AWS::AutoScalingPlans::ScalingPlan"
-  tf_block_type = "customized_load_metric_specification"
+  def write(self, w):
+    with w.block("customized_load_metric_specification"):
+      self.property(w, "MetricName", "metric_name", StringValueConverter())
+      self.property(w, "Statistic", "statistic", StringValueConverter())
+      self.repeated_block(w, "Dimensions", AWS_AutoScalingPlans_ScalingPlan_MetricDimension)
+      self.property(w, "Unit", "unit", StringValueConverter())
+      self.property(w, "Namespace", "namespace", StringValueConverter())
 
-  props = {
-    "MetricName": (StringValueConverter(), "metric_name"),
-    "Statistic": (StringValueConverter(), "statistic"),
-    "Dimensions": (BlockValueConverter(AWS_AutoScalingPlans_ScalingPlan_MetricDimension), None),
-    "Unit": (StringValueConverter(), "unit"),
-    "Namespace": (StringValueConverter(), "namespace"),
-  }
 
 class AWS_AutoScalingPlans_ScalingPlan_TargetTrackingConfiguration(CloudFormationProperty):
-  entity = "AWS::AutoScalingPlans::ScalingPlan"
-  tf_block_type = "target_tracking_configuration"
+  def write(self, w):
+    with w.block("target_tracking_configuration"):
+      self.property(w, "ScaleOutCooldown", "scale_out_cooldown", BasicValueConverter())
+      self.property(w, "TargetValue", "target_value", BasicValueConverter())
+      self.block(w, "PredefinedScalingMetricSpecification", AWS_AutoScalingPlans_ScalingPlan_PredefinedScalingMetricSpecification)
+      self.property(w, "DisableScaleIn", "disable_scale_in", BasicValueConverter())
+      self.property(w, "ScaleInCooldown", "scale_in_cooldown", BasicValueConverter())
+      self.property(w, "EstimatedInstanceWarmup", "estimated_instance_warmup", BasicValueConverter())
+      self.block(w, "CustomizedScalingMetricSpecification", AWS_AutoScalingPlans_ScalingPlan_CustomizedScalingMetricSpecification)
 
-  props = {
-    "ScaleOutCooldown": (BasicValueConverter(), "scale_out_cooldown"),
-    "TargetValue": (BasicValueConverter(), "target_value"),
-    "PredefinedScalingMetricSpecification": (AWS_AutoScalingPlans_ScalingPlan_PredefinedScalingMetricSpecification, "predefined_scaling_metric_specification"),
-    "DisableScaleIn": (BasicValueConverter(), "disable_scale_in"),
-    "ScaleInCooldown": (BasicValueConverter(), "scale_in_cooldown"),
-    "EstimatedInstanceWarmup": (BasicValueConverter(), "estimated_instance_warmup"),
-    "CustomizedScalingMetricSpecification": (AWS_AutoScalingPlans_ScalingPlan_CustomizedScalingMetricSpecification, "customized_scaling_metric_specification"),
-  }
 
 class AWS_AutoScalingPlans_ScalingPlan_ScalingInstruction(CloudFormationProperty):
-  entity = "AWS::AutoScalingPlans::ScalingPlan"
-  tf_block_type = "scaling_instruction"
+  def write(self, w):
+    with w.block("scaling_instruction"):
+      self.property(w, "DisableDynamicScaling", "disable_dynamic_scaling", BasicValueConverter())
+      self.property(w, "ServiceNamespace", "service_namespace", StringValueConverter())
+      self.property(w, "PredictiveScalingMaxCapacityBehavior", "predictive_scaling_max_capacity_behavior", StringValueConverter())
+      self.property(w, "ScalableDimension", "scalable_dimension", StringValueConverter())
+      self.property(w, "ScalingPolicyUpdateBehavior", "scaling_policy_update_behavior", StringValueConverter())
+      self.property(w, "MinCapacity", "min_capacity", BasicValueConverter())
+      self.repeated_block(w, "TargetTrackingConfigurations", AWS_AutoScalingPlans_ScalingPlan_TargetTrackingConfiguration)
+      self.property(w, "PredictiveScalingMaxCapacityBuffer", "predictive_scaling_max_capacity_buffer", BasicValueConverter())
+      self.block(w, "CustomizedLoadMetricSpecification", AWS_AutoScalingPlans_ScalingPlan_CustomizedLoadMetricSpecification)
+      self.block(w, "PredefinedLoadMetricSpecification", AWS_AutoScalingPlans_ScalingPlan_PredefinedLoadMetricSpecification)
+      self.property(w, "ResourceId", "resource_id", StringValueConverter())
+      self.property(w, "ScheduledActionBufferTime", "scheduled_action_buffer_time", BasicValueConverter())
+      self.property(w, "MaxCapacity", "max_capacity", BasicValueConverter())
+      self.property(w, "PredictiveScalingMode", "predictive_scaling_mode", StringValueConverter())
 
-  props = {
-    "DisableDynamicScaling": (BasicValueConverter(), "disable_dynamic_scaling"),
-    "ServiceNamespace": (StringValueConverter(), "service_namespace"),
-    "PredictiveScalingMaxCapacityBehavior": (StringValueConverter(), "predictive_scaling_max_capacity_behavior"),
-    "ScalableDimension": (StringValueConverter(), "scalable_dimension"),
-    "ScalingPolicyUpdateBehavior": (StringValueConverter(), "scaling_policy_update_behavior"),
-    "MinCapacity": (BasicValueConverter(), "min_capacity"),
-    "TargetTrackingConfigurations": (BlockValueConverter(AWS_AutoScalingPlans_ScalingPlan_TargetTrackingConfiguration), None),
-    "PredictiveScalingMaxCapacityBuffer": (BasicValueConverter(), "predictive_scaling_max_capacity_buffer"),
-    "CustomizedLoadMetricSpecification": (AWS_AutoScalingPlans_ScalingPlan_CustomizedLoadMetricSpecification, "customized_load_metric_specification"),
-    "PredefinedLoadMetricSpecification": (AWS_AutoScalingPlans_ScalingPlan_PredefinedLoadMetricSpecification, "predefined_load_metric_specification"),
-    "ResourceId": (StringValueConverter(), "resource_id"),
-    "ScheduledActionBufferTime": (BasicValueConverter(), "scheduled_action_buffer_time"),
-    "MaxCapacity": (BasicValueConverter(), "max_capacity"),
-    "PredictiveScalingMode": (StringValueConverter(), "predictive_scaling_mode"),
-  }
 
 class AWS_AutoScalingPlans_ScalingPlan(CloudFormationResource):
-  terraform_resource = "aws_auto_scaling_plans_scaling_plan"
+  cfn_type = "AWS::AutoScalingPlans::ScalingPlan"
+  tf_type = "aws_auto_scaling_plans_scaling_plan"
+  ref = "arn"
 
-  resource_type = "AWS::AutoScalingPlans::ScalingPlan"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "ApplicationSource", AWS_AutoScalingPlans_ScalingPlan_ApplicationSource)
+      self.repeated_block(w, "ScalingInstructions", AWS_AutoScalingPlans_ScalingPlan_ScalingInstruction)
 
-  props = {
-    "ApplicationSource": (AWS_AutoScalingPlans_ScalingPlan_ApplicationSource, "application_source"),
-    "ScalingInstructions": (BlockValueConverter(AWS_AutoScalingPlans_ScalingPlan_ScalingInstruction), None),
-  }
 

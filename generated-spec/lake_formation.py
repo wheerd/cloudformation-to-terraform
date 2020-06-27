@@ -1,109 +1,98 @@
 from . import *
 
 class AWS_LakeFormation_Permissions_DataLocationResource(CloudFormationProperty):
-  entity = "AWS::LakeFormation::Permissions"
-  tf_block_type = "data_location_resource"
+  def write(self, w):
+    with w.block("data_location_resource"):
+      self.property(w, "S3Resource", "s3_resource", StringValueConverter())
 
-  props = {
-    "S3Resource": (StringValueConverter(), "s3_resource"),
-  }
 
 class AWS_LakeFormation_DataLakeSettings_DataLakePrincipal(CloudFormationProperty):
-  entity = "AWS::LakeFormation::DataLakeSettings"
-  tf_block_type = "data_lake_principal"
+  def write(self, w):
+    with w.block("data_lake_principal"):
+      self.property(w, "DataLakePrincipalIdentifier", "data_lake_principal_identifier", StringValueConverter())
 
-  props = {
-    "DataLakePrincipalIdentifier": (StringValueConverter(), "data_lake_principal_identifier"),
-  }
 
 class AWS_LakeFormation_Permissions_ColumnWildcard(CloudFormationProperty):
-  entity = "AWS::LakeFormation::Permissions"
-  tf_block_type = "column_wildcard"
+  def write(self, w):
+    with w.block("column_wildcard"):
+      self.property(w, "ExcludedColumnNames", "excluded_column_names", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "ExcludedColumnNames": (ListValueConverter(StringValueConverter()), "excluded_column_names"),
-  }
 
 class AWS_LakeFormation_Permissions_DatabaseResource(CloudFormationProperty):
-  entity = "AWS::LakeFormation::Permissions"
-  tf_block_type = "database_resource"
+  def write(self, w):
+    with w.block("database_resource"):
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_LakeFormation_Permissions_DataLakePrincipal(CloudFormationProperty):
-  entity = "AWS::LakeFormation::Permissions"
-  tf_block_type = "data_lake_principal"
+  def write(self, w):
+    with w.block("data_lake_principal"):
+      self.property(w, "DataLakePrincipalIdentifier", "data_lake_principal_identifier", StringValueConverter())
 
-  props = {
-    "DataLakePrincipalIdentifier": (StringValueConverter(), "data_lake_principal_identifier"),
-  }
 
 class AWS_LakeFormation_Permissions_TableResource(CloudFormationProperty):
-  entity = "AWS::LakeFormation::Permissions"
-  tf_block_type = "table_resource"
+  def write(self, w):
+    with w.block("table_resource"):
+      self.property(w, "DatabaseName", "database_name", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "DatabaseName": (StringValueConverter(), "database_name"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_LakeFormation_Permissions_TableWithColumnsResource(CloudFormationProperty):
-  entity = "AWS::LakeFormation::Permissions"
-  tf_block_type = "table_with_columns_resource"
+  def write(self, w):
+    with w.block("table_with_columns_resource"):
+      self.property(w, "ColumnNames", "column_names", ListValueConverter(StringValueConverter()))
+      self.property(w, "DatabaseName", "database_name", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
+      self.block(w, "ColumnWildcard", AWS_LakeFormation_Permissions_ColumnWildcard)
 
-  props = {
-    "ColumnNames": (ListValueConverter(StringValueConverter()), "column_names"),
-    "DatabaseName": (StringValueConverter(), "database_name"),
-    "Name": (StringValueConverter(), "name"),
-    "ColumnWildcard": (AWS_LakeFormation_Permissions_ColumnWildcard, "column_wildcard"),
-  }
 
 class AWS_LakeFormation_Permissions_Resource(CloudFormationProperty):
-  entity = "AWS::LakeFormation::Permissions"
-  tf_block_type = "resource"
+  def write(self, w):
+    with w.block("resource"):
+      self.block(w, "TableResource", AWS_LakeFormation_Permissions_TableResource)
+      self.block(w, "DatabaseResource", AWS_LakeFormation_Permissions_DatabaseResource)
+      self.block(w, "DataLocationResource", AWS_LakeFormation_Permissions_DataLocationResource)
+      self.block(w, "TableWithColumnsResource", AWS_LakeFormation_Permissions_TableWithColumnsResource)
 
-  props = {
-    "TableResource": (AWS_LakeFormation_Permissions_TableResource, "table_resource"),
-    "DatabaseResource": (AWS_LakeFormation_Permissions_DatabaseResource, "database_resource"),
-    "DataLocationResource": (AWS_LakeFormation_Permissions_DataLocationResource, "data_location_resource"),
-    "TableWithColumnsResource": (AWS_LakeFormation_Permissions_TableWithColumnsResource, "table_with_columns_resource"),
-  }
 
 class AWS_LakeFormation_DataLakeSettings_Admins(CloudFormationProperty):
-  entity = "AWS::LakeFormation::DataLakeSettings"
-  tf_block_type = "admins"
+  def write(self, w):
+    with w.block("admins"):
+      pass
+
 
 class AWS_LakeFormation_Resource(CloudFormationResource):
-  terraform_resource = "aws_lake_formation_resource"
+  cfn_type = "AWS::LakeFormation::Resource"
+  tf_type = "aws_lake_formation_resource"
+  ref = "arn"
 
-  resource_type = "AWS::LakeFormation::Resource"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ResourceArn", "resource_arn", StringValueConverter())
+      self.property(w, "UseServiceLinkedRole", "use_service_linked_role", BasicValueConverter())
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
 
-  props = {
-    "ResourceArn": (StringValueConverter(), "resource_arn"),
-    "UseServiceLinkedRole": (BasicValueConverter(), "use_service_linked_role"),
-    "RoleArn": (StringValueConverter(), "role_arn"),
-  }
 
 class AWS_LakeFormation_Permissions(CloudFormationResource):
-  terraform_resource = "aws_lake_formation_permissions"
+  cfn_type = "AWS::LakeFormation::Permissions"
+  tf_type = "aws_lake_formation_permissions"
+  ref = "arn"
 
-  resource_type = "AWS::LakeFormation::Permissions"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "DataLakePrincipal", AWS_LakeFormation_Permissions_DataLakePrincipal)
+      self.block(w, "Resource", AWS_LakeFormation_Permissions_Resource)
+      self.property(w, "Permissions", "permissions", ListValueConverter(StringValueConverter()))
+      self.property(w, "PermissionsWithGrantOption", "permissions_with_grant_option", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "DataLakePrincipal": (AWS_LakeFormation_Permissions_DataLakePrincipal, "data_lake_principal"),
-    "Resource": (AWS_LakeFormation_Permissions_Resource, "resource"),
-    "Permissions": (ListValueConverter(StringValueConverter()), "permissions"),
-    "PermissionsWithGrantOption": (ListValueConverter(StringValueConverter()), "permissions_with_grant_option"),
-  }
 
 class AWS_LakeFormation_DataLakeSettings(CloudFormationResource):
-  terraform_resource = "aws_lake_formation_data_lake_settings"
+  cfn_type = "AWS::LakeFormation::DataLakeSettings"
+  tf_type = "aws_lake_formation_data_lake_settings"
+  ref = "arn"
 
-  resource_type = "AWS::LakeFormation::DataLakeSettings"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "Admins", AWS_LakeFormation_DataLakeSettings_Admins)
 
-  props = {
-    "Admins": (AWS_LakeFormation_DataLakeSettings_Admins, "admins"),
-  }
 

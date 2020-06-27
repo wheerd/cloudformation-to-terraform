@@ -1,328 +1,272 @@
 from . import *
 
 class AWS_MediaLive_Channel_MediaPackageOutputDestinationSettings(CloudFormationProperty):
-  entity = "AWS::MediaLive::Channel"
-  tf_block_type = "media_package_output_destination_settings"
+  def write(self, w):
+    with w.block("media_package_output_destination_settings"):
+      self.property(w, "ChannelId", "channel_id", StringValueConverter())
 
-  props = {
-    "ChannelId": (StringValueConverter(), "channel_id"),
-  }
 
 class AWS_MediaLive_InputSecurityGroup_InputWhitelistRuleCidr(CloudFormationProperty):
-  entity = "AWS::MediaLive::InputSecurityGroup"
-  tf_block_type = "input_whitelist_rule_cidr"
+  def write(self, w):
+    with w.block("input_whitelist_rule_cidr"):
+      self.property(w, "Cidr", "cidr", StringValueConverter())
 
-  props = {
-    "Cidr": (StringValueConverter(), "cidr"),
-  }
 
 class AWS_MediaLive_Channel_HlsInputSettings(CloudFormationProperty):
-  entity = "AWS::MediaLive::Channel"
-  tf_block_type = "hls_input_settings"
+  def write(self, w):
+    with w.block("hls_input_settings"):
+      self.property(w, "BufferSegments", "buffer_segments", BasicValueConverter())
+      self.property(w, "Retries", "retries", BasicValueConverter())
+      self.property(w, "Bandwidth", "bandwidth", BasicValueConverter())
+      self.property(w, "RetryInterval", "retry_interval", BasicValueConverter())
 
-  props = {
-    "BufferSegments": (BasicValueConverter(), "buffer_segments"),
-    "Retries": (BasicValueConverter(), "retries"),
-    "Bandwidth": (BasicValueConverter(), "bandwidth"),
-    "RetryInterval": (BasicValueConverter(), "retry_interval"),
-  }
 
 class AWS_MediaLive_Channel_VideoSelectorProgramId(CloudFormationProperty):
-  entity = "AWS::MediaLive::Channel"
-  tf_block_type = "video_selector_program_id"
+  def write(self, w):
+    with w.block("video_selector_program_id"):
+      self.property(w, "ProgramId", "program_id", BasicValueConverter())
 
-  props = {
-    "ProgramId": (BasicValueConverter(), "program_id"),
-  }
 
 class AWS_MediaLive_Channel_MultiplexProgramChannelDestinationSettings(CloudFormationProperty):
-  entity = "AWS::MediaLive::Channel"
-  tf_block_type = "multiplex_program_channel_destination_settings"
+  def write(self, w):
+    with w.block("multiplex_program_channel_destination_settings"):
+      self.property(w, "MultiplexId", "multiplex_id", StringValueConverter())
+      self.property(w, "ProgramName", "program_name", StringValueConverter())
 
-  props = {
-    "MultiplexId": (StringValueConverter(), "multiplex_id"),
-    "ProgramName": (StringValueConverter(), "program_name"),
-  }
 
 class AWS_MediaLive_Channel_EmbeddedSourceSettings(CloudFormationProperty):
-  entity = "AWS::MediaLive::Channel"
-  tf_block_type = "embedded_source_settings"
+  def write(self, w):
+    with w.block("embedded_source_settings"):
+      self.property(w, "Source608ChannelNumber", "source608_channel_number", BasicValueConverter())
+      self.property(w, "Scte20Detection", "scte20_detection", StringValueConverter())
+      self.property(w, "Source608TrackNumber", "source608_track_number", BasicValueConverter())
+      self.property(w, "Convert608To708", "convert608_to708", StringValueConverter())
 
-  props = {
-    "Source608ChannelNumber": (BasicValueConverter(), "source608_channel_number"),
-    "Scte20Detection": (StringValueConverter(), "scte20_detection"),
-    "Source608TrackNumber": (BasicValueConverter(), "source608_track_number"),
-    "Convert608To708": (StringValueConverter(), "convert608_to708"),
-  }
 
 class AWS_MediaLive_Channel_InputSpecification(CloudFormationProperty):
-  entity = "AWS::MediaLive::Channel"
-  tf_block_type = "input_specification"
+  def write(self, w):
+    with w.block("input_specification"):
+      self.property(w, "Codec", "codec", StringValueConverter())
+      self.property(w, "MaximumBitrate", "maximum_bitrate", StringValueConverter())
+      self.property(w, "Resolution", "resolution", StringValueConverter())
 
-  props = {
-    "Codec": (StringValueConverter(), "codec"),
-    "MaximumBitrate": (StringValueConverter(), "maximum_bitrate"),
-    "Resolution": (StringValueConverter(), "resolution"),
-  }
 
 class AWS_MediaLive_Channel_Scte27SourceSettings(CloudFormationProperty):
-  entity = "AWS::MediaLive::Channel"
-  tf_block_type = "scte27_source_settings"
+  def write(self, w):
+    with w.block("scte27_source_settings"):
+      self.property(w, "Pid", "pid", BasicValueConverter())
 
-  props = {
-    "Pid": (BasicValueConverter(), "pid"),
-  }
 
 class AWS_MediaLive_Channel_VideoSelectorPid(CloudFormationProperty):
-  entity = "AWS::MediaLive::Channel"
-  tf_block_type = "video_selector_pid"
+  def write(self, w):
+    with w.block("video_selector_pid"):
+      self.property(w, "Pid", "pid", BasicValueConverter())
 
-  props = {
-    "Pid": (BasicValueConverter(), "pid"),
-  }
 
 class AWS_MediaLive_Input_InputVpcRequest(CloudFormationProperty):
-  entity = "AWS::MediaLive::Input"
-  tf_block_type = "input_vpc_request"
+  def write(self, w):
+    with w.block("input_vpc_request"):
+      self.property(w, "SecurityGroupIds", "security_group_ids", ListValueConverter(StringValueConverter()))
+      self.property(w, "SubnetIds", "subnet_ids", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "SecurityGroupIds": (ListValueConverter(StringValueConverter()), "security_group_ids"),
-    "SubnetIds": (ListValueConverter(StringValueConverter()), "subnet_ids"),
-  }
 
 class AWS_MediaLive_Channel_AudioLanguageSelection(CloudFormationProperty):
-  entity = "AWS::MediaLive::Channel"
-  tf_block_type = "audio_language_selection"
+  def write(self, w):
+    with w.block("audio_language_selection"):
+      self.property(w, "LanguageCode", "language_code", StringValueConverter())
+      self.property(w, "LanguageSelectionPolicy", "language_selection_policy", StringValueConverter())
 
-  props = {
-    "LanguageCode": (StringValueConverter(), "language_code"),
-    "LanguageSelectionPolicy": (StringValueConverter(), "language_selection_policy"),
-  }
 
 class AWS_MediaLive_Channel_AribSourceSettings(CloudFormationProperty):
-  entity = "AWS::MediaLive::Channel"
-  tf_block_type = "arib_source_settings"
+  def write(self, w):
+    with w.block("arib_source_settings"):
+      pass
 
-  props = {
-  }
 
 class AWS_MediaLive_Channel_AudioPidSelection(CloudFormationProperty):
-  entity = "AWS::MediaLive::Channel"
-  tf_block_type = "audio_pid_selection"
+  def write(self, w):
+    with w.block("audio_pid_selection"):
+      self.property(w, "Pid", "pid", BasicValueConverter())
 
-  props = {
-    "Pid": (BasicValueConverter(), "pid"),
-  }
 
 class AWS_MediaLive_Channel_DvbSubSourceSettings(CloudFormationProperty):
-  entity = "AWS::MediaLive::Channel"
-  tf_block_type = "dvb_sub_source_settings"
+  def write(self, w):
+    with w.block("dvb_sub_source_settings"):
+      self.property(w, "Pid", "pid", BasicValueConverter())
 
-  props = {
-    "Pid": (BasicValueConverter(), "pid"),
-  }
 
 class AWS_MediaLive_Input_InputSourceRequest(CloudFormationProperty):
-  entity = "AWS::MediaLive::Input"
-  tf_block_type = "input_source_request"
+  def write(self, w):
+    with w.block("input_source_request"):
+      self.property(w, "Username", "username", StringValueConverter())
+      self.property(w, "PasswordParam", "password_param", StringValueConverter())
+      self.property(w, "Url", "url", StringValueConverter())
 
-  props = {
-    "Username": (StringValueConverter(), "username"),
-    "PasswordParam": (StringValueConverter(), "password_param"),
-    "Url": (StringValueConverter(), "url"),
-  }
 
 class AWS_MediaLive_Channel_VideoSelectorSettings(CloudFormationProperty):
-  entity = "AWS::MediaLive::Channel"
-  tf_block_type = "video_selector_settings"
+  def write(self, w):
+    with w.block("video_selector_settings"):
+      self.block(w, "VideoSelectorProgramId", AWS_MediaLive_Channel_VideoSelectorProgramId)
+      self.block(w, "VideoSelectorPid", AWS_MediaLive_Channel_VideoSelectorPid)
 
-  props = {
-    "VideoSelectorProgramId": (AWS_MediaLive_Channel_VideoSelectorProgramId, "video_selector_program_id"),
-    "VideoSelectorPid": (AWS_MediaLive_Channel_VideoSelectorPid, "video_selector_pid"),
-  }
 
 class AWS_MediaLive_Channel_TeletextSourceSettings(CloudFormationProperty):
-  entity = "AWS::MediaLive::Channel"
-  tf_block_type = "teletext_source_settings"
+  def write(self, w):
+    with w.block("teletext_source_settings"):
+      self.property(w, "PageNumber", "page_number", StringValueConverter())
 
-  props = {
-    "PageNumber": (StringValueConverter(), "page_number"),
-  }
 
 class AWS_MediaLive_Input_InputDestinationRequest(CloudFormationProperty):
-  entity = "AWS::MediaLive::Input"
-  tf_block_type = "input_destination_request"
+  def write(self, w):
+    with w.block("input_destination_request"):
+      self.property(w, "StreamName", "stream_name", StringValueConverter())
 
-  props = {
-    "StreamName": (StringValueConverter(), "stream_name"),
-  }
 
 class AWS_MediaLive_Channel_NetworkInputSettings(CloudFormationProperty):
-  entity = "AWS::MediaLive::Channel"
-  tf_block_type = "network_input_settings"
+  def write(self, w):
+    with w.block("network_input_settings"):
+      self.property(w, "ServerValidation", "server_validation", StringValueConverter())
+      self.block(w, "HlsInputSettings", AWS_MediaLive_Channel_HlsInputSettings)
 
-  props = {
-    "ServerValidation": (StringValueConverter(), "server_validation"),
-    "HlsInputSettings": (AWS_MediaLive_Channel_HlsInputSettings, "hls_input_settings"),
-  }
 
 class AWS_MediaLive_Input_MediaConnectFlowRequest(CloudFormationProperty):
-  entity = "AWS::MediaLive::Input"
-  tf_block_type = "media_connect_flow_request"
+  def write(self, w):
+    with w.block("media_connect_flow_request"):
+      self.property(w, "FlowArn", "flow_arn", StringValueConverter())
 
-  props = {
-    "FlowArn": (StringValueConverter(), "flow_arn"),
-  }
 
 class AWS_MediaLive_Channel_Scte20SourceSettings(CloudFormationProperty):
-  entity = "AWS::MediaLive::Channel"
-  tf_block_type = "scte20_source_settings"
+  def write(self, w):
+    with w.block("scte20_source_settings"):
+      self.property(w, "Source608ChannelNumber", "source608_channel_number", BasicValueConverter())
+      self.property(w, "Convert608To708", "convert608_to708", StringValueConverter())
 
-  props = {
-    "Source608ChannelNumber": (BasicValueConverter(), "source608_channel_number"),
-    "Convert608To708": (StringValueConverter(), "convert608_to708"),
-  }
 
 class AWS_MediaLive_Channel_AudioSelectorSettings(CloudFormationProperty):
-  entity = "AWS::MediaLive::Channel"
-  tf_block_type = "audio_selector_settings"
+  def write(self, w):
+    with w.block("audio_selector_settings"):
+      self.block(w, "AudioPidSelection", AWS_MediaLive_Channel_AudioPidSelection)
+      self.block(w, "AudioLanguageSelection", AWS_MediaLive_Channel_AudioLanguageSelection)
 
-  props = {
-    "AudioPidSelection": (AWS_MediaLive_Channel_AudioPidSelection, "audio_pid_selection"),
-    "AudioLanguageSelection": (AWS_MediaLive_Channel_AudioLanguageSelection, "audio_language_selection"),
-  }
 
 class AWS_MediaLive_Channel_VideoSelector(CloudFormationProperty):
-  entity = "AWS::MediaLive::Channel"
-  tf_block_type = "video_selector"
+  def write(self, w):
+    with w.block("video_selector"):
+      self.block(w, "SelectorSettings", AWS_MediaLive_Channel_VideoSelectorSettings)
+      self.property(w, "ColorSpace", "color_space", StringValueConverter())
+      self.property(w, "ColorSpaceUsage", "color_space_usage", StringValueConverter())
 
-  props = {
-    "SelectorSettings": (AWS_MediaLive_Channel_VideoSelectorSettings, "selector_settings"),
-    "ColorSpace": (StringValueConverter(), "color_space"),
-    "ColorSpaceUsage": (StringValueConverter(), "color_space_usage"),
-  }
 
 class AWS_MediaLive_Channel_OutputDestinationSettings(CloudFormationProperty):
-  entity = "AWS::MediaLive::Channel"
-  tf_block_type = "output_destination_settings"
+  def write(self, w):
+    with w.block("output_destination_settings"):
+      self.property(w, "StreamName", "stream_name", StringValueConverter())
+      self.property(w, "Username", "username", StringValueConverter())
+      self.property(w, "PasswordParam", "password_param", StringValueConverter())
+      self.property(w, "Url", "url", StringValueConverter())
 
-  props = {
-    "StreamName": (StringValueConverter(), "stream_name"),
-    "Username": (StringValueConverter(), "username"),
-    "PasswordParam": (StringValueConverter(), "password_param"),
-    "Url": (StringValueConverter(), "url"),
-  }
 
 class AWS_MediaLive_Channel_OutputDestination(CloudFormationProperty):
-  entity = "AWS::MediaLive::Channel"
-  tf_block_type = "output_destination"
+  def write(self, w):
+    with w.block("output_destination"):
+      self.block(w, "MultiplexSettings", AWS_MediaLive_Channel_MultiplexProgramChannelDestinationSettings)
+      self.property(w, "Id", "id", StringValueConverter())
+      self.repeated_block(w, "Settings", AWS_MediaLive_Channel_OutputDestinationSettings)
+      self.repeated_block(w, "MediaPackageSettings", AWS_MediaLive_Channel_MediaPackageOutputDestinationSettings)
 
-  props = {
-    "MultiplexSettings": (AWS_MediaLive_Channel_MultiplexProgramChannelDestinationSettings, "multiplex_settings"),
-    "Id": (StringValueConverter(), "id"),
-    "Settings": (BlockValueConverter(AWS_MediaLive_Channel_OutputDestinationSettings), None),
-    "MediaPackageSettings": (BlockValueConverter(AWS_MediaLive_Channel_MediaPackageOutputDestinationSettings), None),
-  }
 
 class AWS_MediaLive_Input(CloudFormationResource):
-  terraform_resource = "aws_media_live_input"
+  cfn_type = "AWS::MediaLive::Input"
+  tf_type = "aws_media_live_input"
+  ref = "arn"
 
-  resource_type = "AWS::MediaLive::Input"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Type", "type", StringValueConverter())
+      self.repeated_block(w, "Destinations", AWS_MediaLive_Input_InputDestinationRequest)
+      self.block(w, "Vpc", AWS_MediaLive_Input_InputVpcRequest)
+      self.repeated_block(w, "MediaConnectFlows", AWS_MediaLive_Input_MediaConnectFlowRequest)
+      self.property(w, "InputSecurityGroups", "input_security_groups", ListValueConverter(StringValueConverter()))
+      self.repeated_block(w, "Sources", AWS_MediaLive_Input_InputSourceRequest)
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
+      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Type": (StringValueConverter(), "type"),
-    "Destinations": (BlockValueConverter(AWS_MediaLive_Input_InputDestinationRequest), None),
-    "Vpc": (AWS_MediaLive_Input_InputVpcRequest, "vpc"),
-    "MediaConnectFlows": (BlockValueConverter(AWS_MediaLive_Input_MediaConnectFlowRequest), None),
-    "InputSecurityGroups": (ListValueConverter(StringValueConverter()), "input_security_groups"),
-    "Sources": (BlockValueConverter(AWS_MediaLive_Input_InputSourceRequest), None),
-    "RoleArn": (StringValueConverter(), "role_arn"),
-    "Tags": (StringValueConverter(), "tags"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_MediaLive_InputSecurityGroup(CloudFormationResource):
-  terraform_resource = "aws_media_live_input_security_group"
+  cfn_type = "AWS::MediaLive::InputSecurityGroup"
+  tf_type = "aws_media_live_input_security_group"
+  ref = "arn"
 
-  resource_type = "AWS::MediaLive::InputSecurityGroup"
+  def write(self, w):
+    with self.resource_block(w):
+      self.repeated_block(w, "WhitelistRules", AWS_MediaLive_InputSecurityGroup_InputWhitelistRuleCidr)
+      self.property(w, "Tags", "tags", StringValueConverter())
 
-  props = {
-    "WhitelistRules": (BlockValueConverter(AWS_MediaLive_InputSecurityGroup_InputWhitelistRuleCidr), None),
-    "Tags": (StringValueConverter(), "tags"),
-  }
 
 class AWS_MediaLive_Channel_AudioSelector(CloudFormationProperty):
-  entity = "AWS::MediaLive::Channel"
-  tf_block_type = "audio_selector"
+  def write(self, w):
+    with w.block("audio_selector"):
+      self.block(w, "SelectorSettings", AWS_MediaLive_Channel_AudioSelectorSettings)
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "SelectorSettings": (AWS_MediaLive_Channel_AudioSelectorSettings, "selector_settings"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_MediaLive_Channel_CaptionSelectorSettings(CloudFormationProperty):
-  entity = "AWS::MediaLive::Channel"
-  tf_block_type = "caption_selector_settings"
+  def write(self, w):
+    with w.block("caption_selector_settings"):
+      self.block(w, "DvbSubSourceSettings", AWS_MediaLive_Channel_DvbSubSourceSettings)
+      self.block(w, "Scte27SourceSettings", AWS_MediaLive_Channel_Scte27SourceSettings)
+      self.block(w, "AribSourceSettings", AWS_MediaLive_Channel_AribSourceSettings)
+      self.block(w, "EmbeddedSourceSettings", AWS_MediaLive_Channel_EmbeddedSourceSettings)
+      self.block(w, "Scte20SourceSettings", AWS_MediaLive_Channel_Scte20SourceSettings)
+      self.block(w, "TeletextSourceSettings", AWS_MediaLive_Channel_TeletextSourceSettings)
 
-  props = {
-    "DvbSubSourceSettings": (AWS_MediaLive_Channel_DvbSubSourceSettings, "dvb_sub_source_settings"),
-    "Scte27SourceSettings": (AWS_MediaLive_Channel_Scte27SourceSettings, "scte27_source_settings"),
-    "AribSourceSettings": (AWS_MediaLive_Channel_AribSourceSettings, "arib_source_settings"),
-    "EmbeddedSourceSettings": (AWS_MediaLive_Channel_EmbeddedSourceSettings, "embedded_source_settings"),
-    "Scte20SourceSettings": (AWS_MediaLive_Channel_Scte20SourceSettings, "scte20_source_settings"),
-    "TeletextSourceSettings": (AWS_MediaLive_Channel_TeletextSourceSettings, "teletext_source_settings"),
-  }
 
 class AWS_MediaLive_Channel_CaptionSelector(CloudFormationProperty):
-  entity = "AWS::MediaLive::Channel"
-  tf_block_type = "caption_selector"
+  def write(self, w):
+    with w.block("caption_selector"):
+      self.property(w, "LanguageCode", "language_code", StringValueConverter())
+      self.block(w, "SelectorSettings", AWS_MediaLive_Channel_CaptionSelectorSettings)
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "LanguageCode": (StringValueConverter(), "language_code"),
-    "SelectorSettings": (AWS_MediaLive_Channel_CaptionSelectorSettings, "selector_settings"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_MediaLive_Channel_InputSettings(CloudFormationProperty):
-  entity = "AWS::MediaLive::Channel"
-  tf_block_type = "input_settings"
+  def write(self, w):
+    with w.block("input_settings"):
+      self.property(w, "DeblockFilter", "deblock_filter", StringValueConverter())
+      self.property(w, "FilterStrength", "filter_strength", BasicValueConverter())
+      self.property(w, "InputFilter", "input_filter", StringValueConverter())
+      self.property(w, "SourceEndBehavior", "source_end_behavior", StringValueConverter())
+      self.block(w, "VideoSelector", AWS_MediaLive_Channel_VideoSelector)
+      self.repeated_block(w, "AudioSelectors", AWS_MediaLive_Channel_AudioSelector)
+      self.repeated_block(w, "CaptionSelectors", AWS_MediaLive_Channel_CaptionSelector)
+      self.property(w, "DenoiseFilter", "denoise_filter", StringValueConverter())
+      self.block(w, "NetworkInputSettings", AWS_MediaLive_Channel_NetworkInputSettings)
 
-  props = {
-    "DeblockFilter": (StringValueConverter(), "deblock_filter"),
-    "FilterStrength": (BasicValueConverter(), "filter_strength"),
-    "InputFilter": (StringValueConverter(), "input_filter"),
-    "SourceEndBehavior": (StringValueConverter(), "source_end_behavior"),
-    "VideoSelector": (AWS_MediaLive_Channel_VideoSelector, "video_selector"),
-    "AudioSelectors": (BlockValueConverter(AWS_MediaLive_Channel_AudioSelector), None),
-    "CaptionSelectors": (BlockValueConverter(AWS_MediaLive_Channel_CaptionSelector), None),
-    "DenoiseFilter": (StringValueConverter(), "denoise_filter"),
-    "NetworkInputSettings": (AWS_MediaLive_Channel_NetworkInputSettings, "network_input_settings"),
-  }
 
 class AWS_MediaLive_Channel_InputAttachment(CloudFormationProperty):
-  entity = "AWS::MediaLive::Channel"
-  tf_block_type = "input_attachment"
+  def write(self, w):
+    with w.block("input_attachment"):
+      self.property(w, "InputAttachmentName", "input_attachment_name", StringValueConverter())
+      self.property(w, "InputId", "input_id", StringValueConverter())
+      self.block(w, "InputSettings", AWS_MediaLive_Channel_InputSettings)
 
-  props = {
-    "InputAttachmentName": (StringValueConverter(), "input_attachment_name"),
-    "InputId": (StringValueConverter(), "input_id"),
-    "InputSettings": (AWS_MediaLive_Channel_InputSettings, "input_settings"),
-  }
 
 class AWS_MediaLive_Channel(CloudFormationResource):
-  terraform_resource = "aws_media_live_channel"
+  cfn_type = "AWS::MediaLive::Channel"
+  tf_type = "aws_media_live_channel"
+  ref = "arn"
 
-  resource_type = "AWS::MediaLive::Channel"
+  def write(self, w):
+    with self.resource_block(w):
+      self.repeated_block(w, "InputAttachments", AWS_MediaLive_Channel_InputAttachment)
+      self.block(w, "InputSpecification", AWS_MediaLive_Channel_InputSpecification)
+      self.property(w, "ChannelClass", "channel_class", StringValueConverter())
+      self.property(w, "EncoderSettings", "encoder_settings", StringValueConverter())
+      self.repeated_block(w, "Destinations", AWS_MediaLive_Channel_OutputDestination)
+      self.property(w, "LogLevel", "log_level", StringValueConverter())
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
+      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "InputAttachments": (BlockValueConverter(AWS_MediaLive_Channel_InputAttachment), None),
-    "InputSpecification": (AWS_MediaLive_Channel_InputSpecification, "input_specification"),
-    "ChannelClass": (StringValueConverter(), "channel_class"),
-    "EncoderSettings": (StringValueConverter(), "encoder_settings"),
-    "Destinations": (BlockValueConverter(AWS_MediaLive_Channel_OutputDestination), None),
-    "LogLevel": (StringValueConverter(), "log_level"),
-    "RoleArn": (StringValueConverter(), "role_arn"),
-    "Tags": (StringValueConverter(), "tags"),
-    "Name": (StringValueConverter(), "name"),
-  }
 

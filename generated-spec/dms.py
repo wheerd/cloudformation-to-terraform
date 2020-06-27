@@ -1,194 +1,186 @@
 from . import *
 
 class AWS_DMS_Endpoint_KinesisSettings(CloudFormationProperty):
-  entity = "AWS::DMS::Endpoint"
-  tf_block_type = "kinesis_settings"
+  def write(self, w):
+    with w.block("kinesis_settings"):
+      self.property(w, "MessageFormat", "message_format", StringValueConverter())
+      self.property(w, "StreamArn", "stream_arn", StringValueConverter())
+      self.property(w, "ServiceAccessRoleArn", "service_access_role_arn", StringValueConverter())
 
-  props = {
-    "MessageFormat": (StringValueConverter(), "message_format"),
-    "StreamArn": (StringValueConverter(), "stream_arn"),
-    "ServiceAccessRoleArn": (StringValueConverter(), "service_access_role_arn"),
-  }
 
 class AWS_DMS_Endpoint_S3Settings(CloudFormationProperty):
-  entity = "AWS::DMS::Endpoint"
-  tf_block_type = "s3_settings"
+  def write(self, w):
+    with w.block("s3_settings"):
+      self.property(w, "ExternalTableDefinition", "external_table_definition", StringValueConverter())
+      self.property(w, "BucketName", "bucket_name", StringValueConverter())
+      self.property(w, "BucketFolder", "bucket_folder", StringValueConverter())
+      self.property(w, "CsvRowDelimiter", "csv_row_delimiter", StringValueConverter())
+      self.property(w, "CsvDelimiter", "csv_delimiter", StringValueConverter())
+      self.property(w, "ServiceAccessRoleArn", "service_access_role_arn", StringValueConverter())
+      self.property(w, "CompressionType", "compression_type", StringValueConverter())
 
-  props = {
-    "ExternalTableDefinition": (StringValueConverter(), "external_table_definition"),
-    "BucketName": (StringValueConverter(), "bucket_name"),
-    "BucketFolder": (StringValueConverter(), "bucket_folder"),
-    "CsvRowDelimiter": (StringValueConverter(), "csv_row_delimiter"),
-    "CsvDelimiter": (StringValueConverter(), "csv_delimiter"),
-    "ServiceAccessRoleArn": (StringValueConverter(), "service_access_role_arn"),
-    "CompressionType": (StringValueConverter(), "compression_type"),
-  }
 
 class AWS_DMS_Endpoint_MongoDbSettings(CloudFormationProperty):
-  entity = "AWS::DMS::Endpoint"
-  tf_block_type = "mongo_db_settings"
+  def write(self, w):
+    with w.block("mongo_db_settings"):
+      self.property(w, "AuthSource", "auth_source", StringValueConverter())
+      self.property(w, "AuthMechanism", "auth_mechanism", StringValueConverter())
+      self.property(w, "Username", "username", StringValueConverter())
+      self.property(w, "DocsToInvestigate", "docs_to_investigate", StringValueConverter())
+      self.property(w, "ServerName", "server_name", StringValueConverter())
+      self.property(w, "Port", "port", BasicValueConverter())
+      self.property(w, "ExtractDocId", "extract_doc_id", StringValueConverter())
+      self.property(w, "DatabaseName", "database_name", StringValueConverter())
+      self.property(w, "AuthType", "auth_type", StringValueConverter())
+      self.property(w, "Password", "password", StringValueConverter())
+      self.property(w, "NestingLevel", "nesting_level", StringValueConverter())
 
-  props = {
-    "AuthSource": (StringValueConverter(), "auth_source"),
-    "AuthMechanism": (StringValueConverter(), "auth_mechanism"),
-    "Username": (StringValueConverter(), "username"),
-    "DocsToInvestigate": (StringValueConverter(), "docs_to_investigate"),
-    "ServerName": (StringValueConverter(), "server_name"),
-    "Port": (BasicValueConverter(), "port"),
-    "ExtractDocId": (StringValueConverter(), "extract_doc_id"),
-    "DatabaseName": (StringValueConverter(), "database_name"),
-    "AuthType": (StringValueConverter(), "auth_type"),
-    "Password": (StringValueConverter(), "password"),
-    "NestingLevel": (StringValueConverter(), "nesting_level"),
-  }
 
 class AWS_DMS_Endpoint_KafkaSettings(CloudFormationProperty):
-  entity = "AWS::DMS::Endpoint"
-  tf_block_type = "kafka_settings"
+  def write(self, w):
+    with w.block("kafka_settings"):
+      self.property(w, "Broker", "broker", StringValueConverter())
+      self.property(w, "Topic", "topic", StringValueConverter())
 
-  props = {
-    "Broker": (StringValueConverter(), "broker"),
-    "Topic": (StringValueConverter(), "topic"),
-  }
 
 class AWS_DMS_Endpoint_DynamoDbSettings(CloudFormationProperty):
-  entity = "AWS::DMS::Endpoint"
-  tf_block_type = "dynamo_db_settings"
+  def write(self, w):
+    with w.block("dynamo_db_settings"):
+      self.property(w, "ServiceAccessRoleArn", "service_access_role_arn", StringValueConverter())
 
-  props = {
-    "ServiceAccessRoleArn": (StringValueConverter(), "service_access_role_arn"),
-  }
 
 class AWS_DMS_Endpoint_NeptuneSettings(CloudFormationProperty):
-  entity = "AWS::DMS::Endpoint"
-  tf_block_type = "neptune_settings"
+  def write(self, w):
+    with w.block("neptune_settings"):
+      self.property(w, "MaxRetryCount", "max_retry_count", BasicValueConverter())
+      self.property(w, "MaxFileSize", "max_file_size", BasicValueConverter())
+      self.property(w, "S3BucketFolder", "s3_bucket_folder", StringValueConverter())
+      self.property(w, "ErrorRetryDuration", "error_retry_duration", BasicValueConverter())
+      self.property(w, "IamAuthEnabled", "iam_auth_enabled", BasicValueConverter())
+      self.property(w, "S3BucketName", "s3_bucket_name", StringValueConverter())
+      self.property(w, "ServiceAccessRoleArn", "service_access_role_arn", StringValueConverter())
 
-  props = {
-    "MaxRetryCount": (BasicValueConverter(), "max_retry_count"),
-    "MaxFileSize": (BasicValueConverter(), "max_file_size"),
-    "S3BucketFolder": (StringValueConverter(), "s3_bucket_folder"),
-    "ErrorRetryDuration": (BasicValueConverter(), "error_retry_duration"),
-    "IamAuthEnabled": (BasicValueConverter(), "iam_auth_enabled"),
-    "S3BucketName": (StringValueConverter(), "s3_bucket_name"),
-    "ServiceAccessRoleArn": (StringValueConverter(), "service_access_role_arn"),
-  }
 
 class AWS_DMS_Endpoint_ElasticsearchSettings(CloudFormationProperty):
-  entity = "AWS::DMS::Endpoint"
-  tf_block_type = "elasticsearch_settings"
+  def write(self, w):
+    with w.block("elasticsearch_settings"):
+      self.property(w, "EndpointUri", "endpoint_uri", StringValueConverter())
+      self.property(w, "FullLoadErrorPercentage", "full_load_error_percentage", BasicValueConverter())
+      self.property(w, "ErrorRetryDuration", "error_retry_duration", BasicValueConverter())
+      self.property(w, "ServiceAccessRoleArn", "service_access_role_arn", StringValueConverter())
 
-  props = {
-    "EndpointUri": (StringValueConverter(), "endpoint_uri"),
-    "FullLoadErrorPercentage": (BasicValueConverter(), "full_load_error_percentage"),
-    "ErrorRetryDuration": (BasicValueConverter(), "error_retry_duration"),
-    "ServiceAccessRoleArn": (StringValueConverter(), "service_access_role_arn"),
-  }
 
 class AWS_DMS_ReplicationSubnetGroup(CloudFormationResource):
-  terraform_resource = "aws_dms_replication_subnet_group"
+  cfn_type = "AWS::DMS::ReplicationSubnetGroup"
+  tf_type = "aws_dms_replication_subnet_group"
+  ref = "arn"
 
-  resource_type = "AWS::DMS::ReplicationSubnetGroup"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ReplicationSubnetGroupDescription", "replication_subnet_group_description", StringValueConverter())
+      self.property(w, "ReplicationSubnetGroupIdentifier", "replication_subnet_group_identifier", StringValueConverter())
+      self.property(w, "SubnetIds", "subnet_ids", ListValueConverter(StringValueConverter()))
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "ReplicationSubnetGroupDescription": (StringValueConverter(), "replication_subnet_group_description"),
-    "ReplicationSubnetGroupIdentifier": (StringValueConverter(), "replication_subnet_group_identifier"),
-    "SubnetIds": (ListValueConverter(StringValueConverter()), "subnet_ids"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 
 class AWS_DMS_EventSubscription(CloudFormationResource):
-  terraform_resource = "aws_dms_event_subscription"
+  cfn_type = "AWS::DMS::EventSubscription"
+  tf_type = "aws_dms_event_subscription"
+  ref = "arn"
 
-  resource_type = "AWS::DMS::EventSubscription"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "SourceType", "source_type", StringValueConverter())
+      self.property(w, "EventCategories", "event_categories", ListValueConverter(StringValueConverter()))
+      self.property(w, "Enabled", "enabled", BasicValueConverter())
+      self.property(w, "SubscriptionName", "subscription_name", StringValueConverter())
+      self.property(w, "SnsTopicArn", "sns_topic_arn", StringValueConverter())
+      self.property(w, "SourceIds", "source_ids", ListValueConverter(StringValueConverter()))
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "SourceType": (StringValueConverter(), "source_type"),
-    "EventCategories": (ListValueConverter(StringValueConverter()), "event_categories"),
-    "Enabled": (BasicValueConverter(), "enabled"),
-    "SubscriptionName": (StringValueConverter(), "subscription_name"),
-    "SnsTopicArn": (StringValueConverter(), "sns_topic_arn"),
-    "SourceIds": (ListValueConverter(StringValueConverter()), "source_ids"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 
 class AWS_DMS_Certificate(CloudFormationResource):
-  terraform_resource = "aws_dms_certificate"
+  cfn_type = "AWS::DMS::Certificate"
+  tf_type = "aws_dms_certificate"
+  ref = "arn"
 
-  resource_type = "AWS::DMS::Certificate"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "CertificateIdentifier", "certificate_identifier", StringValueConverter())
+      self.property(w, "CertificatePem", "certificate_pem", StringValueConverter())
+      self.property(w, "CertificateWallet", "certificate_wallet", StringValueConverter())
 
-  props = {
-    "CertificateIdentifier": (StringValueConverter(), "certificate_identifier"),
-    "CertificatePem": (StringValueConverter(), "certificate_pem"),
-    "CertificateWallet": (StringValueConverter(), "certificate_wallet"),
-  }
 
 class AWS_DMS_Endpoint(CloudFormationResource):
-  terraform_resource = "aws_dms_endpoint"
+  cfn_type = "AWS::DMS::Endpoint"
+  tf_type = "aws_dms_endpoint"
+  ref = "arn"
 
-  resource_type = "AWS::DMS::Endpoint"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "KmsKeyId", "kms_key_id", StringValueConverter())
+      self.block(w, "KafkaSettings", AWS_DMS_Endpoint_KafkaSettings)
+      self.property(w, "Port", "port", BasicValueConverter())
+      self.property(w, "DatabaseName", "database_name", StringValueConverter())
+      self.block(w, "NeptuneSettings", AWS_DMS_Endpoint_NeptuneSettings)
+      self.block(w, "ElasticsearchSettings", AWS_DMS_Endpoint_ElasticsearchSettings)
+      self.block(w, "S3Settings", AWS_DMS_Endpoint_S3Settings)
+      self.property(w, "EngineName", "engine_name", StringValueConverter())
+      self.block(w, "DynamoDbSettings", AWS_DMS_Endpoint_DynamoDbSettings)
+      self.block(w, "KinesisSettings", AWS_DMS_Endpoint_KinesisSettings)
+      self.property(w, "Username", "username", StringValueConverter())
+      self.property(w, "SslMode", "ssl_mode", StringValueConverter())
+      self.property(w, "ServerName", "server_name", StringValueConverter())
+      self.property(w, "ExtraConnectionAttributes", "extra_connection_attributes", StringValueConverter())
+      self.property(w, "EndpointType", "endpoint_type", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "EndpointIdentifier", "endpoint_identifier", StringValueConverter())
+      self.property(w, "Password", "password", StringValueConverter())
+      self.property(w, "CertificateArn", "certificate_arn", StringValueConverter())
+      self.block(w, "MongoDbSettings", AWS_DMS_Endpoint_MongoDbSettings)
 
-  props = {
-    "KmsKeyId": (StringValueConverter(), "kms_key_id"),
-    "KafkaSettings": (AWS_DMS_Endpoint_KafkaSettings, "kafka_settings"),
-    "Port": (BasicValueConverter(), "port"),
-    "DatabaseName": (StringValueConverter(), "database_name"),
-    "NeptuneSettings": (AWS_DMS_Endpoint_NeptuneSettings, "neptune_settings"),
-    "ElasticsearchSettings": (AWS_DMS_Endpoint_ElasticsearchSettings, "elasticsearch_settings"),
-    "S3Settings": (AWS_DMS_Endpoint_S3Settings, "s3_settings"),
-    "EngineName": (StringValueConverter(), "engine_name"),
-    "DynamoDbSettings": (AWS_DMS_Endpoint_DynamoDbSettings, "dynamo_db_settings"),
-    "KinesisSettings": (AWS_DMS_Endpoint_KinesisSettings, "kinesis_settings"),
-    "Username": (StringValueConverter(), "username"),
-    "SslMode": (StringValueConverter(), "ssl_mode"),
-    "ServerName": (StringValueConverter(), "server_name"),
-    "ExtraConnectionAttributes": (StringValueConverter(), "extra_connection_attributes"),
-    "EndpointType": (StringValueConverter(), "endpoint_type"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "EndpointIdentifier": (StringValueConverter(), "endpoint_identifier"),
-    "Password": (StringValueConverter(), "password"),
-    "CertificateArn": (StringValueConverter(), "certificate_arn"),
-    "MongoDbSettings": (AWS_DMS_Endpoint_MongoDbSettings, "mongo_db_settings"),
-  }
 
 class AWS_DMS_ReplicationTask(CloudFormationResource):
-  terraform_resource = "aws_dms_replication_task"
+  cfn_type = "AWS::DMS::ReplicationTask"
+  tf_type = "aws_dms_replication_task"
+  ref = "arn"
 
-  resource_type = "AWS::DMS::ReplicationTask"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ReplicationTaskSettings", "replication_task_settings", StringValueConverter())
+      self.property(w, "TableMappings", "table_mappings", StringValueConverter())
+      self.property(w, "CdcStartPosition", "cdc_start_position", StringValueConverter())
+      self.property(w, "ReplicationTaskIdentifier", "replication_task_identifier", StringValueConverter())
+      self.property(w, "CdcStopPosition", "cdc_stop_position", StringValueConverter())
+      self.property(w, "SourceEndpointArn", "source_endpoint_arn", StringValueConverter())
+      self.property(w, "MigrationType", "migration_type", StringValueConverter())
+      self.property(w, "TargetEndpointArn", "target_endpoint_arn", StringValueConverter())
+      self.property(w, "ReplicationInstanceArn", "replication_instance_arn", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "TaskData", "task_data", StringValueConverter())
+      self.property(w, "CdcStartTime", "cdc_start_time", BasicValueConverter())
 
-  props = {
-    "ReplicationTaskSettings": (StringValueConverter(), "replication_task_settings"),
-    "TableMappings": (StringValueConverter(), "table_mappings"),
-    "CdcStartPosition": (StringValueConverter(), "cdc_start_position"),
-    "ReplicationTaskIdentifier": (StringValueConverter(), "replication_task_identifier"),
-    "CdcStopPosition": (StringValueConverter(), "cdc_stop_position"),
-    "SourceEndpointArn": (StringValueConverter(), "source_endpoint_arn"),
-    "MigrationType": (StringValueConverter(), "migration_type"),
-    "TargetEndpointArn": (StringValueConverter(), "target_endpoint_arn"),
-    "ReplicationInstanceArn": (StringValueConverter(), "replication_instance_arn"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "TaskData": (StringValueConverter(), "task_data"),
-    "CdcStartTime": (BasicValueConverter(), "cdc_start_time"),
-  }
 
 class AWS_DMS_ReplicationInstance(CloudFormationResource):
-  terraform_resource = "aws_dms_replication_instance"
+  cfn_type = "AWS::DMS::ReplicationInstance"
+  tf_type = "aws_dms_replication_instance"
+  ref = "arn"
 
-  resource_type = "AWS::DMS::ReplicationInstance"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ReplicationInstanceIdentifier", "replication_instance_identifier", StringValueConverter())
+      self.property(w, "EngineVersion", "engine_version", StringValueConverter())
+      self.property(w, "KmsKeyId", "kms_key_id", StringValueConverter())
+      self.property(w, "AvailabilityZone", "availability_zone", StringValueConverter())
+      self.property(w, "PreferredMaintenanceWindow", "preferred_maintenance_window", StringValueConverter())
+      self.property(w, "AutoMinorVersionUpgrade", "auto_minor_version_upgrade", BasicValueConverter())
+      self.property(w, "ReplicationSubnetGroupIdentifier", "replication_subnet_group_identifier", StringValueConverter())
+      self.property(w, "AllocatedStorage", "allocated_storage", BasicValueConverter())
+      self.property(w, "VpcSecurityGroupIds", "vpc_security_group_ids", ListValueConverter(StringValueConverter()))
+      self.property(w, "AllowMajorVersionUpgrade", "allow_major_version_upgrade", BasicValueConverter())
+      self.property(w, "ReplicationInstanceClass", "replication_instance_class", StringValueConverter())
+      self.property(w, "PubliclyAccessible", "publicly_accessible", BasicValueConverter())
+      self.property(w, "MultiAZ", "multi_az", BasicValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "ReplicationInstanceIdentifier": (StringValueConverter(), "replication_instance_identifier"),
-    "EngineVersion": (StringValueConverter(), "engine_version"),
-    "KmsKeyId": (StringValueConverter(), "kms_key_id"),
-    "AvailabilityZone": (StringValueConverter(), "availability_zone"),
-    "PreferredMaintenanceWindow": (StringValueConverter(), "preferred_maintenance_window"),
-    "AutoMinorVersionUpgrade": (BasicValueConverter(), "auto_minor_version_upgrade"),
-    "ReplicationSubnetGroupIdentifier": (StringValueConverter(), "replication_subnet_group_identifier"),
-    "AllocatedStorage": (BasicValueConverter(), "allocated_storage"),
-    "VpcSecurityGroupIds": (ListValueConverter(StringValueConverter()), "vpc_security_group_ids"),
-    "AllowMajorVersionUpgrade": (BasicValueConverter(), "allow_major_version_upgrade"),
-    "ReplicationInstanceClass": (StringValueConverter(), "replication_instance_class"),
-    "PubliclyAccessible": (BasicValueConverter(), "publicly_accessible"),
-    "MultiAZ": (BasicValueConverter(), "multi_az"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 

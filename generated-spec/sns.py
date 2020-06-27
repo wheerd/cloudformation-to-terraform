@@ -1,52 +1,53 @@
 from . import *
 
 class AWS_SNS_Topic_Subscription(CloudFormationProperty):
-  entity = "AWS::SNS::Topic"
-  tf_block_type = "subscription"
+  def write(self, w):
+    with w.block("subscription"):
+      self.property(w, "Endpoint", "endpoint", StringValueConverter())
+      self.property(w, "Protocol", "protocol", StringValueConverter())
 
-  props = {
-    "Endpoint": (StringValueConverter(), "endpoint"),
-    "Protocol": (StringValueConverter(), "protocol"),
-  }
 
 class AWS_SNS_Subscription(CloudFormationResource):
-  terraform_resource = "aws_sns_subscription"
+  cfn_type = "AWS::SNS::Subscription"
+  tf_type = "aws_sns_subscription"
+  ref = "arn"
 
-  resource_type = "AWS::SNS::Subscription"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "DeliveryPolicy", "delivery_policy", StringValueConverter())
+      self.property(w, "Endpoint", "endpoint", StringValueConverter())
+      self.property(w, "FilterPolicy", "filter_policy", StringValueConverter())
+      self.property(w, "Protocol", "protocol", StringValueConverter())
+      self.property(w, "RawMessageDelivery", "raw_message_delivery", BasicValueConverter())
+      self.property(w, "RedrivePolicy", "redrive_policy", StringValueConverter())
+      self.property(w, "Region", "region", StringValueConverter())
+      self.property(w, "TopicArn", "topic_arn", StringValueConverter())
 
-  props = {
-    "DeliveryPolicy": (StringValueConverter(), "delivery_policy"),
-    "Endpoint": (StringValueConverter(), "endpoint"),
-    "FilterPolicy": (StringValueConverter(), "filter_policy"),
-    "Protocol": (StringValueConverter(), "protocol"),
-    "RawMessageDelivery": (BasicValueConverter(), "raw_message_delivery"),
-    "RedrivePolicy": (StringValueConverter(), "redrive_policy"),
-    "Region": (StringValueConverter(), "region"),
-    "TopicArn": (StringValueConverter(), "topic_arn"),
-  }
 
 class AWS_SNS_Topic(CloudFormationResource):
-  terraform_resource = "aws_sns_topic"
+  cfn_type = "AWS::SNS::Topic"
+  tf_type = "aws_sns_topic"
+  ref = "arn"
 
-  resource_type = "AWS::SNS::Topic"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ContentBasedDeduplication", "content_based_deduplication", BasicValueConverter())
+      self.property(w, "DisplayName", "display_name", StringValueConverter())
+      self.property(w, "FifoTopic", "fifo_topic", BasicValueConverter())
+      self.property(w, "KmsMasterKeyId", "kms_master_key_id", StringValueConverter())
+      self.repeated_block(w, "Subscription", AWS_SNS_Topic_Subscription)
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "TopicName", "topic_name", StringValueConverter())
 
-  props = {
-    "ContentBasedDeduplication": (BasicValueConverter(), "content_based_deduplication"),
-    "DisplayName": (StringValueConverter(), "display_name"),
-    "FifoTopic": (BasicValueConverter(), "fifo_topic"),
-    "KmsMasterKeyId": (StringValueConverter(), "kms_master_key_id"),
-    "Subscription": (BlockValueConverter(AWS_SNS_Topic_Subscription), None),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "TopicName": (StringValueConverter(), "topic_name"),
-  }
 
 class AWS_SNS_TopicPolicy(CloudFormationResource):
-  terraform_resource = "aws_sns_topic_policy"
+  cfn_type = "AWS::SNS::TopicPolicy"
+  tf_type = "aws_sns_topic_policy"
+  ref = "arn"
 
-  resource_type = "AWS::SNS::TopicPolicy"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "PolicyDocument", "policy_document", StringValueConverter())
+      self.property(w, "Topics", "topics", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "PolicyDocument": (StringValueConverter(), "policy_document"),
-    "Topics": (ListValueConverter(StringValueConverter()), "topics"),
-  }
 

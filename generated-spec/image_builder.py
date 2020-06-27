@@ -1,182 +1,170 @@
 from . import *
 
 class AWS_ImageBuilder_ImagePipeline_ImageTestsConfiguration(CloudFormationProperty):
-  entity = "AWS::ImageBuilder::ImagePipeline"
-  tf_block_type = "image_tests_configuration"
+  def write(self, w):
+    with w.block("image_tests_configuration"):
+      self.property(w, "ImageTestsEnabled", "image_tests_enabled", BasicValueConverter())
+      self.property(w, "TimeoutMinutes", "timeout_minutes", BasicValueConverter())
 
-  props = {
-    "ImageTestsEnabled": (BasicValueConverter(), "image_tests_enabled"),
-    "TimeoutMinutes": (BasicValueConverter(), "timeout_minutes"),
-  }
 
 class AWS_ImageBuilder_DistributionConfiguration_Distribution(CloudFormationProperty):
-  entity = "AWS::ImageBuilder::DistributionConfiguration"
-  tf_block_type = "distribution"
+  def write(self, w):
+    with w.block("distribution"):
+      self.property(w, "Region", "region", StringValueConverter())
+      self.property(w, "AmiDistributionConfiguration", "ami_distribution_configuration", StringValueConverter())
+      self.property(w, "LicenseConfigurationArns", "license_configuration_arns", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "Region": (StringValueConverter(), "region"),
-    "AmiDistributionConfiguration": (StringValueConverter(), "ami_distribution_configuration"),
-    "LicenseConfigurationArns": (ListValueConverter(StringValueConverter()), "license_configuration_arns"),
-  }
 
 class AWS_ImageBuilder_ImagePipeline_Schedule(CloudFormationProperty):
-  entity = "AWS::ImageBuilder::ImagePipeline"
-  tf_block_type = "schedule"
+  def write(self, w):
+    with w.block("schedule"):
+      self.property(w, "ScheduleExpression", "schedule_expression", StringValueConverter())
+      self.property(w, "PipelineExecutionStartCondition", "pipeline_execution_start_condition", StringValueConverter())
 
-  props = {
-    "ScheduleExpression": (StringValueConverter(), "schedule_expression"),
-    "PipelineExecutionStartCondition": (StringValueConverter(), "pipeline_execution_start_condition"),
-  }
 
 class AWS_ImageBuilder_Image_ImageTestsConfiguration(CloudFormationProperty):
-  entity = "AWS::ImageBuilder::Image"
-  tf_block_type = "image_tests_configuration"
+  def write(self, w):
+    with w.block("image_tests_configuration"):
+      self.property(w, "ImageTestsEnabled", "image_tests_enabled", BasicValueConverter())
+      self.property(w, "TimeoutMinutes", "timeout_minutes", BasicValueConverter())
 
-  props = {
-    "ImageTestsEnabled": (BasicValueConverter(), "image_tests_enabled"),
-    "TimeoutMinutes": (BasicValueConverter(), "timeout_minutes"),
-  }
 
 class AWS_ImageBuilder_InfrastructureConfiguration_S3Logs(CloudFormationProperty):
-  entity = "AWS::ImageBuilder::InfrastructureConfiguration"
-  tf_block_type = "s3_logs"
+  def write(self, w):
+    with w.block("s3_logs"):
+      self.property(w, "S3BucketName", "s3_bucket_name", StringValueConverter())
+      self.property(w, "S3KeyPrefix", "s3_key_prefix", StringValueConverter())
 
-  props = {
-    "S3BucketName": (StringValueConverter(), "s3_bucket_name"),
-    "S3KeyPrefix": (StringValueConverter(), "s3_key_prefix"),
-  }
 
 class AWS_ImageBuilder_InfrastructureConfiguration_Logging(CloudFormationProperty):
-  entity = "AWS::ImageBuilder::InfrastructureConfiguration"
-  tf_block_type = "logging"
+  def write(self, w):
+    with w.block("logging"):
+      self.block(w, "S3Logs", AWS_ImageBuilder_InfrastructureConfiguration_S3Logs)
 
-  props = {
-    "S3Logs": (AWS_ImageBuilder_InfrastructureConfiguration_S3Logs, "s3_logs"),
-  }
 
 class AWS_ImageBuilder_ImageRecipe_ComponentConfiguration(CloudFormationProperty):
-  entity = "AWS::ImageBuilder::ImageRecipe"
-  tf_block_type = "component_configuration"
+  def write(self, w):
+    with w.block("component_configuration"):
+      self.property(w, "ComponentArn", "component_arn", StringValueConverter())
 
-  props = {
-    "ComponentArn": (StringValueConverter(), "component_arn"),
-  }
 
 class AWS_ImageBuilder_ImageRecipe_EbsInstanceBlockDeviceSpecification(CloudFormationProperty):
-  entity = "AWS::ImageBuilder::ImageRecipe"
-  tf_block_type = "ebs_instance_block_device_specification"
+  def write(self, w):
+    with w.block("ebs_instance_block_device_specification"):
+      self.property(w, "Encrypted", "encrypted", BasicValueConverter())
+      self.property(w, "DeleteOnTermination", "delete_on_termination", BasicValueConverter())
+      self.property(w, "Iops", "iops", BasicValueConverter())
+      self.property(w, "KmsKeyId", "kms_key_id", StringValueConverter())
+      self.property(w, "SnapshotId", "snapshot_id", StringValueConverter())
+      self.property(w, "VolumeSize", "volume_size", BasicValueConverter())
+      self.property(w, "VolumeType", "volume_type", StringValueConverter())
 
-  props = {
-    "Encrypted": (BasicValueConverter(), "encrypted"),
-    "DeleteOnTermination": (BasicValueConverter(), "delete_on_termination"),
-    "Iops": (BasicValueConverter(), "iops"),
-    "KmsKeyId": (StringValueConverter(), "kms_key_id"),
-    "SnapshotId": (StringValueConverter(), "snapshot_id"),
-    "VolumeSize": (BasicValueConverter(), "volume_size"),
-    "VolumeType": (StringValueConverter(), "volume_type"),
-  }
 
 class AWS_ImageBuilder_Component(CloudFormationResource):
-  terraform_resource = "aws_image_builder_component"
+  cfn_type = "AWS::ImageBuilder::Component"
+  tf_type = "aws_image_builder_component"
+  ref = "arn"
 
-  resource_type = "AWS::ImageBuilder::Component"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Version", "version", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "ChangeDescription", "change_description", StringValueConverter())
+      self.property(w, "Platform", "platform", StringValueConverter())
+      self.property(w, "Data", "data", StringValueConverter())
+      self.property(w, "KmsKeyId", "kms_key_id", StringValueConverter())
+      self.property(w, "Tags", "tags", MapValueConverter(StringValueConverter()))
+      self.property(w, "Uri", "uri", StringValueConverter())
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-    "Version": (StringValueConverter(), "version"),
-    "Description": (StringValueConverter(), "description"),
-    "ChangeDescription": (StringValueConverter(), "change_description"),
-    "Platform": (StringValueConverter(), "platform"),
-    "Data": (StringValueConverter(), "data"),
-    "KmsKeyId": (StringValueConverter(), "kms_key_id"),
-    "Tags": (MapValueConverter(StringValueConverter()), "tags"),
-    "Uri": (StringValueConverter(), "uri"),
-  }
 
 class AWS_ImageBuilder_InfrastructureConfiguration(CloudFormationResource):
-  terraform_resource = "aws_image_builder_infrastructure_configuration"
+  cfn_type = "AWS::ImageBuilder::InfrastructureConfiguration"
+  tf_type = "aws_image_builder_infrastructure_configuration"
+  ref = "arn"
 
-  resource_type = "AWS::ImageBuilder::InfrastructureConfiguration"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "InstanceTypes", "instance_types", ListValueConverter(StringValueConverter()))
+      self.property(w, "SecurityGroupIds", "security_group_ids", ListValueConverter(StringValueConverter()))
+      self.property(w, "Logging", "logging", StringValueConverter())
+      self.property(w, "SubnetId", "subnet_id", StringValueConverter())
+      self.property(w, "KeyPair", "key_pair", StringValueConverter())
+      self.property(w, "TerminateInstanceOnFailure", "terminate_instance_on_failure", BasicValueConverter())
+      self.property(w, "InstanceProfileName", "instance_profile_name", StringValueConverter())
+      self.property(w, "SnsTopicArn", "sns_topic_arn", StringValueConverter())
+      self.property(w, "Tags", "tags", MapValueConverter(StringValueConverter()))
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-    "Description": (StringValueConverter(), "description"),
-    "InstanceTypes": (ListValueConverter(StringValueConverter()), "instance_types"),
-    "SecurityGroupIds": (ListValueConverter(StringValueConverter()), "security_group_ids"),
-    "Logging": (StringValueConverter(), "logging"),
-    "SubnetId": (StringValueConverter(), "subnet_id"),
-    "KeyPair": (StringValueConverter(), "key_pair"),
-    "TerminateInstanceOnFailure": (BasicValueConverter(), "terminate_instance_on_failure"),
-    "InstanceProfileName": (StringValueConverter(), "instance_profile_name"),
-    "SnsTopicArn": (StringValueConverter(), "sns_topic_arn"),
-    "Tags": (MapValueConverter(StringValueConverter()), "tags"),
-  }
 
 class AWS_ImageBuilder_ImagePipeline(CloudFormationResource):
-  terraform_resource = "aws_image_builder_image_pipeline"
+  cfn_type = "AWS::ImageBuilder::ImagePipeline"
+  tf_type = "aws_image_builder_image_pipeline"
+  ref = "arn"
 
-  resource_type = "AWS::ImageBuilder::ImagePipeline"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.block(w, "ImageTestsConfiguration", AWS_ImageBuilder_ImagePipeline_ImageTestsConfiguration)
+      self.property(w, "Status", "status", StringValueConverter())
+      self.block(w, "Schedule", AWS_ImageBuilder_ImagePipeline_Schedule)
+      self.property(w, "ImageRecipeArn", "image_recipe_arn", StringValueConverter())
+      self.property(w, "DistributionConfigurationArn", "distribution_configuration_arn", StringValueConverter())
+      self.property(w, "InfrastructureConfigurationArn", "infrastructure_configuration_arn", StringValueConverter())
+      self.property(w, "Tags", "tags", MapValueConverter(StringValueConverter()))
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-    "Description": (StringValueConverter(), "description"),
-    "ImageTestsConfiguration": (AWS_ImageBuilder_ImagePipeline_ImageTestsConfiguration, "image_tests_configuration"),
-    "Status": (StringValueConverter(), "status"),
-    "Schedule": (AWS_ImageBuilder_ImagePipeline_Schedule, "schedule"),
-    "ImageRecipeArn": (StringValueConverter(), "image_recipe_arn"),
-    "DistributionConfigurationArn": (StringValueConverter(), "distribution_configuration_arn"),
-    "InfrastructureConfigurationArn": (StringValueConverter(), "infrastructure_configuration_arn"),
-    "Tags": (MapValueConverter(StringValueConverter()), "tags"),
-  }
 
 class AWS_ImageBuilder_DistributionConfiguration(CloudFormationResource):
-  terraform_resource = "aws_image_builder_distribution_configuration"
+  cfn_type = "AWS::ImageBuilder::DistributionConfiguration"
+  tf_type = "aws_image_builder_distribution_configuration"
+  ref = "arn"
 
-  resource_type = "AWS::ImageBuilder::DistributionConfiguration"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.repeated_block(w, "Distributions", AWS_ImageBuilder_DistributionConfiguration_Distribution)
+      self.property(w, "Tags", "tags", MapValueConverter(StringValueConverter()))
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-    "Description": (StringValueConverter(), "description"),
-    "Distributions": (BlockValueConverter(AWS_ImageBuilder_DistributionConfiguration_Distribution), None),
-    "Tags": (MapValueConverter(StringValueConverter()), "tags"),
-  }
 
 class AWS_ImageBuilder_Image(CloudFormationResource):
-  terraform_resource = "aws_image_builder_image"
+  cfn_type = "AWS::ImageBuilder::Image"
+  tf_type = "aws_image_builder_image"
+  ref = "arn"
 
-  resource_type = "AWS::ImageBuilder::Image"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "ImageTestsConfiguration", AWS_ImageBuilder_Image_ImageTestsConfiguration)
+      self.property(w, "ImageRecipeArn", "image_recipe_arn", StringValueConverter())
+      self.property(w, "DistributionConfigurationArn", "distribution_configuration_arn", StringValueConverter())
+      self.property(w, "InfrastructureConfigurationArn", "infrastructure_configuration_arn", StringValueConverter())
+      self.property(w, "Tags", "tags", MapValueConverter(StringValueConverter()))
 
-  props = {
-    "ImageTestsConfiguration": (AWS_ImageBuilder_Image_ImageTestsConfiguration, "image_tests_configuration"),
-    "ImageRecipeArn": (StringValueConverter(), "image_recipe_arn"),
-    "DistributionConfigurationArn": (StringValueConverter(), "distribution_configuration_arn"),
-    "InfrastructureConfigurationArn": (StringValueConverter(), "infrastructure_configuration_arn"),
-    "Tags": (MapValueConverter(StringValueConverter()), "tags"),
-  }
 
 class AWS_ImageBuilder_ImageRecipe_InstanceBlockDeviceMapping(CloudFormationProperty):
-  entity = "AWS::ImageBuilder::ImageRecipe"
-  tf_block_type = "instance_block_device_mapping"
+  def write(self, w):
+    with w.block("instance_block_device_mapping"):
+      self.property(w, "DeviceName", "device_name", StringValueConverter())
+      self.property(w, "VirtualName", "virtual_name", StringValueConverter())
+      self.property(w, "NoDevice", "no_device", StringValueConverter())
+      self.block(w, "Ebs", AWS_ImageBuilder_ImageRecipe_EbsInstanceBlockDeviceSpecification)
 
-  props = {
-    "DeviceName": (StringValueConverter(), "device_name"),
-    "VirtualName": (StringValueConverter(), "virtual_name"),
-    "NoDevice": (StringValueConverter(), "no_device"),
-    "Ebs": (AWS_ImageBuilder_ImageRecipe_EbsInstanceBlockDeviceSpecification, "ebs"),
-  }
 
 class AWS_ImageBuilder_ImageRecipe(CloudFormationResource):
-  terraform_resource = "aws_image_builder_image_recipe"
+  cfn_type = "AWS::ImageBuilder::ImageRecipe"
+  tf_type = "aws_image_builder_image_recipe"
+  ref = "arn"
 
-  resource_type = "AWS::ImageBuilder::ImageRecipe"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "Version", "version", StringValueConverter())
+      self.repeated_block(w, "Components", AWS_ImageBuilder_ImageRecipe_ComponentConfiguration)
+      self.repeated_block(w, "BlockDeviceMappings", AWS_ImageBuilder_ImageRecipe_InstanceBlockDeviceMapping)
+      self.property(w, "ParentImage", "parent_image", StringValueConverter())
+      self.property(w, "Tags", "tags", MapValueConverter(StringValueConverter()))
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-    "Description": (StringValueConverter(), "description"),
-    "Version": (StringValueConverter(), "version"),
-    "Components": (BlockValueConverter(AWS_ImageBuilder_ImageRecipe_ComponentConfiguration), None),
-    "BlockDeviceMappings": (BlockValueConverter(AWS_ImageBuilder_ImageRecipe_InstanceBlockDeviceMapping), None),
-    "ParentImage": (StringValueConverter(), "parent_image"),
-    "Tags": (MapValueConverter(StringValueConverter()), "tags"),
-  }
 

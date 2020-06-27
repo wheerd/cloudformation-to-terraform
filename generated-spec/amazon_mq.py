@@ -1,125 +1,112 @@
 from . import *
 
 class AWS_AmazonMQ_Broker_EncryptionOptions(CloudFormationProperty):
-  entity = "AWS::AmazonMQ::Broker"
-  tf_block_type = "encryption_options"
+  def write(self, w):
+    with w.block("encryption_options"):
+      self.property(w, "KmsKeyId", "kms_key_id", StringValueConverter())
+      self.property(w, "UseAwsOwnedKey", "use_aws_owned_key", BasicValueConverter())
 
-  props = {
-    "KmsKeyId": (StringValueConverter(), "kms_key_id"),
-    "UseAwsOwnedKey": (BasicValueConverter(), "use_aws_owned_key"),
-  }
 
 class AWS_AmazonMQ_Broker_MaintenanceWindow(CloudFormationProperty):
-  entity = "AWS::AmazonMQ::Broker"
-  tf_block_type = "maintenance_window"
+  def write(self, w):
+    with w.block("maintenance_window"):
+      self.property(w, "DayOfWeek", "day_of_week", StringValueConverter())
+      self.property(w, "TimeOfDay", "time_of_day", StringValueConverter())
+      self.property(w, "TimeZone", "time_zone", StringValueConverter())
 
-  props = {
-    "DayOfWeek": (StringValueConverter(), "day_of_week"),
-    "TimeOfDay": (StringValueConverter(), "time_of_day"),
-    "TimeZone": (StringValueConverter(), "time_zone"),
-  }
 
 class AWS_AmazonMQ_Broker_LogList(CloudFormationProperty):
-  entity = "AWS::AmazonMQ::Broker"
-  tf_block_type = "log_list"
+  def write(self, w):
+    with w.block("log_list"):
+      self.property(w, "Audit", "audit", BasicValueConverter())
+      self.property(w, "General", "general", BasicValueConverter())
 
-  props = {
-    "Audit": (BasicValueConverter(), "audit"),
-    "General": (BasicValueConverter(), "general"),
-  }
 
 class AWS_AmazonMQ_Broker_TagsEntry(CloudFormationProperty):
-  entity = "AWS::AmazonMQ::Broker"
-  tf_block_type = "tags_entry"
+  def write(self, w):
+    with w.block("tags_entry"):
+      self.property(w, "Value", "value", StringValueConverter())
+      self.property(w, "Key", "key", StringValueConverter())
 
-  props = {
-    "Value": (StringValueConverter(), "value"),
-    "Key": (StringValueConverter(), "key"),
-  }
 
 class AWS_AmazonMQ_Broker_User(CloudFormationProperty):
-  entity = "AWS::AmazonMQ::Broker"
-  tf_block_type = "user"
+  def write(self, w):
+    with w.block("user"):
+      self.property(w, "Username", "username", StringValueConverter())
+      self.property(w, "Groups", "groups", ListValueConverter(StringValueConverter()))
+      self.property(w, "ConsoleAccess", "console_access", BasicValueConverter())
+      self.property(w, "Password", "password", StringValueConverter())
 
-  props = {
-    "Username": (StringValueConverter(), "username"),
-    "Groups": (ListValueConverter(StringValueConverter()), "groups"),
-    "ConsoleAccess": (BasicValueConverter(), "console_access"),
-    "Password": (StringValueConverter(), "password"),
-  }
 
 class AWS_AmazonMQ_Configuration_TagsEntry(CloudFormationProperty):
-  entity = "AWS::AmazonMQ::Configuration"
-  tf_block_type = "tags_entry"
+  def write(self, w):
+    with w.block("tags_entry"):
+      self.property(w, "Value", "value", StringValueConverter())
+      self.property(w, "Key", "key", StringValueConverter())
 
-  props = {
-    "Value": (StringValueConverter(), "value"),
-    "Key": (StringValueConverter(), "key"),
-  }
 
 class AWS_AmazonMQ_Broker_ConfigurationId(CloudFormationProperty):
-  entity = "AWS::AmazonMQ::Broker"
-  tf_block_type = "configuration_id"
+  def write(self, w):
+    with w.block("configuration_id"):
+      self.property(w, "Revision", "revision", BasicValueConverter())
+      self.property(w, "Id", "id", StringValueConverter())
 
-  props = {
-    "Revision": (BasicValueConverter(), "revision"),
-    "Id": (StringValueConverter(), "id"),
-  }
 
 class AWS_AmazonMQ_ConfigurationAssociation_ConfigurationId(CloudFormationProperty):
-  entity = "AWS::AmazonMQ::ConfigurationAssociation"
-  tf_block_type = "configuration_id"
+  def write(self, w):
+    with w.block("configuration_id"):
+      self.property(w, "Revision", "revision", BasicValueConverter())
+      self.property(w, "Id", "id", StringValueConverter())
 
-  props = {
-    "Revision": (BasicValueConverter(), "revision"),
-    "Id": (StringValueConverter(), "id"),
-  }
 
 class AWS_AmazonMQ_ConfigurationAssociation(CloudFormationResource):
-  terraform_resource = "aws_amazon_mq_configuration_association"
+  cfn_type = "AWS::AmazonMQ::ConfigurationAssociation"
+  tf_type = "aws_amazon_mq_configuration_association"
+  ref = "arn"
 
-  resource_type = "AWS::AmazonMQ::ConfigurationAssociation"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Broker", "broker", StringValueConverter())
+      self.block(w, "Configuration", AWS_AmazonMQ_ConfigurationAssociation_ConfigurationId)
 
-  props = {
-    "Broker": (StringValueConverter(), "broker"),
-    "Configuration": (AWS_AmazonMQ_ConfigurationAssociation_ConfigurationId, "configuration"),
-  }
 
 class AWS_AmazonMQ_Configuration(CloudFormationResource):
-  terraform_resource = "aws_amazon_mq_configuration"
+  cfn_type = "AWS::AmazonMQ::Configuration"
+  tf_type = "aws_amazon_mq_configuration"
+  ref = "arn"
 
-  resource_type = "AWS::AmazonMQ::Configuration"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "EngineVersion", "engine_version", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "EngineType", "engine_type", StringValueConverter())
+      self.property(w, "Data", "data", StringValueConverter())
+      self.repeated_block(w, "Tags", AWS_AmazonMQ_Configuration_TagsEntry)
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "EngineVersion": (StringValueConverter(), "engine_version"),
-    "Description": (StringValueConverter(), "description"),
-    "EngineType": (StringValueConverter(), "engine_type"),
-    "Data": (StringValueConverter(), "data"),
-    "Tags": (BlockValueConverter(AWS_AmazonMQ_Configuration_TagsEntry), None),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_AmazonMQ_Broker(CloudFormationResource):
-  terraform_resource = "aws_amazon_mq_broker"
+  cfn_type = "AWS::AmazonMQ::Broker"
+  tf_type = "aws_amazon_mq_broker"
+  ref = "arn"
 
-  resource_type = "AWS::AmazonMQ::Broker"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "SecurityGroups", "security_groups", ListValueConverter(StringValueConverter()))
+      self.property(w, "StorageType", "storage_type", StringValueConverter())
+      self.property(w, "EngineVersion", "engine_version", StringValueConverter())
+      self.block(w, "Configuration", AWS_AmazonMQ_Broker_ConfigurationId)
+      self.block(w, "MaintenanceWindowStartTime", AWS_AmazonMQ_Broker_MaintenanceWindow)
+      self.property(w, "HostInstanceType", "host_instance_type", StringValueConverter())
+      self.property(w, "AutoMinorVersionUpgrade", "auto_minor_version_upgrade", BasicValueConverter())
+      self.repeated_block(w, "Users", AWS_AmazonMQ_Broker_User)
+      self.block(w, "Logs", AWS_AmazonMQ_Broker_LogList)
+      self.property(w, "SubnetIds", "subnet_ids", ListValueConverter(StringValueConverter()))
+      self.property(w, "BrokerName", "broker_name", StringValueConverter())
+      self.property(w, "DeploymentMode", "deployment_mode", StringValueConverter())
+      self.property(w, "EngineType", "engine_type", StringValueConverter())
+      self.property(w, "PubliclyAccessible", "publicly_accessible", BasicValueConverter())
+      self.block(w, "EncryptionOptions", AWS_AmazonMQ_Broker_EncryptionOptions)
+      self.repeated_block(w, "Tags", AWS_AmazonMQ_Broker_TagsEntry)
 
-  props = {
-    "SecurityGroups": (ListValueConverter(StringValueConverter()), "security_groups"),
-    "StorageType": (StringValueConverter(), "storage_type"),
-    "EngineVersion": (StringValueConverter(), "engine_version"),
-    "Configuration": (AWS_AmazonMQ_Broker_ConfigurationId, "configuration"),
-    "MaintenanceWindowStartTime": (AWS_AmazonMQ_Broker_MaintenanceWindow, "maintenance_window_start_time"),
-    "HostInstanceType": (StringValueConverter(), "host_instance_type"),
-    "AutoMinorVersionUpgrade": (BasicValueConverter(), "auto_minor_version_upgrade"),
-    "Users": (BlockValueConverter(AWS_AmazonMQ_Broker_User), None),
-    "Logs": (AWS_AmazonMQ_Broker_LogList, "logs"),
-    "SubnetIds": (ListValueConverter(StringValueConverter()), "subnet_ids"),
-    "BrokerName": (StringValueConverter(), "broker_name"),
-    "DeploymentMode": (StringValueConverter(), "deployment_mode"),
-    "EngineType": (StringValueConverter(), "engine_type"),
-    "PubliclyAccessible": (BasicValueConverter(), "publicly_accessible"),
-    "EncryptionOptions": (AWS_AmazonMQ_Broker_EncryptionOptions, "encryption_options"),
-    "Tags": (BlockValueConverter(AWS_AmazonMQ_Broker_TagsEntry), None),
-  }
 

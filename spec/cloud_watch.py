@@ -20,21 +20,6 @@ class AWS_CloudWatch_AnomalyDetector_Dimension(CloudFormationProperty):
       self.property(w, "Name", "name", StringValueConverter())
 
 
-class AWS_CloudWatch_Alarm_Dimension(CloudFormationProperty):
-  def write(self, w):
-    with w.block("dimension"):
-      self.property(w, "Name", "name", StringValueConverter())
-      self.property(w, "Value", "value", StringValueConverter())
-
-
-class AWS_CloudWatch_Alarm_Metric(CloudFormationProperty):
-  def write(self, w):
-    with w.block("metric"):
-      self.repeated_block(w, "Dimensions", AWS_CloudWatch_Alarm_Dimension)
-      self.property(w, "MetricName", "metric_name", StringValueConverter())
-      self.property(w, "Namespace", "namespace", StringValueConverter())
-
-
 class AWS_CloudWatch_AnomalyDetector_Configuration(CloudFormationProperty):
   def write(self, w):
     with w.block("configuration"):
@@ -44,8 +29,7 @@ class AWS_CloudWatch_AnomalyDetector_Configuration(CloudFormationProperty):
 
 class AWS_CloudWatch_Dashboard(CloudFormationResource):
   cfn_type = "AWS::CloudWatch::Dashboard"
-  tf_type = "aws_cloud_watch_dashboard"
-  ref = "arn"
+  tf_type = "aws_cloudwatch_dashboard"
 
   def write(self, w):
     with self.resource_block(w):
@@ -55,8 +39,7 @@ class AWS_CloudWatch_Dashboard(CloudFormationResource):
 
 class AWS_CloudWatch_AnomalyDetector(CloudFormationResource):
   cfn_type = "AWS::CloudWatch::AnomalyDetector"
-  tf_type = "aws_cloud_watch_anomaly_detector"
-  ref = "arn"
+  tf_type = "aws_cloudwatch_anomaly_detector"
 
   def write(self, w):
     with self.resource_block(w):
@@ -69,8 +52,7 @@ class AWS_CloudWatch_AnomalyDetector(CloudFormationResource):
 
 class AWS_CloudWatch_CompositeAlarm(CloudFormationResource):
   cfn_type = "AWS::CloudWatch::CompositeAlarm"
-  tf_type = "aws_cloud_watch_composite_alarm"
-  ref = "arn"
+  tf_type = "aws_cloudwatch_composite_alarm"
 
   def write(self, w):
     with self.resource_block(w):
@@ -85,8 +67,7 @@ class AWS_CloudWatch_CompositeAlarm(CloudFormationResource):
 
 class AWS_CloudWatch_InsightRule(CloudFormationResource):
   cfn_type = "AWS::CloudWatch::InsightRule"
-  tf_type = "aws_cloud_watch_insight_rule"
-  ref = "arn"
+  tf_type = "aws_cloudwatch_insight_rule"
 
   def write(self, w):
     with self.resource_block(w):
@@ -98,8 +79,10 @@ class AWS_CloudWatch_InsightRule(CloudFormationResource):
 
 class AWS_CloudWatch_Alarm_MetricStat(CloudFormationProperty):
   def write(self, w):
-    with w.block("metric_stat"):
-      self.block(w, "Metric", AWS_CloudWatch_Alarm_Metric)
+    with w.block("metric"):
+      self.dict_property(w, "Dimensions", "dimensions", StringValueConverter())
+      self.property(w, "Metric.MetricName", "metric_name", StringValueConverter())
+      self.property(w, "Metric.Namespace", "namespace", StringValueConverter())
       self.property(w, "Period", "period", BasicValueConverter())
       self.property(w, "Stat", "stat", StringValueConverter())
       self.property(w, "Unit", "unit", StringValueConverter())
@@ -107,7 +90,7 @@ class AWS_CloudWatch_Alarm_MetricStat(CloudFormationProperty):
 
 class AWS_CloudWatch_Alarm_MetricDataQuery(CloudFormationProperty):
   def write(self, w):
-    with w.block("metric_data_query"):
+    with w.block("metric_query"):
       self.property(w, "Expression", "expression", StringValueConverter())
       self.property(w, "Id", "id", StringValueConverter())
       self.property(w, "Label", "label", StringValueConverter())
@@ -118,8 +101,7 @@ class AWS_CloudWatch_Alarm_MetricDataQuery(CloudFormationProperty):
 
 class AWS_CloudWatch_Alarm(CloudFormationResource):
   cfn_type = "AWS::CloudWatch::Alarm"
-  tf_type = "aws_cloud_watch_alarm"
-  ref = "arn"
+  tf_type = "aws_cloudwatch_metric_alarm"
 
   def write(self, w):
     with self.resource_block(w):
@@ -129,7 +111,7 @@ class AWS_CloudWatch_Alarm(CloudFormationResource):
       self.property(w, "AlarmName", "alarm_name", StringValueConverter())
       self.property(w, "ComparisonOperator", "comparison_operator", StringValueConverter())
       self.property(w, "DatapointsToAlarm", "datapoints_to_alarm", BasicValueConverter())
-      self.repeated_block(w, "Dimensions", AWS_CloudWatch_Alarm_Dimension)
+      self.dict_property(w, "Dimensions", "dimensions", StringValueConverter())
       self.property(w, "EvaluateLowSampleCountPercentile", "evaluate_low_sample_count_percentile", StringValueConverter())
       self.property(w, "EvaluationPeriods", "evaluation_periods", BasicValueConverter())
       self.property(w, "ExtendedStatistic", "extended_statistic", StringValueConverter())

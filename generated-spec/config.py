@@ -1,282 +1,259 @@
 from . import *
 
 class AWS_Config_OrganizationConformancePack_ConformancePackInputParameter(CloudFormationProperty):
-  entity = "AWS::Config::OrganizationConformancePack"
-  tf_block_type = "conformance_pack_input_parameter"
+  def write(self, w):
+    with w.block("conformance_pack_input_parameter"):
+      self.property(w, "ParameterName", "parameter_name", StringValueConverter())
+      self.property(w, "ParameterValue", "parameter_value", StringValueConverter())
 
-  props = {
-    "ParameterName": (StringValueConverter(), "parameter_name"),
-    "ParameterValue": (StringValueConverter(), "parameter_value"),
-  }
 
 class AWS_Config_ConfigurationAggregator_OrganizationAggregationSource(CloudFormationProperty):
-  entity = "AWS::Config::ConfigurationAggregator"
-  tf_block_type = "organization_aggregation_source"
+  def write(self, w):
+    with w.block("organization_aggregation_source"):
+      self.property(w, "AllAwsRegions", "all_aws_regions", BasicValueConverter())
+      self.property(w, "AwsRegions", "aws_regions", ListValueConverter(StringValueConverter()))
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
 
-  props = {
-    "AllAwsRegions": (BasicValueConverter(), "all_aws_regions"),
-    "AwsRegions": (ListValueConverter(StringValueConverter()), "aws_regions"),
-    "RoleArn": (StringValueConverter(), "role_arn"),
-  }
 
 class AWS_Config_DeliveryChannel_ConfigSnapshotDeliveryProperties(CloudFormationProperty):
-  entity = "AWS::Config::DeliveryChannel"
-  tf_block_type = "config_snapshot_delivery_properties"
+  def write(self, w):
+    with w.block("config_snapshot_delivery_properties"):
+      self.property(w, "DeliveryFrequency", "delivery_frequency", StringValueConverter())
 
-  props = {
-    "DeliveryFrequency": (StringValueConverter(), "delivery_frequency"),
-  }
 
 class AWS_Config_ConfigurationRecorder_RecordingGroup(CloudFormationProperty):
-  entity = "AWS::Config::ConfigurationRecorder"
-  tf_block_type = "recording_group"
+  def write(self, w):
+    with w.block("recording_group"):
+      self.property(w, "AllSupported", "all_supported", BasicValueConverter())
+      self.property(w, "IncludeGlobalResourceTypes", "include_global_resource_types", BasicValueConverter())
+      self.property(w, "ResourceTypes", "resource_types", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "AllSupported": (BasicValueConverter(), "all_supported"),
-    "IncludeGlobalResourceTypes": (BasicValueConverter(), "include_global_resource_types"),
-    "ResourceTypes": (ListValueConverter(StringValueConverter()), "resource_types"),
-  }
 
 class AWS_Config_RemediationConfiguration_ResourceValue(CloudFormationProperty):
-  entity = "AWS::Config::RemediationConfiguration"
-  tf_block_type = "resource_value"
+  def write(self, w):
+    with w.block("resource_value"):
+      self.property(w, "Value", "value", StringValueConverter())
 
-  props = {
-    "Value": (StringValueConverter(), "value"),
-  }
 
 class AWS_Config_ConfigRule_Scope(CloudFormationProperty):
-  entity = "AWS::Config::ConfigRule"
-  tf_block_type = "scope"
+  def write(self, w):
+    with w.block("scope"):
+      self.property(w, "ComplianceResourceId", "compliance_resource_id", StringValueConverter())
+      self.property(w, "ComplianceResourceTypes", "compliance_resource_types", ListValueConverter(StringValueConverter()))
+      self.property(w, "TagKey", "tag_key", StringValueConverter())
+      self.property(w, "TagValue", "tag_value", StringValueConverter())
 
-  props = {
-    "ComplianceResourceId": (StringValueConverter(), "compliance_resource_id"),
-    "ComplianceResourceTypes": (ListValueConverter(StringValueConverter()), "compliance_resource_types"),
-    "TagKey": (StringValueConverter(), "tag_key"),
-    "TagValue": (StringValueConverter(), "tag_value"),
-  }
 
 class AWS_Config_OrganizationConfigRule_OrganizationManagedRuleMetadata(CloudFormationProperty):
-  entity = "AWS::Config::OrganizationConfigRule"
-  tf_block_type = "organization_managed_rule_metadata"
+  def write(self, w):
+    with w.block("organization_managed_rule_metadata"):
+      self.property(w, "TagKeyScope", "tag_key_scope", StringValueConverter())
+      self.property(w, "TagValueScope", "tag_value_scope", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "ResourceIdScope", "resource_id_scope", StringValueConverter())
+      self.property(w, "RuleIdentifier", "rule_identifier", StringValueConverter())
+      self.property(w, "ResourceTypesScope", "resource_types_scope", ListValueConverter(StringValueConverter()))
+      self.property(w, "MaximumExecutionFrequency", "maximum_execution_frequency", StringValueConverter())
+      self.property(w, "InputParameters", "input_parameters", StringValueConverter())
 
-  props = {
-    "TagKeyScope": (StringValueConverter(), "tag_key_scope"),
-    "TagValueScope": (StringValueConverter(), "tag_value_scope"),
-    "Description": (StringValueConverter(), "description"),
-    "ResourceIdScope": (StringValueConverter(), "resource_id_scope"),
-    "RuleIdentifier": (StringValueConverter(), "rule_identifier"),
-    "ResourceTypesScope": (ListValueConverter(StringValueConverter()), "resource_types_scope"),
-    "MaximumExecutionFrequency": (StringValueConverter(), "maximum_execution_frequency"),
-    "InputParameters": (StringValueConverter(), "input_parameters"),
-  }
 
 class AWS_Config_RemediationConfiguration_SsmControls(CloudFormationProperty):
-  entity = "AWS::Config::RemediationConfiguration"
-  tf_block_type = "ssm_controls"
+  def write(self, w):
+    with w.block("ssm_controls"):
+      self.property(w, "ErrorPercentage", "error_percentage", BasicValueConverter())
+      self.property(w, "ConcurrentExecutionRatePercentage", "concurrent_execution_rate_percentage", BasicValueConverter())
 
-  props = {
-    "ErrorPercentage": (BasicValueConverter(), "error_percentage"),
-    "ConcurrentExecutionRatePercentage": (BasicValueConverter(), "concurrent_execution_rate_percentage"),
-  }
 
 class AWS_Config_RemediationConfiguration_StaticValue(CloudFormationProperty):
-  entity = "AWS::Config::RemediationConfiguration"
-  tf_block_type = "static_value"
+  def write(self, w):
+    with w.block("static_value"):
+      self.property(w, "Values", "values", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "Values": (ListValueConverter(StringValueConverter()), "values"),
-  }
 
 class AWS_Config_RemediationConfiguration_RemediationParameterValue(CloudFormationProperty):
-  entity = "AWS::Config::RemediationConfiguration"
-  tf_block_type = "remediation_parameter_value"
+  def write(self, w):
+    with w.block("remediation_parameter_value"):
+      self.block(w, "ResourceValue", AWS_Config_RemediationConfiguration_ResourceValue)
+      self.block(w, "StaticValue", AWS_Config_RemediationConfiguration_StaticValue)
 
-  props = {
-    "ResourceValue": (AWS_Config_RemediationConfiguration_ResourceValue, "resource_value"),
-    "StaticValue": (AWS_Config_RemediationConfiguration_StaticValue, "static_value"),
-  }
 
 class AWS_Config_RemediationConfiguration_ExecutionControls(CloudFormationProperty):
-  entity = "AWS::Config::RemediationConfiguration"
-  tf_block_type = "execution_controls"
+  def write(self, w):
+    with w.block("execution_controls"):
+      self.block(w, "SsmControls", AWS_Config_RemediationConfiguration_SsmControls)
 
-  props = {
-    "SsmControls": (AWS_Config_RemediationConfiguration_SsmControls, "ssm_controls"),
-  }
 
 class AWS_Config_ConformancePack_ConformancePackInputParameter(CloudFormationProperty):
-  entity = "AWS::Config::ConformancePack"
-  tf_block_type = "conformance_pack_input_parameter"
+  def write(self, w):
+    with w.block("conformance_pack_input_parameter"):
+      self.property(w, "ParameterName", "parameter_name", StringValueConverter())
+      self.property(w, "ParameterValue", "parameter_value", StringValueConverter())
 
-  props = {
-    "ParameterName": (StringValueConverter(), "parameter_name"),
-    "ParameterValue": (StringValueConverter(), "parameter_value"),
-  }
 
 class AWS_Config_ConfigurationAggregator_AccountAggregationSource(CloudFormationProperty):
-  entity = "AWS::Config::ConfigurationAggregator"
-  tf_block_type = "account_aggregation_source"
+  def write(self, w):
+    with w.block("account_aggregation_source"):
+      self.property(w, "AllAwsRegions", "all_aws_regions", BasicValueConverter())
+      self.property(w, "AwsRegions", "aws_regions", ListValueConverter(StringValueConverter()))
+      self.property(w, "AccountIds", "account_ids", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "AllAwsRegions": (BasicValueConverter(), "all_aws_regions"),
-    "AwsRegions": (ListValueConverter(StringValueConverter()), "aws_regions"),
-    "AccountIds": (ListValueConverter(StringValueConverter()), "account_ids"),
-  }
 
 class AWS_Config_ConfigRule_SourceDetail(CloudFormationProperty):
-  entity = "AWS::Config::ConfigRule"
-  tf_block_type = "source_detail"
+  def write(self, w):
+    with w.block("source_detail"):
+      self.property(w, "EventSource", "event_source", StringValueConverter())
+      self.property(w, "MaximumExecutionFrequency", "maximum_execution_frequency", StringValueConverter())
+      self.property(w, "MessageType", "message_type", StringValueConverter())
 
-  props = {
-    "EventSource": (StringValueConverter(), "event_source"),
-    "MaximumExecutionFrequency": (StringValueConverter(), "maximum_execution_frequency"),
-    "MessageType": (StringValueConverter(), "message_type"),
-  }
 
 class AWS_Config_OrganizationConfigRule_OrganizationCustomRuleMetadata(CloudFormationProperty):
-  entity = "AWS::Config::OrganizationConfigRule"
-  tf_block_type = "organization_custom_rule_metadata"
+  def write(self, w):
+    with w.block("organization_custom_rule_metadata"):
+      self.property(w, "TagKeyScope", "tag_key_scope", StringValueConverter())
+      self.property(w, "TagValueScope", "tag_value_scope", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "ResourceIdScope", "resource_id_scope", StringValueConverter())
+      self.property(w, "LambdaFunctionArn", "lambda_function_arn", StringValueConverter())
+      self.property(w, "OrganizationConfigRuleTriggerTypes", "organization_config_rule_trigger_types", ListValueConverter(StringValueConverter()))
+      self.property(w, "ResourceTypesScope", "resource_types_scope", ListValueConverter(StringValueConverter()))
+      self.property(w, "MaximumExecutionFrequency", "maximum_execution_frequency", StringValueConverter())
+      self.property(w, "InputParameters", "input_parameters", StringValueConverter())
 
-  props = {
-    "TagKeyScope": (StringValueConverter(), "tag_key_scope"),
-    "TagValueScope": (StringValueConverter(), "tag_value_scope"),
-    "Description": (StringValueConverter(), "description"),
-    "ResourceIdScope": (StringValueConverter(), "resource_id_scope"),
-    "LambdaFunctionArn": (StringValueConverter(), "lambda_function_arn"),
-    "OrganizationConfigRuleTriggerTypes": (ListValueConverter(StringValueConverter()), "organization_config_rule_trigger_types"),
-    "ResourceTypesScope": (ListValueConverter(StringValueConverter()), "resource_types_scope"),
-    "MaximumExecutionFrequency": (StringValueConverter(), "maximum_execution_frequency"),
-    "InputParameters": (StringValueConverter(), "input_parameters"),
-  }
 
 class AWS_Config_RemediationConfiguration(CloudFormationResource):
-  terraform_resource = "aws_config_remediation_configuration"
+  cfn_type = "AWS::Config::RemediationConfiguration"
+  tf_type = "aws_config_remediation_configuration"
+  ref = "arn"
 
-  resource_type = "AWS::Config::RemediationConfiguration"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "TargetVersion", "target_version", StringValueConverter())
+      self.block(w, "ExecutionControls", AWS_Config_RemediationConfiguration_ExecutionControls)
+      self.property(w, "Parameters", "parameters", StringValueConverter())
+      self.property(w, "TargetType", "target_type", StringValueConverter())
+      self.property(w, "ConfigRuleName", "config_rule_name", StringValueConverter())
+      self.property(w, "ResourceType", "resource_type", StringValueConverter())
+      self.property(w, "RetryAttemptSeconds", "retry_attempt_seconds", BasicValueConverter())
+      self.property(w, "MaximumAutomaticAttempts", "maximum_automatic_attempts", BasicValueConverter())
+      self.property(w, "TargetId", "target_id", StringValueConverter())
+      self.property(w, "Automatic", "automatic", BasicValueConverter())
 
-  props = {
-    "TargetVersion": (StringValueConverter(), "target_version"),
-    "ExecutionControls": (AWS_Config_RemediationConfiguration_ExecutionControls, "execution_controls"),
-    "Parameters": (StringValueConverter(), "parameters"),
-    "TargetType": (StringValueConverter(), "target_type"),
-    "ConfigRuleName": (StringValueConverter(), "config_rule_name"),
-    "ResourceType": (StringValueConverter(), "resource_type"),
-    "RetryAttemptSeconds": (BasicValueConverter(), "retry_attempt_seconds"),
-    "MaximumAutomaticAttempts": (BasicValueConverter(), "maximum_automatic_attempts"),
-    "TargetId": (StringValueConverter(), "target_id"),
-    "Automatic": (BasicValueConverter(), "automatic"),
-  }
 
 class AWS_Config_ConfigurationAggregator(CloudFormationResource):
-  terraform_resource = "aws_config_configuration_aggregator"
+  cfn_type = "AWS::Config::ConfigurationAggregator"
+  tf_type = "aws_config_configuration_aggregator"
+  ref = "arn"
 
-  resource_type = "AWS::Config::ConfigurationAggregator"
+  def write(self, w):
+    with self.resource_block(w):
+      self.repeated_block(w, "AccountAggregationSources", AWS_Config_ConfigurationAggregator_AccountAggregationSource)
+      self.property(w, "ConfigurationAggregatorName", "configuration_aggregator_name", StringValueConverter())
+      self.block(w, "OrganizationAggregationSource", AWS_Config_ConfigurationAggregator_OrganizationAggregationSource)
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "AccountAggregationSources": (BlockValueConverter(AWS_Config_ConfigurationAggregator_AccountAggregationSource), None),
-    "ConfigurationAggregatorName": (StringValueConverter(), "configuration_aggregator_name"),
-    "OrganizationAggregationSource": (AWS_Config_ConfigurationAggregator_OrganizationAggregationSource, "organization_aggregation_source"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 
 class AWS_Config_AggregationAuthorization(CloudFormationResource):
-  terraform_resource = "aws_config_aggregation_authorization"
+  cfn_type = "AWS::Config::AggregationAuthorization"
+  tf_type = "aws_config_aggregation_authorization"
+  ref = "arn"
 
-  resource_type = "AWS::Config::AggregationAuthorization"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "AuthorizedAccountId", "authorized_account_id", StringValueConverter())
+      self.property(w, "AuthorizedAwsRegion", "authorized_aws_region", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "AuthorizedAccountId": (StringValueConverter(), "authorized_account_id"),
-    "AuthorizedAwsRegion": (StringValueConverter(), "authorized_aws_region"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 
 class AWS_Config_ConfigurationRecorder(CloudFormationResource):
-  terraform_resource = "aws_config_configuration_recorder"
+  cfn_type = "AWS::Config::ConfigurationRecorder"
+  tf_type = "aws_config_configuration_recorder"
+  ref = "arn"
 
-  resource_type = "AWS::Config::ConfigurationRecorder"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Name", "name", StringValueConverter())
+      self.block(w, "RecordingGroup", AWS_Config_ConfigurationRecorder_RecordingGroup)
+      self.property(w, "RoleARN", "role_arn", StringValueConverter())
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-    "RecordingGroup": (AWS_Config_ConfigurationRecorder_RecordingGroup, "recording_group"),
-    "RoleARN": (StringValueConverter(), "role_arn"),
-  }
 
 class AWS_Config_DeliveryChannel(CloudFormationResource):
-  terraform_resource = "aws_config_delivery_channel"
+  cfn_type = "AWS::Config::DeliveryChannel"
+  tf_type = "aws_config_delivery_channel"
+  ref = "arn"
 
-  resource_type = "AWS::Config::DeliveryChannel"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "ConfigSnapshotDeliveryProperties", AWS_Config_DeliveryChannel_ConfigSnapshotDeliveryProperties)
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "S3BucketName", "s3_bucket_name", StringValueConverter())
+      self.property(w, "S3KeyPrefix", "s3_key_prefix", StringValueConverter())
+      self.property(w, "SnsTopicARN", "sns_topic_arn", StringValueConverter())
 
-  props = {
-    "ConfigSnapshotDeliveryProperties": (AWS_Config_DeliveryChannel_ConfigSnapshotDeliveryProperties, "config_snapshot_delivery_properties"),
-    "Name": (StringValueConverter(), "name"),
-    "S3BucketName": (StringValueConverter(), "s3_bucket_name"),
-    "S3KeyPrefix": (StringValueConverter(), "s3_key_prefix"),
-    "SnsTopicARN": (StringValueConverter(), "sns_topic_arn"),
-  }
 
 class AWS_Config_OrganizationConfigRule(CloudFormationResource):
-  terraform_resource = "aws_config_organization_config_rule"
+  cfn_type = "AWS::Config::OrganizationConfigRule"
+  tf_type = "aws_config_organization_config_rule"
+  ref = "arn"
 
-  resource_type = "AWS::Config::OrganizationConfigRule"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "OrganizationManagedRuleMetadata", AWS_Config_OrganizationConfigRule_OrganizationManagedRuleMetadata)
+      self.property(w, "OrganizationConfigRuleName", "organization_config_rule_name", StringValueConverter())
+      self.block(w, "OrganizationCustomRuleMetadata", AWS_Config_OrganizationConfigRule_OrganizationCustomRuleMetadata)
+      self.property(w, "ExcludedAccounts", "excluded_accounts", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "OrganizationManagedRuleMetadata": (AWS_Config_OrganizationConfigRule_OrganizationManagedRuleMetadata, "organization_managed_rule_metadata"),
-    "OrganizationConfigRuleName": (StringValueConverter(), "organization_config_rule_name"),
-    "OrganizationCustomRuleMetadata": (AWS_Config_OrganizationConfigRule_OrganizationCustomRuleMetadata, "organization_custom_rule_metadata"),
-    "ExcludedAccounts": (ListValueConverter(StringValueConverter()), "excluded_accounts"),
-  }
 
 class AWS_Config_OrganizationConformancePack(CloudFormationResource):
-  terraform_resource = "aws_config_organization_conformance_pack"
+  cfn_type = "AWS::Config::OrganizationConformancePack"
+  tf_type = "aws_config_organization_conformance_pack"
+  ref = "arn"
 
-  resource_type = "AWS::Config::OrganizationConformancePack"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "OrganizationConformancePackName", "organization_conformance_pack_name", StringValueConverter())
+      self.property(w, "TemplateS3Uri", "template_s3_uri", StringValueConverter())
+      self.property(w, "TemplateBody", "template_body", StringValueConverter())
+      self.property(w, "DeliveryS3Bucket", "delivery_s3_bucket", StringValueConverter())
+      self.property(w, "DeliveryS3KeyPrefix", "delivery_s3_key_prefix", StringValueConverter())
+      self.repeated_block(w, "ConformancePackInputParameters", AWS_Config_OrganizationConformancePack_ConformancePackInputParameter)
+      self.property(w, "ExcludedAccounts", "excluded_accounts", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "OrganizationConformancePackName": (StringValueConverter(), "organization_conformance_pack_name"),
-    "TemplateS3Uri": (StringValueConverter(), "template_s3_uri"),
-    "TemplateBody": (StringValueConverter(), "template_body"),
-    "DeliveryS3Bucket": (StringValueConverter(), "delivery_s3_bucket"),
-    "DeliveryS3KeyPrefix": (StringValueConverter(), "delivery_s3_key_prefix"),
-    "ConformancePackInputParameters": (BlockValueConverter(AWS_Config_OrganizationConformancePack_ConformancePackInputParameter), None),
-    "ExcludedAccounts": (ListValueConverter(StringValueConverter()), "excluded_accounts"),
-  }
 
 class AWS_Config_ConformancePack(CloudFormationResource):
-  terraform_resource = "aws_config_conformance_pack"
+  cfn_type = "AWS::Config::ConformancePack"
+  tf_type = "aws_config_conformance_pack"
+  ref = "arn"
 
-  resource_type = "AWS::Config::ConformancePack"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ConformancePackName", "conformance_pack_name", StringValueConverter())
+      self.property(w, "DeliveryS3Bucket", "delivery_s3_bucket", StringValueConverter())
+      self.property(w, "DeliveryS3KeyPrefix", "delivery_s3_key_prefix", StringValueConverter())
+      self.property(w, "TemplateBody", "template_body", StringValueConverter())
+      self.property(w, "TemplateS3Uri", "template_s3_uri", StringValueConverter())
+      self.repeated_block(w, "ConformancePackInputParameters", AWS_Config_ConformancePack_ConformancePackInputParameter)
 
-  props = {
-    "ConformancePackName": (StringValueConverter(), "conformance_pack_name"),
-    "DeliveryS3Bucket": (StringValueConverter(), "delivery_s3_bucket"),
-    "DeliveryS3KeyPrefix": (StringValueConverter(), "delivery_s3_key_prefix"),
-    "TemplateBody": (StringValueConverter(), "template_body"),
-    "TemplateS3Uri": (StringValueConverter(), "template_s3_uri"),
-    "ConformancePackInputParameters": (BlockValueConverter(AWS_Config_ConformancePack_ConformancePackInputParameter), None),
-  }
 
 class AWS_Config_ConfigRule_Source(CloudFormationProperty):
-  entity = "AWS::Config::ConfigRule"
-  tf_block_type = "source"
+  def write(self, w):
+    with w.block("source"):
+      self.property(w, "Owner", "owner", StringValueConverter())
+      self.repeated_block(w, "SourceDetails", AWS_Config_ConfigRule_SourceDetail)
+      self.property(w, "SourceIdentifier", "source_identifier", StringValueConverter())
 
-  props = {
-    "Owner": (StringValueConverter(), "owner"),
-    "SourceDetails": (BlockValueConverter(AWS_Config_ConfigRule_SourceDetail), None),
-    "SourceIdentifier": (StringValueConverter(), "source_identifier"),
-  }
 
 class AWS_Config_ConfigRule(CloudFormationResource):
-  terraform_resource = "aws_config_config_rule"
+  cfn_type = "AWS::Config::ConfigRule"
+  tf_type = "aws_config_config_rule"
+  ref = "arn"
 
-  resource_type = "AWS::Config::ConfigRule"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ConfigRuleName", "config_rule_name", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "InputParameters", "input_parameters", StringValueConverter())
+      self.property(w, "MaximumExecutionFrequency", "maximum_execution_frequency", StringValueConverter())
+      self.block(w, "Scope", AWS_Config_ConfigRule_Scope)
+      self.block(w, "Source", AWS_Config_ConfigRule_Source)
 
-  props = {
-    "ConfigRuleName": (StringValueConverter(), "config_rule_name"),
-    "Description": (StringValueConverter(), "description"),
-    "InputParameters": (StringValueConverter(), "input_parameters"),
-    "MaximumExecutionFrequency": (StringValueConverter(), "maximum_execution_frequency"),
-    "Scope": (AWS_Config_ConfigRule_Scope, "scope"),
-    "Source": (AWS_Config_ConfigRule_Source, "source"),
-  }
 

@@ -1,675 +1,591 @@
 from . import *
 
 class AWS_Greengrass_CoreDefinition_Core(CloudFormationProperty):
-  entity = "AWS::Greengrass::CoreDefinition"
-  tf_block_type = "core"
+  def write(self, w):
+    with w.block("core"):
+      self.property(w, "SyncShadow", "sync_shadow", BasicValueConverter())
+      self.property(w, "ThingArn", "thing_arn", StringValueConverter())
+      self.property(w, "Id", "id", StringValueConverter())
+      self.property(w, "CertificateArn", "certificate_arn", StringValueConverter())
 
-  props = {
-    "SyncShadow": (BasicValueConverter(), "sync_shadow"),
-    "ThingArn": (StringValueConverter(), "thing_arn"),
-    "Id": (StringValueConverter(), "id"),
-    "CertificateArn": (StringValueConverter(), "certificate_arn"),
-  }
 
 class AWS_Greengrass_CoreDefinitionVersion_Core(CloudFormationProperty):
-  entity = "AWS::Greengrass::CoreDefinitionVersion"
-  tf_block_type = "core"
+  def write(self, w):
+    with w.block("core"):
+      self.property(w, "SyncShadow", "sync_shadow", BasicValueConverter())
+      self.property(w, "ThingArn", "thing_arn", StringValueConverter())
+      self.property(w, "Id", "id", StringValueConverter())
+      self.property(w, "CertificateArn", "certificate_arn", StringValueConverter())
 
-  props = {
-    "SyncShadow": (BasicValueConverter(), "sync_shadow"),
-    "ThingArn": (StringValueConverter(), "thing_arn"),
-    "Id": (StringValueConverter(), "id"),
-    "CertificateArn": (StringValueConverter(), "certificate_arn"),
-  }
 
 class AWS_Greengrass_LoggerDefinitionVersion_Logger(CloudFormationProperty):
-  entity = "AWS::Greengrass::LoggerDefinitionVersion"
-  tf_block_type = "logger"
+  def write(self, w):
+    with w.block("logger"):
+      self.property(w, "Space", "space", BasicValueConverter())
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "Level", "level", StringValueConverter())
+      self.property(w, "Id", "id", StringValueConverter())
+      self.property(w, "Component", "component", StringValueConverter())
 
-  props = {
-    "Space": (BasicValueConverter(), "space"),
-    "Type": (StringValueConverter(), "type"),
-    "Level": (StringValueConverter(), "level"),
-    "Id": (StringValueConverter(), "id"),
-    "Component": (StringValueConverter(), "component"),
-  }
 
 class AWS_Greengrass_FunctionDefinitionVersion_RunAs(CloudFormationProperty):
-  entity = "AWS::Greengrass::FunctionDefinitionVersion"
-  tf_block_type = "run_as"
+  def write(self, w):
+    with w.block("run_as"):
+      self.property(w, "Uid", "uid", BasicValueConverter())
+      self.property(w, "Gid", "gid", BasicValueConverter())
 
-  props = {
-    "Uid": (BasicValueConverter(), "uid"),
-    "Gid": (BasicValueConverter(), "gid"),
-  }
 
 class AWS_Greengrass_ResourceDefinition_SecretsManagerSecretResourceData(CloudFormationProperty):
-  entity = "AWS::Greengrass::ResourceDefinition"
-  tf_block_type = "secrets_manager_secret_resource_data"
+  def write(self, w):
+    with w.block("secrets_manager_secret_resource_data"):
+      self.property(w, "ARN", "arn", StringValueConverter())
+      self.property(w, "AdditionalStagingLabelsToDownload", "additional_staging_labels_to_download", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "ARN": (StringValueConverter(), "arn"),
-    "AdditionalStagingLabelsToDownload": (ListValueConverter(StringValueConverter()), "additional_staging_labels_to_download"),
-  }
 
 class AWS_Greengrass_ResourceDefinitionVersion_ResourceDownloadOwnerSetting(CloudFormationProperty):
-  entity = "AWS::Greengrass::ResourceDefinitionVersion"
-  tf_block_type = "resource_download_owner_setting"
+  def write(self, w):
+    with w.block("resource_download_owner_setting"):
+      self.property(w, "GroupOwner", "group_owner", StringValueConverter())
+      self.property(w, "GroupPermission", "group_permission", StringValueConverter())
 
-  props = {
-    "GroupOwner": (StringValueConverter(), "group_owner"),
-    "GroupPermission": (StringValueConverter(), "group_permission"),
-  }
 
 class AWS_Greengrass_FunctionDefinition_RunAs(CloudFormationProperty):
-  entity = "AWS::Greengrass::FunctionDefinition"
-  tf_block_type = "run_as"
+  def write(self, w):
+    with w.block("run_as"):
+      self.property(w, "Uid", "uid", BasicValueConverter())
+      self.property(w, "Gid", "gid", BasicValueConverter())
 
-  props = {
-    "Uid": (BasicValueConverter(), "uid"),
-    "Gid": (BasicValueConverter(), "gid"),
-  }
 
 class AWS_Greengrass_DeviceDefinitionVersion_Device(CloudFormationProperty):
-  entity = "AWS::Greengrass::DeviceDefinitionVersion"
-  tf_block_type = "device"
+  def write(self, w):
+    with w.block("device"):
+      self.property(w, "SyncShadow", "sync_shadow", BasicValueConverter())
+      self.property(w, "ThingArn", "thing_arn", StringValueConverter())
+      self.property(w, "Id", "id", StringValueConverter())
+      self.property(w, "CertificateArn", "certificate_arn", StringValueConverter())
 
-  props = {
-    "SyncShadow": (BasicValueConverter(), "sync_shadow"),
-    "ThingArn": (StringValueConverter(), "thing_arn"),
-    "Id": (StringValueConverter(), "id"),
-    "CertificateArn": (StringValueConverter(), "certificate_arn"),
-  }
 
 class AWS_Greengrass_ResourceDefinition_ResourceDownloadOwnerSetting(CloudFormationProperty):
-  entity = "AWS::Greengrass::ResourceDefinition"
-  tf_block_type = "resource_download_owner_setting"
+  def write(self, w):
+    with w.block("resource_download_owner_setting"):
+      self.property(w, "GroupOwner", "group_owner", StringValueConverter())
+      self.property(w, "GroupPermission", "group_permission", StringValueConverter())
 
-  props = {
-    "GroupOwner": (StringValueConverter(), "group_owner"),
-    "GroupPermission": (StringValueConverter(), "group_permission"),
-  }
 
 class AWS_Greengrass_ResourceDefinition_GroupOwnerSetting(CloudFormationProperty):
-  entity = "AWS::Greengrass::ResourceDefinition"
-  tf_block_type = "group_owner_setting"
+  def write(self, w):
+    with w.block("group_owner_setting"):
+      self.property(w, "AutoAddGroupOwner", "auto_add_group_owner", BasicValueConverter())
+      self.property(w, "GroupOwner", "group_owner", StringValueConverter())
 
-  props = {
-    "AutoAddGroupOwner": (BasicValueConverter(), "auto_add_group_owner"),
-    "GroupOwner": (StringValueConverter(), "group_owner"),
-  }
 
 class AWS_Greengrass_Group_GroupVersion(CloudFormationProperty):
-  entity = "AWS::Greengrass::Group"
-  tf_block_type = "group_version"
+  def write(self, w):
+    with w.block("group_version"):
+      self.property(w, "LoggerDefinitionVersionArn", "logger_definition_version_arn", StringValueConverter())
+      self.property(w, "DeviceDefinitionVersionArn", "device_definition_version_arn", StringValueConverter())
+      self.property(w, "FunctionDefinitionVersionArn", "function_definition_version_arn", StringValueConverter())
+      self.property(w, "CoreDefinitionVersionArn", "core_definition_version_arn", StringValueConverter())
+      self.property(w, "ResourceDefinitionVersionArn", "resource_definition_version_arn", StringValueConverter())
+      self.property(w, "ConnectorDefinitionVersionArn", "connector_definition_version_arn", StringValueConverter())
+      self.property(w, "SubscriptionDefinitionVersionArn", "subscription_definition_version_arn", StringValueConverter())
 
-  props = {
-    "LoggerDefinitionVersionArn": (StringValueConverter(), "logger_definition_version_arn"),
-    "DeviceDefinitionVersionArn": (StringValueConverter(), "device_definition_version_arn"),
-    "FunctionDefinitionVersionArn": (StringValueConverter(), "function_definition_version_arn"),
-    "CoreDefinitionVersionArn": (StringValueConverter(), "core_definition_version_arn"),
-    "ResourceDefinitionVersionArn": (StringValueConverter(), "resource_definition_version_arn"),
-    "ConnectorDefinitionVersionArn": (StringValueConverter(), "connector_definition_version_arn"),
-    "SubscriptionDefinitionVersionArn": (StringValueConverter(), "subscription_definition_version_arn"),
-  }
 
 class AWS_Greengrass_ResourceDefinition_LocalDeviceResourceData(CloudFormationProperty):
-  entity = "AWS::Greengrass::ResourceDefinition"
-  tf_block_type = "local_device_resource_data"
+  def write(self, w):
+    with w.block("local_device_resource_data"):
+      self.property(w, "SourcePath", "source_path", StringValueConverter())
+      self.block(w, "GroupOwnerSetting", AWS_Greengrass_ResourceDefinition_GroupOwnerSetting)
 
-  props = {
-    "SourcePath": (StringValueConverter(), "source_path"),
-    "GroupOwnerSetting": (AWS_Greengrass_ResourceDefinition_GroupOwnerSetting, "group_owner_setting"),
-  }
 
 class AWS_Greengrass_DeviceDefinition_Device(CloudFormationProperty):
-  entity = "AWS::Greengrass::DeviceDefinition"
-  tf_block_type = "device"
+  def write(self, w):
+    with w.block("device"):
+      self.property(w, "SyncShadow", "sync_shadow", BasicValueConverter())
+      self.property(w, "ThingArn", "thing_arn", StringValueConverter())
+      self.property(w, "Id", "id", StringValueConverter())
+      self.property(w, "CertificateArn", "certificate_arn", StringValueConverter())
 
-  props = {
-    "SyncShadow": (BasicValueConverter(), "sync_shadow"),
-    "ThingArn": (StringValueConverter(), "thing_arn"),
-    "Id": (StringValueConverter(), "id"),
-    "CertificateArn": (StringValueConverter(), "certificate_arn"),
-  }
 
 class AWS_Greengrass_DeviceDefinition_DeviceDefinitionVersion(CloudFormationProperty):
-  entity = "AWS::Greengrass::DeviceDefinition"
-  tf_block_type = "device_definition_version"
+  def write(self, w):
+    with w.block("device_definition_version"):
+      self.repeated_block(w, "Devices", AWS_Greengrass_DeviceDefinition_Device)
 
-  props = {
-    "Devices": (BlockValueConverter(AWS_Greengrass_DeviceDefinition_Device), None),
-  }
 
 class AWS_Greengrass_SubscriptionDefinition_Subscription(CloudFormationProperty):
-  entity = "AWS::Greengrass::SubscriptionDefinition"
-  tf_block_type = "subscription"
+  def write(self, w):
+    with w.block("subscription"):
+      self.property(w, "Target", "target", StringValueConverter())
+      self.property(w, "Id", "id", StringValueConverter())
+      self.property(w, "Source", "source", StringValueConverter())
+      self.property(w, "Subject", "subject", StringValueConverter())
 
-  props = {
-    "Target": (StringValueConverter(), "target"),
-    "Id": (StringValueConverter(), "id"),
-    "Source": (StringValueConverter(), "source"),
-    "Subject": (StringValueConverter(), "subject"),
-  }
 
 class AWS_Greengrass_LoggerDefinition_Logger(CloudFormationProperty):
-  entity = "AWS::Greengrass::LoggerDefinition"
-  tf_block_type = "logger"
+  def write(self, w):
+    with w.block("logger"):
+      self.property(w, "Space", "space", BasicValueConverter())
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "Level", "level", StringValueConverter())
+      self.property(w, "Id", "id", StringValueConverter())
+      self.property(w, "Component", "component", StringValueConverter())
 
-  props = {
-    "Space": (BasicValueConverter(), "space"),
-    "Type": (StringValueConverter(), "type"),
-    "Level": (StringValueConverter(), "level"),
-    "Id": (StringValueConverter(), "id"),
-    "Component": (StringValueConverter(), "component"),
-  }
 
 class AWS_Greengrass_CoreDefinition_CoreDefinitionVersion(CloudFormationProperty):
-  entity = "AWS::Greengrass::CoreDefinition"
-  tf_block_type = "core_definition_version"
+  def write(self, w):
+    with w.block("core_definition_version"):
+      self.repeated_block(w, "Cores", AWS_Greengrass_CoreDefinition_Core)
 
-  props = {
-    "Cores": (BlockValueConverter(AWS_Greengrass_CoreDefinition_Core), None),
-  }
 
 class AWS_Greengrass_ResourceDefinitionVersion_S3MachineLearningModelResourceData(CloudFormationProperty):
-  entity = "AWS::Greengrass::ResourceDefinitionVersion"
-  tf_block_type = "s3_machine_learning_model_resource_data"
+  def write(self, w):
+    with w.block("s3_machine_learning_model_resource_data"):
+      self.block(w, "OwnerSetting", AWS_Greengrass_ResourceDefinitionVersion_ResourceDownloadOwnerSetting)
+      self.property(w, "DestinationPath", "destination_path", StringValueConverter())
+      self.property(w, "S3Uri", "s3_uri", StringValueConverter())
 
-  props = {
-    "OwnerSetting": (AWS_Greengrass_ResourceDefinitionVersion_ResourceDownloadOwnerSetting, "owner_setting"),
-    "DestinationPath": (StringValueConverter(), "destination_path"),
-    "S3Uri": (StringValueConverter(), "s3_uri"),
-  }
 
 class AWS_Greengrass_ResourceDefinition_LocalVolumeResourceData(CloudFormationProperty):
-  entity = "AWS::Greengrass::ResourceDefinition"
-  tf_block_type = "local_volume_resource_data"
+  def write(self, w):
+    with w.block("local_volume_resource_data"):
+      self.property(w, "SourcePath", "source_path", StringValueConverter())
+      self.property(w, "DestinationPath", "destination_path", StringValueConverter())
+      self.block(w, "GroupOwnerSetting", AWS_Greengrass_ResourceDefinition_GroupOwnerSetting)
 
-  props = {
-    "SourcePath": (StringValueConverter(), "source_path"),
-    "DestinationPath": (StringValueConverter(), "destination_path"),
-    "GroupOwnerSetting": (AWS_Greengrass_ResourceDefinition_GroupOwnerSetting, "group_owner_setting"),
-  }
 
 class AWS_Greengrass_FunctionDefinition_ResourceAccessPolicy(CloudFormationProperty):
-  entity = "AWS::Greengrass::FunctionDefinition"
-  tf_block_type = "resource_access_policy"
+  def write(self, w):
+    with w.block("resource_access_policy"):
+      self.property(w, "ResourceId", "resource_id", StringValueConverter())
+      self.property(w, "Permission", "permission", StringValueConverter())
 
-  props = {
-    "ResourceId": (StringValueConverter(), "resource_id"),
-    "Permission": (StringValueConverter(), "permission"),
-  }
 
 class AWS_Greengrass_ResourceDefinitionVersion_GroupOwnerSetting(CloudFormationProperty):
-  entity = "AWS::Greengrass::ResourceDefinitionVersion"
-  tf_block_type = "group_owner_setting"
+  def write(self, w):
+    with w.block("group_owner_setting"):
+      self.property(w, "AutoAddGroupOwner", "auto_add_group_owner", BasicValueConverter())
+      self.property(w, "GroupOwner", "group_owner", StringValueConverter())
 
-  props = {
-    "AutoAddGroupOwner": (BasicValueConverter(), "auto_add_group_owner"),
-    "GroupOwner": (StringValueConverter(), "group_owner"),
-  }
 
 class AWS_Greengrass_ConnectorDefinition_Connector(CloudFormationProperty):
-  entity = "AWS::Greengrass::ConnectorDefinition"
-  tf_block_type = "connector"
+  def write(self, w):
+    with w.block("connector"):
+      self.property(w, "ConnectorArn", "connector_arn", StringValueConverter())
+      self.property(w, "Parameters", "parameters", StringValueConverter())
+      self.property(w, "Id", "id", StringValueConverter())
 
-  props = {
-    "ConnectorArn": (StringValueConverter(), "connector_arn"),
-    "Parameters": (StringValueConverter(), "parameters"),
-    "Id": (StringValueConverter(), "id"),
-  }
 
 class AWS_Greengrass_FunctionDefinitionVersion_ResourceAccessPolicy(CloudFormationProperty):
-  entity = "AWS::Greengrass::FunctionDefinitionVersion"
-  tf_block_type = "resource_access_policy"
+  def write(self, w):
+    with w.block("resource_access_policy"):
+      self.property(w, "ResourceId", "resource_id", StringValueConverter())
+      self.property(w, "Permission", "permission", StringValueConverter())
 
-  props = {
-    "ResourceId": (StringValueConverter(), "resource_id"),
-    "Permission": (StringValueConverter(), "permission"),
-  }
 
 class AWS_Greengrass_ResourceDefinitionVersion_SecretsManagerSecretResourceData(CloudFormationProperty):
-  entity = "AWS::Greengrass::ResourceDefinitionVersion"
-  tf_block_type = "secrets_manager_secret_resource_data"
+  def write(self, w):
+    with w.block("secrets_manager_secret_resource_data"):
+      self.property(w, "ARN", "arn", StringValueConverter())
+      self.property(w, "AdditionalStagingLabelsToDownload", "additional_staging_labels_to_download", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "ARN": (StringValueConverter(), "arn"),
-    "AdditionalStagingLabelsToDownload": (ListValueConverter(StringValueConverter()), "additional_staging_labels_to_download"),
-  }
 
 class AWS_Greengrass_LoggerDefinition_LoggerDefinitionVersion(CloudFormationProperty):
-  entity = "AWS::Greengrass::LoggerDefinition"
-  tf_block_type = "logger_definition_version"
+  def write(self, w):
+    with w.block("logger_definition_version"):
+      self.repeated_block(w, "Loggers", AWS_Greengrass_LoggerDefinition_Logger)
 
-  props = {
-    "Loggers": (BlockValueConverter(AWS_Greengrass_LoggerDefinition_Logger), None),
-  }
 
 class AWS_Greengrass_SubscriptionDefinitionVersion_Subscription(CloudFormationProperty):
-  entity = "AWS::Greengrass::SubscriptionDefinitionVersion"
-  tf_block_type = "subscription"
+  def write(self, w):
+    with w.block("subscription"):
+      self.property(w, "Target", "target", StringValueConverter())
+      self.property(w, "Id", "id", StringValueConverter())
+      self.property(w, "Source", "source", StringValueConverter())
+      self.property(w, "Subject", "subject", StringValueConverter())
 
-  props = {
-    "Target": (StringValueConverter(), "target"),
-    "Id": (StringValueConverter(), "id"),
-    "Source": (StringValueConverter(), "source"),
-    "Subject": (StringValueConverter(), "subject"),
-  }
 
 class AWS_Greengrass_ConnectorDefinitionVersion_Connector(CloudFormationProperty):
-  entity = "AWS::Greengrass::ConnectorDefinitionVersion"
-  tf_block_type = "connector"
+  def write(self, w):
+    with w.block("connector"):
+      self.property(w, "ConnectorArn", "connector_arn", StringValueConverter())
+      self.property(w, "Parameters", "parameters", StringValueConverter())
+      self.property(w, "Id", "id", StringValueConverter())
 
-  props = {
-    "ConnectorArn": (StringValueConverter(), "connector_arn"),
-    "Parameters": (StringValueConverter(), "parameters"),
-    "Id": (StringValueConverter(), "id"),
-  }
 
 class AWS_Greengrass_ConnectorDefinitionVersion(CloudFormationResource):
-  terraform_resource = "aws_greengrass_connector_definition_version"
+  cfn_type = "AWS::Greengrass::ConnectorDefinitionVersion"
+  tf_type = "aws_greengrass_connector_definition_version"
+  ref = "arn"
 
-  resource_type = "AWS::Greengrass::ConnectorDefinitionVersion"
+  def write(self, w):
+    with self.resource_block(w):
+      self.repeated_block(w, "Connectors", AWS_Greengrass_ConnectorDefinitionVersion_Connector)
+      self.property(w, "ConnectorDefinitionId", "connector_definition_id", StringValueConverter())
 
-  props = {
-    "Connectors": (BlockValueConverter(AWS_Greengrass_ConnectorDefinitionVersion_Connector), None),
-    "ConnectorDefinitionId": (StringValueConverter(), "connector_definition_id"),
-  }
 
 class AWS_Greengrass_DeviceDefinition(CloudFormationResource):
-  terraform_resource = "aws_greengrass_device_definition"
+  cfn_type = "AWS::Greengrass::DeviceDefinition"
+  tf_type = "aws_greengrass_device_definition"
+  ref = "arn"
 
-  resource_type = "AWS::Greengrass::DeviceDefinition"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "InitialVersion", AWS_Greengrass_DeviceDefinition_DeviceDefinitionVersion)
+      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "InitialVersion": (AWS_Greengrass_DeviceDefinition_DeviceDefinitionVersion, "initial_version"),
-    "Tags": (StringValueConverter(), "tags"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_Greengrass_LoggerDefinitionVersion(CloudFormationResource):
-  terraform_resource = "aws_greengrass_logger_definition_version"
+  cfn_type = "AWS::Greengrass::LoggerDefinitionVersion"
+  tf_type = "aws_greengrass_logger_definition_version"
+  ref = "arn"
 
-  resource_type = "AWS::Greengrass::LoggerDefinitionVersion"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "LoggerDefinitionId", "logger_definition_id", StringValueConverter())
+      self.repeated_block(w, "Loggers", AWS_Greengrass_LoggerDefinitionVersion_Logger)
 
-  props = {
-    "LoggerDefinitionId": (StringValueConverter(), "logger_definition_id"),
-    "Loggers": (BlockValueConverter(AWS_Greengrass_LoggerDefinitionVersion_Logger), None),
-  }
 
 class AWS_Greengrass_Group(CloudFormationResource):
-  terraform_resource = "aws_greengrass_group"
+  cfn_type = "AWS::Greengrass::Group"
+  tf_type = "aws_greengrass_group"
+  ref = "arn"
 
-  resource_type = "AWS::Greengrass::Group"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "InitialVersion", AWS_Greengrass_Group_GroupVersion)
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
+      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "InitialVersion": (AWS_Greengrass_Group_GroupVersion, "initial_version"),
-    "RoleArn": (StringValueConverter(), "role_arn"),
-    "Tags": (StringValueConverter(), "tags"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_Greengrass_SubscriptionDefinitionVersion(CloudFormationResource):
-  terraform_resource = "aws_greengrass_subscription_definition_version"
+  cfn_type = "AWS::Greengrass::SubscriptionDefinitionVersion"
+  tf_type = "aws_greengrass_subscription_definition_version"
+  ref = "arn"
 
-  resource_type = "AWS::Greengrass::SubscriptionDefinitionVersion"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "SubscriptionDefinitionId", "subscription_definition_id", StringValueConverter())
+      self.repeated_block(w, "Subscriptions", AWS_Greengrass_SubscriptionDefinitionVersion_Subscription)
 
-  props = {
-    "SubscriptionDefinitionId": (StringValueConverter(), "subscription_definition_id"),
-    "Subscriptions": (BlockValueConverter(AWS_Greengrass_SubscriptionDefinitionVersion_Subscription), None),
-  }
 
 class AWS_Greengrass_CoreDefinitionVersion(CloudFormationResource):
-  terraform_resource = "aws_greengrass_core_definition_version"
+  cfn_type = "AWS::Greengrass::CoreDefinitionVersion"
+  tf_type = "aws_greengrass_core_definition_version"
+  ref = "arn"
 
-  resource_type = "AWS::Greengrass::CoreDefinitionVersion"
+  def write(self, w):
+    with self.resource_block(w):
+      self.repeated_block(w, "Cores", AWS_Greengrass_CoreDefinitionVersion_Core)
+      self.property(w, "CoreDefinitionId", "core_definition_id", StringValueConverter())
 
-  props = {
-    "Cores": (BlockValueConverter(AWS_Greengrass_CoreDefinitionVersion_Core), None),
-    "CoreDefinitionId": (StringValueConverter(), "core_definition_id"),
-  }
 
 class AWS_Greengrass_LoggerDefinition(CloudFormationResource):
-  terraform_resource = "aws_greengrass_logger_definition"
+  cfn_type = "AWS::Greengrass::LoggerDefinition"
+  tf_type = "aws_greengrass_logger_definition"
+  ref = "arn"
 
-  resource_type = "AWS::Greengrass::LoggerDefinition"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "InitialVersion", AWS_Greengrass_LoggerDefinition_LoggerDefinitionVersion)
+      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "InitialVersion": (AWS_Greengrass_LoggerDefinition_LoggerDefinitionVersion, "initial_version"),
-    "Tags": (StringValueConverter(), "tags"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_Greengrass_CoreDefinition(CloudFormationResource):
-  terraform_resource = "aws_greengrass_core_definition"
+  cfn_type = "AWS::Greengrass::CoreDefinition"
+  tf_type = "aws_greengrass_core_definition"
+  ref = "arn"
 
-  resource_type = "AWS::Greengrass::CoreDefinition"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "InitialVersion", AWS_Greengrass_CoreDefinition_CoreDefinitionVersion)
+      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "InitialVersion": (AWS_Greengrass_CoreDefinition_CoreDefinitionVersion, "initial_version"),
-    "Tags": (StringValueConverter(), "tags"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_Greengrass_DeviceDefinitionVersion(CloudFormationResource):
-  terraform_resource = "aws_greengrass_device_definition_version"
+  cfn_type = "AWS::Greengrass::DeviceDefinitionVersion"
+  tf_type = "aws_greengrass_device_definition_version"
+  ref = "arn"
 
-  resource_type = "AWS::Greengrass::DeviceDefinitionVersion"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "DeviceDefinitionId", "device_definition_id", StringValueConverter())
+      self.repeated_block(w, "Devices", AWS_Greengrass_DeviceDefinitionVersion_Device)
 
-  props = {
-    "DeviceDefinitionId": (StringValueConverter(), "device_definition_id"),
-    "Devices": (BlockValueConverter(AWS_Greengrass_DeviceDefinitionVersion_Device), None),
-  }
 
 class AWS_Greengrass_GroupVersion(CloudFormationResource):
-  terraform_resource = "aws_greengrass_group_version"
+  cfn_type = "AWS::Greengrass::GroupVersion"
+  tf_type = "aws_greengrass_group_version"
+  ref = "arn"
 
-  resource_type = "AWS::Greengrass::GroupVersion"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "LoggerDefinitionVersionArn", "logger_definition_version_arn", StringValueConverter())
+      self.property(w, "DeviceDefinitionVersionArn", "device_definition_version_arn", StringValueConverter())
+      self.property(w, "FunctionDefinitionVersionArn", "function_definition_version_arn", StringValueConverter())
+      self.property(w, "CoreDefinitionVersionArn", "core_definition_version_arn", StringValueConverter())
+      self.property(w, "ResourceDefinitionVersionArn", "resource_definition_version_arn", StringValueConverter())
+      self.property(w, "ConnectorDefinitionVersionArn", "connector_definition_version_arn", StringValueConverter())
+      self.property(w, "SubscriptionDefinitionVersionArn", "subscription_definition_version_arn", StringValueConverter())
+      self.property(w, "GroupId", "group_id", StringValueConverter())
 
-  props = {
-    "LoggerDefinitionVersionArn": (StringValueConverter(), "logger_definition_version_arn"),
-    "DeviceDefinitionVersionArn": (StringValueConverter(), "device_definition_version_arn"),
-    "FunctionDefinitionVersionArn": (StringValueConverter(), "function_definition_version_arn"),
-    "CoreDefinitionVersionArn": (StringValueConverter(), "core_definition_version_arn"),
-    "ResourceDefinitionVersionArn": (StringValueConverter(), "resource_definition_version_arn"),
-    "ConnectorDefinitionVersionArn": (StringValueConverter(), "connector_definition_version_arn"),
-    "SubscriptionDefinitionVersionArn": (StringValueConverter(), "subscription_definition_version_arn"),
-    "GroupId": (StringValueConverter(), "group_id"),
-  }
 
 class AWS_Greengrass_FunctionDefinition_Execution(CloudFormationProperty):
-  entity = "AWS::Greengrass::FunctionDefinition"
-  tf_block_type = "execution"
+  def write(self, w):
+    with w.block("execution"):
+      self.property(w, "IsolationMode", "isolation_mode", StringValueConverter())
+      self.block(w, "RunAs", AWS_Greengrass_FunctionDefinition_RunAs)
 
-  props = {
-    "IsolationMode": (StringValueConverter(), "isolation_mode"),
-    "RunAs": (AWS_Greengrass_FunctionDefinition_RunAs, "run_as"),
-  }
 
 class AWS_Greengrass_ResourceDefinition_SageMakerMachineLearningModelResourceData(CloudFormationProperty):
-  entity = "AWS::Greengrass::ResourceDefinition"
-  tf_block_type = "sage_maker_machine_learning_model_resource_data"
+  def write(self, w):
+    with w.block("sage_maker_machine_learning_model_resource_data"):
+      self.block(w, "OwnerSetting", AWS_Greengrass_ResourceDefinition_ResourceDownloadOwnerSetting)
+      self.property(w, "DestinationPath", "destination_path", StringValueConverter())
+      self.property(w, "SageMakerJobArn", "sage_maker_job_arn", StringValueConverter())
 
-  props = {
-    "OwnerSetting": (AWS_Greengrass_ResourceDefinition_ResourceDownloadOwnerSetting, "owner_setting"),
-    "DestinationPath": (StringValueConverter(), "destination_path"),
-    "SageMakerJobArn": (StringValueConverter(), "sage_maker_job_arn"),
-  }
 
 class AWS_Greengrass_FunctionDefinitionVersion_Execution(CloudFormationProperty):
-  entity = "AWS::Greengrass::FunctionDefinitionVersion"
-  tf_block_type = "execution"
+  def write(self, w):
+    with w.block("execution"):
+      self.property(w, "IsolationMode", "isolation_mode", StringValueConverter())
+      self.block(w, "RunAs", AWS_Greengrass_FunctionDefinitionVersion_RunAs)
 
-  props = {
-    "IsolationMode": (StringValueConverter(), "isolation_mode"),
-    "RunAs": (AWS_Greengrass_FunctionDefinitionVersion_RunAs, "run_as"),
-  }
 
 class AWS_Greengrass_ResourceDefinition_S3MachineLearningModelResourceData(CloudFormationProperty):
-  entity = "AWS::Greengrass::ResourceDefinition"
-  tf_block_type = "s3_machine_learning_model_resource_data"
+  def write(self, w):
+    with w.block("s3_machine_learning_model_resource_data"):
+      self.block(w, "OwnerSetting", AWS_Greengrass_ResourceDefinition_ResourceDownloadOwnerSetting)
+      self.property(w, "DestinationPath", "destination_path", StringValueConverter())
+      self.property(w, "S3Uri", "s3_uri", StringValueConverter())
 
-  props = {
-    "OwnerSetting": (AWS_Greengrass_ResourceDefinition_ResourceDownloadOwnerSetting, "owner_setting"),
-    "DestinationPath": (StringValueConverter(), "destination_path"),
-    "S3Uri": (StringValueConverter(), "s3_uri"),
-  }
 
 class AWS_Greengrass_ResourceDefinitionVersion_SageMakerMachineLearningModelResourceData(CloudFormationProperty):
-  entity = "AWS::Greengrass::ResourceDefinitionVersion"
-  tf_block_type = "sage_maker_machine_learning_model_resource_data"
+  def write(self, w):
+    with w.block("sage_maker_machine_learning_model_resource_data"):
+      self.block(w, "OwnerSetting", AWS_Greengrass_ResourceDefinitionVersion_ResourceDownloadOwnerSetting)
+      self.property(w, "DestinationPath", "destination_path", StringValueConverter())
+      self.property(w, "SageMakerJobArn", "sage_maker_job_arn", StringValueConverter())
 
-  props = {
-    "OwnerSetting": (AWS_Greengrass_ResourceDefinitionVersion_ResourceDownloadOwnerSetting, "owner_setting"),
-    "DestinationPath": (StringValueConverter(), "destination_path"),
-    "SageMakerJobArn": (StringValueConverter(), "sage_maker_job_arn"),
-  }
 
 class AWS_Greengrass_FunctionDefinition_Environment(CloudFormationProperty):
-  entity = "AWS::Greengrass::FunctionDefinition"
-  tf_block_type = "environment"
+  def write(self, w):
+    with w.block("environment"):
+      self.property(w, "Variables", "variables", StringValueConverter())
+      self.block(w, "Execution", AWS_Greengrass_FunctionDefinition_Execution)
+      self.repeated_block(w, "ResourceAccessPolicies", AWS_Greengrass_FunctionDefinition_ResourceAccessPolicy)
+      self.property(w, "AccessSysfs", "access_sysfs", BasicValueConverter())
 
-  props = {
-    "Variables": (StringValueConverter(), "variables"),
-    "Execution": (AWS_Greengrass_FunctionDefinition_Execution, "execution"),
-    "ResourceAccessPolicies": (BlockValueConverter(AWS_Greengrass_FunctionDefinition_ResourceAccessPolicy), None),
-    "AccessSysfs": (BasicValueConverter(), "access_sysfs"),
-  }
 
 class AWS_Greengrass_SubscriptionDefinition_SubscriptionDefinitionVersion(CloudFormationProperty):
-  entity = "AWS::Greengrass::SubscriptionDefinition"
-  tf_block_type = "subscription_definition_version"
+  def write(self, w):
+    with w.block("subscription_definition_version"):
+      self.repeated_block(w, "Subscriptions", AWS_Greengrass_SubscriptionDefinition_Subscription)
 
-  props = {
-    "Subscriptions": (BlockValueConverter(AWS_Greengrass_SubscriptionDefinition_Subscription), None),
-  }
 
 class AWS_Greengrass_ResourceDefinitionVersion_LocalDeviceResourceData(CloudFormationProperty):
-  entity = "AWS::Greengrass::ResourceDefinitionVersion"
-  tf_block_type = "local_device_resource_data"
+  def write(self, w):
+    with w.block("local_device_resource_data"):
+      self.property(w, "SourcePath", "source_path", StringValueConverter())
+      self.block(w, "GroupOwnerSetting", AWS_Greengrass_ResourceDefinitionVersion_GroupOwnerSetting)
 
-  props = {
-    "SourcePath": (StringValueConverter(), "source_path"),
-    "GroupOwnerSetting": (AWS_Greengrass_ResourceDefinitionVersion_GroupOwnerSetting, "group_owner_setting"),
-  }
 
 class AWS_Greengrass_FunctionDefinitionVersion_Environment(CloudFormationProperty):
-  entity = "AWS::Greengrass::FunctionDefinitionVersion"
-  tf_block_type = "environment"
+  def write(self, w):
+    with w.block("environment"):
+      self.property(w, "Variables", "variables", StringValueConverter())
+      self.block(w, "Execution", AWS_Greengrass_FunctionDefinitionVersion_Execution)
+      self.repeated_block(w, "ResourceAccessPolicies", AWS_Greengrass_FunctionDefinitionVersion_ResourceAccessPolicy)
+      self.property(w, "AccessSysfs", "access_sysfs", BasicValueConverter())
 
-  props = {
-    "Variables": (StringValueConverter(), "variables"),
-    "Execution": (AWS_Greengrass_FunctionDefinitionVersion_Execution, "execution"),
-    "ResourceAccessPolicies": (BlockValueConverter(AWS_Greengrass_FunctionDefinitionVersion_ResourceAccessPolicy), None),
-    "AccessSysfs": (BasicValueConverter(), "access_sysfs"),
-  }
 
 class AWS_Greengrass_FunctionDefinitionVersion_DefaultConfig(CloudFormationProperty):
-  entity = "AWS::Greengrass::FunctionDefinitionVersion"
-  tf_block_type = "default_config"
+  def write(self, w):
+    with w.block("default_config"):
+      self.block(w, "Execution", AWS_Greengrass_FunctionDefinitionVersion_Execution)
 
-  props = {
-    "Execution": (AWS_Greengrass_FunctionDefinitionVersion_Execution, "execution"),
-  }
 
 class AWS_Greengrass_ConnectorDefinition_ConnectorDefinitionVersion(CloudFormationProperty):
-  entity = "AWS::Greengrass::ConnectorDefinition"
-  tf_block_type = "connector_definition_version"
+  def write(self, w):
+    with w.block("connector_definition_version"):
+      self.repeated_block(w, "Connectors", AWS_Greengrass_ConnectorDefinition_Connector)
 
-  props = {
-    "Connectors": (BlockValueConverter(AWS_Greengrass_ConnectorDefinition_Connector), None),
-  }
 
 class AWS_Greengrass_FunctionDefinition_DefaultConfig(CloudFormationProperty):
-  entity = "AWS::Greengrass::FunctionDefinition"
-  tf_block_type = "default_config"
+  def write(self, w):
+    with w.block("default_config"):
+      self.block(w, "Execution", AWS_Greengrass_FunctionDefinition_Execution)
 
-  props = {
-    "Execution": (AWS_Greengrass_FunctionDefinition_Execution, "execution"),
-  }
 
 class AWS_Greengrass_ResourceDefinitionVersion_LocalVolumeResourceData(CloudFormationProperty):
-  entity = "AWS::Greengrass::ResourceDefinitionVersion"
-  tf_block_type = "local_volume_resource_data"
+  def write(self, w):
+    with w.block("local_volume_resource_data"):
+      self.property(w, "SourcePath", "source_path", StringValueConverter())
+      self.property(w, "DestinationPath", "destination_path", StringValueConverter())
+      self.block(w, "GroupOwnerSetting", AWS_Greengrass_ResourceDefinitionVersion_GroupOwnerSetting)
 
-  props = {
-    "SourcePath": (StringValueConverter(), "source_path"),
-    "DestinationPath": (StringValueConverter(), "destination_path"),
-    "GroupOwnerSetting": (AWS_Greengrass_ResourceDefinitionVersion_GroupOwnerSetting, "group_owner_setting"),
-  }
 
 class AWS_Greengrass_ResourceDefinitionVersion_ResourceDataContainer(CloudFormationProperty):
-  entity = "AWS::Greengrass::ResourceDefinitionVersion"
-  tf_block_type = "resource_data_container"
+  def write(self, w):
+    with w.block("resource_data_container"):
+      self.block(w, "SecretsManagerSecretResourceData", AWS_Greengrass_ResourceDefinitionVersion_SecretsManagerSecretResourceData)
+      self.block(w, "SageMakerMachineLearningModelResourceData", AWS_Greengrass_ResourceDefinitionVersion_SageMakerMachineLearningModelResourceData)
+      self.block(w, "LocalVolumeResourceData", AWS_Greengrass_ResourceDefinitionVersion_LocalVolumeResourceData)
+      self.block(w, "LocalDeviceResourceData", AWS_Greengrass_ResourceDefinitionVersion_LocalDeviceResourceData)
+      self.block(w, "S3MachineLearningModelResourceData", AWS_Greengrass_ResourceDefinitionVersion_S3MachineLearningModelResourceData)
 
-  props = {
-    "SecretsManagerSecretResourceData": (AWS_Greengrass_ResourceDefinitionVersion_SecretsManagerSecretResourceData, "secrets_manager_secret_resource_data"),
-    "SageMakerMachineLearningModelResourceData": (AWS_Greengrass_ResourceDefinitionVersion_SageMakerMachineLearningModelResourceData, "sage_maker_machine_learning_model_resource_data"),
-    "LocalVolumeResourceData": (AWS_Greengrass_ResourceDefinitionVersion_LocalVolumeResourceData, "local_volume_resource_data"),
-    "LocalDeviceResourceData": (AWS_Greengrass_ResourceDefinitionVersion_LocalDeviceResourceData, "local_device_resource_data"),
-    "S3MachineLearningModelResourceData": (AWS_Greengrass_ResourceDefinitionVersion_S3MachineLearningModelResourceData, "s3_machine_learning_model_resource_data"),
-  }
 
 class AWS_Greengrass_ResourceDefinition_ResourceDataContainer(CloudFormationProperty):
-  entity = "AWS::Greengrass::ResourceDefinition"
-  tf_block_type = "resource_data_container"
+  def write(self, w):
+    with w.block("resource_data_container"):
+      self.block(w, "SecretsManagerSecretResourceData", AWS_Greengrass_ResourceDefinition_SecretsManagerSecretResourceData)
+      self.block(w, "SageMakerMachineLearningModelResourceData", AWS_Greengrass_ResourceDefinition_SageMakerMachineLearningModelResourceData)
+      self.block(w, "LocalVolumeResourceData", AWS_Greengrass_ResourceDefinition_LocalVolumeResourceData)
+      self.block(w, "LocalDeviceResourceData", AWS_Greengrass_ResourceDefinition_LocalDeviceResourceData)
+      self.block(w, "S3MachineLearningModelResourceData", AWS_Greengrass_ResourceDefinition_S3MachineLearningModelResourceData)
 
-  props = {
-    "SecretsManagerSecretResourceData": (AWS_Greengrass_ResourceDefinition_SecretsManagerSecretResourceData, "secrets_manager_secret_resource_data"),
-    "SageMakerMachineLearningModelResourceData": (AWS_Greengrass_ResourceDefinition_SageMakerMachineLearningModelResourceData, "sage_maker_machine_learning_model_resource_data"),
-    "LocalVolumeResourceData": (AWS_Greengrass_ResourceDefinition_LocalVolumeResourceData, "local_volume_resource_data"),
-    "LocalDeviceResourceData": (AWS_Greengrass_ResourceDefinition_LocalDeviceResourceData, "local_device_resource_data"),
-    "S3MachineLearningModelResourceData": (AWS_Greengrass_ResourceDefinition_S3MachineLearningModelResourceData, "s3_machine_learning_model_resource_data"),
-  }
 
 class AWS_Greengrass_ConnectorDefinition(CloudFormationResource):
-  terraform_resource = "aws_greengrass_connector_definition"
+  cfn_type = "AWS::Greengrass::ConnectorDefinition"
+  tf_type = "aws_greengrass_connector_definition"
+  ref = "arn"
 
-  resource_type = "AWS::Greengrass::ConnectorDefinition"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "InitialVersion", AWS_Greengrass_ConnectorDefinition_ConnectorDefinitionVersion)
+      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "InitialVersion": (AWS_Greengrass_ConnectorDefinition_ConnectorDefinitionVersion, "initial_version"),
-    "Tags": (StringValueConverter(), "tags"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_Greengrass_SubscriptionDefinition(CloudFormationResource):
-  terraform_resource = "aws_greengrass_subscription_definition"
+  cfn_type = "AWS::Greengrass::SubscriptionDefinition"
+  tf_type = "aws_greengrass_subscription_definition"
+  ref = "arn"
 
-  resource_type = "AWS::Greengrass::SubscriptionDefinition"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "InitialVersion", AWS_Greengrass_SubscriptionDefinition_SubscriptionDefinitionVersion)
+      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "InitialVersion": (AWS_Greengrass_SubscriptionDefinition_SubscriptionDefinitionVersion, "initial_version"),
-    "Tags": (StringValueConverter(), "tags"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_Greengrass_FunctionDefinitionVersion_FunctionConfiguration(CloudFormationProperty):
-  entity = "AWS::Greengrass::FunctionDefinitionVersion"
-  tf_block_type = "function_configuration"
+  def write(self, w):
+    with w.block("function_configuration"):
+      self.property(w, "MemorySize", "memory_size", BasicValueConverter())
+      self.property(w, "Pinned", "pinned", BasicValueConverter())
+      self.property(w, "ExecArgs", "exec_args", StringValueConverter())
+      self.property(w, "Timeout", "timeout", BasicValueConverter())
+      self.property(w, "EncodingType", "encoding_type", StringValueConverter())
+      self.block(w, "Environment", AWS_Greengrass_FunctionDefinitionVersion_Environment)
+      self.property(w, "Executable", "executable", StringValueConverter())
 
-  props = {
-    "MemorySize": (BasicValueConverter(), "memory_size"),
-    "Pinned": (BasicValueConverter(), "pinned"),
-    "ExecArgs": (StringValueConverter(), "exec_args"),
-    "Timeout": (BasicValueConverter(), "timeout"),
-    "EncodingType": (StringValueConverter(), "encoding_type"),
-    "Environment": (AWS_Greengrass_FunctionDefinitionVersion_Environment, "environment"),
-    "Executable": (StringValueConverter(), "executable"),
-  }
 
 class AWS_Greengrass_ResourceDefinitionVersion_ResourceInstance(CloudFormationProperty):
-  entity = "AWS::Greengrass::ResourceDefinitionVersion"
-  tf_block_type = "resource_instance"
+  def write(self, w):
+    with w.block("resource_instance"):
+      self.block(w, "ResourceDataContainer", AWS_Greengrass_ResourceDefinitionVersion_ResourceDataContainer)
+      self.property(w, "Id", "id", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "ResourceDataContainer": (AWS_Greengrass_ResourceDefinitionVersion_ResourceDataContainer, "resource_data_container"),
-    "Id": (StringValueConverter(), "id"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_Greengrass_FunctionDefinition_FunctionConfiguration(CloudFormationProperty):
-  entity = "AWS::Greengrass::FunctionDefinition"
-  tf_block_type = "function_configuration"
+  def write(self, w):
+    with w.block("function_configuration"):
+      self.property(w, "MemorySize", "memory_size", BasicValueConverter())
+      self.property(w, "Pinned", "pinned", BasicValueConverter())
+      self.property(w, "ExecArgs", "exec_args", StringValueConverter())
+      self.property(w, "Timeout", "timeout", BasicValueConverter())
+      self.property(w, "EncodingType", "encoding_type", StringValueConverter())
+      self.block(w, "Environment", AWS_Greengrass_FunctionDefinition_Environment)
+      self.property(w, "Executable", "executable", StringValueConverter())
 
-  props = {
-    "MemorySize": (BasicValueConverter(), "memory_size"),
-    "Pinned": (BasicValueConverter(), "pinned"),
-    "ExecArgs": (StringValueConverter(), "exec_args"),
-    "Timeout": (BasicValueConverter(), "timeout"),
-    "EncodingType": (StringValueConverter(), "encoding_type"),
-    "Environment": (AWS_Greengrass_FunctionDefinition_Environment, "environment"),
-    "Executable": (StringValueConverter(), "executable"),
-  }
 
 class AWS_Greengrass_FunctionDefinitionVersion_Function(CloudFormationProperty):
-  entity = "AWS::Greengrass::FunctionDefinitionVersion"
-  tf_block_type = "function"
+  def write(self, w):
+    with w.block("function"):
+      self.property(w, "FunctionArn", "function_arn", StringValueConverter())
+      self.block(w, "FunctionConfiguration", AWS_Greengrass_FunctionDefinitionVersion_FunctionConfiguration)
+      self.property(w, "Id", "id", StringValueConverter())
 
-  props = {
-    "FunctionArn": (StringValueConverter(), "function_arn"),
-    "FunctionConfiguration": (AWS_Greengrass_FunctionDefinitionVersion_FunctionConfiguration, "function_configuration"),
-    "Id": (StringValueConverter(), "id"),
-  }
 
 class AWS_Greengrass_ResourceDefinition_ResourceInstance(CloudFormationProperty):
-  entity = "AWS::Greengrass::ResourceDefinition"
-  tf_block_type = "resource_instance"
+  def write(self, w):
+    with w.block("resource_instance"):
+      self.block(w, "ResourceDataContainer", AWS_Greengrass_ResourceDefinition_ResourceDataContainer)
+      self.property(w, "Id", "id", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "ResourceDataContainer": (AWS_Greengrass_ResourceDefinition_ResourceDataContainer, "resource_data_container"),
-    "Id": (StringValueConverter(), "id"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_Greengrass_FunctionDefinition_Function(CloudFormationProperty):
-  entity = "AWS::Greengrass::FunctionDefinition"
-  tf_block_type = "function"
+  def write(self, w):
+    with w.block("function"):
+      self.property(w, "FunctionArn", "function_arn", StringValueConverter())
+      self.block(w, "FunctionConfiguration", AWS_Greengrass_FunctionDefinition_FunctionConfiguration)
+      self.property(w, "Id", "id", StringValueConverter())
 
-  props = {
-    "FunctionArn": (StringValueConverter(), "function_arn"),
-    "FunctionConfiguration": (AWS_Greengrass_FunctionDefinition_FunctionConfiguration, "function_configuration"),
-    "Id": (StringValueConverter(), "id"),
-  }
 
 class AWS_Greengrass_FunctionDefinitionVersion(CloudFormationResource):
-  terraform_resource = "aws_greengrass_function_definition_version"
+  cfn_type = "AWS::Greengrass::FunctionDefinitionVersion"
+  tf_type = "aws_greengrass_function_definition_version"
+  ref = "arn"
 
-  resource_type = "AWS::Greengrass::FunctionDefinitionVersion"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "DefaultConfig", AWS_Greengrass_FunctionDefinitionVersion_DefaultConfig)
+      self.repeated_block(w, "Functions", AWS_Greengrass_FunctionDefinitionVersion_Function)
+      self.property(w, "FunctionDefinitionId", "function_definition_id", StringValueConverter())
 
-  props = {
-    "DefaultConfig": (AWS_Greengrass_FunctionDefinitionVersion_DefaultConfig, "default_config"),
-    "Functions": (BlockValueConverter(AWS_Greengrass_FunctionDefinitionVersion_Function), None),
-    "FunctionDefinitionId": (StringValueConverter(), "function_definition_id"),
-  }
 
 class AWS_Greengrass_ResourceDefinitionVersion(CloudFormationResource):
-  terraform_resource = "aws_greengrass_resource_definition_version"
+  cfn_type = "AWS::Greengrass::ResourceDefinitionVersion"
+  tf_type = "aws_greengrass_resource_definition_version"
+  ref = "arn"
 
-  resource_type = "AWS::Greengrass::ResourceDefinitionVersion"
+  def write(self, w):
+    with self.resource_block(w):
+      self.repeated_block(w, "Resources", AWS_Greengrass_ResourceDefinitionVersion_ResourceInstance)
+      self.property(w, "ResourceDefinitionId", "resource_definition_id", StringValueConverter())
 
-  props = {
-    "Resources": (BlockValueConverter(AWS_Greengrass_ResourceDefinitionVersion_ResourceInstance), None),
-    "ResourceDefinitionId": (StringValueConverter(), "resource_definition_id"),
-  }
 
 class AWS_Greengrass_FunctionDefinition_FunctionDefinitionVersion(CloudFormationProperty):
-  entity = "AWS::Greengrass::FunctionDefinition"
-  tf_block_type = "function_definition_version"
+  def write(self, w):
+    with w.block("function_definition_version"):
+      self.block(w, "DefaultConfig", AWS_Greengrass_FunctionDefinition_DefaultConfig)
+      self.repeated_block(w, "Functions", AWS_Greengrass_FunctionDefinition_Function)
 
-  props = {
-    "DefaultConfig": (AWS_Greengrass_FunctionDefinition_DefaultConfig, "default_config"),
-    "Functions": (BlockValueConverter(AWS_Greengrass_FunctionDefinition_Function), None),
-  }
 
 class AWS_Greengrass_ResourceDefinition_ResourceDefinitionVersion(CloudFormationProperty):
-  entity = "AWS::Greengrass::ResourceDefinition"
-  tf_block_type = "resource_definition_version"
+  def write(self, w):
+    with w.block("resource_definition_version"):
+      self.repeated_block(w, "Resources", AWS_Greengrass_ResourceDefinition_ResourceInstance)
 
-  props = {
-    "Resources": (BlockValueConverter(AWS_Greengrass_ResourceDefinition_ResourceInstance), None),
-  }
 
 class AWS_Greengrass_ResourceDefinition(CloudFormationResource):
-  terraform_resource = "aws_greengrass_resource_definition"
+  cfn_type = "AWS::Greengrass::ResourceDefinition"
+  tf_type = "aws_greengrass_resource_definition"
+  ref = "arn"
 
-  resource_type = "AWS::Greengrass::ResourceDefinition"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "InitialVersion", AWS_Greengrass_ResourceDefinition_ResourceDefinitionVersion)
+      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "InitialVersion": (AWS_Greengrass_ResourceDefinition_ResourceDefinitionVersion, "initial_version"),
-    "Tags": (StringValueConverter(), "tags"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_Greengrass_FunctionDefinition(CloudFormationResource):
-  terraform_resource = "aws_greengrass_function_definition"
+  cfn_type = "AWS::Greengrass::FunctionDefinition"
+  tf_type = "aws_greengrass_function_definition"
+  ref = "arn"
 
-  resource_type = "AWS::Greengrass::FunctionDefinition"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "InitialVersion", AWS_Greengrass_FunctionDefinition_FunctionDefinitionVersion)
+      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "InitialVersion": (AWS_Greengrass_FunctionDefinition_FunctionDefinitionVersion, "initial_version"),
-    "Tags": (StringValueConverter(), "tags"),
-    "Name": (StringValueConverter(), "name"),
-  }
 

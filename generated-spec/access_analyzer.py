@@ -1,35 +1,32 @@
 from . import *
 
 class AWS_AccessAnalyzer_Analyzer_Filter(CloudFormationProperty):
-  entity = "AWS::AccessAnalyzer::Analyzer"
-  tf_block_type = "filter"
+  def write(self, w):
+    with w.block("filter"):
+      self.property(w, "Contains", "contains", ListValueConverter(StringValueConverter()))
+      self.property(w, "Eq", "eq", ListValueConverter(StringValueConverter()))
+      self.property(w, "Exists", "exists", BasicValueConverter())
+      self.property(w, "Property", "property", StringValueConverter())
+      self.property(w, "Neq", "neq", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "Contains": (ListValueConverter(StringValueConverter()), "contains"),
-    "Eq": (ListValueConverter(StringValueConverter()), "eq"),
-    "Exists": (BasicValueConverter(), "exists"),
-    "Property": (StringValueConverter(), "property"),
-    "Neq": (ListValueConverter(StringValueConverter()), "neq"),
-  }
 
 class AWS_AccessAnalyzer_Analyzer_ArchiveRule(CloudFormationProperty):
-  entity = "AWS::AccessAnalyzer::Analyzer"
-  tf_block_type = "archive_rule"
+  def write(self, w):
+    with w.block("archive_rule"):
+      self.repeated_block(w, "Filter", AWS_AccessAnalyzer_Analyzer_Filter)
+      self.property(w, "RuleName", "rule_name", StringValueConverter())
 
-  props = {
-    "Filter": (BlockValueConverter(AWS_AccessAnalyzer_Analyzer_Filter), None),
-    "RuleName": (StringValueConverter(), "rule_name"),
-  }
 
 class AWS_AccessAnalyzer_Analyzer(CloudFormationResource):
-  terraform_resource = "aws_access_analyzer_analyzer"
+  cfn_type = "AWS::AccessAnalyzer::Analyzer"
+  tf_type = "aws_access_analyzer_analyzer"
+  ref = "arn"
 
-  resource_type = "AWS::AccessAnalyzer::Analyzer"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "AnalyzerName", "analyzer_name", StringValueConverter())
+      self.repeated_block(w, "ArchiveRules", AWS_AccessAnalyzer_Analyzer_ArchiveRule)
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "Type", "type", StringValueConverter())
 
-  props = {
-    "AnalyzerName": (StringValueConverter(), "analyzer_name"),
-    "ArchiveRules": (BlockValueConverter(AWS_AccessAnalyzer_Analyzer_ArchiveRule), None),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "Type": (StringValueConverter(), "type"),
-  }
 

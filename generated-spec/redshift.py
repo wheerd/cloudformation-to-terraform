@@ -1,102 +1,103 @@
 from . import *
 
 class AWS_Redshift_ClusterParameterGroup_Parameter(CloudFormationProperty):
-  entity = "AWS::Redshift::ClusterParameterGroup"
-  tf_block_type = "parameter"
+  def write(self, w):
+    with w.block("parameter"):
+      self.property(w, "ParameterName", "parameter_name", StringValueConverter())
+      self.property(w, "ParameterValue", "parameter_value", StringValueConverter())
 
-  props = {
-    "ParameterName": (StringValueConverter(), "parameter_name"),
-    "ParameterValue": (StringValueConverter(), "parameter_value"),
-  }
 
 class AWS_Redshift_Cluster_LoggingProperties(CloudFormationProperty):
-  entity = "AWS::Redshift::Cluster"
-  tf_block_type = "logging_properties"
+  def write(self, w):
+    with w.block("logging_properties"):
+      self.property(w, "BucketName", "bucket_name", StringValueConverter())
+      self.property(w, "S3KeyPrefix", "s3_key_prefix", StringValueConverter())
 
-  props = {
-    "BucketName": (StringValueConverter(), "bucket_name"),
-    "S3KeyPrefix": (StringValueConverter(), "s3_key_prefix"),
-  }
 
 class AWS_Redshift_Cluster(CloudFormationResource):
-  terraform_resource = "aws_redshift_cluster"
+  cfn_type = "AWS::Redshift::Cluster"
+  tf_type = "aws_redshift_cluster"
+  ref = "arn"
 
-  resource_type = "AWS::Redshift::Cluster"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "AllowVersionUpgrade", "allow_version_upgrade", BasicValueConverter())
+      self.property(w, "AutomatedSnapshotRetentionPeriod", "automated_snapshot_retention_period", BasicValueConverter())
+      self.property(w, "AvailabilityZone", "availability_zone", StringValueConverter())
+      self.property(w, "ClusterIdentifier", "cluster_identifier", StringValueConverter())
+      self.property(w, "ClusterParameterGroupName", "cluster_parameter_group_name", StringValueConverter())
+      self.property(w, "ClusterSecurityGroups", "cluster_security_groups", ListValueConverter(StringValueConverter()))
+      self.property(w, "ClusterSubnetGroupName", "cluster_subnet_group_name", StringValueConverter())
+      self.property(w, "ClusterType", "cluster_type", StringValueConverter())
+      self.property(w, "ClusterVersion", "cluster_version", StringValueConverter())
+      self.property(w, "DBName", "db_name", StringValueConverter())
+      self.property(w, "ElasticIp", "elastic_ip", StringValueConverter())
+      self.property(w, "Encrypted", "encrypted", BasicValueConverter())
+      self.property(w, "HsmClientCertificateIdentifier", "hsm_client_certificate_identifier", StringValueConverter())
+      self.property(w, "HsmConfigurationIdentifier", "hsm_configuration_identifier", StringValueConverter())
+      self.property(w, "IamRoles", "iam_roles", ListValueConverter(StringValueConverter()))
+      self.property(w, "KmsKeyId", "kms_key_id", StringValueConverter())
+      self.block(w, "LoggingProperties", AWS_Redshift_Cluster_LoggingProperties)
+      self.property(w, "MasterUserPassword", "master_user_password", StringValueConverter())
+      self.property(w, "MasterUsername", "master_username", StringValueConverter())
+      self.property(w, "NodeType", "node_type", StringValueConverter())
+      self.property(w, "NumberOfNodes", "number_of_nodes", BasicValueConverter())
+      self.property(w, "OwnerAccount", "owner_account", StringValueConverter())
+      self.property(w, "Port", "port", BasicValueConverter())
+      self.property(w, "PreferredMaintenanceWindow", "preferred_maintenance_window", StringValueConverter())
+      self.property(w, "PubliclyAccessible", "publicly_accessible", BasicValueConverter())
+      self.property(w, "SnapshotClusterIdentifier", "snapshot_cluster_identifier", StringValueConverter())
+      self.property(w, "SnapshotIdentifier", "snapshot_identifier", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "VpcSecurityGroupIds", "vpc_security_group_ids", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "AllowVersionUpgrade": (BasicValueConverter(), "allow_version_upgrade"),
-    "AutomatedSnapshotRetentionPeriod": (BasicValueConverter(), "automated_snapshot_retention_period"),
-    "AvailabilityZone": (StringValueConverter(), "availability_zone"),
-    "ClusterIdentifier": (StringValueConverter(), "cluster_identifier"),
-    "ClusterParameterGroupName": (StringValueConverter(), "cluster_parameter_group_name"),
-    "ClusterSecurityGroups": (ListValueConverter(StringValueConverter()), "cluster_security_groups"),
-    "ClusterSubnetGroupName": (StringValueConverter(), "cluster_subnet_group_name"),
-    "ClusterType": (StringValueConverter(), "cluster_type"),
-    "ClusterVersion": (StringValueConverter(), "cluster_version"),
-    "DBName": (StringValueConverter(), "db_name"),
-    "ElasticIp": (StringValueConverter(), "elastic_ip"),
-    "Encrypted": (BasicValueConverter(), "encrypted"),
-    "HsmClientCertificateIdentifier": (StringValueConverter(), "hsm_client_certificate_identifier"),
-    "HsmConfigurationIdentifier": (StringValueConverter(), "hsm_configuration_identifier"),
-    "IamRoles": (ListValueConverter(StringValueConverter()), "iam_roles"),
-    "KmsKeyId": (StringValueConverter(), "kms_key_id"),
-    "LoggingProperties": (AWS_Redshift_Cluster_LoggingProperties, "logging_properties"),
-    "MasterUserPassword": (StringValueConverter(), "master_user_password"),
-    "MasterUsername": (StringValueConverter(), "master_username"),
-    "NodeType": (StringValueConverter(), "node_type"),
-    "NumberOfNodes": (BasicValueConverter(), "number_of_nodes"),
-    "OwnerAccount": (StringValueConverter(), "owner_account"),
-    "Port": (BasicValueConverter(), "port"),
-    "PreferredMaintenanceWindow": (StringValueConverter(), "preferred_maintenance_window"),
-    "PubliclyAccessible": (BasicValueConverter(), "publicly_accessible"),
-    "SnapshotClusterIdentifier": (StringValueConverter(), "snapshot_cluster_identifier"),
-    "SnapshotIdentifier": (StringValueConverter(), "snapshot_identifier"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "VpcSecurityGroupIds": (ListValueConverter(StringValueConverter()), "vpc_security_group_ids"),
-  }
 
 class AWS_Redshift_ClusterParameterGroup(CloudFormationResource):
-  terraform_resource = "aws_redshift_cluster_parameter_group"
+  cfn_type = "AWS::Redshift::ClusterParameterGroup"
+  tf_type = "aws_redshift_cluster_parameter_group"
+  ref = "arn"
 
-  resource_type = "AWS::Redshift::ClusterParameterGroup"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "ParameterGroupFamily", "parameter_group_family", StringValueConverter())
+      self.repeated_block(w, "Parameters", AWS_Redshift_ClusterParameterGroup_Parameter)
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "ParameterGroupFamily": (StringValueConverter(), "parameter_group_family"),
-    "Parameters": (BlockValueConverter(AWS_Redshift_ClusterParameterGroup_Parameter), None),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 
 class AWS_Redshift_ClusterSubnetGroup(CloudFormationResource):
-  terraform_resource = "aws_redshift_cluster_subnet_group"
+  cfn_type = "AWS::Redshift::ClusterSubnetGroup"
+  tf_type = "aws_redshift_cluster_subnet_group"
+  ref = "arn"
 
-  resource_type = "AWS::Redshift::ClusterSubnetGroup"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "SubnetIds", "subnet_ids", ListValueConverter(StringValueConverter()))
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "SubnetIds": (ListValueConverter(StringValueConverter()), "subnet_ids"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 
 class AWS_Redshift_ClusterSecurityGroup(CloudFormationResource):
-  terraform_resource = "aws_redshift_cluster_security_group"
+  cfn_type = "AWS::Redshift::ClusterSecurityGroup"
+  tf_type = "aws_redshift_cluster_security_group"
+  ref = "arn"
 
-  resource_type = "AWS::Redshift::ClusterSecurityGroup"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 
 class AWS_Redshift_ClusterSecurityGroupIngress(CloudFormationResource):
-  terraform_resource = "aws_redshift_cluster_security_group_ingress"
+  cfn_type = "AWS::Redshift::ClusterSecurityGroupIngress"
+  tf_type = "aws_redshift_cluster_security_group_ingress"
+  ref = "arn"
 
-  resource_type = "AWS::Redshift::ClusterSecurityGroupIngress"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "CIDRIP", "cidrip", StringValueConverter())
+      self.property(w, "ClusterSecurityGroupName", "cluster_security_group_name", StringValueConverter())
+      self.property(w, "EC2SecurityGroupName", "ec2_security_group_name", StringValueConverter())
+      self.property(w, "EC2SecurityGroupOwnerId", "ec2_security_group_owner_id", StringValueConverter())
 
-  props = {
-    "CIDRIP": (StringValueConverter(), "cidrip"),
-    "ClusterSecurityGroupName": (StringValueConverter(), "cluster_security_group_name"),
-    "EC2SecurityGroupName": (StringValueConverter(), "ec2_security_group_name"),
-    "EC2SecurityGroupOwnerId": (StringValueConverter(), "ec2_security_group_owner_id"),
-  }
 

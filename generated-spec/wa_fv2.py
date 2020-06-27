@@ -1,601 +1,504 @@
 from . import *
 
 class AWS_WAFv2_WebACL_RuleAction(CloudFormationProperty):
-  entity = "AWS::WAFv2::WebACL"
-  tf_block_type = "rule_action"
+  def write(self, w):
+    with w.block("rule_action"):
+      self.property(w, "Allow", "allow", StringValueConverter())
+      self.property(w, "Block", "block", StringValueConverter())
+      self.property(w, "Count", "count", StringValueConverter())
 
-  props = {
-    "Allow": (StringValueConverter(), "allow"),
-    "Block": (StringValueConverter(), "block"),
-    "Count": (StringValueConverter(), "count"),
-  }
 
 class AWS_WAFv2_WebACL_TextTransformation(CloudFormationProperty):
-  entity = "AWS::WAFv2::WebACL"
-  tf_block_type = "text_transformation"
+  def write(self, w):
+    with w.block("text_transformation"):
+      self.property(w, "Priority", "priority", BasicValueConverter())
+      self.property(w, "Type", "type", StringValueConverter())
 
-  props = {
-    "Priority": (BasicValueConverter(), "priority"),
-    "Type": (StringValueConverter(), "type"),
-  }
 
 class AWS_WAFv2_WebACL_DefaultAction(CloudFormationProperty):
-  entity = "AWS::WAFv2::WebACL"
-  tf_block_type = "default_action"
+  def write(self, w):
+    with w.block("default_action"):
+      self.property(w, "Allow", "allow", StringValueConverter())
+      self.property(w, "Block", "block", StringValueConverter())
 
-  props = {
-    "Allow": (StringValueConverter(), "allow"),
-    "Block": (StringValueConverter(), "block"),
-  }
 
 class AWS_WAFv2_RuleGroup_TextTransformation(CloudFormationProperty):
-  entity = "AWS::WAFv2::RuleGroup"
-  tf_block_type = "text_transformation"
+  def write(self, w):
+    with w.block("text_transformation"):
+      self.property(w, "Priority", "priority", BasicValueConverter())
+      self.property(w, "Type", "type", StringValueConverter())
 
-  props = {
-    "Priority": (BasicValueConverter(), "priority"),
-    "Type": (StringValueConverter(), "type"),
-  }
 
 class AWS_WAFv2_WebACL_OverrideAction(CloudFormationProperty):
-  entity = "AWS::WAFv2::WebACL"
-  tf_block_type = "override_action"
+  def write(self, w):
+    with w.block("override_action"):
+      self.property(w, "Count", "count", StringValueConverter())
+      self.property(w, "None", "none", StringValueConverter())
 
-  props = {
-    "Count": (StringValueConverter(), "count"),
-    "None": (StringValueConverter(), "none"),
-  }
 
 class AWS_WAFv2_RuleGroup_RuleAction(CloudFormationProperty):
-  entity = "AWS::WAFv2::RuleGroup"
-  tf_block_type = "rule_action"
+  def write(self, w):
+    with w.block("rule_action"):
+      self.property(w, "Allow", "allow", StringValueConverter())
+      self.property(w, "Block", "block", StringValueConverter())
+      self.property(w, "Count", "count", StringValueConverter())
 
-  props = {
-    "Allow": (StringValueConverter(), "allow"),
-    "Block": (StringValueConverter(), "block"),
-    "Count": (StringValueConverter(), "count"),
-  }
 
 class AWS_WAFv2_RuleGroup_FieldToMatch(CloudFormationProperty):
-  entity = "AWS::WAFv2::RuleGroup"
-  tf_block_type = "field_to_match"
+  def write(self, w):
+    with w.block("field_to_match"):
+      self.property(w, "SingleHeader", "single_header", StringValueConverter())
+      self.property(w, "SingleQueryArgument", "single_query_argument", StringValueConverter())
+      self.property(w, "AllQueryArguments", "all_query_arguments", StringValueConverter())
+      self.property(w, "UriPath", "uri_path", StringValueConverter())
+      self.property(w, "QueryString", "query_string", StringValueConverter())
+      self.property(w, "Body", "body", StringValueConverter())
+      self.property(w, "Method", "method", StringValueConverter())
 
-  props = {
-    "SingleHeader": (StringValueConverter(), "single_header"),
-    "SingleQueryArgument": (StringValueConverter(), "single_query_argument"),
-    "AllQueryArguments": (StringValueConverter(), "all_query_arguments"),
-    "UriPath": (StringValueConverter(), "uri_path"),
-    "QueryString": (StringValueConverter(), "query_string"),
-    "Body": (StringValueConverter(), "body"),
-    "Method": (StringValueConverter(), "method"),
-  }
 
 class AWS_WAFv2_RuleGroup_IPSetReferenceStatement(CloudFormationProperty):
-  entity = "AWS::WAFv2::RuleGroup"
-  tf_block_type = "ip_set_reference_statement"
+  def write(self, w):
+    with w.block("ip_set_reference_statement"):
+      self.property(w, "Arn", "arn", StringValueConverter())
 
-  props = {
-    "Arn": (StringValueConverter(), "arn"),
-  }
 
 class AWS_WAFv2_WebACL_ExcludedRule(CloudFormationProperty):
-  entity = "AWS::WAFv2::WebACL"
-  tf_block_type = "excluded_rule"
+  def write(self, w):
+    with w.block("excluded_rule"):
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_WAFv2_WebACL_VisibilityConfig(CloudFormationProperty):
-  entity = "AWS::WAFv2::WebACL"
-  tf_block_type = "visibility_config"
+  def write(self, w):
+    with w.block("visibility_config"):
+      self.property(w, "SampledRequestsEnabled", "sampled_requests_enabled", BasicValueConverter())
+      self.property(w, "CloudWatchMetricsEnabled", "cloud_watch_metrics_enabled", BasicValueConverter())
+      self.property(w, "MetricName", "metric_name", StringValueConverter())
 
-  props = {
-    "SampledRequestsEnabled": (BasicValueConverter(), "sampled_requests_enabled"),
-    "CloudWatchMetricsEnabled": (BasicValueConverter(), "cloud_watch_metrics_enabled"),
-    "MetricName": (StringValueConverter(), "metric_name"),
-  }
 
 class AWS_WAFv2_WebACL_FieldToMatch(CloudFormationProperty):
-  entity = "AWS::WAFv2::WebACL"
-  tf_block_type = "field_to_match"
+  def write(self, w):
+    with w.block("field_to_match"):
+      self.property(w, "SingleHeader", "single_header", StringValueConverter())
+      self.property(w, "SingleQueryArgument", "single_query_argument", StringValueConverter())
+      self.property(w, "AllQueryArguments", "all_query_arguments", StringValueConverter())
+      self.property(w, "UriPath", "uri_path", StringValueConverter())
+      self.property(w, "QueryString", "query_string", StringValueConverter())
+      self.property(w, "Body", "body", StringValueConverter())
+      self.property(w, "Method", "method", StringValueConverter())
 
-  props = {
-    "SingleHeader": (StringValueConverter(), "single_header"),
-    "SingleQueryArgument": (StringValueConverter(), "single_query_argument"),
-    "AllQueryArguments": (StringValueConverter(), "all_query_arguments"),
-    "UriPath": (StringValueConverter(), "uri_path"),
-    "QueryString": (StringValueConverter(), "query_string"),
-    "Body": (StringValueConverter(), "body"),
-    "Method": (StringValueConverter(), "method"),
-  }
 
 class AWS_WAFv2_WebACL_SqliMatchStatement(CloudFormationProperty):
-  entity = "AWS::WAFv2::WebACL"
-  tf_block_type = "sqli_match_statement"
+  def write(self, w):
+    with w.block("sqli_match_statement"):
+      self.block(w, "FieldToMatch", AWS_WAFv2_WebACL_FieldToMatch)
+      self.repeated_block(w, "TextTransformations", AWS_WAFv2_WebACL_TextTransformation)
 
-  props = {
-    "FieldToMatch": (AWS_WAFv2_WebACL_FieldToMatch, "field_to_match"),
-    "TextTransformations": (BlockValueConverter(AWS_WAFv2_WebACL_TextTransformation), None),
-  }
 
 class AWS_WAFv2_WebACL_GeoMatchStatement(CloudFormationProperty):
-  entity = "AWS::WAFv2::WebACL"
-  tf_block_type = "geo_match_statement"
+  def write(self, w):
+    with w.block("geo_match_statement"):
+      self.property(w, "CountryCodes", "country_codes", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "CountryCodes": (ListValueConverter(StringValueConverter()), "country_codes"),
-  }
 
 class AWS_WAFv2_RuleGroup_VisibilityConfig(CloudFormationProperty):
-  entity = "AWS::WAFv2::RuleGroup"
-  tf_block_type = "visibility_config"
+  def write(self, w):
+    with w.block("visibility_config"):
+      self.property(w, "SampledRequestsEnabled", "sampled_requests_enabled", BasicValueConverter())
+      self.property(w, "CloudWatchMetricsEnabled", "cloud_watch_metrics_enabled", BasicValueConverter())
+      self.property(w, "MetricName", "metric_name", StringValueConverter())
 
-  props = {
-    "SampledRequestsEnabled": (BasicValueConverter(), "sampled_requests_enabled"),
-    "CloudWatchMetricsEnabled": (BasicValueConverter(), "cloud_watch_metrics_enabled"),
-    "MetricName": (StringValueConverter(), "metric_name"),
-  }
 
 class AWS_WAFv2_WebACL_IPSetReferenceStatement(CloudFormationProperty):
-  entity = "AWS::WAFv2::WebACL"
-  tf_block_type = "ip_set_reference_statement"
+  def write(self, w):
+    with w.block("ip_set_reference_statement"):
+      self.property(w, "Arn", "arn", StringValueConverter())
 
-  props = {
-    "Arn": (StringValueConverter(), "arn"),
-  }
 
 class AWS_WAFv2_RuleGroup_GeoMatchStatement(CloudFormationProperty):
-  entity = "AWS::WAFv2::RuleGroup"
-  tf_block_type = "geo_match_statement"
+  def write(self, w):
+    with w.block("geo_match_statement"):
+      self.property(w, "CountryCodes", "country_codes", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "CountryCodes": (ListValueConverter(StringValueConverter()), "country_codes"),
-  }
 
 class AWS_WAFv2_RuleGroup_SqliMatchStatement(CloudFormationProperty):
-  entity = "AWS::WAFv2::RuleGroup"
-  tf_block_type = "sqli_match_statement"
+  def write(self, w):
+    with w.block("sqli_match_statement"):
+      self.block(w, "FieldToMatch", AWS_WAFv2_RuleGroup_FieldToMatch)
+      self.repeated_block(w, "TextTransformations", AWS_WAFv2_RuleGroup_TextTransformation)
 
-  props = {
-    "FieldToMatch": (AWS_WAFv2_RuleGroup_FieldToMatch, "field_to_match"),
-    "TextTransformations": (BlockValueConverter(AWS_WAFv2_RuleGroup_TextTransformation), None),
-  }
 
 class AWS_WAFv2_RuleGroup_SizeConstraintStatement(CloudFormationProperty):
-  entity = "AWS::WAFv2::RuleGroup"
-  tf_block_type = "size_constraint_statement"
+  def write(self, w):
+    with w.block("size_constraint_statement"):
+      self.block(w, "FieldToMatch", AWS_WAFv2_RuleGroup_FieldToMatch)
+      self.property(w, "ComparisonOperator", "comparison_operator", StringValueConverter())
+      self.property(w, "Size", "size", BasicValueConverter())
+      self.repeated_block(w, "TextTransformations", AWS_WAFv2_RuleGroup_TextTransformation)
 
-  props = {
-    "FieldToMatch": (AWS_WAFv2_RuleGroup_FieldToMatch, "field_to_match"),
-    "ComparisonOperator": (StringValueConverter(), "comparison_operator"),
-    "Size": (BasicValueConverter(), "size"),
-    "TextTransformations": (BlockValueConverter(AWS_WAFv2_RuleGroup_TextTransformation), None),
-  }
 
 class AWS_WAFv2_RegexPatternSet(CloudFormationResource):
-  terraform_resource = "aws_wa_fv2_regex_pattern_set"
+  cfn_type = "AWS::WAFv2::RegexPatternSet"
+  tf_type = "aws_wa_fv2_regex_pattern_set"
+  ref = "arn"
 
-  resource_type = "AWS::WAFv2::RegexPatternSet"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "RegularExpressionList", "regular_expression_list", ListValueConverter(StringValueConverter()))
+      self.property(w, "Scope", "scope", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "Name": (StringValueConverter(), "name"),
-    "RegularExpressionList": (ListValueConverter(StringValueConverter()), "regular_expression_list"),
-    "Scope": (StringValueConverter(), "scope"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 
 class AWS_WAFv2_IPSet(CloudFormationResource):
-  terraform_resource = "aws_wa_fv2_ip_set"
+  cfn_type = "AWS::WAFv2::IPSet"
+  tf_type = "aws_wa_fv2_ip_set"
+  ref = "arn"
 
-  resource_type = "AWS::WAFv2::IPSet"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Scope", "scope", StringValueConverter())
+      self.property(w, "IPAddressVersion", "ip_address_version", StringValueConverter())
+      self.property(w, "Addresses", "addresses", ListValueConverter(StringValueConverter()))
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "Name": (StringValueConverter(), "name"),
-    "Scope": (StringValueConverter(), "scope"),
-    "IPAddressVersion": (StringValueConverter(), "ip_address_version"),
-    "Addresses": (ListValueConverter(StringValueConverter()), "addresses"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 
 class AWS_WAFv2_WebACLAssociation(CloudFormationResource):
-  terraform_resource = "aws_wa_fv2_web_acl_association"
+  cfn_type = "AWS::WAFv2::WebACLAssociation"
+  tf_type = "aws_wa_fv2_web_acl_association"
+  ref = "arn"
 
-  resource_type = "AWS::WAFv2::WebACLAssociation"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ResourceArn", "resource_arn", StringValueConverter())
+      self.property(w, "WebACLArn", "web_acl_arn", StringValueConverter())
 
-  props = {
-    "ResourceArn": (StringValueConverter(), "resource_arn"),
-    "WebACLArn": (StringValueConverter(), "web_acl_arn"),
-  }
 
 class AWS_WAFv2_RuleGroup_XssMatchStatement(CloudFormationProperty):
-  entity = "AWS::WAFv2::RuleGroup"
-  tf_block_type = "xss_match_statement"
+  def write(self, w):
+    with w.block("xss_match_statement"):
+      self.block(w, "FieldToMatch", AWS_WAFv2_RuleGroup_FieldToMatch)
+      self.repeated_block(w, "TextTransformations", AWS_WAFv2_RuleGroup_TextTransformation)
 
-  props = {
-    "FieldToMatch": (AWS_WAFv2_RuleGroup_FieldToMatch, "field_to_match"),
-    "TextTransformations": (BlockValueConverter(AWS_WAFv2_RuleGroup_TextTransformation), None),
-  }
 
 class AWS_WAFv2_WebACL_ManagedRuleGroupStatement(CloudFormationProperty):
-  entity = "AWS::WAFv2::WebACL"
-  tf_block_type = "managed_rule_group_statement"
+  def write(self, w):
+    with w.block("managed_rule_group_statement"):
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "VendorName", "vendor_name", StringValueConverter())
+      self.repeated_block(w, "ExcludedRules", AWS_WAFv2_WebACL_ExcludedRule)
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-    "VendorName": (StringValueConverter(), "vendor_name"),
-    "ExcludedRules": (BlockValueConverter(AWS_WAFv2_WebACL_ExcludedRule), None),
-  }
 
 class AWS_WAFv2_WebACL_XssMatchStatement(CloudFormationProperty):
-  entity = "AWS::WAFv2::WebACL"
-  tf_block_type = "xss_match_statement"
+  def write(self, w):
+    with w.block("xss_match_statement"):
+      self.block(w, "FieldToMatch", AWS_WAFv2_WebACL_FieldToMatch)
+      self.repeated_block(w, "TextTransformations", AWS_WAFv2_WebACL_TextTransformation)
 
-  props = {
-    "FieldToMatch": (AWS_WAFv2_WebACL_FieldToMatch, "field_to_match"),
-    "TextTransformations": (BlockValueConverter(AWS_WAFv2_WebACL_TextTransformation), None),
-  }
 
 class AWS_WAFv2_RuleGroup_ByteMatchStatement(CloudFormationProperty):
-  entity = "AWS::WAFv2::RuleGroup"
-  tf_block_type = "byte_match_statement"
+  def write(self, w):
+    with w.block("byte_match_statement"):
+      self.property(w, "SearchString", "search_string", StringValueConverter())
+      self.property(w, "SearchStringBase64", "search_string_base64", StringValueConverter())
+      self.block(w, "FieldToMatch", AWS_WAFv2_RuleGroup_FieldToMatch)
+      self.repeated_block(w, "TextTransformations", AWS_WAFv2_RuleGroup_TextTransformation)
+      self.property(w, "PositionalConstraint", "positional_constraint", StringValueConverter())
 
-  props = {
-    "SearchString": (StringValueConverter(), "search_string"),
-    "SearchStringBase64": (StringValueConverter(), "search_string_base64"),
-    "FieldToMatch": (AWS_WAFv2_RuleGroup_FieldToMatch, "field_to_match"),
-    "TextTransformations": (BlockValueConverter(AWS_WAFv2_RuleGroup_TextTransformation), None),
-    "PositionalConstraint": (StringValueConverter(), "positional_constraint"),
-  }
 
 class AWS_WAFv2_WebACL_ByteMatchStatement(CloudFormationProperty):
-  entity = "AWS::WAFv2::WebACL"
-  tf_block_type = "byte_match_statement"
+  def write(self, w):
+    with w.block("byte_match_statement"):
+      self.property(w, "SearchString", "search_string", StringValueConverter())
+      self.property(w, "SearchStringBase64", "search_string_base64", StringValueConverter())
+      self.block(w, "FieldToMatch", AWS_WAFv2_WebACL_FieldToMatch)
+      self.repeated_block(w, "TextTransformations", AWS_WAFv2_WebACL_TextTransformation)
+      self.property(w, "PositionalConstraint", "positional_constraint", StringValueConverter())
 
-  props = {
-    "SearchString": (StringValueConverter(), "search_string"),
-    "SearchStringBase64": (StringValueConverter(), "search_string_base64"),
-    "FieldToMatch": (AWS_WAFv2_WebACL_FieldToMatch, "field_to_match"),
-    "TextTransformations": (BlockValueConverter(AWS_WAFv2_WebACL_TextTransformation), None),
-    "PositionalConstraint": (StringValueConverter(), "positional_constraint"),
-  }
 
 class AWS_WAFv2_RuleGroup_RegexPatternSetReferenceStatement(CloudFormationProperty):
-  entity = "AWS::WAFv2::RuleGroup"
-  tf_block_type = "regex_pattern_set_reference_statement"
+  def write(self, w):
+    with w.block("regex_pattern_set_reference_statement"):
+      self.property(w, "Arn", "arn", StringValueConverter())
+      self.block(w, "FieldToMatch", AWS_WAFv2_RuleGroup_FieldToMatch)
+      self.repeated_block(w, "TextTransformations", AWS_WAFv2_RuleGroup_TextTransformation)
 
-  props = {
-    "Arn": (StringValueConverter(), "arn"),
-    "FieldToMatch": (AWS_WAFv2_RuleGroup_FieldToMatch, "field_to_match"),
-    "TextTransformations": (BlockValueConverter(AWS_WAFv2_RuleGroup_TextTransformation), None),
-  }
 
 class AWS_WAFv2_RuleGroup_StatementThree(CloudFormationProperty):
-  entity = "AWS::WAFv2::RuleGroup"
-  tf_block_type = "statement_three"
+  def write(self, w):
+    with w.block("statement_three"):
+      self.block(w, "ByteMatchStatement", AWS_WAFv2_RuleGroup_ByteMatchStatement)
+      self.block(w, "SqliMatchStatement", AWS_WAFv2_RuleGroup_SqliMatchStatement)
+      self.block(w, "XssMatchStatement", AWS_WAFv2_RuleGroup_XssMatchStatement)
+      self.block(w, "SizeConstraintStatement", AWS_WAFv2_RuleGroup_SizeConstraintStatement)
+      self.block(w, "GeoMatchStatement", AWS_WAFv2_RuleGroup_GeoMatchStatement)
+      self.block(w, "IPSetReferenceStatement", AWS_WAFv2_RuleGroup_IPSetReferenceStatement)
+      self.block(w, "RegexPatternSetReferenceStatement", AWS_WAFv2_RuleGroup_RegexPatternSetReferenceStatement)
 
-  props = {
-    "ByteMatchStatement": (AWS_WAFv2_RuleGroup_ByteMatchStatement, "byte_match_statement"),
-    "SqliMatchStatement": (AWS_WAFv2_RuleGroup_SqliMatchStatement, "sqli_match_statement"),
-    "XssMatchStatement": (AWS_WAFv2_RuleGroup_XssMatchStatement, "xss_match_statement"),
-    "SizeConstraintStatement": (AWS_WAFv2_RuleGroup_SizeConstraintStatement, "size_constraint_statement"),
-    "GeoMatchStatement": (AWS_WAFv2_RuleGroup_GeoMatchStatement, "geo_match_statement"),
-    "IPSetReferenceStatement": (AWS_WAFv2_RuleGroup_IPSetReferenceStatement, "ip_set_reference_statement"),
-    "RegexPatternSetReferenceStatement": (AWS_WAFv2_RuleGroup_RegexPatternSetReferenceStatement, "regex_pattern_set_reference_statement"),
-  }
 
 class AWS_WAFv2_RuleGroup_NotStatementTwo(CloudFormationProperty):
-  entity = "AWS::WAFv2::RuleGroup"
-  tf_block_type = "not_statement_two"
+  def write(self, w):
+    with w.block("not_statement_two"):
+      self.block(w, "Statement", AWS_WAFv2_RuleGroup_StatementThree)
 
-  props = {
-    "Statement": (AWS_WAFv2_RuleGroup_StatementThree, "statement"),
-  }
 
 class AWS_WAFv2_WebACL_RegexPatternSetReferenceStatement(CloudFormationProperty):
-  entity = "AWS::WAFv2::WebACL"
-  tf_block_type = "regex_pattern_set_reference_statement"
+  def write(self, w):
+    with w.block("regex_pattern_set_reference_statement"):
+      self.property(w, "Arn", "arn", StringValueConverter())
+      self.block(w, "FieldToMatch", AWS_WAFv2_WebACL_FieldToMatch)
+      self.repeated_block(w, "TextTransformations", AWS_WAFv2_WebACL_TextTransformation)
 
-  props = {
-    "Arn": (StringValueConverter(), "arn"),
-    "FieldToMatch": (AWS_WAFv2_WebACL_FieldToMatch, "field_to_match"),
-    "TextTransformations": (BlockValueConverter(AWS_WAFv2_WebACL_TextTransformation), None),
-  }
 
 class AWS_WAFv2_RuleGroup_OrStatementTwo(CloudFormationProperty):
-  entity = "AWS::WAFv2::RuleGroup"
-  tf_block_type = "or_statement_two"
+  def write(self, w):
+    with w.block("or_statement_two"):
+      self.repeated_block(w, "Statements", AWS_WAFv2_RuleGroup_StatementThree)
 
-  props = {
-    "Statements": (BlockValueConverter(AWS_WAFv2_RuleGroup_StatementThree), None),
-  }
 
 class AWS_WAFv2_WebACL_RuleGroupReferenceStatement(CloudFormationProperty):
-  entity = "AWS::WAFv2::WebACL"
-  tf_block_type = "rule_group_reference_statement"
+  def write(self, w):
+    with w.block("rule_group_reference_statement"):
+      self.property(w, "Arn", "arn", StringValueConverter())
+      self.repeated_block(w, "ExcludedRules", AWS_WAFv2_WebACL_ExcludedRule)
 
-  props = {
-    "Arn": (StringValueConverter(), "arn"),
-    "ExcludedRules": (BlockValueConverter(AWS_WAFv2_WebACL_ExcludedRule), None),
-  }
 
 class AWS_WAFv2_WebACL_SizeConstraintStatement(CloudFormationProperty):
-  entity = "AWS::WAFv2::WebACL"
-  tf_block_type = "size_constraint_statement"
+  def write(self, w):
+    with w.block("size_constraint_statement"):
+      self.block(w, "FieldToMatch", AWS_WAFv2_WebACL_FieldToMatch)
+      self.property(w, "ComparisonOperator", "comparison_operator", StringValueConverter())
+      self.property(w, "Size", "size", BasicValueConverter())
+      self.repeated_block(w, "TextTransformations", AWS_WAFv2_WebACL_TextTransformation)
 
-  props = {
-    "FieldToMatch": (AWS_WAFv2_WebACL_FieldToMatch, "field_to_match"),
-    "ComparisonOperator": (StringValueConverter(), "comparison_operator"),
-    "Size": (BasicValueConverter(), "size"),
-    "TextTransformations": (BlockValueConverter(AWS_WAFv2_WebACL_TextTransformation), None),
-  }
 
 class AWS_WAFv2_WebACL_StatementThree(CloudFormationProperty):
-  entity = "AWS::WAFv2::WebACL"
-  tf_block_type = "statement_three"
+  def write(self, w):
+    with w.block("statement_three"):
+      self.block(w, "ByteMatchStatement", AWS_WAFv2_WebACL_ByteMatchStatement)
+      self.block(w, "SqliMatchStatement", AWS_WAFv2_WebACL_SqliMatchStatement)
+      self.block(w, "XssMatchStatement", AWS_WAFv2_WebACL_XssMatchStatement)
+      self.block(w, "SizeConstraintStatement", AWS_WAFv2_WebACL_SizeConstraintStatement)
+      self.block(w, "GeoMatchStatement", AWS_WAFv2_WebACL_GeoMatchStatement)
+      self.block(w, "RuleGroupReferenceStatement", AWS_WAFv2_WebACL_RuleGroupReferenceStatement)
+      self.block(w, "IPSetReferenceStatement", AWS_WAFv2_WebACL_IPSetReferenceStatement)
+      self.block(w, "RegexPatternSetReferenceStatement", AWS_WAFv2_WebACL_RegexPatternSetReferenceStatement)
+      self.block(w, "ManagedRuleGroupStatement", AWS_WAFv2_WebACL_ManagedRuleGroupStatement)
 
-  props = {
-    "ByteMatchStatement": (AWS_WAFv2_WebACL_ByteMatchStatement, "byte_match_statement"),
-    "SqliMatchStatement": (AWS_WAFv2_WebACL_SqliMatchStatement, "sqli_match_statement"),
-    "XssMatchStatement": (AWS_WAFv2_WebACL_XssMatchStatement, "xss_match_statement"),
-    "SizeConstraintStatement": (AWS_WAFv2_WebACL_SizeConstraintStatement, "size_constraint_statement"),
-    "GeoMatchStatement": (AWS_WAFv2_WebACL_GeoMatchStatement, "geo_match_statement"),
-    "RuleGroupReferenceStatement": (AWS_WAFv2_WebACL_RuleGroupReferenceStatement, "rule_group_reference_statement"),
-    "IPSetReferenceStatement": (AWS_WAFv2_WebACL_IPSetReferenceStatement, "ip_set_reference_statement"),
-    "RegexPatternSetReferenceStatement": (AWS_WAFv2_WebACL_RegexPatternSetReferenceStatement, "regex_pattern_set_reference_statement"),
-    "ManagedRuleGroupStatement": (AWS_WAFv2_WebACL_ManagedRuleGroupStatement, "managed_rule_group_statement"),
-  }
 
 class AWS_WAFv2_RuleGroup_RateBasedStatementTwo(CloudFormationProperty):
-  entity = "AWS::WAFv2::RuleGroup"
-  tf_block_type = "rate_based_statement_two"
+  def write(self, w):
+    with w.block("rate_based_statement_two"):
+      self.property(w, "Limit", "limit", BasicValueConverter())
+      self.property(w, "AggregateKeyType", "aggregate_key_type", StringValueConverter())
+      self.block(w, "ScopeDownStatement", AWS_WAFv2_RuleGroup_StatementThree)
 
-  props = {
-    "Limit": (BasicValueConverter(), "limit"),
-    "AggregateKeyType": (StringValueConverter(), "aggregate_key_type"),
-    "ScopeDownStatement": (AWS_WAFv2_RuleGroup_StatementThree, "scope_down_statement"),
-  }
 
 class AWS_WAFv2_WebACL_OrStatementTwo(CloudFormationProperty):
-  entity = "AWS::WAFv2::WebACL"
-  tf_block_type = "or_statement_two"
+  def write(self, w):
+    with w.block("or_statement_two"):
+      self.repeated_block(w, "Statements", AWS_WAFv2_WebACL_StatementThree)
 
-  props = {
-    "Statements": (BlockValueConverter(AWS_WAFv2_WebACL_StatementThree), None),
-  }
 
 class AWS_WAFv2_WebACL_NotStatementTwo(CloudFormationProperty):
-  entity = "AWS::WAFv2::WebACL"
-  tf_block_type = "not_statement_two"
+  def write(self, w):
+    with w.block("not_statement_two"):
+      self.block(w, "Statement", AWS_WAFv2_WebACL_StatementThree)
 
-  props = {
-    "Statement": (AWS_WAFv2_WebACL_StatementThree, "statement"),
-  }
 
 class AWS_WAFv2_RuleGroup_AndStatementTwo(CloudFormationProperty):
-  entity = "AWS::WAFv2::RuleGroup"
-  tf_block_type = "and_statement_two"
+  def write(self, w):
+    with w.block("and_statement_two"):
+      self.repeated_block(w, "Statements", AWS_WAFv2_RuleGroup_StatementThree)
 
-  props = {
-    "Statements": (BlockValueConverter(AWS_WAFv2_RuleGroup_StatementThree), None),
-  }
 
 class AWS_WAFv2_WebACL_RateBasedStatementTwo(CloudFormationProperty):
-  entity = "AWS::WAFv2::WebACL"
-  tf_block_type = "rate_based_statement_two"
+  def write(self, w):
+    with w.block("rate_based_statement_two"):
+      self.property(w, "Limit", "limit", BasicValueConverter())
+      self.property(w, "AggregateKeyType", "aggregate_key_type", StringValueConverter())
+      self.block(w, "ScopeDownStatement", AWS_WAFv2_WebACL_StatementThree)
 
-  props = {
-    "Limit": (BasicValueConverter(), "limit"),
-    "AggregateKeyType": (StringValueConverter(), "aggregate_key_type"),
-    "ScopeDownStatement": (AWS_WAFv2_WebACL_StatementThree, "scope_down_statement"),
-  }
 
 class AWS_WAFv2_WebACL_AndStatementTwo(CloudFormationProperty):
-  entity = "AWS::WAFv2::WebACL"
-  tf_block_type = "and_statement_two"
+  def write(self, w):
+    with w.block("and_statement_two"):
+      self.repeated_block(w, "Statements", AWS_WAFv2_WebACL_StatementThree)
 
-  props = {
-    "Statements": (BlockValueConverter(AWS_WAFv2_WebACL_StatementThree), None),
-  }
 
 class AWS_WAFv2_WebACL_StatementTwo(CloudFormationProperty):
-  entity = "AWS::WAFv2::WebACL"
-  tf_block_type = "statement_two"
+  def write(self, w):
+    with w.block("statement_two"):
+      self.block(w, "ByteMatchStatement", AWS_WAFv2_WebACL_ByteMatchStatement)
+      self.block(w, "SqliMatchStatement", AWS_WAFv2_WebACL_SqliMatchStatement)
+      self.block(w, "XssMatchStatement", AWS_WAFv2_WebACL_XssMatchStatement)
+      self.block(w, "SizeConstraintStatement", AWS_WAFv2_WebACL_SizeConstraintStatement)
+      self.block(w, "GeoMatchStatement", AWS_WAFv2_WebACL_GeoMatchStatement)
+      self.block(w, "RuleGroupReferenceStatement", AWS_WAFv2_WebACL_RuleGroupReferenceStatement)
+      self.block(w, "IPSetReferenceStatement", AWS_WAFv2_WebACL_IPSetReferenceStatement)
+      self.block(w, "RegexPatternSetReferenceStatement", AWS_WAFv2_WebACL_RegexPatternSetReferenceStatement)
+      self.block(w, "ManagedRuleGroupStatement", AWS_WAFv2_WebACL_ManagedRuleGroupStatement)
+      self.block(w, "RateBasedStatement", AWS_WAFv2_WebACL_RateBasedStatementTwo)
+      self.block(w, "AndStatement", AWS_WAFv2_WebACL_AndStatementTwo)
+      self.block(w, "OrStatement", AWS_WAFv2_WebACL_OrStatementTwo)
+      self.block(w, "NotStatement", AWS_WAFv2_WebACL_NotStatementTwo)
 
-  props = {
-    "ByteMatchStatement": (AWS_WAFv2_WebACL_ByteMatchStatement, "byte_match_statement"),
-    "SqliMatchStatement": (AWS_WAFv2_WebACL_SqliMatchStatement, "sqli_match_statement"),
-    "XssMatchStatement": (AWS_WAFv2_WebACL_XssMatchStatement, "xss_match_statement"),
-    "SizeConstraintStatement": (AWS_WAFv2_WebACL_SizeConstraintStatement, "size_constraint_statement"),
-    "GeoMatchStatement": (AWS_WAFv2_WebACL_GeoMatchStatement, "geo_match_statement"),
-    "RuleGroupReferenceStatement": (AWS_WAFv2_WebACL_RuleGroupReferenceStatement, "rule_group_reference_statement"),
-    "IPSetReferenceStatement": (AWS_WAFv2_WebACL_IPSetReferenceStatement, "ip_set_reference_statement"),
-    "RegexPatternSetReferenceStatement": (AWS_WAFv2_WebACL_RegexPatternSetReferenceStatement, "regex_pattern_set_reference_statement"),
-    "ManagedRuleGroupStatement": (AWS_WAFv2_WebACL_ManagedRuleGroupStatement, "managed_rule_group_statement"),
-    "RateBasedStatement": (AWS_WAFv2_WebACL_RateBasedStatementTwo, "rate_based_statement"),
-    "AndStatement": (AWS_WAFv2_WebACL_AndStatementTwo, "and_statement"),
-    "OrStatement": (AWS_WAFv2_WebACL_OrStatementTwo, "or_statement"),
-    "NotStatement": (AWS_WAFv2_WebACL_NotStatementTwo, "not_statement"),
-  }
 
 class AWS_WAFv2_WebACL_NotStatementOne(CloudFormationProperty):
-  entity = "AWS::WAFv2::WebACL"
-  tf_block_type = "not_statement_one"
+  def write(self, w):
+    with w.block("not_statement_one"):
+      self.block(w, "Statement", AWS_WAFv2_WebACL_StatementTwo)
 
-  props = {
-    "Statement": (AWS_WAFv2_WebACL_StatementTwo, "statement"),
-  }
 
 class AWS_WAFv2_WebACL_RateBasedStatementOne(CloudFormationProperty):
-  entity = "AWS::WAFv2::WebACL"
-  tf_block_type = "rate_based_statement_one"
+  def write(self, w):
+    with w.block("rate_based_statement_one"):
+      self.property(w, "Limit", "limit", BasicValueConverter())
+      self.property(w, "AggregateKeyType", "aggregate_key_type", StringValueConverter())
+      self.block(w, "ScopeDownStatement", AWS_WAFv2_WebACL_StatementTwo)
 
-  props = {
-    "Limit": (BasicValueConverter(), "limit"),
-    "AggregateKeyType": (StringValueConverter(), "aggregate_key_type"),
-    "ScopeDownStatement": (AWS_WAFv2_WebACL_StatementTwo, "scope_down_statement"),
-  }
 
 class AWS_WAFv2_WebACL_AndStatementOne(CloudFormationProperty):
-  entity = "AWS::WAFv2::WebACL"
-  tf_block_type = "and_statement_one"
+  def write(self, w):
+    with w.block("and_statement_one"):
+      self.repeated_block(w, "Statements", AWS_WAFv2_WebACL_StatementTwo)
 
-  props = {
-    "Statements": (BlockValueConverter(AWS_WAFv2_WebACL_StatementTwo), None),
-  }
 
 class AWS_WAFv2_RuleGroup_StatementTwo(CloudFormationProperty):
-  entity = "AWS::WAFv2::RuleGroup"
-  tf_block_type = "statement_two"
+  def write(self, w):
+    with w.block("statement_two"):
+      self.block(w, "ByteMatchStatement", AWS_WAFv2_RuleGroup_ByteMatchStatement)
+      self.block(w, "SqliMatchStatement", AWS_WAFv2_RuleGroup_SqliMatchStatement)
+      self.block(w, "XssMatchStatement", AWS_WAFv2_RuleGroup_XssMatchStatement)
+      self.block(w, "SizeConstraintStatement", AWS_WAFv2_RuleGroup_SizeConstraintStatement)
+      self.block(w, "GeoMatchStatement", AWS_WAFv2_RuleGroup_GeoMatchStatement)
+      self.block(w, "IPSetReferenceStatement", AWS_WAFv2_RuleGroup_IPSetReferenceStatement)
+      self.block(w, "RegexPatternSetReferenceStatement", AWS_WAFv2_RuleGroup_RegexPatternSetReferenceStatement)
+      self.block(w, "RateBasedStatement", AWS_WAFv2_RuleGroup_RateBasedStatementTwo)
+      self.block(w, "AndStatement", AWS_WAFv2_RuleGroup_AndStatementTwo)
+      self.block(w, "OrStatement", AWS_WAFv2_RuleGroup_OrStatementTwo)
+      self.block(w, "NotStatement", AWS_WAFv2_RuleGroup_NotStatementTwo)
 
-  props = {
-    "ByteMatchStatement": (AWS_WAFv2_RuleGroup_ByteMatchStatement, "byte_match_statement"),
-    "SqliMatchStatement": (AWS_WAFv2_RuleGroup_SqliMatchStatement, "sqli_match_statement"),
-    "XssMatchStatement": (AWS_WAFv2_RuleGroup_XssMatchStatement, "xss_match_statement"),
-    "SizeConstraintStatement": (AWS_WAFv2_RuleGroup_SizeConstraintStatement, "size_constraint_statement"),
-    "GeoMatchStatement": (AWS_WAFv2_RuleGroup_GeoMatchStatement, "geo_match_statement"),
-    "IPSetReferenceStatement": (AWS_WAFv2_RuleGroup_IPSetReferenceStatement, "ip_set_reference_statement"),
-    "RegexPatternSetReferenceStatement": (AWS_WAFv2_RuleGroup_RegexPatternSetReferenceStatement, "regex_pattern_set_reference_statement"),
-    "RateBasedStatement": (AWS_WAFv2_RuleGroup_RateBasedStatementTwo, "rate_based_statement"),
-    "AndStatement": (AWS_WAFv2_RuleGroup_AndStatementTwo, "and_statement"),
-    "OrStatement": (AWS_WAFv2_RuleGroup_OrStatementTwo, "or_statement"),
-    "NotStatement": (AWS_WAFv2_RuleGroup_NotStatementTwo, "not_statement"),
-  }
 
 class AWS_WAFv2_RuleGroup_OrStatementOne(CloudFormationProperty):
-  entity = "AWS::WAFv2::RuleGroup"
-  tf_block_type = "or_statement_one"
+  def write(self, w):
+    with w.block("or_statement_one"):
+      self.repeated_block(w, "Statements", AWS_WAFv2_RuleGroup_StatementTwo)
 
-  props = {
-    "Statements": (BlockValueConverter(AWS_WAFv2_RuleGroup_StatementTwo), None),
-  }
 
 class AWS_WAFv2_RuleGroup_NotStatementOne(CloudFormationProperty):
-  entity = "AWS::WAFv2::RuleGroup"
-  tf_block_type = "not_statement_one"
+  def write(self, w):
+    with w.block("not_statement_one"):
+      self.block(w, "Statement", AWS_WAFv2_RuleGroup_StatementTwo)
 
-  props = {
-    "Statement": (AWS_WAFv2_RuleGroup_StatementTwo, "statement"),
-  }
 
 class AWS_WAFv2_RuleGroup_RateBasedStatementOne(CloudFormationProperty):
-  entity = "AWS::WAFv2::RuleGroup"
-  tf_block_type = "rate_based_statement_one"
+  def write(self, w):
+    with w.block("rate_based_statement_one"):
+      self.property(w, "Limit", "limit", BasicValueConverter())
+      self.property(w, "AggregateKeyType", "aggregate_key_type", StringValueConverter())
+      self.block(w, "ScopeDownStatement", AWS_WAFv2_RuleGroup_StatementTwo)
 
-  props = {
-    "Limit": (BasicValueConverter(), "limit"),
-    "AggregateKeyType": (StringValueConverter(), "aggregate_key_type"),
-    "ScopeDownStatement": (AWS_WAFv2_RuleGroup_StatementTwo, "scope_down_statement"),
-  }
 
 class AWS_WAFv2_WebACL_OrStatementOne(CloudFormationProperty):
-  entity = "AWS::WAFv2::WebACL"
-  tf_block_type = "or_statement_one"
+  def write(self, w):
+    with w.block("or_statement_one"):
+      self.repeated_block(w, "Statements", AWS_WAFv2_WebACL_StatementTwo)
 
-  props = {
-    "Statements": (BlockValueConverter(AWS_WAFv2_WebACL_StatementTwo), None),
-  }
 
 class AWS_WAFv2_RuleGroup_AndStatementOne(CloudFormationProperty):
-  entity = "AWS::WAFv2::RuleGroup"
-  tf_block_type = "and_statement_one"
+  def write(self, w):
+    with w.block("and_statement_one"):
+      self.repeated_block(w, "Statements", AWS_WAFv2_RuleGroup_StatementTwo)
 
-  props = {
-    "Statements": (BlockValueConverter(AWS_WAFv2_RuleGroup_StatementTwo), None),
-  }
 
 class AWS_WAFv2_WebACL_StatementOne(CloudFormationProperty):
-  entity = "AWS::WAFv2::WebACL"
-  tf_block_type = "statement_one"
+  def write(self, w):
+    with w.block("statement_one"):
+      self.block(w, "ByteMatchStatement", AWS_WAFv2_WebACL_ByteMatchStatement)
+      self.block(w, "SqliMatchStatement", AWS_WAFv2_WebACL_SqliMatchStatement)
+      self.block(w, "XssMatchStatement", AWS_WAFv2_WebACL_XssMatchStatement)
+      self.block(w, "SizeConstraintStatement", AWS_WAFv2_WebACL_SizeConstraintStatement)
+      self.block(w, "GeoMatchStatement", AWS_WAFv2_WebACL_GeoMatchStatement)
+      self.block(w, "RuleGroupReferenceStatement", AWS_WAFv2_WebACL_RuleGroupReferenceStatement)
+      self.block(w, "IPSetReferenceStatement", AWS_WAFv2_WebACL_IPSetReferenceStatement)
+      self.block(w, "RegexPatternSetReferenceStatement", AWS_WAFv2_WebACL_RegexPatternSetReferenceStatement)
+      self.block(w, "ManagedRuleGroupStatement", AWS_WAFv2_WebACL_ManagedRuleGroupStatement)
+      self.block(w, "RateBasedStatement", AWS_WAFv2_WebACL_RateBasedStatementOne)
+      self.block(w, "AndStatement", AWS_WAFv2_WebACL_AndStatementOne)
+      self.block(w, "OrStatement", AWS_WAFv2_WebACL_OrStatementOne)
+      self.block(w, "NotStatement", AWS_WAFv2_WebACL_NotStatementOne)
 
-  props = {
-    "ByteMatchStatement": (AWS_WAFv2_WebACL_ByteMatchStatement, "byte_match_statement"),
-    "SqliMatchStatement": (AWS_WAFv2_WebACL_SqliMatchStatement, "sqli_match_statement"),
-    "XssMatchStatement": (AWS_WAFv2_WebACL_XssMatchStatement, "xss_match_statement"),
-    "SizeConstraintStatement": (AWS_WAFv2_WebACL_SizeConstraintStatement, "size_constraint_statement"),
-    "GeoMatchStatement": (AWS_WAFv2_WebACL_GeoMatchStatement, "geo_match_statement"),
-    "RuleGroupReferenceStatement": (AWS_WAFv2_WebACL_RuleGroupReferenceStatement, "rule_group_reference_statement"),
-    "IPSetReferenceStatement": (AWS_WAFv2_WebACL_IPSetReferenceStatement, "ip_set_reference_statement"),
-    "RegexPatternSetReferenceStatement": (AWS_WAFv2_WebACL_RegexPatternSetReferenceStatement, "regex_pattern_set_reference_statement"),
-    "ManagedRuleGroupStatement": (AWS_WAFv2_WebACL_ManagedRuleGroupStatement, "managed_rule_group_statement"),
-    "RateBasedStatement": (AWS_WAFv2_WebACL_RateBasedStatementOne, "rate_based_statement"),
-    "AndStatement": (AWS_WAFv2_WebACL_AndStatementOne, "and_statement"),
-    "OrStatement": (AWS_WAFv2_WebACL_OrStatementOne, "or_statement"),
-    "NotStatement": (AWS_WAFv2_WebACL_NotStatementOne, "not_statement"),
-  }
 
 class AWS_WAFv2_RuleGroup_StatementOne(CloudFormationProperty):
-  entity = "AWS::WAFv2::RuleGroup"
-  tf_block_type = "statement_one"
+  def write(self, w):
+    with w.block("statement_one"):
+      self.block(w, "ByteMatchStatement", AWS_WAFv2_RuleGroup_ByteMatchStatement)
+      self.block(w, "SqliMatchStatement", AWS_WAFv2_RuleGroup_SqliMatchStatement)
+      self.block(w, "XssMatchStatement", AWS_WAFv2_RuleGroup_XssMatchStatement)
+      self.block(w, "SizeConstraintStatement", AWS_WAFv2_RuleGroup_SizeConstraintStatement)
+      self.block(w, "GeoMatchStatement", AWS_WAFv2_RuleGroup_GeoMatchStatement)
+      self.block(w, "IPSetReferenceStatement", AWS_WAFv2_RuleGroup_IPSetReferenceStatement)
+      self.block(w, "RegexPatternSetReferenceStatement", AWS_WAFv2_RuleGroup_RegexPatternSetReferenceStatement)
+      self.block(w, "RateBasedStatement", AWS_WAFv2_RuleGroup_RateBasedStatementOne)
+      self.block(w, "AndStatement", AWS_WAFv2_RuleGroup_AndStatementOne)
+      self.block(w, "OrStatement", AWS_WAFv2_RuleGroup_OrStatementOne)
+      self.block(w, "NotStatement", AWS_WAFv2_RuleGroup_NotStatementOne)
 
-  props = {
-    "ByteMatchStatement": (AWS_WAFv2_RuleGroup_ByteMatchStatement, "byte_match_statement"),
-    "SqliMatchStatement": (AWS_WAFv2_RuleGroup_SqliMatchStatement, "sqli_match_statement"),
-    "XssMatchStatement": (AWS_WAFv2_RuleGroup_XssMatchStatement, "xss_match_statement"),
-    "SizeConstraintStatement": (AWS_WAFv2_RuleGroup_SizeConstraintStatement, "size_constraint_statement"),
-    "GeoMatchStatement": (AWS_WAFv2_RuleGroup_GeoMatchStatement, "geo_match_statement"),
-    "IPSetReferenceStatement": (AWS_WAFv2_RuleGroup_IPSetReferenceStatement, "ip_set_reference_statement"),
-    "RegexPatternSetReferenceStatement": (AWS_WAFv2_RuleGroup_RegexPatternSetReferenceStatement, "regex_pattern_set_reference_statement"),
-    "RateBasedStatement": (AWS_WAFv2_RuleGroup_RateBasedStatementOne, "rate_based_statement"),
-    "AndStatement": (AWS_WAFv2_RuleGroup_AndStatementOne, "and_statement"),
-    "OrStatement": (AWS_WAFv2_RuleGroup_OrStatementOne, "or_statement"),
-    "NotStatement": (AWS_WAFv2_RuleGroup_NotStatementOne, "not_statement"),
-  }
 
 class AWS_WAFv2_WebACL_Rule(CloudFormationProperty):
-  entity = "AWS::WAFv2::WebACL"
-  tf_block_type = "rule"
+  def write(self, w):
+    with w.block("rule"):
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Priority", "priority", BasicValueConverter())
+      self.block(w, "Statement", AWS_WAFv2_WebACL_StatementOne)
+      self.block(w, "Action", AWS_WAFv2_WebACL_RuleAction)
+      self.block(w, "OverrideAction", AWS_WAFv2_WebACL_OverrideAction)
+      self.block(w, "VisibilityConfig", AWS_WAFv2_WebACL_VisibilityConfig)
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-    "Priority": (BasicValueConverter(), "priority"),
-    "Statement": (AWS_WAFv2_WebACL_StatementOne, "statement"),
-    "Action": (AWS_WAFv2_WebACL_RuleAction, "action"),
-    "OverrideAction": (AWS_WAFv2_WebACL_OverrideAction, "override_action"),
-    "VisibilityConfig": (AWS_WAFv2_WebACL_VisibilityConfig, "visibility_config"),
-  }
 
 class AWS_WAFv2_WebACL(CloudFormationResource):
-  terraform_resource = "aws_wa_fv2_web_acl"
+  cfn_type = "AWS::WAFv2::WebACL"
+  tf_type = "aws_wa_fv2_web_acl"
+  ref = "arn"
 
-  resource_type = "AWS::WAFv2::WebACL"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "DefaultAction", AWS_WAFv2_WebACL_DefaultAction)
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Scope", "scope", StringValueConverter())
+      self.repeated_block(w, "Rules", AWS_WAFv2_WebACL_Rule)
+      self.block(w, "VisibilityConfig", AWS_WAFv2_WebACL_VisibilityConfig)
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "DefaultAction": (AWS_WAFv2_WebACL_DefaultAction, "default_action"),
-    "Description": (StringValueConverter(), "description"),
-    "Name": (StringValueConverter(), "name"),
-    "Scope": (StringValueConverter(), "scope"),
-    "Rules": (BlockValueConverter(AWS_WAFv2_WebACL_Rule), None),
-    "VisibilityConfig": (AWS_WAFv2_WebACL_VisibilityConfig, "visibility_config"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 
 class AWS_WAFv2_RuleGroup_Rule(CloudFormationProperty):
-  entity = "AWS::WAFv2::RuleGroup"
-  tf_block_type = "rule"
+  def write(self, w):
+    with w.block("rule"):
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Priority", "priority", BasicValueConverter())
+      self.block(w, "Statement", AWS_WAFv2_RuleGroup_StatementOne)
+      self.block(w, "Action", AWS_WAFv2_RuleGroup_RuleAction)
+      self.block(w, "VisibilityConfig", AWS_WAFv2_RuleGroup_VisibilityConfig)
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-    "Priority": (BasicValueConverter(), "priority"),
-    "Statement": (AWS_WAFv2_RuleGroup_StatementOne, "statement"),
-    "Action": (AWS_WAFv2_RuleGroup_RuleAction, "action"),
-    "VisibilityConfig": (AWS_WAFv2_RuleGroup_VisibilityConfig, "visibility_config"),
-  }
 
 class AWS_WAFv2_RuleGroup(CloudFormationResource):
-  terraform_resource = "aws_wa_fv2_rule_group"
+  cfn_type = "AWS::WAFv2::RuleGroup"
+  tf_type = "aws_wa_fv2_rule_group"
+  ref = "arn"
 
-  resource_type = "AWS::WAFv2::RuleGroup"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Capacity", "capacity", BasicValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Scope", "scope", StringValueConverter())
+      self.repeated_block(w, "Rules", AWS_WAFv2_RuleGroup_Rule)
+      self.block(w, "VisibilityConfig", AWS_WAFv2_RuleGroup_VisibilityConfig)
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "Capacity": (BasicValueConverter(), "capacity"),
-    "Description": (StringValueConverter(), "description"),
-    "Name": (StringValueConverter(), "name"),
-    "Scope": (StringValueConverter(), "scope"),
-    "Rules": (BlockValueConverter(AWS_WAFv2_RuleGroup_Rule), None),
-    "VisibilityConfig": (AWS_WAFv2_RuleGroup_VisibilityConfig, "visibility_config"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 

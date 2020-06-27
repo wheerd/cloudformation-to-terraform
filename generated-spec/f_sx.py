@@ -1,62 +1,57 @@
 from . import *
 
 class AWS_FSx_FileSystem_LustreConfiguration(CloudFormationProperty):
-  entity = "AWS::FSx::FileSystem"
-  tf_block_type = "lustre_configuration"
+  def write(self, w):
+    with w.block("lustre_configuration"):
+      self.property(w, "ImportPath", "import_path", StringValueConverter())
+      self.property(w, "WeeklyMaintenanceStartTime", "weekly_maintenance_start_time", StringValueConverter())
+      self.property(w, "ImportedFileChunkSize", "imported_file_chunk_size", BasicValueConverter())
+      self.property(w, "DeploymentType", "deployment_type", StringValueConverter())
+      self.property(w, "ExportPath", "export_path", StringValueConverter())
+      self.property(w, "PerUnitStorageThroughput", "per_unit_storage_throughput", BasicValueConverter())
 
-  props = {
-    "ImportPath": (StringValueConverter(), "import_path"),
-    "WeeklyMaintenanceStartTime": (StringValueConverter(), "weekly_maintenance_start_time"),
-    "ImportedFileChunkSize": (BasicValueConverter(), "imported_file_chunk_size"),
-    "DeploymentType": (StringValueConverter(), "deployment_type"),
-    "ExportPath": (StringValueConverter(), "export_path"),
-    "PerUnitStorageThroughput": (BasicValueConverter(), "per_unit_storage_throughput"),
-  }
 
 class AWS_FSx_FileSystem_SelfManagedActiveDirectoryConfiguration(CloudFormationProperty):
-  entity = "AWS::FSx::FileSystem"
-  tf_block_type = "self_managed_active_directory_configuration"
+  def write(self, w):
+    with w.block("self_managed_active_directory_configuration"):
+      self.property(w, "FileSystemAdministratorsGroup", "file_system_administrators_group", StringValueConverter())
+      self.property(w, "UserName", "user_name", StringValueConverter())
+      self.property(w, "DomainName", "domain_name", StringValueConverter())
+      self.property(w, "OrganizationalUnitDistinguishedName", "organizational_unit_distinguished_name", StringValueConverter())
+      self.property(w, "DnsIps", "dns_ips", ListValueConverter(StringValueConverter()))
+      self.property(w, "Password", "password", StringValueConverter())
 
-  props = {
-    "FileSystemAdministratorsGroup": (StringValueConverter(), "file_system_administrators_group"),
-    "UserName": (StringValueConverter(), "user_name"),
-    "DomainName": (StringValueConverter(), "domain_name"),
-    "OrganizationalUnitDistinguishedName": (StringValueConverter(), "organizational_unit_distinguished_name"),
-    "DnsIps": (ListValueConverter(StringValueConverter()), "dns_ips"),
-    "Password": (StringValueConverter(), "password"),
-  }
 
 class AWS_FSx_FileSystem_WindowsConfiguration(CloudFormationProperty):
-  entity = "AWS::FSx::FileSystem"
-  tf_block_type = "windows_configuration"
+  def write(self, w):
+    with w.block("windows_configuration"):
+      self.block(w, "SelfManagedActiveDirectoryConfiguration", AWS_FSx_FileSystem_SelfManagedActiveDirectoryConfiguration)
+      self.property(w, "WeeklyMaintenanceStartTime", "weekly_maintenance_start_time", StringValueConverter())
+      self.property(w, "ActiveDirectoryId", "active_directory_id", StringValueConverter())
+      self.property(w, "DeploymentType", "deployment_type", StringValueConverter())
+      self.property(w, "ThroughputCapacity", "throughput_capacity", BasicValueConverter())
+      self.property(w, "CopyTagsToBackups", "copy_tags_to_backups", BasicValueConverter())
+      self.property(w, "DailyAutomaticBackupStartTime", "daily_automatic_backup_start_time", StringValueConverter())
+      self.property(w, "AutomaticBackupRetentionDays", "automatic_backup_retention_days", BasicValueConverter())
+      self.property(w, "PreferredSubnetId", "preferred_subnet_id", StringValueConverter())
 
-  props = {
-    "SelfManagedActiveDirectoryConfiguration": (AWS_FSx_FileSystem_SelfManagedActiveDirectoryConfiguration, "self_managed_active_directory_configuration"),
-    "WeeklyMaintenanceStartTime": (StringValueConverter(), "weekly_maintenance_start_time"),
-    "ActiveDirectoryId": (StringValueConverter(), "active_directory_id"),
-    "DeploymentType": (StringValueConverter(), "deployment_type"),
-    "ThroughputCapacity": (BasicValueConverter(), "throughput_capacity"),
-    "CopyTagsToBackups": (BasicValueConverter(), "copy_tags_to_backups"),
-    "DailyAutomaticBackupStartTime": (StringValueConverter(), "daily_automatic_backup_start_time"),
-    "AutomaticBackupRetentionDays": (BasicValueConverter(), "automatic_backup_retention_days"),
-    "PreferredSubnetId": (StringValueConverter(), "preferred_subnet_id"),
-  }
 
 class AWS_FSx_FileSystem(CloudFormationResource):
-  terraform_resource = "aws_f_sx_file_system"
+  cfn_type = "AWS::FSx::FileSystem"
+  tf_type = "aws_f_sx_file_system"
+  ref = "arn"
 
-  resource_type = "AWS::FSx::FileSystem"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "StorageType", "storage_type", StringValueConverter())
+      self.property(w, "KmsKeyId", "kms_key_id", StringValueConverter())
+      self.property(w, "StorageCapacity", "storage_capacity", BasicValueConverter())
+      self.property(w, "FileSystemType", "file_system_type", StringValueConverter())
+      self.block(w, "LustreConfiguration", AWS_FSx_FileSystem_LustreConfiguration)
+      self.property(w, "BackupId", "backup_id", StringValueConverter())
+      self.property(w, "SubnetIds", "subnet_ids", ListValueConverter(StringValueConverter()))
+      self.property(w, "SecurityGroupIds", "security_group_ids", ListValueConverter(StringValueConverter()))
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.block(w, "WindowsConfiguration", AWS_FSx_FileSystem_WindowsConfiguration)
 
-  props = {
-    "StorageType": (StringValueConverter(), "storage_type"),
-    "KmsKeyId": (StringValueConverter(), "kms_key_id"),
-    "StorageCapacity": (BasicValueConverter(), "storage_capacity"),
-    "FileSystemType": (StringValueConverter(), "file_system_type"),
-    "LustreConfiguration": (AWS_FSx_FileSystem_LustreConfiguration, "lustre_configuration"),
-    "BackupId": (StringValueConverter(), "backup_id"),
-    "SubnetIds": (ListValueConverter(StringValueConverter()), "subnet_ids"),
-    "SecurityGroupIds": (ListValueConverter(StringValueConverter()), "security_group_ids"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "WindowsConfiguration": (AWS_FSx_FileSystem_WindowsConfiguration, "windows_configuration"),
-  }
 

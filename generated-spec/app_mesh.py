@@ -1,611 +1,498 @@
 from . import *
 
 class AWS_AppMesh_VirtualRouter_PortMapping(CloudFormationProperty):
-  entity = "AWS::AppMesh::VirtualRouter"
-  tf_block_type = "port_mapping"
+  def write(self, w):
+    with w.block("port_mapping"):
+      self.property(w, "Port", "port", BasicValueConverter())
+      self.property(w, "Protocol", "protocol", StringValueConverter())
 
-  props = {
-    "Port": (BasicValueConverter(), "port"),
-    "Protocol": (StringValueConverter(), "protocol"),
-  }
 
 class AWS_AppMesh_VirtualRouter_VirtualRouterListener(CloudFormationProperty):
-  entity = "AWS::AppMesh::VirtualRouter"
-  tf_block_type = "virtual_router_listener"
+  def write(self, w):
+    with w.block("virtual_router_listener"):
+      self.block(w, "PortMapping", AWS_AppMesh_VirtualRouter_PortMapping)
 
-  props = {
-    "PortMapping": (AWS_AppMesh_VirtualRouter_PortMapping, "port_mapping"),
-  }
 
 class AWS_AppMesh_Route_Duration(CloudFormationProperty):
-  entity = "AWS::AppMesh::Route"
-  tf_block_type = "duration"
+  def write(self, w):
+    with w.block("duration"):
+      self.property(w, "Value", "value", BasicValueConverter())
+      self.property(w, "Unit", "unit", StringValueConverter())
 
-  props = {
-    "Value": (BasicValueConverter(), "value"),
-    "Unit": (StringValueConverter(), "unit"),
-  }
 
 class AWS_AppMesh_Route_WeightedTarget(CloudFormationProperty):
-  entity = "AWS::AppMesh::Route"
-  tf_block_type = "weighted_target"
+  def write(self, w):
+    with w.block("weighted_target"):
+      self.property(w, "VirtualNode", "virtual_node", StringValueConverter())
+      self.property(w, "Weight", "weight", BasicValueConverter())
 
-  props = {
-    "VirtualNode": (StringValueConverter(), "virtual_node"),
-    "Weight": (BasicValueConverter(), "weight"),
-  }
 
 class AWS_AppMesh_VirtualNode_Duration(CloudFormationProperty):
-  entity = "AWS::AppMesh::VirtualNode"
-  tf_block_type = "duration"
+  def write(self, w):
+    with w.block("duration"):
+      self.property(w, "Value", "value", BasicValueConverter())
+      self.property(w, "Unit", "unit", StringValueConverter())
 
-  props = {
-    "Value": (BasicValueConverter(), "value"),
-    "Unit": (StringValueConverter(), "unit"),
-  }
 
 class AWS_AppMesh_Route_HttpRetryPolicy(CloudFormationProperty):
-  entity = "AWS::AppMesh::Route"
-  tf_block_type = "http_retry_policy"
+  def write(self, w):
+    with w.block("http_retry_policy"):
+      self.property(w, "MaxRetries", "max_retries", BasicValueConverter())
+      self.block(w, "PerRetryTimeout", AWS_AppMesh_Route_Duration)
+      self.property(w, "HttpRetryEvents", "http_retry_events", ListValueConverter(StringValueConverter()))
+      self.property(w, "TcpRetryEvents", "tcp_retry_events", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "MaxRetries": (BasicValueConverter(), "max_retries"),
-    "PerRetryTimeout": (AWS_AppMesh_Route_Duration, "per_retry_timeout"),
-    "HttpRetryEvents": (ListValueConverter(StringValueConverter()), "http_retry_events"),
-    "TcpRetryEvents": (ListValueConverter(StringValueConverter()), "tcp_retry_events"),
-  }
 
 class AWS_AppMesh_VirtualNode_FileAccessLog(CloudFormationProperty):
-  entity = "AWS::AppMesh::VirtualNode"
-  tf_block_type = "file_access_log"
+  def write(self, w):
+    with w.block("file_access_log"):
+      self.property(w, "Path", "path", StringValueConverter())
 
-  props = {
-    "Path": (StringValueConverter(), "path"),
-  }
 
 class AWS_AppMesh_VirtualNode_AwsCloudMapInstanceAttribute(CloudFormationProperty):
-  entity = "AWS::AppMesh::VirtualNode"
-  tf_block_type = "aws_cloud_map_instance_attribute"
+  def write(self, w):
+    with w.block("aws_cloud_map_instance_attribute"):
+      self.property(w, "Value", "value", StringValueConverter())
+      self.property(w, "Key", "key", StringValueConverter())
 
-  props = {
-    "Value": (StringValueConverter(), "value"),
-    "Key": (StringValueConverter(), "key"),
-  }
 
 class AWS_AppMesh_VirtualNode_ListenerTlsAcmCertificate(CloudFormationProperty):
-  entity = "AWS::AppMesh::VirtualNode"
-  tf_block_type = "listener_tls_acm_certificate"
+  def write(self, w):
+    with w.block("listener_tls_acm_certificate"):
+      self.property(w, "CertificateArn", "certificate_arn", StringValueConverter())
 
-  props = {
-    "CertificateArn": (StringValueConverter(), "certificate_arn"),
-  }
 
 class AWS_AppMesh_Route_GrpcTimeout(CloudFormationProperty):
-  entity = "AWS::AppMesh::Route"
-  tf_block_type = "grpc_timeout"
+  def write(self, w):
+    with w.block("grpc_timeout"):
+      self.block(w, "PerRequest", AWS_AppMesh_Route_Duration)
+      self.block(w, "Idle", AWS_AppMesh_Route_Duration)
 
-  props = {
-    "PerRequest": (AWS_AppMesh_Route_Duration, "per_request"),
-    "Idle": (AWS_AppMesh_Route_Duration, "idle"),
-  }
 
 class AWS_AppMesh_VirtualNode_TcpTimeout(CloudFormationProperty):
-  entity = "AWS::AppMesh::VirtualNode"
-  tf_block_type = "tcp_timeout"
+  def write(self, w):
+    with w.block("tcp_timeout"):
+      self.block(w, "Idle", AWS_AppMesh_VirtualNode_Duration)
 
-  props = {
-    "Idle": (AWS_AppMesh_VirtualNode_Duration, "idle"),
-  }
 
 class AWS_AppMesh_Route_TcpTimeout(CloudFormationProperty):
-  entity = "AWS::AppMesh::Route"
-  tf_block_type = "tcp_timeout"
+  def write(self, w):
+    with w.block("tcp_timeout"):
+      self.block(w, "Idle", AWS_AppMesh_Route_Duration)
 
-  props = {
-    "Idle": (AWS_AppMesh_Route_Duration, "idle"),
-  }
 
 class AWS_AppMesh_VirtualNode_PortMapping(CloudFormationProperty):
-  entity = "AWS::AppMesh::VirtualNode"
-  tf_block_type = "port_mapping"
+  def write(self, w):
+    with w.block("port_mapping"):
+      self.property(w, "Port", "port", BasicValueConverter())
+      self.property(w, "Protocol", "protocol", StringValueConverter())
 
-  props = {
-    "Port": (BasicValueConverter(), "port"),
-    "Protocol": (StringValueConverter(), "protocol"),
-  }
 
 class AWS_AppMesh_Route_HttpTimeout(CloudFormationProperty):
-  entity = "AWS::AppMesh::Route"
-  tf_block_type = "http_timeout"
+  def write(self, w):
+    with w.block("http_timeout"):
+      self.block(w, "PerRequest", AWS_AppMesh_Route_Duration)
+      self.block(w, "Idle", AWS_AppMesh_Route_Duration)
 
-  props = {
-    "PerRequest": (AWS_AppMesh_Route_Duration, "per_request"),
-    "Idle": (AWS_AppMesh_Route_Duration, "idle"),
-  }
 
 class AWS_AppMesh_VirtualService_VirtualRouterServiceProvider(CloudFormationProperty):
-  entity = "AWS::AppMesh::VirtualService"
-  tf_block_type = "virtual_router_service_provider"
+  def write(self, w):
+    with w.block("virtual_router_service_provider"):
+      self.property(w, "VirtualRouterName", "virtual_router_name", StringValueConverter())
 
-  props = {
-    "VirtualRouterName": (StringValueConverter(), "virtual_router_name"),
-  }
 
 class AWS_AppMesh_VirtualNode_HttpTimeout(CloudFormationProperty):
-  entity = "AWS::AppMesh::VirtualNode"
-  tf_block_type = "http_timeout"
+  def write(self, w):
+    with w.block("http_timeout"):
+      self.block(w, "PerRequest", AWS_AppMesh_VirtualNode_Duration)
+      self.block(w, "Idle", AWS_AppMesh_VirtualNode_Duration)
 
-  props = {
-    "PerRequest": (AWS_AppMesh_VirtualNode_Duration, "per_request"),
-    "Idle": (AWS_AppMesh_VirtualNode_Duration, "idle"),
-  }
 
 class AWS_AppMesh_VirtualNode_HealthCheck(CloudFormationProperty):
-  entity = "AWS::AppMesh::VirtualNode"
-  tf_block_type = "health_check"
+  def write(self, w):
+    with w.block("health_check"):
+      self.property(w, "Path", "path", StringValueConverter())
+      self.property(w, "UnhealthyThreshold", "unhealthy_threshold", BasicValueConverter())
+      self.property(w, "Port", "port", BasicValueConverter())
+      self.property(w, "HealthyThreshold", "healthy_threshold", BasicValueConverter())
+      self.property(w, "TimeoutMillis", "timeout_millis", BasicValueConverter())
+      self.property(w, "Protocol", "protocol", StringValueConverter())
+      self.property(w, "IntervalMillis", "interval_millis", BasicValueConverter())
 
-  props = {
-    "Path": (StringValueConverter(), "path"),
-    "UnhealthyThreshold": (BasicValueConverter(), "unhealthy_threshold"),
-    "Port": (BasicValueConverter(), "port"),
-    "HealthyThreshold": (BasicValueConverter(), "healthy_threshold"),
-    "TimeoutMillis": (BasicValueConverter(), "timeout_millis"),
-    "Protocol": (StringValueConverter(), "protocol"),
-    "IntervalMillis": (BasicValueConverter(), "interval_millis"),
-  }
 
 class AWS_AppMesh_VirtualNode_AwsCloudMapServiceDiscovery(CloudFormationProperty):
-  entity = "AWS::AppMesh::VirtualNode"
-  tf_block_type = "aws_cloud_map_service_discovery"
+  def write(self, w):
+    with w.block("aws_cloud_map_service_discovery"):
+      self.property(w, "NamespaceName", "namespace_name", StringValueConverter())
+      self.property(w, "ServiceName", "service_name", StringValueConverter())
+      self.repeated_block(w, "Attributes", AWS_AppMesh_VirtualNode_AwsCloudMapInstanceAttribute)
 
-  props = {
-    "NamespaceName": (StringValueConverter(), "namespace_name"),
-    "ServiceName": (StringValueConverter(), "service_name"),
-    "Attributes": (BlockValueConverter(AWS_AppMesh_VirtualNode_AwsCloudMapInstanceAttribute), None),
-  }
 
 class AWS_AppMesh_VirtualNode_TlsValidationContextAcmTrust(CloudFormationProperty):
-  entity = "AWS::AppMesh::VirtualNode"
-  tf_block_type = "tls_validation_context_acm_trust"
+  def write(self, w):
+    with w.block("tls_validation_context_acm_trust"):
+      self.property(w, "CertificateAuthorityArns", "certificate_authority_arns", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "CertificateAuthorityArns": (ListValueConverter(StringValueConverter()), "certificate_authority_arns"),
-  }
 
 class AWS_AppMesh_Mesh_EgressFilter(CloudFormationProperty):
-  entity = "AWS::AppMesh::Mesh"
-  tf_block_type = "egress_filter"
+  def write(self, w):
+    with w.block("egress_filter"):
+      self.property(w, "Type", "type", StringValueConverter())
 
-  props = {
-    "Type": (StringValueConverter(), "type"),
-  }
 
 class AWS_AppMesh_VirtualService_VirtualNodeServiceProvider(CloudFormationProperty):
-  entity = "AWS::AppMesh::VirtualService"
-  tf_block_type = "virtual_node_service_provider"
+  def write(self, w):
+    with w.block("virtual_node_service_provider"):
+      self.property(w, "VirtualNodeName", "virtual_node_name", StringValueConverter())
 
-  props = {
-    "VirtualNodeName": (StringValueConverter(), "virtual_node_name"),
-  }
 
 class AWS_AppMesh_VirtualNode_ListenerTlsFileCertificate(CloudFormationProperty):
-  entity = "AWS::AppMesh::VirtualNode"
-  tf_block_type = "listener_tls_file_certificate"
+  def write(self, w):
+    with w.block("listener_tls_file_certificate"):
+      self.property(w, "PrivateKey", "private_key", StringValueConverter())
+      self.property(w, "CertificateChain", "certificate_chain", StringValueConverter())
 
-  props = {
-    "PrivateKey": (StringValueConverter(), "private_key"),
-    "CertificateChain": (StringValueConverter(), "certificate_chain"),
-  }
 
 class AWS_AppMesh_Route_HttpRouteAction(CloudFormationProperty):
-  entity = "AWS::AppMesh::Route"
-  tf_block_type = "http_route_action"
+  def write(self, w):
+    with w.block("http_route_action"):
+      self.repeated_block(w, "WeightedTargets", AWS_AppMesh_Route_WeightedTarget)
 
-  props = {
-    "WeightedTargets": (BlockValueConverter(AWS_AppMesh_Route_WeightedTarget), None),
-  }
 
 class AWS_AppMesh_VirtualRouter_VirtualRouterSpec(CloudFormationProperty):
-  entity = "AWS::AppMesh::VirtualRouter"
-  tf_block_type = "virtual_router_spec"
+  def write(self, w):
+    with w.block("virtual_router_spec"):
+      self.repeated_block(w, "Listeners", AWS_AppMesh_VirtualRouter_VirtualRouterListener)
 
-  props = {
-    "Listeners": (BlockValueConverter(AWS_AppMesh_VirtualRouter_VirtualRouterListener), None),
-  }
 
 class AWS_AppMesh_VirtualNode_AccessLog(CloudFormationProperty):
-  entity = "AWS::AppMesh::VirtualNode"
-  tf_block_type = "access_log"
+  def write(self, w):
+    with w.block("access_log"):
+      self.block(w, "File", AWS_AppMesh_VirtualNode_FileAccessLog)
 
-  props = {
-    "File": (AWS_AppMesh_VirtualNode_FileAccessLog, "file"),
-  }
 
 class AWS_AppMesh_Route_GrpcRouteAction(CloudFormationProperty):
-  entity = "AWS::AppMesh::Route"
-  tf_block_type = "grpc_route_action"
+  def write(self, w):
+    with w.block("grpc_route_action"):
+      self.repeated_block(w, "WeightedTargets", AWS_AppMesh_Route_WeightedTarget)
 
-  props = {
-    "WeightedTargets": (BlockValueConverter(AWS_AppMesh_Route_WeightedTarget), None),
-  }
 
 class AWS_AppMesh_VirtualService_VirtualServiceProvider(CloudFormationProperty):
-  entity = "AWS::AppMesh::VirtualService"
-  tf_block_type = "virtual_service_provider"
+  def write(self, w):
+    with w.block("virtual_service_provider"):
+      self.block(w, "VirtualNode", AWS_AppMesh_VirtualService_VirtualNodeServiceProvider)
+      self.block(w, "VirtualRouter", AWS_AppMesh_VirtualService_VirtualRouterServiceProvider)
 
-  props = {
-    "VirtualNode": (AWS_AppMesh_VirtualService_VirtualNodeServiceProvider, "virtual_node"),
-    "VirtualRouter": (AWS_AppMesh_VirtualService_VirtualRouterServiceProvider, "virtual_router"),
-  }
 
 class AWS_AppMesh_VirtualNode_DnsServiceDiscovery(CloudFormationProperty):
-  entity = "AWS::AppMesh::VirtualNode"
-  tf_block_type = "dns_service_discovery"
+  def write(self, w):
+    with w.block("dns_service_discovery"):
+      self.property(w, "Hostname", "hostname", StringValueConverter())
 
-  props = {
-    "Hostname": (StringValueConverter(), "hostname"),
-  }
 
 class AWS_AppMesh_VirtualNode_TlsValidationContextFileTrust(CloudFormationProperty):
-  entity = "AWS::AppMesh::VirtualNode"
-  tf_block_type = "tls_validation_context_file_trust"
+  def write(self, w):
+    with w.block("tls_validation_context_file_trust"):
+      self.property(w, "CertificateChain", "certificate_chain", StringValueConverter())
 
-  props = {
-    "CertificateChain": (StringValueConverter(), "certificate_chain"),
-  }
 
 class AWS_AppMesh_Route_MatchRange(CloudFormationProperty):
-  entity = "AWS::AppMesh::Route"
-  tf_block_type = "match_range"
+  def write(self, w):
+    with w.block("match_range"):
+      self.property(w, "Start", "start", BasicValueConverter())
+      self.property(w, "End", "end", BasicValueConverter())
 
-  props = {
-    "Start": (BasicValueConverter(), "start"),
-    "End": (BasicValueConverter(), "end"),
-  }
 
 class AWS_AppMesh_Route_TcpRouteAction(CloudFormationProperty):
-  entity = "AWS::AppMesh::Route"
-  tf_block_type = "tcp_route_action"
+  def write(self, w):
+    with w.block("tcp_route_action"):
+      self.repeated_block(w, "WeightedTargets", AWS_AppMesh_Route_WeightedTarget)
 
-  props = {
-    "WeightedTargets": (BlockValueConverter(AWS_AppMesh_Route_WeightedTarget), None),
-  }
 
 class AWS_AppMesh_VirtualRouter(CloudFormationResource):
-  terraform_resource = "aws_app_mesh_virtual_router"
+  cfn_type = "AWS::AppMesh::VirtualRouter"
+  tf_type = "aws_app_mesh_virtual_router"
+  ref = "arn"
 
-  resource_type = "AWS::AppMesh::VirtualRouter"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "MeshName", "mesh_name", StringValueConverter())
+      self.property(w, "VirtualRouterName", "virtual_router_name", StringValueConverter())
+      self.property(w, "MeshOwner", "mesh_owner", StringValueConverter())
+      self.block(w, "Spec", AWS_AppMesh_VirtualRouter_VirtualRouterSpec)
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "MeshName": (StringValueConverter(), "mesh_name"),
-    "VirtualRouterName": (StringValueConverter(), "virtual_router_name"),
-    "MeshOwner": (StringValueConverter(), "mesh_owner"),
-    "Spec": (AWS_AppMesh_VirtualRouter_VirtualRouterSpec, "spec"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 
 class AWS_AppMesh_VirtualNode_GrpcTimeout(CloudFormationProperty):
-  entity = "AWS::AppMesh::VirtualNode"
-  tf_block_type = "grpc_timeout"
+  def write(self, w):
+    with w.block("grpc_timeout"):
+      self.block(w, "PerRequest", AWS_AppMesh_VirtualNode_Duration)
+      self.block(w, "Idle", AWS_AppMesh_VirtualNode_Duration)
 
-  props = {
-    "PerRequest": (AWS_AppMesh_VirtualNode_Duration, "per_request"),
-    "Idle": (AWS_AppMesh_VirtualNode_Duration, "idle"),
-  }
 
 class AWS_AppMesh_VirtualNode_Logging(CloudFormationProperty):
-  entity = "AWS::AppMesh::VirtualNode"
-  tf_block_type = "logging"
+  def write(self, w):
+    with w.block("logging"):
+      self.block(w, "AccessLog", AWS_AppMesh_VirtualNode_AccessLog)
 
-  props = {
-    "AccessLog": (AWS_AppMesh_VirtualNode_AccessLog, "access_log"),
-  }
 
 class AWS_AppMesh_Route_GrpcRetryPolicy(CloudFormationProperty):
-  entity = "AWS::AppMesh::Route"
-  tf_block_type = "grpc_retry_policy"
+  def write(self, w):
+    with w.block("grpc_retry_policy"):
+      self.property(w, "MaxRetries", "max_retries", BasicValueConverter())
+      self.block(w, "PerRetryTimeout", AWS_AppMesh_Route_Duration)
+      self.property(w, "GrpcRetryEvents", "grpc_retry_events", ListValueConverter(StringValueConverter()))
+      self.property(w, "HttpRetryEvents", "http_retry_events", ListValueConverter(StringValueConverter()))
+      self.property(w, "TcpRetryEvents", "tcp_retry_events", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "MaxRetries": (BasicValueConverter(), "max_retries"),
-    "PerRetryTimeout": (AWS_AppMesh_Route_Duration, "per_retry_timeout"),
-    "GrpcRetryEvents": (ListValueConverter(StringValueConverter()), "grpc_retry_events"),
-    "HttpRetryEvents": (ListValueConverter(StringValueConverter()), "http_retry_events"),
-    "TcpRetryEvents": (ListValueConverter(StringValueConverter()), "tcp_retry_events"),
-  }
 
 class AWS_AppMesh_VirtualNode_ServiceDiscovery(CloudFormationProperty):
-  entity = "AWS::AppMesh::VirtualNode"
-  tf_block_type = "service_discovery"
+  def write(self, w):
+    with w.block("service_discovery"):
+      self.block(w, "DNS", AWS_AppMesh_VirtualNode_DnsServiceDiscovery)
+      self.block(w, "AWSCloudMap", AWS_AppMesh_VirtualNode_AwsCloudMapServiceDiscovery)
 
-  props = {
-    "DNS": (AWS_AppMesh_VirtualNode_DnsServiceDiscovery, "dns"),
-    "AWSCloudMap": (AWS_AppMesh_VirtualNode_AwsCloudMapServiceDiscovery, "aws_cloud_map"),
-  }
 
 class AWS_AppMesh_Route_TcpRoute(CloudFormationProperty):
-  entity = "AWS::AppMesh::Route"
-  tf_block_type = "tcp_route"
+  def write(self, w):
+    with w.block("tcp_route"):
+      self.block(w, "Action", AWS_AppMesh_Route_TcpRouteAction)
+      self.block(w, "Timeout", AWS_AppMesh_Route_TcpTimeout)
 
-  props = {
-    "Action": (AWS_AppMesh_Route_TcpRouteAction, "action"),
-    "Timeout": (AWS_AppMesh_Route_TcpTimeout, "timeout"),
-  }
 
 class AWS_AppMesh_Route_GrpcRouteMetadataMatchMethod(CloudFormationProperty):
-  entity = "AWS::AppMesh::Route"
-  tf_block_type = "grpc_route_metadata_match_method"
+  def write(self, w):
+    with w.block("grpc_route_metadata_match_method"):
+      self.property(w, "Suffix", "suffix", StringValueConverter())
+      self.property(w, "Regex", "regex", StringValueConverter())
+      self.property(w, "Exact", "exact", StringValueConverter())
+      self.property(w, "Prefix", "prefix", StringValueConverter())
+      self.block(w, "Range", AWS_AppMesh_Route_MatchRange)
 
-  props = {
-    "Suffix": (StringValueConverter(), "suffix"),
-    "Regex": (StringValueConverter(), "regex"),
-    "Exact": (StringValueConverter(), "exact"),
-    "Prefix": (StringValueConverter(), "prefix"),
-    "Range": (AWS_AppMesh_Route_MatchRange, "range"),
-  }
 
 class AWS_AppMesh_VirtualNode_TlsValidationContextTrust(CloudFormationProperty):
-  entity = "AWS::AppMesh::VirtualNode"
-  tf_block_type = "tls_validation_context_trust"
+  def write(self, w):
+    with w.block("tls_validation_context_trust"):
+      self.block(w, "ACM", AWS_AppMesh_VirtualNode_TlsValidationContextAcmTrust)
+      self.block(w, "File", AWS_AppMesh_VirtualNode_TlsValidationContextFileTrust)
 
-  props = {
-    "ACM": (AWS_AppMesh_VirtualNode_TlsValidationContextAcmTrust, "acm"),
-    "File": (AWS_AppMesh_VirtualNode_TlsValidationContextFileTrust, "file"),
-  }
 
 class AWS_AppMesh_Route_HeaderMatchMethod(CloudFormationProperty):
-  entity = "AWS::AppMesh::Route"
-  tf_block_type = "header_match_method"
+  def write(self, w):
+    with w.block("header_match_method"):
+      self.property(w, "Suffix", "suffix", StringValueConverter())
+      self.property(w, "Regex", "regex", StringValueConverter())
+      self.property(w, "Exact", "exact", StringValueConverter())
+      self.property(w, "Prefix", "prefix", StringValueConverter())
+      self.block(w, "Range", AWS_AppMesh_Route_MatchRange)
 
-  props = {
-    "Suffix": (StringValueConverter(), "suffix"),
-    "Regex": (StringValueConverter(), "regex"),
-    "Exact": (StringValueConverter(), "exact"),
-    "Prefix": (StringValueConverter(), "prefix"),
-    "Range": (AWS_AppMesh_Route_MatchRange, "range"),
-  }
 
 class AWS_AppMesh_Mesh_MeshSpec(CloudFormationProperty):
-  entity = "AWS::AppMesh::Mesh"
-  tf_block_type = "mesh_spec"
+  def write(self, w):
+    with w.block("mesh_spec"):
+      self.block(w, "EgressFilter", AWS_AppMesh_Mesh_EgressFilter)
 
-  props = {
-    "EgressFilter": (AWS_AppMesh_Mesh_EgressFilter, "egress_filter"),
-  }
 
 class AWS_AppMesh_VirtualNode_ListenerTlsCertificate(CloudFormationProperty):
-  entity = "AWS::AppMesh::VirtualNode"
-  tf_block_type = "listener_tls_certificate"
+  def write(self, w):
+    with w.block("listener_tls_certificate"):
+      self.block(w, "ACM", AWS_AppMesh_VirtualNode_ListenerTlsAcmCertificate)
+      self.block(w, "File", AWS_AppMesh_VirtualNode_ListenerTlsFileCertificate)
 
-  props = {
-    "ACM": (AWS_AppMesh_VirtualNode_ListenerTlsAcmCertificate, "acm"),
-    "File": (AWS_AppMesh_VirtualNode_ListenerTlsFileCertificate, "file"),
-  }
 
 class AWS_AppMesh_VirtualNode_ListenerTimeout(CloudFormationProperty):
-  entity = "AWS::AppMesh::VirtualNode"
-  tf_block_type = "listener_timeout"
+  def write(self, w):
+    with w.block("listener_timeout"):
+      self.block(w, "TCP", AWS_AppMesh_VirtualNode_TcpTimeout)
+      self.block(w, "HTTP2", AWS_AppMesh_VirtualNode_HttpTimeout)
+      self.block(w, "HTTP", AWS_AppMesh_VirtualNode_HttpTimeout)
+      self.block(w, "GRPC", AWS_AppMesh_VirtualNode_GrpcTimeout)
 
-  props = {
-    "TCP": (AWS_AppMesh_VirtualNode_TcpTimeout, "tcp"),
-    "HTTP2": (AWS_AppMesh_VirtualNode_HttpTimeout, "http2"),
-    "HTTP": (AWS_AppMesh_VirtualNode_HttpTimeout, "http"),
-    "GRPC": (AWS_AppMesh_VirtualNode_GrpcTimeout, "grpc"),
-  }
 
 class AWS_AppMesh_VirtualNode_ListenerTls(CloudFormationProperty):
-  entity = "AWS::AppMesh::VirtualNode"
-  tf_block_type = "listener_tls"
+  def write(self, w):
+    with w.block("listener_tls"):
+      self.property(w, "Mode", "mode", StringValueConverter())
+      self.block(w, "Certificate", AWS_AppMesh_VirtualNode_ListenerTlsCertificate)
 
-  props = {
-    "Mode": (StringValueConverter(), "mode"),
-    "Certificate": (AWS_AppMesh_VirtualNode_ListenerTlsCertificate, "certificate"),
-  }
 
 class AWS_AppMesh_VirtualService_VirtualServiceSpec(CloudFormationProperty):
-  entity = "AWS::AppMesh::VirtualService"
-  tf_block_type = "virtual_service_spec"
+  def write(self, w):
+    with w.block("virtual_service_spec"):
+      self.block(w, "Provider", AWS_AppMesh_VirtualService_VirtualServiceProvider)
 
-  props = {
-    "Provider": (AWS_AppMesh_VirtualService_VirtualServiceProvider, "provider"),
-  }
 
 class AWS_AppMesh_Route_HttpRouteHeader(CloudFormationProperty):
-  entity = "AWS::AppMesh::Route"
-  tf_block_type = "http_route_header"
+  def write(self, w):
+    with w.block("http_route_header"):
+      self.property(w, "Invert", "invert", BasicValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
+      self.block(w, "Match", AWS_AppMesh_Route_HeaderMatchMethod)
 
-  props = {
-    "Invert": (BasicValueConverter(), "invert"),
-    "Name": (StringValueConverter(), "name"),
-    "Match": (AWS_AppMesh_Route_HeaderMatchMethod, "match"),
-  }
 
 class AWS_AppMesh_Route_GrpcRouteMetadata(CloudFormationProperty):
-  entity = "AWS::AppMesh::Route"
-  tf_block_type = "grpc_route_metadata"
+  def write(self, w):
+    with w.block("grpc_route_metadata"):
+      self.property(w, "Invert", "invert", BasicValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
+      self.block(w, "Match", AWS_AppMesh_Route_GrpcRouteMetadataMatchMethod)
 
-  props = {
-    "Invert": (BasicValueConverter(), "invert"),
-    "Name": (StringValueConverter(), "name"),
-    "Match": (AWS_AppMesh_Route_GrpcRouteMetadataMatchMethod, "match"),
-  }
 
 class AWS_AppMesh_Route_HttpRouteMatch(CloudFormationProperty):
-  entity = "AWS::AppMesh::Route"
-  tf_block_type = "http_route_match"
+  def write(self, w):
+    with w.block("http_route_match"):
+      self.property(w, "Scheme", "scheme", StringValueConverter())
+      self.repeated_block(w, "Headers", AWS_AppMesh_Route_HttpRouteHeader)
+      self.property(w, "Prefix", "prefix", StringValueConverter())
+      self.property(w, "Method", "method", StringValueConverter())
 
-  props = {
-    "Scheme": (StringValueConverter(), "scheme"),
-    "Headers": (BlockValueConverter(AWS_AppMesh_Route_HttpRouteHeader), None),
-    "Prefix": (StringValueConverter(), "prefix"),
-    "Method": (StringValueConverter(), "method"),
-  }
 
 class AWS_AppMesh_VirtualNode_TlsValidationContext(CloudFormationProperty):
-  entity = "AWS::AppMesh::VirtualNode"
-  tf_block_type = "tls_validation_context"
+  def write(self, w):
+    with w.block("tls_validation_context"):
+      self.block(w, "Trust", AWS_AppMesh_VirtualNode_TlsValidationContextTrust)
 
-  props = {
-    "Trust": (AWS_AppMesh_VirtualNode_TlsValidationContextTrust, "trust"),
-  }
 
 class AWS_AppMesh_Route_GrpcRouteMatch(CloudFormationProperty):
-  entity = "AWS::AppMesh::Route"
-  tf_block_type = "grpc_route_match"
+  def write(self, w):
+    with w.block("grpc_route_match"):
+      self.property(w, "ServiceName", "service_name", StringValueConverter())
+      self.repeated_block(w, "Metadata", AWS_AppMesh_Route_GrpcRouteMetadata)
+      self.property(w, "MethodName", "method_name", StringValueConverter())
 
-  props = {
-    "ServiceName": (StringValueConverter(), "service_name"),
-    "Metadata": (BlockValueConverter(AWS_AppMesh_Route_GrpcRouteMetadata), None),
-    "MethodName": (StringValueConverter(), "method_name"),
-  }
 
 class AWS_AppMesh_VirtualNode_Listener(CloudFormationProperty):
-  entity = "AWS::AppMesh::VirtualNode"
-  tf_block_type = "listener"
+  def write(self, w):
+    with w.block("listener"):
+      self.block(w, "Timeout", AWS_AppMesh_VirtualNode_ListenerTimeout)
+      self.block(w, "HealthCheck", AWS_AppMesh_VirtualNode_HealthCheck)
+      self.block(w, "TLS", AWS_AppMesh_VirtualNode_ListenerTls)
+      self.block(w, "PortMapping", AWS_AppMesh_VirtualNode_PortMapping)
 
-  props = {
-    "Timeout": (AWS_AppMesh_VirtualNode_ListenerTimeout, "timeout"),
-    "HealthCheck": (AWS_AppMesh_VirtualNode_HealthCheck, "health_check"),
-    "TLS": (AWS_AppMesh_VirtualNode_ListenerTls, "tls"),
-    "PortMapping": (AWS_AppMesh_VirtualNode_PortMapping, "port_mapping"),
-  }
 
 class AWS_AppMesh_Route_HttpRoute(CloudFormationProperty):
-  entity = "AWS::AppMesh::Route"
-  tf_block_type = "http_route"
+  def write(self, w):
+    with w.block("http_route"):
+      self.block(w, "Action", AWS_AppMesh_Route_HttpRouteAction)
+      self.block(w, "Timeout", AWS_AppMesh_Route_HttpTimeout)
+      self.block(w, "RetryPolicy", AWS_AppMesh_Route_HttpRetryPolicy)
+      self.block(w, "Match", AWS_AppMesh_Route_HttpRouteMatch)
 
-  props = {
-    "Action": (AWS_AppMesh_Route_HttpRouteAction, "action"),
-    "Timeout": (AWS_AppMesh_Route_HttpTimeout, "timeout"),
-    "RetryPolicy": (AWS_AppMesh_Route_HttpRetryPolicy, "retry_policy"),
-    "Match": (AWS_AppMesh_Route_HttpRouteMatch, "match"),
-  }
 
 class AWS_AppMesh_VirtualService(CloudFormationResource):
-  terraform_resource = "aws_app_mesh_virtual_service"
+  cfn_type = "AWS::AppMesh::VirtualService"
+  tf_type = "aws_app_mesh_virtual_service"
+  ref = "arn"
 
-  resource_type = "AWS::AppMesh::VirtualService"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "MeshName", "mesh_name", StringValueConverter())
+      self.property(w, "MeshOwner", "mesh_owner", StringValueConverter())
+      self.property(w, "VirtualServiceName", "virtual_service_name", StringValueConverter())
+      self.block(w, "Spec", AWS_AppMesh_VirtualService_VirtualServiceSpec)
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "MeshName": (StringValueConverter(), "mesh_name"),
-    "MeshOwner": (StringValueConverter(), "mesh_owner"),
-    "VirtualServiceName": (StringValueConverter(), "virtual_service_name"),
-    "Spec": (AWS_AppMesh_VirtualService_VirtualServiceSpec, "spec"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 
 class AWS_AppMesh_Mesh(CloudFormationResource):
-  terraform_resource = "aws_app_mesh_mesh"
+  cfn_type = "AWS::AppMesh::Mesh"
+  tf_type = "aws_app_mesh_mesh"
+  ref = "arn"
 
-  resource_type = "AWS::AppMesh::Mesh"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "MeshName", "mesh_name", StringValueConverter())
+      self.block(w, "Spec", AWS_AppMesh_Mesh_MeshSpec)
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "MeshName": (StringValueConverter(), "mesh_name"),
-    "Spec": (AWS_AppMesh_Mesh_MeshSpec, "spec"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 
 class AWS_AppMesh_VirtualNode_ClientPolicyTls(CloudFormationProperty):
-  entity = "AWS::AppMesh::VirtualNode"
-  tf_block_type = "client_policy_tls"
+  def write(self, w):
+    with w.block("client_policy_tls"):
+      self.block(w, "Validation", AWS_AppMesh_VirtualNode_TlsValidationContext)
+      self.property(w, "Enforce", "enforce", BasicValueConverter())
+      self.property(w, "Ports", "ports", ListValueConverter(BasicValueConverter()))
 
-  props = {
-    "Validation": (AWS_AppMesh_VirtualNode_TlsValidationContext, "validation"),
-    "Enforce": (BasicValueConverter(), "enforce"),
-    "Ports": (ListValueConverter(BasicValueConverter()), "ports"),
-  }
 
 class AWS_AppMesh_Route_GrpcRoute(CloudFormationProperty):
-  entity = "AWS::AppMesh::Route"
-  tf_block_type = "grpc_route"
+  def write(self, w):
+    with w.block("grpc_route"):
+      self.block(w, "Action", AWS_AppMesh_Route_GrpcRouteAction)
+      self.block(w, "Timeout", AWS_AppMesh_Route_GrpcTimeout)
+      self.block(w, "RetryPolicy", AWS_AppMesh_Route_GrpcRetryPolicy)
+      self.block(w, "Match", AWS_AppMesh_Route_GrpcRouteMatch)
 
-  props = {
-    "Action": (AWS_AppMesh_Route_GrpcRouteAction, "action"),
-    "Timeout": (AWS_AppMesh_Route_GrpcTimeout, "timeout"),
-    "RetryPolicy": (AWS_AppMesh_Route_GrpcRetryPolicy, "retry_policy"),
-    "Match": (AWS_AppMesh_Route_GrpcRouteMatch, "match"),
-  }
 
 class AWS_AppMesh_VirtualNode_ClientPolicy(CloudFormationProperty):
-  entity = "AWS::AppMesh::VirtualNode"
-  tf_block_type = "client_policy"
+  def write(self, w):
+    with w.block("client_policy"):
+      self.block(w, "TLS", AWS_AppMesh_VirtualNode_ClientPolicyTls)
 
-  props = {
-    "TLS": (AWS_AppMesh_VirtualNode_ClientPolicyTls, "tls"),
-  }
 
 class AWS_AppMesh_Route_RouteSpec(CloudFormationProperty):
-  entity = "AWS::AppMesh::Route"
-  tf_block_type = "route_spec"
+  def write(self, w):
+    with w.block("route_spec"):
+      self.block(w, "HttpRoute", AWS_AppMesh_Route_HttpRoute)
+      self.property(w, "Priority", "priority", BasicValueConverter())
+      self.block(w, "Http2Route", AWS_AppMesh_Route_HttpRoute)
+      self.block(w, "GrpcRoute", AWS_AppMesh_Route_GrpcRoute)
+      self.block(w, "TcpRoute", AWS_AppMesh_Route_TcpRoute)
 
-  props = {
-    "HttpRoute": (AWS_AppMesh_Route_HttpRoute, "http_route"),
-    "Priority": (BasicValueConverter(), "priority"),
-    "Http2Route": (AWS_AppMesh_Route_HttpRoute, "http2_route"),
-    "GrpcRoute": (AWS_AppMesh_Route_GrpcRoute, "grpc_route"),
-    "TcpRoute": (AWS_AppMesh_Route_TcpRoute, "tcp_route"),
-  }
 
 class AWS_AppMesh_VirtualNode_VirtualServiceBackend(CloudFormationProperty):
-  entity = "AWS::AppMesh::VirtualNode"
-  tf_block_type = "virtual_service_backend"
+  def write(self, w):
+    with w.block("virtual_service_backend"):
+      self.block(w, "ClientPolicy", AWS_AppMesh_VirtualNode_ClientPolicy)
+      self.property(w, "VirtualServiceName", "virtual_service_name", StringValueConverter())
 
-  props = {
-    "ClientPolicy": (AWS_AppMesh_VirtualNode_ClientPolicy, "client_policy"),
-    "VirtualServiceName": (StringValueConverter(), "virtual_service_name"),
-  }
 
 class AWS_AppMesh_VirtualNode_BackendDefaults(CloudFormationProperty):
-  entity = "AWS::AppMesh::VirtualNode"
-  tf_block_type = "backend_defaults"
+  def write(self, w):
+    with w.block("backend_defaults"):
+      self.block(w, "ClientPolicy", AWS_AppMesh_VirtualNode_ClientPolicy)
 
-  props = {
-    "ClientPolicy": (AWS_AppMesh_VirtualNode_ClientPolicy, "client_policy"),
-  }
 
 class AWS_AppMesh_Route(CloudFormationResource):
-  terraform_resource = "aws_app_mesh_route"
+  cfn_type = "AWS::AppMesh::Route"
+  tf_type = "aws_app_mesh_route"
+  ref = "arn"
 
-  resource_type = "AWS::AppMesh::Route"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "MeshName", "mesh_name", StringValueConverter())
+      self.property(w, "VirtualRouterName", "virtual_router_name", StringValueConverter())
+      self.property(w, "MeshOwner", "mesh_owner", StringValueConverter())
+      self.property(w, "RouteName", "route_name", StringValueConverter())
+      self.block(w, "Spec", AWS_AppMesh_Route_RouteSpec)
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "MeshName": (StringValueConverter(), "mesh_name"),
-    "VirtualRouterName": (StringValueConverter(), "virtual_router_name"),
-    "MeshOwner": (StringValueConverter(), "mesh_owner"),
-    "RouteName": (StringValueConverter(), "route_name"),
-    "Spec": (AWS_AppMesh_Route_RouteSpec, "spec"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 
 class AWS_AppMesh_VirtualNode_Backend(CloudFormationProperty):
-  entity = "AWS::AppMesh::VirtualNode"
-  tf_block_type = "backend"
+  def write(self, w):
+    with w.block("backend"):
+      self.block(w, "VirtualService", AWS_AppMesh_VirtualNode_VirtualServiceBackend)
 
-  props = {
-    "VirtualService": (AWS_AppMesh_VirtualNode_VirtualServiceBackend, "virtual_service"),
-  }
 
 class AWS_AppMesh_VirtualNode_VirtualNodeSpec(CloudFormationProperty):
-  entity = "AWS::AppMesh::VirtualNode"
-  tf_block_type = "virtual_node_spec"
+  def write(self, w):
+    with w.block("virtual_node_spec"):
+      self.block(w, "Logging", AWS_AppMesh_VirtualNode_Logging)
+      self.repeated_block(w, "Backends", AWS_AppMesh_VirtualNode_Backend)
+      self.repeated_block(w, "Listeners", AWS_AppMesh_VirtualNode_Listener)
+      self.block(w, "BackendDefaults", AWS_AppMesh_VirtualNode_BackendDefaults)
+      self.block(w, "ServiceDiscovery", AWS_AppMesh_VirtualNode_ServiceDiscovery)
 
-  props = {
-    "Logging": (AWS_AppMesh_VirtualNode_Logging, "logging"),
-    "Backends": (BlockValueConverter(AWS_AppMesh_VirtualNode_Backend), None),
-    "Listeners": (BlockValueConverter(AWS_AppMesh_VirtualNode_Listener), None),
-    "BackendDefaults": (AWS_AppMesh_VirtualNode_BackendDefaults, "backend_defaults"),
-    "ServiceDiscovery": (AWS_AppMesh_VirtualNode_ServiceDiscovery, "service_discovery"),
-  }
 
 class AWS_AppMesh_VirtualNode(CloudFormationResource):
-  terraform_resource = "aws_app_mesh_virtual_node"
+  cfn_type = "AWS::AppMesh::VirtualNode"
+  tf_type = "aws_app_mesh_virtual_node"
+  ref = "arn"
 
-  resource_type = "AWS::AppMesh::VirtualNode"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "MeshName", "mesh_name", StringValueConverter())
+      self.property(w, "MeshOwner", "mesh_owner", StringValueConverter())
+      self.block(w, "Spec", AWS_AppMesh_VirtualNode_VirtualNodeSpec)
+      self.property(w, "VirtualNodeName", "virtual_node_name", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "MeshName": (StringValueConverter(), "mesh_name"),
-    "MeshOwner": (StringValueConverter(), "mesh_owner"),
-    "Spec": (AWS_AppMesh_VirtualNode_VirtualNodeSpec, "spec"),
-    "VirtualNodeName": (StringValueConverter(), "virtual_node_name"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 

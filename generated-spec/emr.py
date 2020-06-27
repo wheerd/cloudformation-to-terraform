@@ -1,571 +1,482 @@
 from . import *
 
 class AWS_EMR_Cluster_SpotProvisioningSpecification(CloudFormationProperty):
-  entity = "AWS::EMR::Cluster"
-  tf_block_type = "spot_provisioning_specification"
+  def write(self, w):
+    with w.block("spot_provisioning_specification"):
+      self.property(w, "BlockDurationMinutes", "block_duration_minutes", BasicValueConverter())
+      self.property(w, "TimeoutAction", "timeout_action", StringValueConverter())
+      self.property(w, "TimeoutDurationMinutes", "timeout_duration_minutes", BasicValueConverter())
 
-  props = {
-    "BlockDurationMinutes": (BasicValueConverter(), "block_duration_minutes"),
-    "TimeoutAction": (StringValueConverter(), "timeout_action"),
-    "TimeoutDurationMinutes": (BasicValueConverter(), "timeout_duration_minutes"),
-  }
 
 class AWS_EMR_InstanceFleetConfig_SpotProvisioningSpecification(CloudFormationProperty):
-  entity = "AWS::EMR::InstanceFleetConfig"
-  tf_block_type = "spot_provisioning_specification"
+  def write(self, w):
+    with w.block("spot_provisioning_specification"):
+      self.property(w, "BlockDurationMinutes", "block_duration_minutes", BasicValueConverter())
+      self.property(w, "TimeoutAction", "timeout_action", StringValueConverter())
+      self.property(w, "TimeoutDurationMinutes", "timeout_duration_minutes", BasicValueConverter())
 
-  props = {
-    "BlockDurationMinutes": (BasicValueConverter(), "block_duration_minutes"),
-    "TimeoutAction": (StringValueConverter(), "timeout_action"),
-    "TimeoutDurationMinutes": (BasicValueConverter(), "timeout_duration_minutes"),
-  }
 
 class AWS_EMR_Step_KeyValue(CloudFormationProperty):
-  entity = "AWS::EMR::Step"
-  tf_block_type = "key_value"
+  def write(self, w):
+    with w.block("key_value"):
+      self.property(w, "Key", "key", StringValueConverter())
+      self.property(w, "Value", "value", StringValueConverter())
 
-  props = {
-    "Key": (StringValueConverter(), "key"),
-    "Value": (StringValueConverter(), "value"),
-  }
 
 class AWS_EMR_Cluster_KeyValue(CloudFormationProperty):
-  entity = "AWS::EMR::Cluster"
-  tf_block_type = "key_value"
+  def write(self, w):
+    with w.block("key_value"):
+      self.property(w, "Key", "key", StringValueConverter())
+      self.property(w, "Value", "value", StringValueConverter())
 
-  props = {
-    "Key": (StringValueConverter(), "key"),
-    "Value": (StringValueConverter(), "value"),
-  }
 
 class AWS_EMR_Cluster_VolumeSpecification(CloudFormationProperty):
-  entity = "AWS::EMR::Cluster"
-  tf_block_type = "volume_specification"
+  def write(self, w):
+    with w.block("volume_specification"):
+      self.property(w, "Iops", "iops", BasicValueConverter())
+      self.property(w, "SizeInGB", "size_in_gb", BasicValueConverter())
+      self.property(w, "VolumeType", "volume_type", StringValueConverter())
 
-  props = {
-    "Iops": (BasicValueConverter(), "iops"),
-    "SizeInGB": (BasicValueConverter(), "size_in_gb"),
-    "VolumeType": (StringValueConverter(), "volume_type"),
-  }
 
 class AWS_EMR_InstanceGroupConfig_VolumeSpecification(CloudFormationProperty):
-  entity = "AWS::EMR::InstanceGroupConfig"
-  tf_block_type = "volume_specification"
+  def write(self, w):
+    with w.block("volume_specification"):
+      self.property(w, "Iops", "iops", BasicValueConverter())
+      self.property(w, "SizeInGB", "size_in_gb", BasicValueConverter())
+      self.property(w, "VolumeType", "volume_type", StringValueConverter())
 
-  props = {
-    "Iops": (BasicValueConverter(), "iops"),
-    "SizeInGB": (BasicValueConverter(), "size_in_gb"),
-    "VolumeType": (StringValueConverter(), "volume_type"),
-  }
 
 class AWS_EMR_Cluster_InstanceFleetProvisioningSpecifications(CloudFormationProperty):
-  entity = "AWS::EMR::Cluster"
-  tf_block_type = "instance_fleet_provisioning_specifications"
+  def write(self, w):
+    with w.block("instance_fleet_provisioning_specifications"):
+      self.block(w, "SpotSpecification", AWS_EMR_Cluster_SpotProvisioningSpecification)
 
-  props = {
-    "SpotSpecification": (AWS_EMR_Cluster_SpotProvisioningSpecification, "spot_specification"),
-  }
 
 class AWS_EMR_InstanceGroupConfig_Configuration(CloudFormationProperty):
-  entity = "AWS::EMR::InstanceGroupConfig"
-  tf_block_type = "configuration"
+  def write(self, w):
+    with w.block("configuration"):
+      self.property(w, "Classification", "classification", StringValueConverter())
+      self.property(w, "ConfigurationProperties", "configuration_properties", MapValueConverter(StringValueConverter()))
+      self.repeated_block(w, "Configurations", AWS_EMR_InstanceGroupConfig_Configuration)
 
-AWS_EMR_InstanceGroupConfig_Configuration.props = {
-    "Classification": (StringValueConverter(), "classification"),
-    "ConfigurationProperties": (MapValueConverter(StringValueConverter()), "configuration_properties"),
-    "Configurations": (BlockValueConverter(AWS_EMR_InstanceGroupConfig_Configuration), None),
-  }
 
 class AWS_EMR_InstanceFleetConfig_VolumeSpecification(CloudFormationProperty):
-  entity = "AWS::EMR::InstanceFleetConfig"
-  tf_block_type = "volume_specification"
+  def write(self, w):
+    with w.block("volume_specification"):
+      self.property(w, "Iops", "iops", BasicValueConverter())
+      self.property(w, "SizeInGB", "size_in_gb", BasicValueConverter())
+      self.property(w, "VolumeType", "volume_type", StringValueConverter())
 
-  props = {
-    "Iops": (BasicValueConverter(), "iops"),
-    "SizeInGB": (BasicValueConverter(), "size_in_gb"),
-    "VolumeType": (StringValueConverter(), "volume_type"),
-  }
 
 class AWS_EMR_Cluster_ScalingConstraints(CloudFormationProperty):
-  entity = "AWS::EMR::Cluster"
-  tf_block_type = "scaling_constraints"
+  def write(self, w):
+    with w.block("scaling_constraints"):
+      self.property(w, "MaxCapacity", "max_capacity", BasicValueConverter())
+      self.property(w, "MinCapacity", "min_capacity", BasicValueConverter())
 
-  props = {
-    "MaxCapacity": (BasicValueConverter(), "max_capacity"),
-    "MinCapacity": (BasicValueConverter(), "min_capacity"),
-  }
 
 class AWS_EMR_InstanceGroupConfig_MetricDimension(CloudFormationProperty):
-  entity = "AWS::EMR::InstanceGroupConfig"
-  tf_block_type = "metric_dimension"
+  def write(self, w):
+    with w.block("metric_dimension"):
+      self.property(w, "Key", "key", StringValueConverter())
+      self.property(w, "Value", "value", StringValueConverter())
 
-  props = {
-    "Key": (StringValueConverter(), "key"),
-    "Value": (StringValueConverter(), "value"),
-  }
 
 class AWS_EMR_InstanceFleetConfig_Configuration(CloudFormationProperty):
-  entity = "AWS::EMR::InstanceFleetConfig"
-  tf_block_type = "configuration"
+  def write(self, w):
+    with w.block("configuration"):
+      self.property(w, "Classification", "classification", StringValueConverter())
+      self.property(w, "ConfigurationProperties", "configuration_properties", MapValueConverter(StringValueConverter()))
+      self.repeated_block(w, "Configurations", AWS_EMR_InstanceFleetConfig_Configuration)
 
-AWS_EMR_InstanceFleetConfig_Configuration.props = {
-    "Classification": (StringValueConverter(), "classification"),
-    "ConfigurationProperties": (MapValueConverter(StringValueConverter()), "configuration_properties"),
-    "Configurations": (BlockValueConverter(AWS_EMR_InstanceFleetConfig_Configuration), None),
-  }
 
 class AWS_EMR_Cluster_KerberosAttributes(CloudFormationProperty):
-  entity = "AWS::EMR::Cluster"
-  tf_block_type = "kerberos_attributes"
+  def write(self, w):
+    with w.block("kerberos_attributes"):
+      self.property(w, "ADDomainJoinPassword", "ad_domain_join_password", StringValueConverter())
+      self.property(w, "ADDomainJoinUser", "ad_domain_join_user", StringValueConverter())
+      self.property(w, "CrossRealmTrustPrincipalPassword", "cross_realm_trust_principal_password", StringValueConverter())
+      self.property(w, "KdcAdminPassword", "kdc_admin_password", StringValueConverter())
+      self.property(w, "Realm", "realm", StringValueConverter())
 
-  props = {
-    "ADDomainJoinPassword": (StringValueConverter(), "ad_domain_join_password"),
-    "ADDomainJoinUser": (StringValueConverter(), "ad_domain_join_user"),
-    "CrossRealmTrustPrincipalPassword": (StringValueConverter(), "cross_realm_trust_principal_password"),
-    "KdcAdminPassword": (StringValueConverter(), "kdc_admin_password"),
-    "Realm": (StringValueConverter(), "realm"),
-  }
 
 class AWS_EMR_Cluster_SimpleScalingPolicyConfiguration(CloudFormationProperty):
-  entity = "AWS::EMR::Cluster"
-  tf_block_type = "simple_scaling_policy_configuration"
+  def write(self, w):
+    with w.block("simple_scaling_policy_configuration"):
+      self.property(w, "AdjustmentType", "adjustment_type", StringValueConverter())
+      self.property(w, "CoolDown", "cool_down", BasicValueConverter())
+      self.property(w, "ScalingAdjustment", "scaling_adjustment", BasicValueConverter())
 
-  props = {
-    "AdjustmentType": (StringValueConverter(), "adjustment_type"),
-    "CoolDown": (BasicValueConverter(), "cool_down"),
-    "ScalingAdjustment": (BasicValueConverter(), "scaling_adjustment"),
-  }
 
 class AWS_EMR_InstanceGroupConfig_SimpleScalingPolicyConfiguration(CloudFormationProperty):
-  entity = "AWS::EMR::InstanceGroupConfig"
-  tf_block_type = "simple_scaling_policy_configuration"
+  def write(self, w):
+    with w.block("simple_scaling_policy_configuration"):
+      self.property(w, "AdjustmentType", "adjustment_type", StringValueConverter())
+      self.property(w, "CoolDown", "cool_down", BasicValueConverter())
+      self.property(w, "ScalingAdjustment", "scaling_adjustment", BasicValueConverter())
 
-  props = {
-    "AdjustmentType": (StringValueConverter(), "adjustment_type"),
-    "CoolDown": (BasicValueConverter(), "cool_down"),
-    "ScalingAdjustment": (BasicValueConverter(), "scaling_adjustment"),
-  }
 
 class AWS_EMR_Cluster_Application(CloudFormationProperty):
-  entity = "AWS::EMR::Cluster"
-  tf_block_type = "application"
+  def write(self, w):
+    with w.block("application"):
+      self.property(w, "AdditionalInfo", "additional_info", MapValueConverter(StringValueConverter()))
+      self.property(w, "Args", "args", ListValueConverter(StringValueConverter()))
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Version", "version", StringValueConverter())
 
-  props = {
-    "AdditionalInfo": (MapValueConverter(StringValueConverter()), "additional_info"),
-    "Args": (ListValueConverter(StringValueConverter()), "args"),
-    "Name": (StringValueConverter(), "name"),
-    "Version": (StringValueConverter(), "version"),
-  }
 
 class AWS_EMR_Cluster_PlacementType(CloudFormationProperty):
-  entity = "AWS::EMR::Cluster"
-  tf_block_type = "placement_type"
+  def write(self, w):
+    with w.block("placement_type"):
+      self.property(w, "AvailabilityZone", "availability_zone", StringValueConverter())
 
-  props = {
-    "AvailabilityZone": (StringValueConverter(), "availability_zone"),
-  }
 
 class AWS_EMR_Cluster_Configuration(CloudFormationProperty):
-  entity = "AWS::EMR::Cluster"
-  tf_block_type = "configuration"
+  def write(self, w):
+    with w.block("configuration"):
+      self.property(w, "Classification", "classification", StringValueConverter())
+      self.property(w, "ConfigurationProperties", "configuration_properties", MapValueConverter(StringValueConverter()))
+      self.repeated_block(w, "Configurations", AWS_EMR_Cluster_Configuration)
 
-AWS_EMR_Cluster_Configuration.props = {
-    "Classification": (StringValueConverter(), "classification"),
-    "ConfigurationProperties": (MapValueConverter(StringValueConverter()), "configuration_properties"),
-    "Configurations": (BlockValueConverter(AWS_EMR_Cluster_Configuration), None),
-  }
 
 class AWS_EMR_Cluster_ScriptBootstrapActionConfig(CloudFormationProperty):
-  entity = "AWS::EMR::Cluster"
-  tf_block_type = "script_bootstrap_action_config"
+  def write(self, w):
+    with w.block("script_bootstrap_action_config"):
+      self.property(w, "Args", "args", ListValueConverter(StringValueConverter()))
+      self.property(w, "Path", "path", StringValueConverter())
 
-  props = {
-    "Args": (ListValueConverter(StringValueConverter()), "args"),
-    "Path": (StringValueConverter(), "path"),
-  }
 
 class AWS_EMR_InstanceGroupConfig_ScalingConstraints(CloudFormationProperty):
-  entity = "AWS::EMR::InstanceGroupConfig"
-  tf_block_type = "scaling_constraints"
+  def write(self, w):
+    with w.block("scaling_constraints"):
+      self.property(w, "MaxCapacity", "max_capacity", BasicValueConverter())
+      self.property(w, "MinCapacity", "min_capacity", BasicValueConverter())
 
-  props = {
-    "MaxCapacity": (BasicValueConverter(), "max_capacity"),
-    "MinCapacity": (BasicValueConverter(), "min_capacity"),
-  }
 
 class AWS_EMR_InstanceGroupConfig_CloudWatchAlarmDefinition(CloudFormationProperty):
-  entity = "AWS::EMR::InstanceGroupConfig"
-  tf_block_type = "cloud_watch_alarm_definition"
+  def write(self, w):
+    with w.block("cloud_watch_alarm_definition"):
+      self.property(w, "ComparisonOperator", "comparison_operator", StringValueConverter())
+      self.repeated_block(w, "Dimensions", AWS_EMR_InstanceGroupConfig_MetricDimension)
+      self.property(w, "EvaluationPeriods", "evaluation_periods", BasicValueConverter())
+      self.property(w, "MetricName", "metric_name", StringValueConverter())
+      self.property(w, "Namespace", "namespace", StringValueConverter())
+      self.property(w, "Period", "period", BasicValueConverter())
+      self.property(w, "Statistic", "statistic", StringValueConverter())
+      self.property(w, "Threshold", "threshold", BasicValueConverter())
+      self.property(w, "Unit", "unit", StringValueConverter())
 
-  props = {
-    "ComparisonOperator": (StringValueConverter(), "comparison_operator"),
-    "Dimensions": (BlockValueConverter(AWS_EMR_InstanceGroupConfig_MetricDimension), None),
-    "EvaluationPeriods": (BasicValueConverter(), "evaluation_periods"),
-    "MetricName": (StringValueConverter(), "metric_name"),
-    "Namespace": (StringValueConverter(), "namespace"),
-    "Period": (BasicValueConverter(), "period"),
-    "Statistic": (StringValueConverter(), "statistic"),
-    "Threshold": (BasicValueConverter(), "threshold"),
-    "Unit": (StringValueConverter(), "unit"),
-  }
 
 class AWS_EMR_Cluster_MetricDimension(CloudFormationProperty):
-  entity = "AWS::EMR::Cluster"
-  tf_block_type = "metric_dimension"
+  def write(self, w):
+    with w.block("metric_dimension"):
+      self.property(w, "Key", "key", StringValueConverter())
+      self.property(w, "Value", "value", StringValueConverter())
 
-  props = {
-    "Key": (StringValueConverter(), "key"),
-    "Value": (StringValueConverter(), "value"),
-  }
 
 class AWS_EMR_InstanceFleetConfig_InstanceFleetProvisioningSpecifications(CloudFormationProperty):
-  entity = "AWS::EMR::InstanceFleetConfig"
-  tf_block_type = "instance_fleet_provisioning_specifications"
+  def write(self, w):
+    with w.block("instance_fleet_provisioning_specifications"):
+      self.block(w, "SpotSpecification", AWS_EMR_InstanceFleetConfig_SpotProvisioningSpecification)
 
-  props = {
-    "SpotSpecification": (AWS_EMR_InstanceFleetConfig_SpotProvisioningSpecification, "spot_specification"),
-  }
 
 class AWS_EMR_InstanceFleetConfig_EbsBlockDeviceConfig(CloudFormationProperty):
-  entity = "AWS::EMR::InstanceFleetConfig"
-  tf_block_type = "ebs_block_device_config"
+  def write(self, w):
+    with w.block("ebs_block_device_config"):
+      self.block(w, "VolumeSpecification", AWS_EMR_InstanceFleetConfig_VolumeSpecification)
+      self.property(w, "VolumesPerInstance", "volumes_per_instance", BasicValueConverter())
 
-  props = {
-    "VolumeSpecification": (AWS_EMR_InstanceFleetConfig_VolumeSpecification, "volume_specification"),
-    "VolumesPerInstance": (BasicValueConverter(), "volumes_per_instance"),
-  }
 
 class AWS_EMR_Cluster_HadoopJarStepConfig(CloudFormationProperty):
-  entity = "AWS::EMR::Cluster"
-  tf_block_type = "hadoop_jar_step_config"
+  def write(self, w):
+    with w.block("hadoop_jar_step_config"):
+      self.property(w, "Args", "args", ListValueConverter(StringValueConverter()))
+      self.property(w, "Jar", "jar", StringValueConverter())
+      self.property(w, "MainClass", "main_class", StringValueConverter())
+      self.repeated_block(w, "StepProperties", AWS_EMR_Cluster_KeyValue)
 
-  props = {
-    "Args": (ListValueConverter(StringValueConverter()), "args"),
-    "Jar": (StringValueConverter(), "jar"),
-    "MainClass": (StringValueConverter(), "main_class"),
-    "StepProperties": (BlockValueConverter(AWS_EMR_Cluster_KeyValue), None),
-  }
 
 class AWS_EMR_SecurityConfiguration(CloudFormationResource):
-  terraform_resource = "aws_emr_security_configuration"
+  cfn_type = "AWS::EMR::SecurityConfiguration"
+  tf_type = "aws_emr_security_configuration"
+  ref = "arn"
 
-  resource_type = "AWS::EMR::SecurityConfiguration"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "SecurityConfiguration", "security_configuration", StringValueConverter())
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-    "SecurityConfiguration": (StringValueConverter(), "security_configuration"),
-  }
 
 class AWS_EMR_Step_HadoopJarStepConfig(CloudFormationProperty):
-  entity = "AWS::EMR::Step"
-  tf_block_type = "hadoop_jar_step_config"
+  def write(self, w):
+    with w.block("hadoop_jar_step_config"):
+      self.property(w, "Args", "args", ListValueConverter(StringValueConverter()))
+      self.property(w, "Jar", "jar", StringValueConverter())
+      self.property(w, "MainClass", "main_class", StringValueConverter())
+      self.repeated_block(w, "StepProperties", AWS_EMR_Step_KeyValue)
 
-  props = {
-    "Args": (ListValueConverter(StringValueConverter()), "args"),
-    "Jar": (StringValueConverter(), "jar"),
-    "MainClass": (StringValueConverter(), "main_class"),
-    "StepProperties": (BlockValueConverter(AWS_EMR_Step_KeyValue), None),
-  }
 
 class AWS_EMR_InstanceGroupConfig_EbsBlockDeviceConfig(CloudFormationProperty):
-  entity = "AWS::EMR::InstanceGroupConfig"
-  tf_block_type = "ebs_block_device_config"
+  def write(self, w):
+    with w.block("ebs_block_device_config"):
+      self.block(w, "VolumeSpecification", AWS_EMR_InstanceGroupConfig_VolumeSpecification)
+      self.property(w, "VolumesPerInstance", "volumes_per_instance", BasicValueConverter())
 
-  props = {
-    "VolumeSpecification": (AWS_EMR_InstanceGroupConfig_VolumeSpecification, "volume_specification"),
-    "VolumesPerInstance": (BasicValueConverter(), "volumes_per_instance"),
-  }
 
 class AWS_EMR_Cluster_BootstrapActionConfig(CloudFormationProperty):
-  entity = "AWS::EMR::Cluster"
-  tf_block_type = "bootstrap_action_config"
+  def write(self, w):
+    with w.block("bootstrap_action_config"):
+      self.property(w, "Name", "name", StringValueConverter())
+      self.block(w, "ScriptBootstrapAction", AWS_EMR_Cluster_ScriptBootstrapActionConfig)
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-    "ScriptBootstrapAction": (AWS_EMR_Cluster_ScriptBootstrapActionConfig, "script_bootstrap_action"),
-  }
 
 class AWS_EMR_Cluster_StepConfig(CloudFormationProperty):
-  entity = "AWS::EMR::Cluster"
-  tf_block_type = "step_config"
+  def write(self, w):
+    with w.block("step_config"):
+      self.property(w, "ActionOnFailure", "action_on_failure", StringValueConverter())
+      self.block(w, "HadoopJarStep", AWS_EMR_Cluster_HadoopJarStepConfig)
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "ActionOnFailure": (StringValueConverter(), "action_on_failure"),
-    "HadoopJarStep": (AWS_EMR_Cluster_HadoopJarStepConfig, "hadoop_jar_step"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_EMR_InstanceFleetConfig_EbsConfiguration(CloudFormationProperty):
-  entity = "AWS::EMR::InstanceFleetConfig"
-  tf_block_type = "ebs_configuration"
+  def write(self, w):
+    with w.block("ebs_configuration"):
+      self.repeated_block(w, "EbsBlockDeviceConfigs", AWS_EMR_InstanceFleetConfig_EbsBlockDeviceConfig)
+      self.property(w, "EbsOptimized", "ebs_optimized", BasicValueConverter())
 
-  props = {
-    "EbsBlockDeviceConfigs": (BlockValueConverter(AWS_EMR_InstanceFleetConfig_EbsBlockDeviceConfig), None),
-    "EbsOptimized": (BasicValueConverter(), "ebs_optimized"),
-  }
 
 class AWS_EMR_Cluster_EbsBlockDeviceConfig(CloudFormationProperty):
-  entity = "AWS::EMR::Cluster"
-  tf_block_type = "ebs_block_device_config"
+  def write(self, w):
+    with w.block("ebs_block_device_config"):
+      self.block(w, "VolumeSpecification", AWS_EMR_Cluster_VolumeSpecification)
+      self.property(w, "VolumesPerInstance", "volumes_per_instance", BasicValueConverter())
 
-  props = {
-    "VolumeSpecification": (AWS_EMR_Cluster_VolumeSpecification, "volume_specification"),
-    "VolumesPerInstance": (BasicValueConverter(), "volumes_per_instance"),
-  }
 
 class AWS_EMR_InstanceGroupConfig_ScalingAction(CloudFormationProperty):
-  entity = "AWS::EMR::InstanceGroupConfig"
-  tf_block_type = "scaling_action"
+  def write(self, w):
+    with w.block("scaling_action"):
+      self.property(w, "Market", "market", StringValueConverter())
+      self.block(w, "SimpleScalingPolicyConfiguration", AWS_EMR_InstanceGroupConfig_SimpleScalingPolicyConfiguration)
 
-  props = {
-    "Market": (StringValueConverter(), "market"),
-    "SimpleScalingPolicyConfiguration": (AWS_EMR_InstanceGroupConfig_SimpleScalingPolicyConfiguration, "simple_scaling_policy_configuration"),
-  }
 
 class AWS_EMR_InstanceGroupConfig_ScalingTrigger(CloudFormationProperty):
-  entity = "AWS::EMR::InstanceGroupConfig"
-  tf_block_type = "scaling_trigger"
+  def write(self, w):
+    with w.block("scaling_trigger"):
+      self.block(w, "CloudWatchAlarmDefinition", AWS_EMR_InstanceGroupConfig_CloudWatchAlarmDefinition)
 
-  props = {
-    "CloudWatchAlarmDefinition": (AWS_EMR_InstanceGroupConfig_CloudWatchAlarmDefinition, "cloud_watch_alarm_definition"),
-  }
 
 class AWS_EMR_Cluster_CloudWatchAlarmDefinition(CloudFormationProperty):
-  entity = "AWS::EMR::Cluster"
-  tf_block_type = "cloud_watch_alarm_definition"
+  def write(self, w):
+    with w.block("cloud_watch_alarm_definition"):
+      self.property(w, "ComparisonOperator", "comparison_operator", StringValueConverter())
+      self.repeated_block(w, "Dimensions", AWS_EMR_Cluster_MetricDimension)
+      self.property(w, "EvaluationPeriods", "evaluation_periods", BasicValueConverter())
+      self.property(w, "MetricName", "metric_name", StringValueConverter())
+      self.property(w, "Namespace", "namespace", StringValueConverter())
+      self.property(w, "Period", "period", BasicValueConverter())
+      self.property(w, "Statistic", "statistic", StringValueConverter())
+      self.property(w, "Threshold", "threshold", BasicValueConverter())
+      self.property(w, "Unit", "unit", StringValueConverter())
 
-  props = {
-    "ComparisonOperator": (StringValueConverter(), "comparison_operator"),
-    "Dimensions": (BlockValueConverter(AWS_EMR_Cluster_MetricDimension), None),
-    "EvaluationPeriods": (BasicValueConverter(), "evaluation_periods"),
-    "MetricName": (StringValueConverter(), "metric_name"),
-    "Namespace": (StringValueConverter(), "namespace"),
-    "Period": (BasicValueConverter(), "period"),
-    "Statistic": (StringValueConverter(), "statistic"),
-    "Threshold": (BasicValueConverter(), "threshold"),
-    "Unit": (StringValueConverter(), "unit"),
-  }
 
 class AWS_EMR_InstanceGroupConfig_EbsConfiguration(CloudFormationProperty):
-  entity = "AWS::EMR::InstanceGroupConfig"
-  tf_block_type = "ebs_configuration"
+  def write(self, w):
+    with w.block("ebs_configuration"):
+      self.repeated_block(w, "EbsBlockDeviceConfigs", AWS_EMR_InstanceGroupConfig_EbsBlockDeviceConfig)
+      self.property(w, "EbsOptimized", "ebs_optimized", BasicValueConverter())
 
-  props = {
-    "EbsBlockDeviceConfigs": (BlockValueConverter(AWS_EMR_InstanceGroupConfig_EbsBlockDeviceConfig), None),
-    "EbsOptimized": (BasicValueConverter(), "ebs_optimized"),
-  }
 
 class AWS_EMR_Cluster_ScalingAction(CloudFormationProperty):
-  entity = "AWS::EMR::Cluster"
-  tf_block_type = "scaling_action"
+  def write(self, w):
+    with w.block("scaling_action"):
+      self.property(w, "Market", "market", StringValueConverter())
+      self.block(w, "SimpleScalingPolicyConfiguration", AWS_EMR_Cluster_SimpleScalingPolicyConfiguration)
 
-  props = {
-    "Market": (StringValueConverter(), "market"),
-    "SimpleScalingPolicyConfiguration": (AWS_EMR_Cluster_SimpleScalingPolicyConfiguration, "simple_scaling_policy_configuration"),
-  }
 
 class AWS_EMR_InstanceGroupConfig_ScalingRule(CloudFormationProperty):
-  entity = "AWS::EMR::InstanceGroupConfig"
-  tf_block_type = "scaling_rule"
+  def write(self, w):
+    with w.block("scaling_rule"):
+      self.block(w, "Action", AWS_EMR_InstanceGroupConfig_ScalingAction)
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
+      self.block(w, "Trigger", AWS_EMR_InstanceGroupConfig_ScalingTrigger)
 
-  props = {
-    "Action": (AWS_EMR_InstanceGroupConfig_ScalingAction, "action"),
-    "Description": (StringValueConverter(), "description"),
-    "Name": (StringValueConverter(), "name"),
-    "Trigger": (AWS_EMR_InstanceGroupConfig_ScalingTrigger, "trigger"),
-  }
 
 class AWS_EMR_InstanceFleetConfig_InstanceTypeConfig(CloudFormationProperty):
-  entity = "AWS::EMR::InstanceFleetConfig"
-  tf_block_type = "instance_type_config"
+  def write(self, w):
+    with w.block("instance_type_config"):
+      self.property(w, "BidPrice", "bid_price", StringValueConverter())
+      self.property(w, "BidPriceAsPercentageOfOnDemandPrice", "bid_price_as_percentage_of_on_demand_price", BasicValueConverter())
+      self.repeated_block(w, "Configurations", AWS_EMR_InstanceFleetConfig_Configuration)
+      self.block(w, "EbsConfiguration", AWS_EMR_InstanceFleetConfig_EbsConfiguration)
+      self.property(w, "InstanceType", "instance_type", StringValueConverter())
+      self.property(w, "WeightedCapacity", "weighted_capacity", BasicValueConverter())
 
-  props = {
-    "BidPrice": (StringValueConverter(), "bid_price"),
-    "BidPriceAsPercentageOfOnDemandPrice": (BasicValueConverter(), "bid_price_as_percentage_of_on_demand_price"),
-    "Configurations": (BlockValueConverter(AWS_EMR_InstanceFleetConfig_Configuration), None),
-    "EbsConfiguration": (AWS_EMR_InstanceFleetConfig_EbsConfiguration, "ebs_configuration"),
-    "InstanceType": (StringValueConverter(), "instance_type"),
-    "WeightedCapacity": (BasicValueConverter(), "weighted_capacity"),
-  }
 
 class AWS_EMR_Cluster_EbsConfiguration(CloudFormationProperty):
-  entity = "AWS::EMR::Cluster"
-  tf_block_type = "ebs_configuration"
+  def write(self, w):
+    with w.block("ebs_configuration"):
+      self.repeated_block(w, "EbsBlockDeviceConfigs", AWS_EMR_Cluster_EbsBlockDeviceConfig)
+      self.property(w, "EbsOptimized", "ebs_optimized", BasicValueConverter())
 
-  props = {
-    "EbsBlockDeviceConfigs": (BlockValueConverter(AWS_EMR_Cluster_EbsBlockDeviceConfig), None),
-    "EbsOptimized": (BasicValueConverter(), "ebs_optimized"),
-  }
 
 class AWS_EMR_Cluster_InstanceTypeConfig(CloudFormationProperty):
-  entity = "AWS::EMR::Cluster"
-  tf_block_type = "instance_type_config"
+  def write(self, w):
+    with w.block("instance_type_config"):
+      self.property(w, "BidPrice", "bid_price", StringValueConverter())
+      self.property(w, "BidPriceAsPercentageOfOnDemandPrice", "bid_price_as_percentage_of_on_demand_price", BasicValueConverter())
+      self.repeated_block(w, "Configurations", AWS_EMR_Cluster_Configuration)
+      self.block(w, "EbsConfiguration", AWS_EMR_Cluster_EbsConfiguration)
+      self.property(w, "InstanceType", "instance_type", StringValueConverter())
+      self.property(w, "WeightedCapacity", "weighted_capacity", BasicValueConverter())
 
-  props = {
-    "BidPrice": (StringValueConverter(), "bid_price"),
-    "BidPriceAsPercentageOfOnDemandPrice": (BasicValueConverter(), "bid_price_as_percentage_of_on_demand_price"),
-    "Configurations": (BlockValueConverter(AWS_EMR_Cluster_Configuration), None),
-    "EbsConfiguration": (AWS_EMR_Cluster_EbsConfiguration, "ebs_configuration"),
-    "InstanceType": (StringValueConverter(), "instance_type"),
-    "WeightedCapacity": (BasicValueConverter(), "weighted_capacity"),
-  }
 
 class AWS_EMR_Cluster_ScalingTrigger(CloudFormationProperty):
-  entity = "AWS::EMR::Cluster"
-  tf_block_type = "scaling_trigger"
+  def write(self, w):
+    with w.block("scaling_trigger"):
+      self.block(w, "CloudWatchAlarmDefinition", AWS_EMR_Cluster_CloudWatchAlarmDefinition)
 
-  props = {
-    "CloudWatchAlarmDefinition": (AWS_EMR_Cluster_CloudWatchAlarmDefinition, "cloud_watch_alarm_definition"),
-  }
 
 class AWS_EMR_InstanceFleetConfig(CloudFormationResource):
-  terraform_resource = "aws_emr_instance_fleet_config"
+  cfn_type = "AWS::EMR::InstanceFleetConfig"
+  tf_type = "aws_emr_instance_fleet_config"
+  ref = "arn"
 
-  resource_type = "AWS::EMR::InstanceFleetConfig"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ClusterId", "cluster_id", StringValueConverter())
+      self.property(w, "InstanceFleetType", "instance_fleet_type", StringValueConverter())
+      self.repeated_block(w, "InstanceTypeConfigs", AWS_EMR_InstanceFleetConfig_InstanceTypeConfig)
+      self.block(w, "LaunchSpecifications", AWS_EMR_InstanceFleetConfig_InstanceFleetProvisioningSpecifications)
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "TargetOnDemandCapacity", "target_on_demand_capacity", BasicValueConverter())
+      self.property(w, "TargetSpotCapacity", "target_spot_capacity", BasicValueConverter())
 
-  props = {
-    "ClusterId": (StringValueConverter(), "cluster_id"),
-    "InstanceFleetType": (StringValueConverter(), "instance_fleet_type"),
-    "InstanceTypeConfigs": (BlockValueConverter(AWS_EMR_InstanceFleetConfig_InstanceTypeConfig), None),
-    "LaunchSpecifications": (AWS_EMR_InstanceFleetConfig_InstanceFleetProvisioningSpecifications, "launch_specifications"),
-    "Name": (StringValueConverter(), "name"),
-    "TargetOnDemandCapacity": (BasicValueConverter(), "target_on_demand_capacity"),
-    "TargetSpotCapacity": (BasicValueConverter(), "target_spot_capacity"),
-  }
 
 class AWS_EMR_Step(CloudFormationResource):
-  terraform_resource = "aws_emr_step"
+  cfn_type = "AWS::EMR::Step"
+  tf_type = "aws_emr_step"
+  ref = "arn"
 
-  resource_type = "AWS::EMR::Step"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ActionOnFailure", "action_on_failure", StringValueConverter())
+      self.block(w, "HadoopJarStep", AWS_EMR_Step_HadoopJarStepConfig)
+      self.property(w, "JobFlowId", "job_flow_id", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "ActionOnFailure": (StringValueConverter(), "action_on_failure"),
-    "HadoopJarStep": (AWS_EMR_Step_HadoopJarStepConfig, "hadoop_jar_step"),
-    "JobFlowId": (StringValueConverter(), "job_flow_id"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_EMR_Cluster_InstanceFleetConfig(CloudFormationProperty):
-  entity = "AWS::EMR::Cluster"
-  tf_block_type = "instance_fleet_config"
+  def write(self, w):
+    with w.block("instance_fleet_config"):
+      self.repeated_block(w, "InstanceTypeConfigs", AWS_EMR_Cluster_InstanceTypeConfig)
+      self.block(w, "LaunchSpecifications", AWS_EMR_Cluster_InstanceFleetProvisioningSpecifications)
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "TargetOnDemandCapacity", "target_on_demand_capacity", BasicValueConverter())
+      self.property(w, "TargetSpotCapacity", "target_spot_capacity", BasicValueConverter())
 
-  props = {
-    "InstanceTypeConfigs": (BlockValueConverter(AWS_EMR_Cluster_InstanceTypeConfig), None),
-    "LaunchSpecifications": (AWS_EMR_Cluster_InstanceFleetProvisioningSpecifications, "launch_specifications"),
-    "Name": (StringValueConverter(), "name"),
-    "TargetOnDemandCapacity": (BasicValueConverter(), "target_on_demand_capacity"),
-    "TargetSpotCapacity": (BasicValueConverter(), "target_spot_capacity"),
-  }
 
 class AWS_EMR_InstanceGroupConfig_AutoScalingPolicy(CloudFormationProperty):
-  entity = "AWS::EMR::InstanceGroupConfig"
-  tf_block_type = "auto_scaling_policy"
+  def write(self, w):
+    with w.block("auto_scaling_policy"):
+      self.block(w, "Constraints", AWS_EMR_InstanceGroupConfig_ScalingConstraints)
+      self.repeated_block(w, "Rules", AWS_EMR_InstanceGroupConfig_ScalingRule)
 
-  props = {
-    "Constraints": (AWS_EMR_InstanceGroupConfig_ScalingConstraints, "constraints"),
-    "Rules": (BlockValueConverter(AWS_EMR_InstanceGroupConfig_ScalingRule), None),
-  }
 
 class AWS_EMR_Cluster_ScalingRule(CloudFormationProperty):
-  entity = "AWS::EMR::Cluster"
-  tf_block_type = "scaling_rule"
+  def write(self, w):
+    with w.block("scaling_rule"):
+      self.block(w, "Action", AWS_EMR_Cluster_ScalingAction)
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
+      self.block(w, "Trigger", AWS_EMR_Cluster_ScalingTrigger)
 
-  props = {
-    "Action": (AWS_EMR_Cluster_ScalingAction, "action"),
-    "Description": (StringValueConverter(), "description"),
-    "Name": (StringValueConverter(), "name"),
-    "Trigger": (AWS_EMR_Cluster_ScalingTrigger, "trigger"),
-  }
 
 class AWS_EMR_Cluster_AutoScalingPolicy(CloudFormationProperty):
-  entity = "AWS::EMR::Cluster"
-  tf_block_type = "auto_scaling_policy"
+  def write(self, w):
+    with w.block("auto_scaling_policy"):
+      self.block(w, "Constraints", AWS_EMR_Cluster_ScalingConstraints)
+      self.repeated_block(w, "Rules", AWS_EMR_Cluster_ScalingRule)
 
-  props = {
-    "Constraints": (AWS_EMR_Cluster_ScalingConstraints, "constraints"),
-    "Rules": (BlockValueConverter(AWS_EMR_Cluster_ScalingRule), None),
-  }
 
 class AWS_EMR_InstanceGroupConfig(CloudFormationResource):
-  terraform_resource = "aws_emr_instance_group_config"
+  cfn_type = "AWS::EMR::InstanceGroupConfig"
+  tf_type = "aws_emr_instance_group_config"
+  ref = "arn"
 
-  resource_type = "AWS::EMR::InstanceGroupConfig"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "AutoScalingPolicy", AWS_EMR_InstanceGroupConfig_AutoScalingPolicy)
+      self.property(w, "BidPrice", "bid_price", StringValueConverter())
+      self.repeated_block(w, "Configurations", AWS_EMR_InstanceGroupConfig_Configuration)
+      self.block(w, "EbsConfiguration", AWS_EMR_InstanceGroupConfig_EbsConfiguration)
+      self.property(w, "InstanceCount", "instance_count", BasicValueConverter())
+      self.property(w, "InstanceRole", "instance_role", StringValueConverter())
+      self.property(w, "InstanceType", "instance_type", StringValueConverter())
+      self.property(w, "JobFlowId", "job_flow_id", StringValueConverter())
+      self.property(w, "Market", "market", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "AutoScalingPolicy": (AWS_EMR_InstanceGroupConfig_AutoScalingPolicy, "auto_scaling_policy"),
-    "BidPrice": (StringValueConverter(), "bid_price"),
-    "Configurations": (BlockValueConverter(AWS_EMR_InstanceGroupConfig_Configuration), None),
-    "EbsConfiguration": (AWS_EMR_InstanceGroupConfig_EbsConfiguration, "ebs_configuration"),
-    "InstanceCount": (BasicValueConverter(), "instance_count"),
-    "InstanceRole": (StringValueConverter(), "instance_role"),
-    "InstanceType": (StringValueConverter(), "instance_type"),
-    "JobFlowId": (StringValueConverter(), "job_flow_id"),
-    "Market": (StringValueConverter(), "market"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_EMR_Cluster_InstanceGroupConfig(CloudFormationProperty):
-  entity = "AWS::EMR::Cluster"
-  tf_block_type = "instance_group_config"
+  def write(self, w):
+    with w.block("instance_group_config"):
+      self.block(w, "AutoScalingPolicy", AWS_EMR_Cluster_AutoScalingPolicy)
+      self.property(w, "BidPrice", "bid_price", StringValueConverter())
+      self.repeated_block(w, "Configurations", AWS_EMR_Cluster_Configuration)
+      self.block(w, "EbsConfiguration", AWS_EMR_Cluster_EbsConfiguration)
+      self.property(w, "InstanceCount", "instance_count", BasicValueConverter())
+      self.property(w, "InstanceType", "instance_type", StringValueConverter())
+      self.property(w, "Market", "market", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "AutoScalingPolicy": (AWS_EMR_Cluster_AutoScalingPolicy, "auto_scaling_policy"),
-    "BidPrice": (StringValueConverter(), "bid_price"),
-    "Configurations": (BlockValueConverter(AWS_EMR_Cluster_Configuration), None),
-    "EbsConfiguration": (AWS_EMR_Cluster_EbsConfiguration, "ebs_configuration"),
-    "InstanceCount": (BasicValueConverter(), "instance_count"),
-    "InstanceType": (StringValueConverter(), "instance_type"),
-    "Market": (StringValueConverter(), "market"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_EMR_Cluster_JobFlowInstancesConfig(CloudFormationProperty):
-  entity = "AWS::EMR::Cluster"
-  tf_block_type = "job_flow_instances_config"
+  def write(self, w):
+    with w.block("job_flow_instances_config"):
+      self.property(w, "AdditionalMasterSecurityGroups", "additional_master_security_groups", ListValueConverter(StringValueConverter()))
+      self.property(w, "AdditionalSlaveSecurityGroups", "additional_slave_security_groups", ListValueConverter(StringValueConverter()))
+      self.block(w, "CoreInstanceFleet", AWS_EMR_Cluster_InstanceFleetConfig)
+      self.block(w, "CoreInstanceGroup", AWS_EMR_Cluster_InstanceGroupConfig)
+      self.property(w, "Ec2KeyName", "ec2_key_name", StringValueConverter())
+      self.property(w, "Ec2SubnetId", "ec2_subnet_id", StringValueConverter())
+      self.property(w, "Ec2SubnetIds", "ec2_subnet_ids", ListValueConverter(StringValueConverter()))
+      self.property(w, "EmrManagedMasterSecurityGroup", "emr_managed_master_security_group", StringValueConverter())
+      self.property(w, "EmrManagedSlaveSecurityGroup", "emr_managed_slave_security_group", StringValueConverter())
+      self.property(w, "HadoopVersion", "hadoop_version", StringValueConverter())
+      self.property(w, "KeepJobFlowAliveWhenNoSteps", "keep_job_flow_alive_when_no_steps", BasicValueConverter())
+      self.block(w, "MasterInstanceFleet", AWS_EMR_Cluster_InstanceFleetConfig)
+      self.block(w, "MasterInstanceGroup", AWS_EMR_Cluster_InstanceGroupConfig)
+      self.block(w, "Placement", AWS_EMR_Cluster_PlacementType)
+      self.property(w, "ServiceAccessSecurityGroup", "service_access_security_group", StringValueConverter())
+      self.property(w, "TerminationProtected", "termination_protected", BasicValueConverter())
 
-  props = {
-    "AdditionalMasterSecurityGroups": (ListValueConverter(StringValueConverter()), "additional_master_security_groups"),
-    "AdditionalSlaveSecurityGroups": (ListValueConverter(StringValueConverter()), "additional_slave_security_groups"),
-    "CoreInstanceFleet": (AWS_EMR_Cluster_InstanceFleetConfig, "core_instance_fleet"),
-    "CoreInstanceGroup": (AWS_EMR_Cluster_InstanceGroupConfig, "core_instance_group"),
-    "Ec2KeyName": (StringValueConverter(), "ec2_key_name"),
-    "Ec2SubnetId": (StringValueConverter(), "ec2_subnet_id"),
-    "Ec2SubnetIds": (ListValueConverter(StringValueConverter()), "ec2_subnet_ids"),
-    "EmrManagedMasterSecurityGroup": (StringValueConverter(), "emr_managed_master_security_group"),
-    "EmrManagedSlaveSecurityGroup": (StringValueConverter(), "emr_managed_slave_security_group"),
-    "HadoopVersion": (StringValueConverter(), "hadoop_version"),
-    "KeepJobFlowAliveWhenNoSteps": (BasicValueConverter(), "keep_job_flow_alive_when_no_steps"),
-    "MasterInstanceFleet": (AWS_EMR_Cluster_InstanceFleetConfig, "master_instance_fleet"),
-    "MasterInstanceGroup": (AWS_EMR_Cluster_InstanceGroupConfig, "master_instance_group"),
-    "Placement": (AWS_EMR_Cluster_PlacementType, "placement"),
-    "ServiceAccessSecurityGroup": (StringValueConverter(), "service_access_security_group"),
-    "TerminationProtected": (BasicValueConverter(), "termination_protected"),
-  }
 
 class AWS_EMR_Cluster(CloudFormationResource):
-  terraform_resource = "aws_emr_cluster"
+  cfn_type = "AWS::EMR::Cluster"
+  tf_type = "aws_emr_cluster"
+  ref = "arn"
 
-  resource_type = "AWS::EMR::Cluster"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "AdditionalInfo", "additional_info", StringValueConverter())
+      self.repeated_block(w, "Applications", AWS_EMR_Cluster_Application)
+      self.property(w, "AutoScalingRole", "auto_scaling_role", StringValueConverter())
+      self.repeated_block(w, "BootstrapActions", AWS_EMR_Cluster_BootstrapActionConfig)
+      self.repeated_block(w, "Configurations", AWS_EMR_Cluster_Configuration)
+      self.property(w, "CustomAmiId", "custom_ami_id", StringValueConverter())
+      self.property(w, "EbsRootVolumeSize", "ebs_root_volume_size", BasicValueConverter())
+      self.block(w, "Instances", AWS_EMR_Cluster_JobFlowInstancesConfig)
+      self.property(w, "JobFlowRole", "job_flow_role", StringValueConverter())
+      self.block(w, "KerberosAttributes", AWS_EMR_Cluster_KerberosAttributes)
+      self.property(w, "LogUri", "log_uri", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "ReleaseLabel", "release_label", StringValueConverter())
+      self.property(w, "ScaleDownBehavior", "scale_down_behavior", StringValueConverter())
+      self.property(w, "SecurityConfiguration", "security_configuration", StringValueConverter())
+      self.property(w, "ServiceRole", "service_role", StringValueConverter())
+      self.repeated_block(w, "Steps", AWS_EMR_Cluster_StepConfig)
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "VisibleToAllUsers", "visible_to_all_users", BasicValueConverter())
 
-  props = {
-    "AdditionalInfo": (StringValueConverter(), "additional_info"),
-    "Applications": (BlockValueConverter(AWS_EMR_Cluster_Application), None),
-    "AutoScalingRole": (StringValueConverter(), "auto_scaling_role"),
-    "BootstrapActions": (BlockValueConverter(AWS_EMR_Cluster_BootstrapActionConfig), None),
-    "Configurations": (BlockValueConverter(AWS_EMR_Cluster_Configuration), None),
-    "CustomAmiId": (StringValueConverter(), "custom_ami_id"),
-    "EbsRootVolumeSize": (BasicValueConverter(), "ebs_root_volume_size"),
-    "Instances": (AWS_EMR_Cluster_JobFlowInstancesConfig, "instances"),
-    "JobFlowRole": (StringValueConverter(), "job_flow_role"),
-    "KerberosAttributes": (AWS_EMR_Cluster_KerberosAttributes, "kerberos_attributes"),
-    "LogUri": (StringValueConverter(), "log_uri"),
-    "Name": (StringValueConverter(), "name"),
-    "ReleaseLabel": (StringValueConverter(), "release_label"),
-    "ScaleDownBehavior": (StringValueConverter(), "scale_down_behavior"),
-    "SecurityConfiguration": (StringValueConverter(), "security_configuration"),
-    "ServiceRole": (StringValueConverter(), "service_role"),
-    "Steps": (BlockValueConverter(AWS_EMR_Cluster_StepConfig), None),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "VisibleToAllUsers": (BasicValueConverter(), "visible_to_all_users"),
-  }
 

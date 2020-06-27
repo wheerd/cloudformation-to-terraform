@@ -1,45 +1,40 @@
 from . import *
 
 class AWS_CodeCommit_Repository_S3(CloudFormationProperty):
-  entity = "AWS::CodeCommit::Repository"
-  tf_block_type = "s3"
+  def write(self, w):
+    with w.block("s3"):
+      self.property(w, "ObjectVersion", "object_version", StringValueConverter())
+      self.property(w, "Bucket", "bucket", StringValueConverter())
+      self.property(w, "Key", "key", StringValueConverter())
 
-  props = {
-    "ObjectVersion": (StringValueConverter(), "object_version"),
-    "Bucket": (StringValueConverter(), "bucket"),
-    "Key": (StringValueConverter(), "key"),
-  }
 
 class AWS_CodeCommit_Repository_RepositoryTrigger(CloudFormationProperty):
-  entity = "AWS::CodeCommit::Repository"
-  tf_block_type = "repository_trigger"
+  def write(self, w):
+    with w.block("repository_trigger"):
+      self.property(w, "Events", "events", ListValueConverter(StringValueConverter()))
+      self.property(w, "Branches", "branches", ListValueConverter(StringValueConverter()))
+      self.property(w, "CustomData", "custom_data", StringValueConverter())
+      self.property(w, "DestinationArn", "destination_arn", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Events": (ListValueConverter(StringValueConverter()), "events"),
-    "Branches": (ListValueConverter(StringValueConverter()), "branches"),
-    "CustomData": (StringValueConverter(), "custom_data"),
-    "DestinationArn": (StringValueConverter(), "destination_arn"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_CodeCommit_Repository_Code(CloudFormationProperty):
-  entity = "AWS::CodeCommit::Repository"
-  tf_block_type = "code"
+  def write(self, w):
+    with w.block("code"):
+      self.block(w, "S3", AWS_CodeCommit_Repository_S3)
 
-  props = {
-    "S3": (AWS_CodeCommit_Repository_S3, "s3"),
-  }
 
 class AWS_CodeCommit_Repository(CloudFormationResource):
-  terraform_resource = "aws_code_commit_repository"
+  cfn_type = "AWS::CodeCommit::Repository"
+  tf_type = "aws_code_commit_repository"
+  ref = "arn"
 
-  resource_type = "AWS::CodeCommit::Repository"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "RepositoryName", "repository_name", StringValueConverter())
+      self.repeated_block(w, "Triggers", AWS_CodeCommit_Repository_RepositoryTrigger)
+      self.block(w, "Code", AWS_CodeCommit_Repository_Code)
+      self.property(w, "RepositoryDescription", "repository_description", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "RepositoryName": (StringValueConverter(), "repository_name"),
-    "Triggers": (BlockValueConverter(AWS_CodeCommit_Repository_RepositoryTrigger), None),
-    "Code": (AWS_CodeCommit_Repository_Code, "code"),
-    "RepositoryDescription": (StringValueConverter(), "repository_description"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 

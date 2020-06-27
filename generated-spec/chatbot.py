@@ -1,16 +1,17 @@
 from . import *
 
 class AWS_Chatbot_SlackChannelConfiguration(CloudFormationResource):
-  terraform_resource = "aws_chatbot_slack_channel_configuration"
+  cfn_type = "AWS::Chatbot::SlackChannelConfiguration"
+  tf_type = "aws_chatbot_slack_channel_configuration"
+  ref = "arn"
 
-  resource_type = "AWS::Chatbot::SlackChannelConfiguration"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "SlackWorkspaceId", "slack_workspace_id", StringValueConverter())
+      self.property(w, "SlackChannelId", "slack_channel_id", StringValueConverter())
+      self.property(w, "ConfigurationName", "configuration_name", StringValueConverter())
+      self.property(w, "IamRoleArn", "iam_role_arn", StringValueConverter())
+      self.property(w, "SnsTopicArns", "sns_topic_arns", ListValueConverter(StringValueConverter()))
+      self.property(w, "LoggingLevel", "logging_level", StringValueConverter())
 
-  props = {
-    "SlackWorkspaceId": (StringValueConverter(), "slack_workspace_id"),
-    "SlackChannelId": (StringValueConverter(), "slack_channel_id"),
-    "ConfigurationName": (StringValueConverter(), "configuration_name"),
-    "IamRoleArn": (StringValueConverter(), "iam_role_arn"),
-    "SnsTopicArns": (ListValueConverter(StringValueConverter()), "sns_topic_arns"),
-    "LoggingLevel": (StringValueConverter(), "logging_level"),
-  }
 

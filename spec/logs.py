@@ -4,27 +4,26 @@ class AWS_Logs_MetricFilter_MetricTransformation(CloudFormationProperty):
   def write(self, w):
     with w.block("metric_transformation"):
       self.property(w, "DefaultValue", "default_value", BasicValueConverter())
-      self.property(w, "MetricName", "metric_name", StringValueConverter())
-      self.property(w, "MetricNamespace", "metric_namespace", StringValueConverter())
-      self.property(w, "MetricValue", "metric_value", StringValueConverter())
+      self.property(w, "MetricName", "name", StringValueConverter())
+      self.property(w, "MetricNamespace", "namespace", StringValueConverter())
+      self.property(w, "MetricValue", "value", StringValueConverter())
 
 
 class AWS_Logs_MetricFilter(CloudFormationResource):
   cfn_type = "AWS::Logs::MetricFilter"
-  tf_type = "aws_logs_metric_filter"
-  ref = "arn"
+  tf_type = "aws_cloudwatch_log_metric_filter"
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "FilterPattern", "filter_pattern", StringValueConverter())
+      self.property(w, "#name", "name", StringValueConverter())
+      self.property(w, "FilterPattern", "pattern", StringValueConverter())
       self.property(w, "LogGroupName", "log_group_name", StringValueConverter())
       self.repeated_block(w, "MetricTransformations", AWS_Logs_MetricFilter_MetricTransformation)
 
 
 class AWS_Logs_SubscriptionFilter(CloudFormationResource):
   cfn_type = "AWS::Logs::SubscriptionFilter"
-  tf_type = "aws_logs_subscription_filter"
-  ref = "arn"
+  tf_type = "aws_cloudwatch_log_subscription_filter"
 
   def write(self, w):
     with self.resource_block(w):
@@ -36,8 +35,7 @@ class AWS_Logs_SubscriptionFilter(CloudFormationResource):
 
 class AWS_Logs_Destination(CloudFormationResource):
   cfn_type = "AWS::Logs::Destination"
-  tf_type = "aws_logs_destination"
-  ref = "arn"
+  tf_type = "aws_cloudwatch_log_destination"
 
   def write(self, w):
     with self.resource_block(w):
@@ -49,8 +47,7 @@ class AWS_Logs_Destination(CloudFormationResource):
 
 class AWS_Logs_LogGroup(CloudFormationResource):
   cfn_type = "AWS::Logs::LogGroup"
-  tf_type = "aws_logs_log_group"
-  ref = "arn"
+  tf_type = "aws_cloudwatch_log_log_group"
 
   def write(self, w):
     with self.resource_block(w):
@@ -60,8 +57,7 @@ class AWS_Logs_LogGroup(CloudFormationResource):
 
 class AWS_Logs_LogStream(CloudFormationResource):
   cfn_type = "AWS::Logs::LogStream"
-  tf_type = "aws_logs_log_stream"
-  ref = "arn"
+  tf_type = "aws_cloudwatch_log_log_stream"
 
   def write(self, w):
     with self.resource_block(w):

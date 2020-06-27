@@ -1,270 +1,263 @@
 from . import *
 
 class AWS_ApiGatewayV2_Route_ParameterConstraints(CloudFormationProperty):
-  entity = "AWS::ApiGatewayV2::Route"
-  tf_block_type = "parameter_constraints"
+  def write(self, w):
+    with w.block("parameter_constraints"):
+      self.property(w, "Required", "required", BasicValueConverter())
 
-  props = {
-    "Required": (BasicValueConverter(), "required"),
-  }
 
 class AWS_ApiGatewayV2_Authorizer_JWTConfiguration(CloudFormationProperty):
-  entity = "AWS::ApiGatewayV2::Authorizer"
-  tf_block_type = "jwt_configuration"
+  def write(self, w):
+    with w.block("jwt_configuration"):
+      self.property(w, "Issuer", "issuer", StringValueConverter())
+      self.property(w, "Audience", "audience", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "Issuer": (StringValueConverter(), "issuer"),
-    "Audience": (ListValueConverter(StringValueConverter()), "audience"),
-  }
 
 class AWS_ApiGatewayV2_DomainName_DomainNameConfiguration(CloudFormationProperty):
-  entity = "AWS::ApiGatewayV2::DomainName"
-  tf_block_type = "domain_name_configuration"
+  def write(self, w):
+    with w.block("domain_name_configuration"):
+      self.property(w, "EndpointType", "endpoint_type", StringValueConverter())
+      self.property(w, "CertificateName", "certificate_name", StringValueConverter())
+      self.property(w, "CertificateArn", "certificate_arn", StringValueConverter())
 
-  props = {
-    "EndpointType": (StringValueConverter(), "endpoint_type"),
-    "CertificateName": (StringValueConverter(), "certificate_name"),
-    "CertificateArn": (StringValueConverter(), "certificate_arn"),
-  }
 
 class AWS_ApiGatewayV2_Integration_TlsConfig(CloudFormationProperty):
-  entity = "AWS::ApiGatewayV2::Integration"
-  tf_block_type = "tls_config"
+  def write(self, w):
+    with w.block("tls_config"):
+      self.property(w, "ServerNameToVerify", "server_name_to_verify", StringValueConverter())
 
-  props = {
-    "ServerNameToVerify": (StringValueConverter(), "server_name_to_verify"),
-  }
 
 class AWS_ApiGatewayV2_RouteResponse_ParameterConstraints(CloudFormationProperty):
-  entity = "AWS::ApiGatewayV2::RouteResponse"
-  tf_block_type = "parameter_constraints"
+  def write(self, w):
+    with w.block("parameter_constraints"):
+      self.property(w, "Required", "required", BasicValueConverter())
 
-  props = {
-    "Required": (BasicValueConverter(), "required"),
-  }
 
 class AWS_ApiGatewayV2_Stage_AccessLogSettings(CloudFormationProperty):
-  entity = "AWS::ApiGatewayV2::Stage"
-  tf_block_type = "access_log_settings"
+  def write(self, w):
+    with w.block("access_log_settings"):
+      self.property(w, "Format", "format", StringValueConverter())
+      self.property(w, "DestinationArn", "destination_arn", StringValueConverter())
 
-  props = {
-    "Format": (StringValueConverter(), "format"),
-    "DestinationArn": (StringValueConverter(), "destination_arn"),
-  }
 
 class AWS_ApiGatewayV2_Api_Cors(CloudFormationProperty):
-  entity = "AWS::ApiGatewayV2::Api"
-  tf_block_type = "cors"
+  def write(self, w):
+    with w.block("cors"):
+      self.property(w, "AllowOrigins", "allow_origins", ListValueConverter(StringValueConverter()))
+      self.property(w, "AllowCredentials", "allow_credentials", BasicValueConverter())
+      self.property(w, "ExposeHeaders", "expose_headers", ListValueConverter(StringValueConverter()))
+      self.property(w, "AllowHeaders", "allow_headers", ListValueConverter(StringValueConverter()))
+      self.property(w, "MaxAge", "max_age", BasicValueConverter())
+      self.property(w, "AllowMethods", "allow_methods", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "AllowOrigins": (ListValueConverter(StringValueConverter()), "allow_origins"),
-    "AllowCredentials": (BasicValueConverter(), "allow_credentials"),
-    "ExposeHeaders": (ListValueConverter(StringValueConverter()), "expose_headers"),
-    "AllowHeaders": (ListValueConverter(StringValueConverter()), "allow_headers"),
-    "MaxAge": (BasicValueConverter(), "max_age"),
-    "AllowMethods": (ListValueConverter(StringValueConverter()), "allow_methods"),
-  }
 
 class AWS_ApiGatewayV2_Api_BodyS3Location(CloudFormationProperty):
-  entity = "AWS::ApiGatewayV2::Api"
-  tf_block_type = "body_s3_location"
+  def write(self, w):
+    with w.block("body_s3_location"):
+      self.property(w, "Etag", "etag", StringValueConverter())
+      self.property(w, "Bucket", "bucket", StringValueConverter())
+      self.property(w, "Version", "version", StringValueConverter())
+      self.property(w, "Key", "key", StringValueConverter())
 
-  props = {
-    "Etag": (StringValueConverter(), "etag"),
-    "Bucket": (StringValueConverter(), "bucket"),
-    "Version": (StringValueConverter(), "version"),
-    "Key": (StringValueConverter(), "key"),
-  }
 
 class AWS_ApiGatewayV2_Stage_RouteSettings(CloudFormationProperty):
-  entity = "AWS::ApiGatewayV2::Stage"
-  tf_block_type = "route_settings"
+  def write(self, w):
+    with w.block("route_settings"):
+      self.property(w, "LoggingLevel", "logging_level", StringValueConverter())
+      self.property(w, "DataTraceEnabled", "data_trace_enabled", BasicValueConverter())
+      self.property(w, "ThrottlingBurstLimit", "throttling_burst_limit", BasicValueConverter())
+      self.property(w, "DetailedMetricsEnabled", "detailed_metrics_enabled", BasicValueConverter())
+      self.property(w, "ThrottlingRateLimit", "throttling_rate_limit", BasicValueConverter())
 
-  props = {
-    "LoggingLevel": (StringValueConverter(), "logging_level"),
-    "DataTraceEnabled": (BasicValueConverter(), "data_trace_enabled"),
-    "ThrottlingBurstLimit": (BasicValueConverter(), "throttling_burst_limit"),
-    "DetailedMetricsEnabled": (BasicValueConverter(), "detailed_metrics_enabled"),
-    "ThrottlingRateLimit": (BasicValueConverter(), "throttling_rate_limit"),
-  }
 
 class AWS_ApiGatewayV2_Route(CloudFormationResource):
-  terraform_resource = "aws_api_gateway_v2_route"
+  cfn_type = "AWS::ApiGatewayV2::Route"
+  tf_type = "aws_api_gateway_v2_route"
+  ref = "arn"
 
-  resource_type = "AWS::ApiGatewayV2::Route"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Target", "target", StringValueConverter())
+      self.property(w, "RouteResponseSelectionExpression", "route_response_selection_expression", StringValueConverter())
+      self.property(w, "AuthorizerId", "authorizer_id", StringValueConverter())
+      self.property(w, "RequestModels", "request_models", StringValueConverter())
+      self.property(w, "OperationName", "operation_name", StringValueConverter())
+      self.property(w, "AuthorizationScopes", "authorization_scopes", ListValueConverter(StringValueConverter()))
+      self.property(w, "ApiKeyRequired", "api_key_required", BasicValueConverter())
+      self.property(w, "RouteKey", "route_key", StringValueConverter())
+      self.property(w, "AuthorizationType", "authorization_type", StringValueConverter())
+      self.property(w, "ModelSelectionExpression", "model_selection_expression", StringValueConverter())
+      self.property(w, "ApiId", "api_id", StringValueConverter())
+      self.property(w, "RequestParameters", "request_parameters", StringValueConverter())
 
-  props = {
-    "Target": (StringValueConverter(), "target"),
-    "RouteResponseSelectionExpression": (StringValueConverter(), "route_response_selection_expression"),
-    "AuthorizerId": (StringValueConverter(), "authorizer_id"),
-    "RequestModels": (StringValueConverter(), "request_models"),
-    "OperationName": (StringValueConverter(), "operation_name"),
-    "AuthorizationScopes": (ListValueConverter(StringValueConverter()), "authorization_scopes"),
-    "ApiKeyRequired": (BasicValueConverter(), "api_key_required"),
-    "RouteKey": (StringValueConverter(), "route_key"),
-    "AuthorizationType": (StringValueConverter(), "authorization_type"),
-    "ModelSelectionExpression": (StringValueConverter(), "model_selection_expression"),
-    "ApiId": (StringValueConverter(), "api_id"),
-    "RequestParameters": (StringValueConverter(), "request_parameters"),
-  }
 
 class AWS_ApiGatewayV2_Stage(CloudFormationResource):
-  terraform_resource = "aws_api_gateway_v2_stage"
+  cfn_type = "AWS::ApiGatewayV2::Stage"
+  tf_type = "aws_api_gateway_v2_stage"
+  ref = "arn"
 
-  resource_type = "AWS::ApiGatewayV2::Stage"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ClientCertificateId", "client_certificate_id", StringValueConverter())
+      self.property(w, "DeploymentId", "deployment_id", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.block(w, "AccessLogSettings", AWS_ApiGatewayV2_Stage_AccessLogSettings)
+      self.property(w, "AutoDeploy", "auto_deploy", BasicValueConverter())
+      self.property(w, "RouteSettings", "route_settings", StringValueConverter())
+      self.property(w, "StageName", "stage_name", StringValueConverter())
+      self.property(w, "StageVariables", "stage_variables", StringValueConverter())
+      self.property(w, "ApiId", "api_id", StringValueConverter())
+      self.block(w, "DefaultRouteSettings", AWS_ApiGatewayV2_Stage_RouteSettings)
+      self.property(w, "Tags", "tags", StringValueConverter())
 
-  props = {
-    "ClientCertificateId": (StringValueConverter(), "client_certificate_id"),
-    "DeploymentId": (StringValueConverter(), "deployment_id"),
-    "Description": (StringValueConverter(), "description"),
-    "AccessLogSettings": (AWS_ApiGatewayV2_Stage_AccessLogSettings, "access_log_settings"),
-    "AutoDeploy": (BasicValueConverter(), "auto_deploy"),
-    "RouteSettings": (StringValueConverter(), "route_settings"),
-    "StageName": (StringValueConverter(), "stage_name"),
-    "StageVariables": (StringValueConverter(), "stage_variables"),
-    "ApiId": (StringValueConverter(), "api_id"),
-    "DefaultRouteSettings": (AWS_ApiGatewayV2_Stage_RouteSettings, "default_route_settings"),
-    "Tags": (StringValueConverter(), "tags"),
-  }
 
 class AWS_ApiGatewayV2_Api(CloudFormationResource):
-  terraform_resource = "aws_api_gateway_v2_api"
+  cfn_type = "AWS::ApiGatewayV2::Api"
+  tf_type = "aws_api_gateway_v2_api"
+  ref = "arn"
 
-  resource_type = "AWS::ApiGatewayV2::Api"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "RouteSelectionExpression", "route_selection_expression", StringValueConverter())
+      self.block(w, "BodyS3Location", AWS_ApiGatewayV2_Api_BodyS3Location)
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "BasePath", "base_path", StringValueConverter())
+      self.property(w, "FailOnWarnings", "fail_on_warnings", BasicValueConverter())
+      self.property(w, "DisableSchemaValidation", "disable_schema_validation", BasicValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Target", "target", StringValueConverter())
+      self.property(w, "CredentialsArn", "credentials_arn", StringValueConverter())
+      self.block(w, "CorsConfiguration", AWS_ApiGatewayV2_Api_Cors)
+      self.property(w, "Version", "version", StringValueConverter())
+      self.property(w, "ProtocolType", "protocol_type", StringValueConverter())
+      self.property(w, "RouteKey", "route_key", StringValueConverter())
+      self.property(w, "Body", "body", StringValueConverter())
+      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "ApiKeySelectionExpression", "api_key_selection_expression", StringValueConverter())
 
-  props = {
-    "RouteSelectionExpression": (StringValueConverter(), "route_selection_expression"),
-    "BodyS3Location": (AWS_ApiGatewayV2_Api_BodyS3Location, "body_s3_location"),
-    "Description": (StringValueConverter(), "description"),
-    "BasePath": (StringValueConverter(), "base_path"),
-    "FailOnWarnings": (BasicValueConverter(), "fail_on_warnings"),
-    "DisableSchemaValidation": (BasicValueConverter(), "disable_schema_validation"),
-    "Name": (StringValueConverter(), "name"),
-    "Target": (StringValueConverter(), "target"),
-    "CredentialsArn": (StringValueConverter(), "credentials_arn"),
-    "CorsConfiguration": (AWS_ApiGatewayV2_Api_Cors, "cors_configuration"),
-    "Version": (StringValueConverter(), "version"),
-    "ProtocolType": (StringValueConverter(), "protocol_type"),
-    "RouteKey": (StringValueConverter(), "route_key"),
-    "Body": (StringValueConverter(), "body"),
-    "Tags": (StringValueConverter(), "tags"),
-    "ApiKeySelectionExpression": (StringValueConverter(), "api_key_selection_expression"),
-  }
 
 class AWS_ApiGatewayV2_RouteResponse(CloudFormationResource):
-  terraform_resource = "aws_api_gateway_v2_route_response"
+  cfn_type = "AWS::ApiGatewayV2::RouteResponse"
+  tf_type = "aws_api_gateway_v2_route_response"
+  ref = "arn"
 
-  resource_type = "AWS::ApiGatewayV2::RouteResponse"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "RouteResponseKey", "route_response_key", StringValueConverter())
+      self.property(w, "ResponseParameters", "response_parameters", StringValueConverter())
+      self.property(w, "RouteId", "route_id", StringValueConverter())
+      self.property(w, "ModelSelectionExpression", "model_selection_expression", StringValueConverter())
+      self.property(w, "ApiId", "api_id", StringValueConverter())
+      self.property(w, "ResponseModels", "response_models", StringValueConverter())
 
-  props = {
-    "RouteResponseKey": (StringValueConverter(), "route_response_key"),
-    "ResponseParameters": (StringValueConverter(), "response_parameters"),
-    "RouteId": (StringValueConverter(), "route_id"),
-    "ModelSelectionExpression": (StringValueConverter(), "model_selection_expression"),
-    "ApiId": (StringValueConverter(), "api_id"),
-    "ResponseModels": (StringValueConverter(), "response_models"),
-  }
 
 class AWS_ApiGatewayV2_DomainName(CloudFormationResource):
-  terraform_resource = "aws_api_gateway_v2_domain_name"
+  cfn_type = "AWS::ApiGatewayV2::DomainName"
+  tf_type = "aws_api_gateway_v2_domain_name"
+  ref = "arn"
 
-  resource_type = "AWS::ApiGatewayV2::DomainName"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "DomainName", "domain_name", StringValueConverter())
+      self.repeated_block(w, "DomainNameConfigurations", AWS_ApiGatewayV2_DomainName_DomainNameConfiguration)
+      self.property(w, "Tags", "tags", StringValueConverter())
 
-  props = {
-    "DomainName": (StringValueConverter(), "domain_name"),
-    "DomainNameConfigurations": (BlockValueConverter(AWS_ApiGatewayV2_DomainName_DomainNameConfiguration), None),
-    "Tags": (StringValueConverter(), "tags"),
-  }
 
 class AWS_ApiGatewayV2_Integration(CloudFormationResource):
-  terraform_resource = "aws_api_gateway_v2_integration"
+  cfn_type = "AWS::ApiGatewayV2::Integration"
+  tf_type = "aws_api_gateway_v2_integration"
+  ref = "arn"
 
-  resource_type = "AWS::ApiGatewayV2::Integration"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "TemplateSelectionExpression", "template_selection_expression", StringValueConverter())
+      self.property(w, "ConnectionType", "connection_type", StringValueConverter())
+      self.property(w, "IntegrationMethod", "integration_method", StringValueConverter())
+      self.property(w, "PassthroughBehavior", "passthrough_behavior", StringValueConverter())
+      self.property(w, "RequestParameters", "request_parameters", StringValueConverter())
+      self.property(w, "ConnectionId", "connection_id", StringValueConverter())
+      self.property(w, "IntegrationUri", "integration_uri", StringValueConverter())
+      self.property(w, "PayloadFormatVersion", "payload_format_version", StringValueConverter())
+      self.property(w, "CredentialsArn", "credentials_arn", StringValueConverter())
+      self.property(w, "RequestTemplates", "request_templates", StringValueConverter())
+      self.property(w, "TimeoutInMillis", "timeout_in_millis", BasicValueConverter())
+      self.block(w, "TlsConfig", AWS_ApiGatewayV2_Integration_TlsConfig)
+      self.property(w, "ContentHandlingStrategy", "content_handling_strategy", StringValueConverter())
+      self.property(w, "ApiId", "api_id", StringValueConverter())
+      self.property(w, "IntegrationType", "integration_type", StringValueConverter())
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "TemplateSelectionExpression": (StringValueConverter(), "template_selection_expression"),
-    "ConnectionType": (StringValueConverter(), "connection_type"),
-    "IntegrationMethod": (StringValueConverter(), "integration_method"),
-    "PassthroughBehavior": (StringValueConverter(), "passthrough_behavior"),
-    "RequestParameters": (StringValueConverter(), "request_parameters"),
-    "ConnectionId": (StringValueConverter(), "connection_id"),
-    "IntegrationUri": (StringValueConverter(), "integration_uri"),
-    "PayloadFormatVersion": (StringValueConverter(), "payload_format_version"),
-    "CredentialsArn": (StringValueConverter(), "credentials_arn"),
-    "RequestTemplates": (StringValueConverter(), "request_templates"),
-    "TimeoutInMillis": (BasicValueConverter(), "timeout_in_millis"),
-    "TlsConfig": (AWS_ApiGatewayV2_Integration_TlsConfig, "tls_config"),
-    "ContentHandlingStrategy": (StringValueConverter(), "content_handling_strategy"),
-    "ApiId": (StringValueConverter(), "api_id"),
-    "IntegrationType": (StringValueConverter(), "integration_type"),
-  }
 
 class AWS_ApiGatewayV2_Deployment(CloudFormationResource):
-  terraform_resource = "aws_api_gateway_v2_deployment"
+  cfn_type = "AWS::ApiGatewayV2::Deployment"
+  tf_type = "aws_api_gateway_v2_deployment"
+  ref = "arn"
 
-  resource_type = "AWS::ApiGatewayV2::Deployment"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "StageName", "stage_name", StringValueConverter())
+      self.property(w, "ApiId", "api_id", StringValueConverter())
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "StageName": (StringValueConverter(), "stage_name"),
-    "ApiId": (StringValueConverter(), "api_id"),
-  }
 
 class AWS_ApiGatewayV2_Model(CloudFormationResource):
-  terraform_resource = "aws_api_gateway_v2_model"
+  cfn_type = "AWS::ApiGatewayV2::Model"
+  tf_type = "aws_api_gateway_v2_model"
+  ref = "arn"
 
-  resource_type = "AWS::ApiGatewayV2::Model"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "ContentType", "content_type", StringValueConverter())
+      self.property(w, "Schema", "schema", StringValueConverter())
+      self.property(w, "ApiId", "api_id", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "ContentType": (StringValueConverter(), "content_type"),
-    "Schema": (StringValueConverter(), "schema"),
-    "ApiId": (StringValueConverter(), "api_id"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_ApiGatewayV2_Authorizer(CloudFormationResource):
-  terraform_resource = "aws_api_gateway_v2_authorizer"
+  cfn_type = "AWS::ApiGatewayV2::Authorizer"
+  tf_type = "aws_api_gateway_v2_authorizer"
+  ref = "arn"
 
-  resource_type = "AWS::ApiGatewayV2::Authorizer"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "IdentityValidationExpression", "identity_validation_expression", StringValueConverter())
+      self.property(w, "AuthorizerUri", "authorizer_uri", StringValueConverter())
+      self.property(w, "AuthorizerCredentialsArn", "authorizer_credentials_arn", StringValueConverter())
+      self.property(w, "AuthorizerType", "authorizer_type", StringValueConverter())
+      self.block(w, "JwtConfiguration", AWS_ApiGatewayV2_Authorizer_JWTConfiguration)
+      self.property(w, "AuthorizerResultTtlInSeconds", "authorizer_result_ttl_in_seconds", BasicValueConverter())
+      self.property(w, "IdentitySource", "identity_source", ListValueConverter(StringValueConverter()))
+      self.property(w, "ApiId", "api_id", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "IdentityValidationExpression": (StringValueConverter(), "identity_validation_expression"),
-    "AuthorizerUri": (StringValueConverter(), "authorizer_uri"),
-    "AuthorizerCredentialsArn": (StringValueConverter(), "authorizer_credentials_arn"),
-    "AuthorizerType": (StringValueConverter(), "authorizer_type"),
-    "JwtConfiguration": (AWS_ApiGatewayV2_Authorizer_JWTConfiguration, "jwt_configuration"),
-    "AuthorizerResultTtlInSeconds": (BasicValueConverter(), "authorizer_result_ttl_in_seconds"),
-    "IdentitySource": (ListValueConverter(StringValueConverter()), "identity_source"),
-    "ApiId": (StringValueConverter(), "api_id"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_ApiGatewayV2_IntegrationResponse(CloudFormationResource):
-  terraform_resource = "aws_api_gateway_v2_integration_response"
+  cfn_type = "AWS::ApiGatewayV2::IntegrationResponse"
+  tf_type = "aws_api_gateway_v2_integration_response"
+  ref = "arn"
 
-  resource_type = "AWS::ApiGatewayV2::IntegrationResponse"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ResponseTemplates", "response_templates", StringValueConverter())
+      self.property(w, "TemplateSelectionExpression", "template_selection_expression", StringValueConverter())
+      self.property(w, "ResponseParameters", "response_parameters", StringValueConverter())
+      self.property(w, "ContentHandlingStrategy", "content_handling_strategy", StringValueConverter())
+      self.property(w, "IntegrationId", "integration_id", StringValueConverter())
+      self.property(w, "IntegrationResponseKey", "integration_response_key", StringValueConverter())
+      self.property(w, "ApiId", "api_id", StringValueConverter())
 
-  props = {
-    "ResponseTemplates": (StringValueConverter(), "response_templates"),
-    "TemplateSelectionExpression": (StringValueConverter(), "template_selection_expression"),
-    "ResponseParameters": (StringValueConverter(), "response_parameters"),
-    "ContentHandlingStrategy": (StringValueConverter(), "content_handling_strategy"),
-    "IntegrationId": (StringValueConverter(), "integration_id"),
-    "IntegrationResponseKey": (StringValueConverter(), "integration_response_key"),
-    "ApiId": (StringValueConverter(), "api_id"),
-  }
 
 class AWS_ApiGatewayV2_ApiMapping(CloudFormationResource):
-  terraform_resource = "aws_api_gateway_v2_api_mapping"
+  cfn_type = "AWS::ApiGatewayV2::ApiMapping"
+  tf_type = "aws_api_gateway_v2_api_mapping"
+  ref = "arn"
 
-  resource_type = "AWS::ApiGatewayV2::ApiMapping"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "DomainName", "domain_name", StringValueConverter())
+      self.property(w, "Stage", "stage", StringValueConverter())
+      self.property(w, "ApiMappingKey", "api_mapping_key", StringValueConverter())
+      self.property(w, "ApiId", "api_id", StringValueConverter())
 
-  props = {
-    "DomainName": (StringValueConverter(), "domain_name"),
-    "Stage": (StringValueConverter(), "stage"),
-    "ApiMappingKey": (StringValueConverter(), "api_mapping_key"),
-    "ApiId": (StringValueConverter(), "api_id"),
-  }
 

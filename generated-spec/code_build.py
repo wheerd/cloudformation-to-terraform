@@ -1,251 +1,220 @@
 from . import *
 
 class AWS_CodeBuild_Project_ProjectSourceVersion(CloudFormationProperty):
-  entity = "AWS::CodeBuild::Project"
-  tf_block_type = "project_source_version"
+  def write(self, w):
+    with w.block("project_source_version"):
+      self.property(w, "SourceIdentifier", "source_identifier", StringValueConverter())
+      self.property(w, "SourceVersion", "source_version", StringValueConverter())
 
-  props = {
-    "SourceIdentifier": (StringValueConverter(), "source_identifier"),
-    "SourceVersion": (StringValueConverter(), "source_version"),
-  }
 
 class AWS_CodeBuild_Project_SourceAuth(CloudFormationProperty):
-  entity = "AWS::CodeBuild::Project"
-  tf_block_type = "source_auth"
+  def write(self, w):
+    with w.block("source_auth"):
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "Resource", "resource", StringValueConverter())
 
-  props = {
-    "Type": (StringValueConverter(), "type"),
-    "Resource": (StringValueConverter(), "resource"),
-  }
 
 class AWS_CodeBuild_Project_GitSubmodulesConfig(CloudFormationProperty):
-  entity = "AWS::CodeBuild::Project"
-  tf_block_type = "git_submodules_config"
+  def write(self, w):
+    with w.block("git_submodules_config"):
+      self.property(w, "FetchSubmodules", "fetch_submodules", BasicValueConverter())
 
-  props = {
-    "FetchSubmodules": (BasicValueConverter(), "fetch_submodules"),
-  }
 
 class AWS_CodeBuild_Project_VpcConfig(CloudFormationProperty):
-  entity = "AWS::CodeBuild::Project"
-  tf_block_type = "vpc_config"
+  def write(self, w):
+    with w.block("vpc_config"):
+      self.property(w, "Subnets", "subnets", ListValueConverter(StringValueConverter()))
+      self.property(w, "VpcId", "vpc_id", StringValueConverter())
+      self.property(w, "SecurityGroupIds", "security_group_ids", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "Subnets": (ListValueConverter(StringValueConverter()), "subnets"),
-    "VpcId": (StringValueConverter(), "vpc_id"),
-    "SecurityGroupIds": (ListValueConverter(StringValueConverter()), "security_group_ids"),
-  }
 
 class AWS_CodeBuild_Project_ProjectFileSystemLocation(CloudFormationProperty):
-  entity = "AWS::CodeBuild::Project"
-  tf_block_type = "project_file_system_location"
+  def write(self, w):
+    with w.block("project_file_system_location"):
+      self.property(w, "MountPoint", "mount_point", StringValueConverter())
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "Identifier", "identifier", StringValueConverter())
+      self.property(w, "MountOptions", "mount_options", StringValueConverter())
+      self.property(w, "Location", "location", StringValueConverter())
 
-  props = {
-    "MountPoint": (StringValueConverter(), "mount_point"),
-    "Type": (StringValueConverter(), "type"),
-    "Identifier": (StringValueConverter(), "identifier"),
-    "MountOptions": (StringValueConverter(), "mount_options"),
-    "Location": (StringValueConverter(), "location"),
-  }
 
 class AWS_CodeBuild_Project_S3LogsConfig(CloudFormationProperty):
-  entity = "AWS::CodeBuild::Project"
-  tf_block_type = "s3_logs_config"
+  def write(self, w):
+    with w.block("s3_logs_config"):
+      self.property(w, "Status", "status", StringValueConverter())
+      self.property(w, "EncryptionDisabled", "encryption_disabled", BasicValueConverter())
+      self.property(w, "Location", "location", StringValueConverter())
 
-  props = {
-    "Status": (StringValueConverter(), "status"),
-    "EncryptionDisabled": (BasicValueConverter(), "encryption_disabled"),
-    "Location": (StringValueConverter(), "location"),
-  }
 
 class AWS_CodeBuild_Project_WebhookFilter(CloudFormationProperty):
-  entity = "AWS::CodeBuild::Project"
-  tf_block_type = "webhook_filter"
+  def write(self, w):
+    with w.block("webhook_filter"):
+      self.property(w, "Pattern", "pattern", StringValueConverter())
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "ExcludeMatchedPattern", "exclude_matched_pattern", BasicValueConverter())
 
-  props = {
-    "Pattern": (StringValueConverter(), "pattern"),
-    "Type": (StringValueConverter(), "type"),
-    "ExcludeMatchedPattern": (BasicValueConverter(), "exclude_matched_pattern"),
-  }
 
 class AWS_CodeBuild_Project_Artifacts(CloudFormationProperty):
-  entity = "AWS::CodeBuild::Project"
-  tf_block_type = "artifacts"
+  def write(self, w):
+    with w.block("artifacts"):
+      self.property(w, "Path", "path", StringValueConverter())
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "ArtifactIdentifier", "artifact_identifier", StringValueConverter())
+      self.property(w, "OverrideArtifactName", "override_artifact_name", BasicValueConverter())
+      self.property(w, "Packaging", "packaging", StringValueConverter())
+      self.property(w, "EncryptionDisabled", "encryption_disabled", BasicValueConverter())
+      self.property(w, "Location", "location", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "NamespaceType", "namespace_type", StringValueConverter())
 
-  props = {
-    "Path": (StringValueConverter(), "path"),
-    "Type": (StringValueConverter(), "type"),
-    "ArtifactIdentifier": (StringValueConverter(), "artifact_identifier"),
-    "OverrideArtifactName": (BasicValueConverter(), "override_artifact_name"),
-    "Packaging": (StringValueConverter(), "packaging"),
-    "EncryptionDisabled": (BasicValueConverter(), "encryption_disabled"),
-    "Location": (StringValueConverter(), "location"),
-    "Name": (StringValueConverter(), "name"),
-    "NamespaceType": (StringValueConverter(), "namespace_type"),
-  }
 
 class AWS_CodeBuild_Project_RegistryCredential(CloudFormationProperty):
-  entity = "AWS::CodeBuild::Project"
-  tf_block_type = "registry_credential"
+  def write(self, w):
+    with w.block("registry_credential"):
+      self.property(w, "Credential", "credential", StringValueConverter())
+      self.property(w, "CredentialProvider", "credential_provider", StringValueConverter())
 
-  props = {
-    "Credential": (StringValueConverter(), "credential"),
-    "CredentialProvider": (StringValueConverter(), "credential_provider"),
-  }
 
 class AWS_CodeBuild_ReportGroup_S3ReportExportConfig(CloudFormationProperty):
-  entity = "AWS::CodeBuild::ReportGroup"
-  tf_block_type = "s3_report_export_config"
+  def write(self, w):
+    with w.block("s3_report_export_config"):
+      self.property(w, "Path", "path", StringValueConverter())
+      self.property(w, "Bucket", "bucket", StringValueConverter())
+      self.property(w, "Packaging", "packaging", StringValueConverter())
+      self.property(w, "EncryptionKey", "encryption_key", StringValueConverter())
+      self.property(w, "EncryptionDisabled", "encryption_disabled", BasicValueConverter())
 
-  props = {
-    "Path": (StringValueConverter(), "path"),
-    "Bucket": (StringValueConverter(), "bucket"),
-    "Packaging": (StringValueConverter(), "packaging"),
-    "EncryptionKey": (StringValueConverter(), "encryption_key"),
-    "EncryptionDisabled": (BasicValueConverter(), "encryption_disabled"),
-  }
 
 class AWS_CodeBuild_Project_CloudWatchLogsConfig(CloudFormationProperty):
-  entity = "AWS::CodeBuild::Project"
-  tf_block_type = "cloud_watch_logs_config"
+  def write(self, w):
+    with w.block("cloud_watch_logs_config"):
+      self.property(w, "Status", "status", StringValueConverter())
+      self.property(w, "GroupName", "group_name", StringValueConverter())
+      self.property(w, "StreamName", "stream_name", StringValueConverter())
 
-  props = {
-    "Status": (StringValueConverter(), "status"),
-    "GroupName": (StringValueConverter(), "group_name"),
-    "StreamName": (StringValueConverter(), "stream_name"),
-  }
 
 class AWS_CodeBuild_Project_ProjectCache(CloudFormationProperty):
-  entity = "AWS::CodeBuild::Project"
-  tf_block_type = "project_cache"
+  def write(self, w):
+    with w.block("project_cache"):
+      self.property(w, "Modes", "modes", ListValueConverter(StringValueConverter()))
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "Location", "location", StringValueConverter())
 
-  props = {
-    "Modes": (ListValueConverter(StringValueConverter()), "modes"),
-    "Type": (StringValueConverter(), "type"),
-    "Location": (StringValueConverter(), "location"),
-  }
 
 class AWS_CodeBuild_Project_FilterGroup(CloudFormationProperty):
-  entity = "AWS::CodeBuild::Project"
-  tf_block_type = "filter_group"
+  def write(self, w):
+    with w.block("filter_group"):
+      pass
+
 
 class AWS_CodeBuild_Project_ProjectTriggers(CloudFormationProperty):
-  entity = "AWS::CodeBuild::Project"
-  tf_block_type = "project_triggers"
+  def write(self, w):
+    with w.block("project_triggers"):
+      self.repeated_block(w, "FilterGroups", AWS_CodeBuild_Project_FilterGroup)
+      self.property(w, "Webhook", "webhook", BasicValueConverter())
 
-  props = {
-    "FilterGroups": (BlockValueConverter(AWS_CodeBuild_Project_FilterGroup), None),
-    "Webhook": (BasicValueConverter(), "webhook"),
-  }
 
 class AWS_CodeBuild_Project_EnvironmentVariable(CloudFormationProperty):
-  entity = "AWS::CodeBuild::Project"
-  tf_block_type = "environment_variable"
+  def write(self, w):
+    with w.block("environment_variable"):
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "Value", "value", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Type": (StringValueConverter(), "type"),
-    "Value": (StringValueConverter(), "value"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_CodeBuild_Project_Source(CloudFormationProperty):
-  entity = "AWS::CodeBuild::Project"
-  tf_block_type = "source"
+  def write(self, w):
+    with w.block("source"):
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "ReportBuildStatus", "report_build_status", BasicValueConverter())
+      self.block(w, "Auth", AWS_CodeBuild_Project_SourceAuth)
+      self.property(w, "SourceIdentifier", "source_identifier", StringValueConverter())
+      self.property(w, "BuildSpec", "build_spec", StringValueConverter())
+      self.property(w, "GitCloneDepth", "git_clone_depth", BasicValueConverter())
+      self.block(w, "GitSubmodulesConfig", AWS_CodeBuild_Project_GitSubmodulesConfig)
+      self.property(w, "InsecureSsl", "insecure_ssl", BasicValueConverter())
+      self.property(w, "Location", "location", StringValueConverter())
 
-  props = {
-    "Type": (StringValueConverter(), "type"),
-    "ReportBuildStatus": (BasicValueConverter(), "report_build_status"),
-    "Auth": (AWS_CodeBuild_Project_SourceAuth, "auth"),
-    "SourceIdentifier": (StringValueConverter(), "source_identifier"),
-    "BuildSpec": (StringValueConverter(), "build_spec"),
-    "GitCloneDepth": (BasicValueConverter(), "git_clone_depth"),
-    "GitSubmodulesConfig": (AWS_CodeBuild_Project_GitSubmodulesConfig, "git_submodules_config"),
-    "InsecureSsl": (BasicValueConverter(), "insecure_ssl"),
-    "Location": (StringValueConverter(), "location"),
-  }
 
 class AWS_CodeBuild_SourceCredential(CloudFormationResource):
-  terraform_resource = "aws_code_build_source_credential"
+  cfn_type = "AWS::CodeBuild::SourceCredential"
+  tf_type = "aws_code_build_source_credential"
+  ref = "arn"
 
-  resource_type = "AWS::CodeBuild::SourceCredential"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ServerType", "server_type", StringValueConverter())
+      self.property(w, "Username", "username", StringValueConverter())
+      self.property(w, "Token", "token", StringValueConverter())
+      self.property(w, "AuthType", "auth_type", StringValueConverter())
 
-  props = {
-    "ServerType": (StringValueConverter(), "server_type"),
-    "Username": (StringValueConverter(), "username"),
-    "Token": (StringValueConverter(), "token"),
-    "AuthType": (StringValueConverter(), "auth_type"),
-  }
 
 class AWS_CodeBuild_Project_LogsConfig(CloudFormationProperty):
-  entity = "AWS::CodeBuild::Project"
-  tf_block_type = "logs_config"
+  def write(self, w):
+    with w.block("logs_config"):
+      self.block(w, "CloudWatchLogs", AWS_CodeBuild_Project_CloudWatchLogsConfig)
+      self.block(w, "S3Logs", AWS_CodeBuild_Project_S3LogsConfig)
 
-  props = {
-    "CloudWatchLogs": (AWS_CodeBuild_Project_CloudWatchLogsConfig, "cloud_watch_logs"),
-    "S3Logs": (AWS_CodeBuild_Project_S3LogsConfig, "s3_logs"),
-  }
 
 class AWS_CodeBuild_Project_Environment(CloudFormationProperty):
-  entity = "AWS::CodeBuild::Project"
-  tf_block_type = "environment"
+  def write(self, w):
+    with w.block("environment"):
+      self.property(w, "Type", "type", StringValueConverter())
+      self.repeated_block(w, "EnvironmentVariables", AWS_CodeBuild_Project_EnvironmentVariable)
+      self.property(w, "PrivilegedMode", "privileged_mode", BasicValueConverter())
+      self.property(w, "ImagePullCredentialsType", "image_pull_credentials_type", StringValueConverter())
+      self.property(w, "Image", "image", StringValueConverter())
+      self.block(w, "RegistryCredential", AWS_CodeBuild_Project_RegistryCredential)
+      self.property(w, "ComputeType", "compute_type", StringValueConverter())
+      self.property(w, "Certificate", "certificate", StringValueConverter())
 
-  props = {
-    "Type": (StringValueConverter(), "type"),
-    "EnvironmentVariables": (BlockValueConverter(AWS_CodeBuild_Project_EnvironmentVariable), None),
-    "PrivilegedMode": (BasicValueConverter(), "privileged_mode"),
-    "ImagePullCredentialsType": (StringValueConverter(), "image_pull_credentials_type"),
-    "Image": (StringValueConverter(), "image"),
-    "RegistryCredential": (AWS_CodeBuild_Project_RegistryCredential, "registry_credential"),
-    "ComputeType": (StringValueConverter(), "compute_type"),
-    "Certificate": (StringValueConverter(), "certificate"),
-  }
 
 class AWS_CodeBuild_ReportGroup_ReportExportConfig(CloudFormationProperty):
-  entity = "AWS::CodeBuild::ReportGroup"
-  tf_block_type = "report_export_config"
+  def write(self, w):
+    with w.block("report_export_config"):
+      self.block(w, "S3Destination", AWS_CodeBuild_ReportGroup_S3ReportExportConfig)
+      self.property(w, "ExportConfigType", "export_config_type", StringValueConverter())
 
-  props = {
-    "S3Destination": (AWS_CodeBuild_ReportGroup_S3ReportExportConfig, "s3_destination"),
-    "ExportConfigType": (StringValueConverter(), "export_config_type"),
-  }
 
 class AWS_CodeBuild_Project(CloudFormationResource):
-  terraform_resource = "aws_code_build_project"
+  cfn_type = "AWS::CodeBuild::Project"
+  tf_type = "aws_code_build_project"
+  ref = "arn"
 
-  resource_type = "AWS::CodeBuild::Project"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.block(w, "VpcConfig", AWS_CodeBuild_Project_VpcConfig)
+      self.repeated_block(w, "SecondarySources", AWS_CodeBuild_Project_Source)
+      self.property(w, "EncryptionKey", "encryption_key", StringValueConverter())
+      self.property(w, "SourceVersion", "source_version", StringValueConverter())
+      self.block(w, "Triggers", AWS_CodeBuild_Project_ProjectTriggers)
+      self.repeated_block(w, "SecondaryArtifacts", AWS_CodeBuild_Project_Artifacts)
+      self.block(w, "Source", AWS_CodeBuild_Project_Source)
+      self.property(w, "Name", "name", StringValueConverter())
+      self.block(w, "Artifacts", AWS_CodeBuild_Project_Artifacts)
+      self.property(w, "BadgeEnabled", "badge_enabled", BasicValueConverter())
+      self.block(w, "LogsConfig", AWS_CodeBuild_Project_LogsConfig)
+      self.property(w, "ServiceRole", "service_role", StringValueConverter())
+      self.property(w, "QueuedTimeoutInMinutes", "queued_timeout_in_minutes", BasicValueConverter())
+      self.repeated_block(w, "FileSystemLocations", AWS_CodeBuild_Project_ProjectFileSystemLocation)
+      self.block(w, "Environment", AWS_CodeBuild_Project_Environment)
+      self.repeated_block(w, "SecondarySourceVersions", AWS_CodeBuild_Project_ProjectSourceVersion)
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "TimeoutInMinutes", "timeout_in_minutes", BasicValueConverter())
+      self.block(w, "Cache", AWS_CodeBuild_Project_ProjectCache)
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "VpcConfig": (AWS_CodeBuild_Project_VpcConfig, "vpc_config"),
-    "SecondarySources": (BlockValueConverter(AWS_CodeBuild_Project_Source), None),
-    "EncryptionKey": (StringValueConverter(), "encryption_key"),
-    "SourceVersion": (StringValueConverter(), "source_version"),
-    "Triggers": (AWS_CodeBuild_Project_ProjectTriggers, "triggers"),
-    "SecondaryArtifacts": (BlockValueConverter(AWS_CodeBuild_Project_Artifacts), None),
-    "Source": (AWS_CodeBuild_Project_Source, "source"),
-    "Name": (StringValueConverter(), "name"),
-    "Artifacts": (AWS_CodeBuild_Project_Artifacts, "artifacts"),
-    "BadgeEnabled": (BasicValueConverter(), "badge_enabled"),
-    "LogsConfig": (AWS_CodeBuild_Project_LogsConfig, "logs_config"),
-    "ServiceRole": (StringValueConverter(), "service_role"),
-    "QueuedTimeoutInMinutes": (BasicValueConverter(), "queued_timeout_in_minutes"),
-    "FileSystemLocations": (BlockValueConverter(AWS_CodeBuild_Project_ProjectFileSystemLocation), None),
-    "Environment": (AWS_CodeBuild_Project_Environment, "environment"),
-    "SecondarySourceVersions": (BlockValueConverter(AWS_CodeBuild_Project_ProjectSourceVersion), None),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "TimeoutInMinutes": (BasicValueConverter(), "timeout_in_minutes"),
-    "Cache": (AWS_CodeBuild_Project_ProjectCache, "cache"),
-  }
 
 class AWS_CodeBuild_ReportGroup(CloudFormationResource):
-  terraform_resource = "aws_code_build_report_group"
+  cfn_type = "AWS::CodeBuild::ReportGroup"
+  tf_type = "aws_code_build_report_group"
+  ref = "arn"
 
-  resource_type = "AWS::CodeBuild::ReportGroup"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Type", "type", StringValueConverter())
+      self.block(w, "ExportConfig", AWS_CodeBuild_ReportGroup_ReportExportConfig)
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Type": (StringValueConverter(), "type"),
-    "ExportConfig": (AWS_CodeBuild_ReportGroup_ReportExportConfig, "export_config"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "Name": (StringValueConverter(), "name"),
-  }
 

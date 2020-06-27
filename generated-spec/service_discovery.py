@@ -1,99 +1,96 @@
 from . import *
 
 class AWS_ServiceDiscovery_Service_HealthCheckCustomConfig(CloudFormationProperty):
-  entity = "AWS::ServiceDiscovery::Service"
-  tf_block_type = "health_check_custom_config"
+  def write(self, w):
+    with w.block("health_check_custom_config"):
+      self.property(w, "FailureThreshold", "failure_threshold", BasicValueConverter())
 
-  props = {
-    "FailureThreshold": (BasicValueConverter(), "failure_threshold"),
-  }
 
 class AWS_ServiceDiscovery_Service_DnsRecord(CloudFormationProperty):
-  entity = "AWS::ServiceDiscovery::Service"
-  tf_block_type = "dns_record"
+  def write(self, w):
+    with w.block("dns_record"):
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "TTL", "ttl", BasicValueConverter())
 
-  props = {
-    "Type": (StringValueConverter(), "type"),
-    "TTL": (BasicValueConverter(), "ttl"),
-  }
 
 class AWS_ServiceDiscovery_Service_HealthCheckConfig(CloudFormationProperty):
-  entity = "AWS::ServiceDiscovery::Service"
-  tf_block_type = "health_check_config"
+  def write(self, w):
+    with w.block("health_check_config"):
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "ResourcePath", "resource_path", StringValueConverter())
+      self.property(w, "FailureThreshold", "failure_threshold", BasicValueConverter())
 
-  props = {
-    "Type": (StringValueConverter(), "type"),
-    "ResourcePath": (StringValueConverter(), "resource_path"),
-    "FailureThreshold": (BasicValueConverter(), "failure_threshold"),
-  }
 
 class AWS_ServiceDiscovery_Instance(CloudFormationResource):
-  terraform_resource = "aws_service_discovery_instance"
+  cfn_type = "AWS::ServiceDiscovery::Instance"
+  tf_type = "aws_service_discovery_instance"
+  ref = "arn"
 
-  resource_type = "AWS::ServiceDiscovery::Instance"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "InstanceAttributes", "instance_attributes", StringValueConverter())
+      self.property(w, "InstanceId", "instance_id", StringValueConverter())
+      self.property(w, "ServiceId", "service_id", StringValueConverter())
 
-  props = {
-    "InstanceAttributes": (StringValueConverter(), "instance_attributes"),
-    "InstanceId": (StringValueConverter(), "instance_id"),
-    "ServiceId": (StringValueConverter(), "service_id"),
-  }
 
 class AWS_ServiceDiscovery_HttpNamespace(CloudFormationResource):
-  terraform_resource = "aws_service_discovery_http_namespace"
+  cfn_type = "AWS::ServiceDiscovery::HttpNamespace"
+  tf_type = "aws_service_discovery_http_namespace"
+  ref = "arn"
 
-  resource_type = "AWS::ServiceDiscovery::HttpNamespace"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_ServiceDiscovery_PrivateDnsNamespace(CloudFormationResource):
-  terraform_resource = "aws_service_discovery_private_dns_namespace"
+  cfn_type = "AWS::ServiceDiscovery::PrivateDnsNamespace"
+  tf_type = "aws_service_discovery_private_dns_namespace"
+  ref = "arn"
 
-  resource_type = "AWS::ServiceDiscovery::PrivateDnsNamespace"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "Vpc", "vpc", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "Vpc": (StringValueConverter(), "vpc"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_ServiceDiscovery_PublicDnsNamespace(CloudFormationResource):
-  terraform_resource = "aws_service_discovery_public_dns_namespace"
+  cfn_type = "AWS::ServiceDiscovery::PublicDnsNamespace"
+  tf_type = "aws_service_discovery_public_dns_namespace"
+  ref = "arn"
 
-  resource_type = "AWS::ServiceDiscovery::PublicDnsNamespace"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_ServiceDiscovery_Service_DnsConfig(CloudFormationProperty):
-  entity = "AWS::ServiceDiscovery::Service"
-  tf_block_type = "dns_config"
+  def write(self, w):
+    with w.block("dns_config"):
+      self.repeated_block(w, "DnsRecords", AWS_ServiceDiscovery_Service_DnsRecord)
+      self.property(w, "RoutingPolicy", "routing_policy", StringValueConverter())
+      self.property(w, "NamespaceId", "namespace_id", StringValueConverter())
 
-  props = {
-    "DnsRecords": (BlockValueConverter(AWS_ServiceDiscovery_Service_DnsRecord), None),
-    "RoutingPolicy": (StringValueConverter(), "routing_policy"),
-    "NamespaceId": (StringValueConverter(), "namespace_id"),
-  }
 
 class AWS_ServiceDiscovery_Service(CloudFormationResource):
-  terraform_resource = "aws_service_discovery_service"
+  cfn_type = "AWS::ServiceDiscovery::Service"
+  tf_type = "aws_service_discovery_service"
+  ref = "arn"
 
-  resource_type = "AWS::ServiceDiscovery::Service"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.block(w, "HealthCheckCustomConfig", AWS_ServiceDiscovery_Service_HealthCheckCustomConfig)
+      self.block(w, "DnsConfig", AWS_ServiceDiscovery_Service_DnsConfig)
+      self.property(w, "NamespaceId", "namespace_id", StringValueConverter())
+      self.block(w, "HealthCheckConfig", AWS_ServiceDiscovery_Service_HealthCheckConfig)
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "HealthCheckCustomConfig": (AWS_ServiceDiscovery_Service_HealthCheckCustomConfig, "health_check_custom_config"),
-    "DnsConfig": (AWS_ServiceDiscovery_Service_DnsConfig, "dns_config"),
-    "NamespaceId": (StringValueConverter(), "namespace_id"),
-    "HealthCheckConfig": (AWS_ServiceDiscovery_Service_HealthCheckConfig, "health_check_config"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "Name": (StringValueConverter(), "name"),
-  }
 

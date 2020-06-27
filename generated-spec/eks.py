@@ -1,82 +1,74 @@
 from . import *
 
 class AWS_EKS_Cluster_Provider(CloudFormationProperty):
-  entity = "AWS::EKS::Cluster"
-  tf_block_type = "provider"
+  def write(self, w):
+    with w.block("provider"):
+      self.property(w, "KeyArn", "key_arn", StringValueConverter())
 
-  props = {
-    "KeyArn": (StringValueConverter(), "key_arn"),
-  }
 
 class AWS_EKS_Nodegroup_ScalingConfig(CloudFormationProperty):
-  entity = "AWS::EKS::Nodegroup"
-  tf_block_type = "scaling_config"
+  def write(self, w):
+    with w.block("scaling_config"):
+      self.property(w, "MinSize", "min_size", BasicValueConverter())
+      self.property(w, "DesiredSize", "desired_size", BasicValueConverter())
+      self.property(w, "MaxSize", "max_size", BasicValueConverter())
 
-  props = {
-    "MinSize": (BasicValueConverter(), "min_size"),
-    "DesiredSize": (BasicValueConverter(), "desired_size"),
-    "MaxSize": (BasicValueConverter(), "max_size"),
-  }
 
 class AWS_EKS_Nodegroup_RemoteAccess(CloudFormationProperty):
-  entity = "AWS::EKS::Nodegroup"
-  tf_block_type = "remote_access"
+  def write(self, w):
+    with w.block("remote_access"):
+      self.property(w, "SourceSecurityGroups", "source_security_groups", ListValueConverter(StringValueConverter()))
+      self.property(w, "Ec2SshKey", "ec2_ssh_key", StringValueConverter())
 
-  props = {
-    "SourceSecurityGroups": (ListValueConverter(StringValueConverter()), "source_security_groups"),
-    "Ec2SshKey": (StringValueConverter(), "ec2_ssh_key"),
-  }
 
 class AWS_EKS_Cluster_EncryptionConfig(CloudFormationProperty):
-  entity = "AWS::EKS::Cluster"
-  tf_block_type = "encryption_config"
+  def write(self, w):
+    with w.block("encryption_config"):
+      self.property(w, "Resources", "resources", ListValueConverter(StringValueConverter()))
+      self.block(w, "Provider", AWS_EKS_Cluster_Provider)
 
-  props = {
-    "Resources": (ListValueConverter(StringValueConverter()), "resources"),
-    "Provider": (AWS_EKS_Cluster_Provider, "provider"),
-  }
 
 class AWS_EKS_Cluster_ResourcesVpcConfig(CloudFormationProperty):
-  entity = "AWS::EKS::Cluster"
-  tf_block_type = "resources_vpc_config"
+  def write(self, w):
+    with w.block("resources_vpc_config"):
+      self.property(w, "SecurityGroupIds", "security_group_ids", ListValueConverter(StringValueConverter()))
+      self.property(w, "SubnetIds", "subnet_ids", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "SecurityGroupIds": (ListValueConverter(StringValueConverter()), "security_group_ids"),
-    "SubnetIds": (ListValueConverter(StringValueConverter()), "subnet_ids"),
-  }
 
 class AWS_EKS_Nodegroup(CloudFormationResource):
-  terraform_resource = "aws_eks_nodegroup"
+  cfn_type = "AWS::EKS::Nodegroup"
+  tf_type = "aws_eks_nodegroup"
+  ref = "arn"
 
-  resource_type = "AWS::EKS::Nodegroup"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "ScalingConfig", AWS_EKS_Nodegroup_ScalingConfig)
+      self.property(w, "Labels", "labels", StringValueConverter())
+      self.property(w, "ReleaseVersion", "release_version", StringValueConverter())
+      self.property(w, "NodegroupName", "nodegroup_name", StringValueConverter())
+      self.property(w, "Subnets", "subnets", ListValueConverter(StringValueConverter()))
+      self.property(w, "NodeRole", "node_role", StringValueConverter())
+      self.property(w, "AmiType", "ami_type", StringValueConverter())
+      self.property(w, "ForceUpdateEnabled", "force_update_enabled", BasicValueConverter())
+      self.property(w, "Version", "version", StringValueConverter())
+      self.block(w, "RemoteAccess", AWS_EKS_Nodegroup_RemoteAccess)
+      self.property(w, "DiskSize", "disk_size", BasicValueConverter())
+      self.property(w, "ClusterName", "cluster_name", StringValueConverter())
+      self.property(w, "InstanceTypes", "instance_types", ListValueConverter(StringValueConverter()))
+      self.property(w, "Tags", "tags", StringValueConverter())
 
-  props = {
-    "ScalingConfig": (AWS_EKS_Nodegroup_ScalingConfig, "scaling_config"),
-    "Labels": (StringValueConverter(), "labels"),
-    "ReleaseVersion": (StringValueConverter(), "release_version"),
-    "NodegroupName": (StringValueConverter(), "nodegroup_name"),
-    "Subnets": (ListValueConverter(StringValueConverter()), "subnets"),
-    "NodeRole": (StringValueConverter(), "node_role"),
-    "AmiType": (StringValueConverter(), "ami_type"),
-    "ForceUpdateEnabled": (BasicValueConverter(), "force_update_enabled"),
-    "Version": (StringValueConverter(), "version"),
-    "RemoteAccess": (AWS_EKS_Nodegroup_RemoteAccess, "remote_access"),
-    "DiskSize": (BasicValueConverter(), "disk_size"),
-    "ClusterName": (StringValueConverter(), "cluster_name"),
-    "InstanceTypes": (ListValueConverter(StringValueConverter()), "instance_types"),
-    "Tags": (StringValueConverter(), "tags"),
-  }
 
 class AWS_EKS_Cluster(CloudFormationResource):
-  terraform_resource = "aws_eks_cluster"
+  cfn_type = "AWS::EKS::Cluster"
+  tf_type = "aws_eks_cluster"
+  ref = "arn"
 
-  resource_type = "AWS::EKS::Cluster"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Version", "version", StringValueConverter())
+      self.repeated_block(w, "EncryptionConfig", AWS_EKS_Cluster_EncryptionConfig)
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
+      self.block(w, "ResourcesVpcConfig", AWS_EKS_Cluster_ResourcesVpcConfig)
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Version": (StringValueConverter(), "version"),
-    "EncryptionConfig": (BlockValueConverter(AWS_EKS_Cluster_EncryptionConfig), None),
-    "RoleArn": (StringValueConverter(), "role_arn"),
-    "ResourcesVpcConfig": (AWS_EKS_Cluster_ResourcesVpcConfig, "resources_vpc_config"),
-    "Name": (StringValueConverter(), "name"),
-  }
 

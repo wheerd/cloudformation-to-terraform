@@ -1,201 +1,174 @@
 from . import *
 
 class AWS_CodePipeline_Pipeline_InputArtifact(CloudFormationProperty):
-  entity = "AWS::CodePipeline::Pipeline"
-  tf_block_type = "input_artifact"
+  def write(self, w):
+    with w.block("input_artifact"):
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_CodePipeline_Pipeline_BlockerDeclaration(CloudFormationProperty):
-  entity = "AWS::CodePipeline::Pipeline"
-  tf_block_type = "blocker_declaration"
+  def write(self, w):
+    with w.block("blocker_declaration"):
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Type", "type", StringValueConverter())
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-    "Type": (StringValueConverter(), "type"),
-  }
 
 class AWS_CodePipeline_CustomActionType_ArtifactDetails(CloudFormationProperty):
-  entity = "AWS::CodePipeline::CustomActionType"
-  tf_block_type = "artifact_details"
+  def write(self, w):
+    with w.block("artifact_details"):
+      self.property(w, "MaximumCount", "maximum_count", BasicValueConverter())
+      self.property(w, "MinimumCount", "minimum_count", BasicValueConverter())
 
-  props = {
-    "MaximumCount": (BasicValueConverter(), "maximum_count"),
-    "MinimumCount": (BasicValueConverter(), "minimum_count"),
-  }
 
 class AWS_CodePipeline_Webhook_WebhookFilterRule(CloudFormationProperty):
-  entity = "AWS::CodePipeline::Webhook"
-  tf_block_type = "webhook_filter_rule"
+  def write(self, w):
+    with w.block("webhook_filter_rule"):
+      self.property(w, "JsonPath", "json_path", StringValueConverter())
+      self.property(w, "MatchEquals", "match_equals", StringValueConverter())
 
-  props = {
-    "JsonPath": (StringValueConverter(), "json_path"),
-    "MatchEquals": (StringValueConverter(), "match_equals"),
-  }
 
 class AWS_CodePipeline_Pipeline_OutputArtifact(CloudFormationProperty):
-  entity = "AWS::CodePipeline::Pipeline"
-  tf_block_type = "output_artifact"
+  def write(self, w):
+    with w.block("output_artifact"):
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_CodePipeline_CustomActionType_ConfigurationProperties(CloudFormationProperty):
-  entity = "AWS::CodePipeline::CustomActionType"
-  tf_block_type = "configuration_properties"
+  def write(self, w):
+    with w.block("configuration_properties"):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "Key", "key", BasicValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Queryable", "queryable", BasicValueConverter())
+      self.property(w, "Required", "required", BasicValueConverter())
+      self.property(w, "Secret", "secret", BasicValueConverter())
+      self.property(w, "Type", "type", StringValueConverter())
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "Key": (BasicValueConverter(), "key"),
-    "Name": (StringValueConverter(), "name"),
-    "Queryable": (BasicValueConverter(), "queryable"),
-    "Required": (BasicValueConverter(), "required"),
-    "Secret": (BasicValueConverter(), "secret"),
-    "Type": (StringValueConverter(), "type"),
-  }
 
 class AWS_CodePipeline_Pipeline_EncryptionKey(CloudFormationProperty):
-  entity = "AWS::CodePipeline::Pipeline"
-  tf_block_type = "encryption_key"
+  def write(self, w):
+    with w.block("encryption_key"):
+      self.property(w, "Id", "id", StringValueConverter())
+      self.property(w, "Type", "type", StringValueConverter())
 
-  props = {
-    "Id": (StringValueConverter(), "id"),
-    "Type": (StringValueConverter(), "type"),
-  }
 
 class AWS_CodePipeline_CustomActionType_Settings(CloudFormationProperty):
-  entity = "AWS::CodePipeline::CustomActionType"
-  tf_block_type = "settings"
+  def write(self, w):
+    with w.block("settings"):
+      self.property(w, "EntityUrlTemplate", "entity_url_template", StringValueConverter())
+      self.property(w, "ExecutionUrlTemplate", "execution_url_template", StringValueConverter())
+      self.property(w, "RevisionUrlTemplate", "revision_url_template", StringValueConverter())
+      self.property(w, "ThirdPartyConfigurationUrl", "third_party_configuration_url", StringValueConverter())
 
-  props = {
-    "EntityUrlTemplate": (StringValueConverter(), "entity_url_template"),
-    "ExecutionUrlTemplate": (StringValueConverter(), "execution_url_template"),
-    "RevisionUrlTemplate": (StringValueConverter(), "revision_url_template"),
-    "ThirdPartyConfigurationUrl": (StringValueConverter(), "third_party_configuration_url"),
-  }
 
 class AWS_CodePipeline_Pipeline_StageTransition(CloudFormationProperty):
-  entity = "AWS::CodePipeline::Pipeline"
-  tf_block_type = "stage_transition"
+  def write(self, w):
+    with w.block("stage_transition"):
+      self.property(w, "Reason", "reason", StringValueConverter())
+      self.property(w, "StageName", "stage_name", StringValueConverter())
 
-  props = {
-    "Reason": (StringValueConverter(), "reason"),
-    "StageName": (StringValueConverter(), "stage_name"),
-  }
 
 class AWS_CodePipeline_Pipeline_ArtifactStore(CloudFormationProperty):
-  entity = "AWS::CodePipeline::Pipeline"
-  tf_block_type = "artifact_store"
+  def write(self, w):
+    with w.block("artifact_store"):
+      self.block(w, "EncryptionKey", AWS_CodePipeline_Pipeline_EncryptionKey)
+      self.property(w, "Location", "location", StringValueConverter())
+      self.property(w, "Type", "type", StringValueConverter())
 
-  props = {
-    "EncryptionKey": (AWS_CodePipeline_Pipeline_EncryptionKey, "encryption_key"),
-    "Location": (StringValueConverter(), "location"),
-    "Type": (StringValueConverter(), "type"),
-  }
 
 class AWS_CodePipeline_Pipeline_ActionTypeId(CloudFormationProperty):
-  entity = "AWS::CodePipeline::Pipeline"
-  tf_block_type = "action_type_id"
+  def write(self, w):
+    with w.block("action_type_id"):
+      self.property(w, "Category", "category", StringValueConverter())
+      self.property(w, "Owner", "owner", StringValueConverter())
+      self.property(w, "Provider", "provider", StringValueConverter())
+      self.property(w, "Version", "version", StringValueConverter())
 
-  props = {
-    "Category": (StringValueConverter(), "category"),
-    "Owner": (StringValueConverter(), "owner"),
-    "Provider": (StringValueConverter(), "provider"),
-    "Version": (StringValueConverter(), "version"),
-  }
 
 class AWS_CodePipeline_Webhook_WebhookAuthConfiguration(CloudFormationProperty):
-  entity = "AWS::CodePipeline::Webhook"
-  tf_block_type = "webhook_auth_configuration"
+  def write(self, w):
+    with w.block("webhook_auth_configuration"):
+      self.property(w, "AllowedIPRange", "allowed_ip_range", StringValueConverter())
+      self.property(w, "SecretToken", "secret_token", StringValueConverter())
 
-  props = {
-    "AllowedIPRange": (StringValueConverter(), "allowed_ip_range"),
-    "SecretToken": (StringValueConverter(), "secret_token"),
-  }
 
 class AWS_CodePipeline_CustomActionType(CloudFormationResource):
-  terraform_resource = "aws_code_pipeline_custom_action_type"
+  cfn_type = "AWS::CodePipeline::CustomActionType"
+  tf_type = "aws_code_pipeline_custom_action_type"
+  ref = "arn"
 
-  resource_type = "AWS::CodePipeline::CustomActionType"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Category", "category", StringValueConverter())
+      self.repeated_block(w, "ConfigurationProperties", AWS_CodePipeline_CustomActionType_ConfigurationProperties)
+      self.block(w, "InputArtifactDetails", AWS_CodePipeline_CustomActionType_ArtifactDetails)
+      self.block(w, "OutputArtifactDetails", AWS_CodePipeline_CustomActionType_ArtifactDetails)
+      self.property(w, "Provider", "provider", StringValueConverter())
+      self.block(w, "Settings", AWS_CodePipeline_CustomActionType_Settings)
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "Version", "version", StringValueConverter())
 
-  props = {
-    "Category": (StringValueConverter(), "category"),
-    "ConfigurationProperties": (BlockValueConverter(AWS_CodePipeline_CustomActionType_ConfigurationProperties), None),
-    "InputArtifactDetails": (AWS_CodePipeline_CustomActionType_ArtifactDetails, "input_artifact_details"),
-    "OutputArtifactDetails": (AWS_CodePipeline_CustomActionType_ArtifactDetails, "output_artifact_details"),
-    "Provider": (StringValueConverter(), "provider"),
-    "Settings": (AWS_CodePipeline_CustomActionType_Settings, "settings"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "Version": (StringValueConverter(), "version"),
-  }
 
 class AWS_CodePipeline_Webhook(CloudFormationResource):
-  terraform_resource = "aws_code_pipeline_webhook"
+  cfn_type = "AWS::CodePipeline::Webhook"
+  tf_type = "aws_code_pipeline_webhook"
+  ref = "arn"
 
-  resource_type = "AWS::CodePipeline::Webhook"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "AuthenticationConfiguration", AWS_CodePipeline_Webhook_WebhookAuthConfiguration)
+      self.repeated_block(w, "Filters", AWS_CodePipeline_Webhook_WebhookFilterRule)
+      self.property(w, "Authentication", "authentication", StringValueConverter())
+      self.property(w, "TargetPipeline", "target_pipeline", StringValueConverter())
+      self.property(w, "TargetAction", "target_action", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "TargetPipelineVersion", "target_pipeline_version", BasicValueConverter())
+      self.property(w, "RegisterWithThirdParty", "register_with_third_party", BasicValueConverter())
 
-  props = {
-    "AuthenticationConfiguration": (AWS_CodePipeline_Webhook_WebhookAuthConfiguration, "authentication_configuration"),
-    "Filters": (BlockValueConverter(AWS_CodePipeline_Webhook_WebhookFilterRule), None),
-    "Authentication": (StringValueConverter(), "authentication"),
-    "TargetPipeline": (StringValueConverter(), "target_pipeline"),
-    "TargetAction": (StringValueConverter(), "target_action"),
-    "Name": (StringValueConverter(), "name"),
-    "TargetPipelineVersion": (BasicValueConverter(), "target_pipeline_version"),
-    "RegisterWithThirdParty": (BasicValueConverter(), "register_with_third_party"),
-  }
 
 class AWS_CodePipeline_Pipeline_ArtifactStoreMap(CloudFormationProperty):
-  entity = "AWS::CodePipeline::Pipeline"
-  tf_block_type = "artifact_store_map"
+  def write(self, w):
+    with w.block("artifact_store_map"):
+      self.block(w, "ArtifactStore", AWS_CodePipeline_Pipeline_ArtifactStore)
+      self.property(w, "Region", "region", StringValueConverter())
 
-  props = {
-    "ArtifactStore": (AWS_CodePipeline_Pipeline_ArtifactStore, "artifact_store"),
-    "Region": (StringValueConverter(), "region"),
-  }
 
 class AWS_CodePipeline_Pipeline_ActionDeclaration(CloudFormationProperty):
-  entity = "AWS::CodePipeline::Pipeline"
-  tf_block_type = "action_declaration"
+  def write(self, w):
+    with w.block("action_declaration"):
+      self.block(w, "ActionTypeId", AWS_CodePipeline_Pipeline_ActionTypeId)
+      self.property(w, "Configuration", "configuration", StringValueConverter())
+      self.repeated_block(w, "InputArtifacts", AWS_CodePipeline_Pipeline_InputArtifact)
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Namespace", "namespace", StringValueConverter())
+      self.repeated_block(w, "OutputArtifacts", AWS_CodePipeline_Pipeline_OutputArtifact)
+      self.property(w, "Region", "region", StringValueConverter())
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
+      self.property(w, "RunOrder", "run_order", BasicValueConverter())
 
-  props = {
-    "ActionTypeId": (AWS_CodePipeline_Pipeline_ActionTypeId, "action_type_id"),
-    "Configuration": (StringValueConverter(), "configuration"),
-    "InputArtifacts": (BlockValueConverter(AWS_CodePipeline_Pipeline_InputArtifact), None),
-    "Name": (StringValueConverter(), "name"),
-    "Namespace": (StringValueConverter(), "namespace"),
-    "OutputArtifacts": (BlockValueConverter(AWS_CodePipeline_Pipeline_OutputArtifact), None),
-    "Region": (StringValueConverter(), "region"),
-    "RoleArn": (StringValueConverter(), "role_arn"),
-    "RunOrder": (BasicValueConverter(), "run_order"),
-  }
 
 class AWS_CodePipeline_Pipeline_StageDeclaration(CloudFormationProperty):
-  entity = "AWS::CodePipeline::Pipeline"
-  tf_block_type = "stage_declaration"
+  def write(self, w):
+    with w.block("stage_declaration"):
+      self.repeated_block(w, "Actions", AWS_CodePipeline_Pipeline_ActionDeclaration)
+      self.repeated_block(w, "Blockers", AWS_CodePipeline_Pipeline_BlockerDeclaration)
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Actions": (BlockValueConverter(AWS_CodePipeline_Pipeline_ActionDeclaration), None),
-    "Blockers": (BlockValueConverter(AWS_CodePipeline_Pipeline_BlockerDeclaration), None),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_CodePipeline_Pipeline(CloudFormationResource):
-  terraform_resource = "aws_code_pipeline_pipeline"
+  cfn_type = "AWS::CodePipeline::Pipeline"
+  tf_type = "aws_code_pipeline_pipeline"
+  ref = "arn"
 
-  resource_type = "AWS::CodePipeline::Pipeline"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "ArtifactStore", AWS_CodePipeline_Pipeline_ArtifactStore)
+      self.repeated_block(w, "ArtifactStores", AWS_CodePipeline_Pipeline_ArtifactStoreMap)
+      self.repeated_block(w, "DisableInboundStageTransitions", AWS_CodePipeline_Pipeline_StageTransition)
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "RestartExecutionOnUpdate", "restart_execution_on_update", BasicValueConverter())
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
+      self.repeated_block(w, "Stages", AWS_CodePipeline_Pipeline_StageDeclaration)
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "ArtifactStore": (AWS_CodePipeline_Pipeline_ArtifactStore, "artifact_store"),
-    "ArtifactStores": (BlockValueConverter(AWS_CodePipeline_Pipeline_ArtifactStoreMap), None),
-    "DisableInboundStageTransitions": (BlockValueConverter(AWS_CodePipeline_Pipeline_StageTransition), None),
-    "Name": (StringValueConverter(), "name"),
-    "RestartExecutionOnUpdate": (BasicValueConverter(), "restart_execution_on_update"),
-    "RoleArn": (StringValueConverter(), "role_arn"),
-    "Stages": (BlockValueConverter(AWS_CodePipeline_Pipeline_StageDeclaration), None),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 

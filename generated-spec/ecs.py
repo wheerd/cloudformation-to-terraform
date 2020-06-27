@@ -1,547 +1,469 @@
 from . import *
 
 class AWS_ECS_TaskSet_LoadBalancer(CloudFormationProperty):
-  entity = "AWS::ECS::TaskSet"
-  tf_block_type = "load_balancer"
+  def write(self, w):
+    with w.block("load_balancer"):
+      self.property(w, "ContainerName", "container_name", StringValueConverter())
+      self.property(w, "ContainerPort", "container_port", BasicValueConverter())
+      self.property(w, "LoadBalancerName", "load_balancer_name", StringValueConverter())
+      self.property(w, "TargetGroupArn", "target_group_arn", StringValueConverter())
 
-  props = {
-    "ContainerName": (StringValueConverter(), "container_name"),
-    "ContainerPort": (BasicValueConverter(), "container_port"),
-    "LoadBalancerName": (StringValueConverter(), "load_balancer_name"),
-    "TargetGroupArn": (StringValueConverter(), "target_group_arn"),
-  }
 
 class AWS_ECS_Service_LoadBalancer(CloudFormationProperty):
-  entity = "AWS::ECS::Service"
-  tf_block_type = "load_balancer"
+  def write(self, w):
+    with w.block("load_balancer"):
+      self.property(w, "ContainerName", "container_name", StringValueConverter())
+      self.property(w, "ContainerPort", "container_port", BasicValueConverter())
+      self.property(w, "LoadBalancerName", "load_balancer_name", StringValueConverter())
+      self.property(w, "TargetGroupArn", "target_group_arn", StringValueConverter())
 
-  props = {
-    "ContainerName": (StringValueConverter(), "container_name"),
-    "ContainerPort": (BasicValueConverter(), "container_port"),
-    "LoadBalancerName": (StringValueConverter(), "load_balancer_name"),
-    "TargetGroupArn": (StringValueConverter(), "target_group_arn"),
-  }
 
 class AWS_ECS_TaskDefinition_FirelensConfiguration(CloudFormationProperty):
-  entity = "AWS::ECS::TaskDefinition"
-  tf_block_type = "firelens_configuration"
+  def write(self, w):
+    with w.block("firelens_configuration"):
+      self.property(w, "Options", "options", MapValueConverter(StringValueConverter()))
+      self.property(w, "Type", "type", StringValueConverter())
 
-  props = {
-    "Options": (MapValueConverter(StringValueConverter()), "options"),
-    "Type": (StringValueConverter(), "type"),
-  }
 
 class AWS_ECS_TaskDefinition_Device(CloudFormationProperty):
-  entity = "AWS::ECS::TaskDefinition"
-  tf_block_type = "device"
+  def write(self, w):
+    with w.block("device"):
+      self.property(w, "ContainerPath", "container_path", StringValueConverter())
+      self.property(w, "HostPath", "host_path", StringValueConverter())
+      self.property(w, "Permissions", "permissions", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "ContainerPath": (StringValueConverter(), "container_path"),
-    "HostPath": (StringValueConverter(), "host_path"),
-    "Permissions": (ListValueConverter(StringValueConverter()), "permissions"),
-  }
 
 class AWS_ECS_TaskDefinition_InferenceAccelerator(CloudFormationProperty):
-  entity = "AWS::ECS::TaskDefinition"
-  tf_block_type = "inference_accelerator"
+  def write(self, w):
+    with w.block("inference_accelerator"):
+      self.property(w, "DeviceName", "device_name", StringValueConverter())
+      self.property(w, "DeviceType", "device_type", StringValueConverter())
 
-  props = {
-    "DeviceName": (StringValueConverter(), "device_name"),
-    "DeviceType": (StringValueConverter(), "device_type"),
-  }
 
 class AWS_ECS_TaskDefinition_Secret(CloudFormationProperty):
-  entity = "AWS::ECS::TaskDefinition"
-  tf_block_type = "secret"
+  def write(self, w):
+    with w.block("secret"):
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "ValueFrom", "value_from", StringValueConverter())
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-    "ValueFrom": (StringValueConverter(), "value_from"),
-  }
 
 class AWS_ECS_Service_PlacementStrategy(CloudFormationProperty):
-  entity = "AWS::ECS::Service"
-  tf_block_type = "placement_strategy"
+  def write(self, w):
+    with w.block("placement_strategy"):
+      self.property(w, "Field", "field", StringValueConverter())
+      self.property(w, "Type", "type", StringValueConverter())
 
-  props = {
-    "Field": (StringValueConverter(), "field"),
-    "Type": (StringValueConverter(), "type"),
-  }
 
 class AWS_ECS_TaskSet_AwsVpcConfiguration(CloudFormationProperty):
-  entity = "AWS::ECS::TaskSet"
-  tf_block_type = "aws_vpc_configuration"
+  def write(self, w):
+    with w.block("aws_vpc_configuration"):
+      self.property(w, "AssignPublicIp", "assign_public_ip", StringValueConverter())
+      self.property(w, "SecurityGroups", "security_groups", ListValueConverter(StringValueConverter()))
+      self.property(w, "Subnets", "subnets", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "AssignPublicIp": (StringValueConverter(), "assign_public_ip"),
-    "SecurityGroups": (ListValueConverter(StringValueConverter()), "security_groups"),
-    "Subnets": (ListValueConverter(StringValueConverter()), "subnets"),
-  }
 
 class AWS_ECS_TaskDefinition_VolumeFrom(CloudFormationProperty):
-  entity = "AWS::ECS::TaskDefinition"
-  tf_block_type = "volume_from"
+  def write(self, w):
+    with w.block("volume_from"):
+      self.property(w, "ReadOnly", "read_only", BasicValueConverter())
+      self.property(w, "SourceContainer", "source_container", StringValueConverter())
 
-  props = {
-    "ReadOnly": (BasicValueConverter(), "read_only"),
-    "SourceContainer": (StringValueConverter(), "source_container"),
-  }
 
 class AWS_ECS_TaskDefinition_HostEntry(CloudFormationProperty):
-  entity = "AWS::ECS::TaskDefinition"
-  tf_block_type = "host_entry"
+  def write(self, w):
+    with w.block("host_entry"):
+      self.property(w, "Hostname", "hostname", StringValueConverter())
+      self.property(w, "IpAddress", "ip_address", StringValueConverter())
 
-  props = {
-    "Hostname": (StringValueConverter(), "hostname"),
-    "IpAddress": (StringValueConverter(), "ip_address"),
-  }
 
 class AWS_ECS_TaskDefinition_TaskDefinitionPlacementConstraint(CloudFormationProperty):
-  entity = "AWS::ECS::TaskDefinition"
-  tf_block_type = "task_definition_placement_constraint"
+  def write(self, w):
+    with w.block("task_definition_placement_constraint"):
+      self.property(w, "Expression", "expression", StringValueConverter())
+      self.property(w, "Type", "type", StringValueConverter())
 
-  props = {
-    "Expression": (StringValueConverter(), "expression"),
-    "Type": (StringValueConverter(), "type"),
-  }
 
 class AWS_ECS_Service_DeploymentConfiguration(CloudFormationProperty):
-  entity = "AWS::ECS::Service"
-  tf_block_type = "deployment_configuration"
+  def write(self, w):
+    with w.block("deployment_configuration"):
+      self.property(w, "MaximumPercent", "maximum_percent", BasicValueConverter())
+      self.property(w, "MinimumHealthyPercent", "minimum_healthy_percent", BasicValueConverter())
 
-  props = {
-    "MaximumPercent": (BasicValueConverter(), "maximum_percent"),
-    "MinimumHealthyPercent": (BasicValueConverter(), "minimum_healthy_percent"),
-  }
 
 class AWS_ECS_Service_DeploymentController(CloudFormationProperty):
-  entity = "AWS::ECS::Service"
-  tf_block_type = "deployment_controller"
+  def write(self, w):
+    with w.block("deployment_controller"):
+      self.property(w, "Type", "type", StringValueConverter())
 
-  props = {
-    "Type": (StringValueConverter(), "type"),
-  }
 
 class AWS_ECS_TaskDefinition_SystemControl(CloudFormationProperty):
-  entity = "AWS::ECS::TaskDefinition"
-  tf_block_type = "system_control"
+  def write(self, w):
+    with w.block("system_control"):
+      self.property(w, "Namespace", "namespace", StringValueConverter())
+      self.property(w, "Value", "value", StringValueConverter())
 
-  props = {
-    "Namespace": (StringValueConverter(), "namespace"),
-    "Value": (StringValueConverter(), "value"),
-  }
 
 class AWS_ECS_TaskSet_NetworkConfiguration(CloudFormationProperty):
-  entity = "AWS::ECS::TaskSet"
-  tf_block_type = "network_configuration"
+  def write(self, w):
+    with w.block("network_configuration"):
+      self.block(w, "AwsVpcConfiguration", AWS_ECS_TaskSet_AwsVpcConfiguration)
 
-  props = {
-    "AwsVpcConfiguration": (AWS_ECS_TaskSet_AwsVpcConfiguration, "aws_vpc_configuration"),
-  }
 
 class AWS_ECS_Cluster_ClusterSettings(CloudFormationProperty):
-  entity = "AWS::ECS::Cluster"
-  tf_block_type = "cluster_settings"
+  def write(self, w):
+    with w.block("cluster_settings"):
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Value", "value", StringValueConverter())
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-    "Value": (StringValueConverter(), "value"),
-  }
 
 class AWS_ECS_Service_PlacementConstraint(CloudFormationProperty):
-  entity = "AWS::ECS::Service"
-  tf_block_type = "placement_constraint"
+  def write(self, w):
+    with w.block("placement_constraint"):
+      self.property(w, "Expression", "expression", StringValueConverter())
+      self.property(w, "Type", "type", StringValueConverter())
 
-  props = {
-    "Expression": (StringValueConverter(), "expression"),
-    "Type": (StringValueConverter(), "type"),
-  }
 
 class AWS_ECS_TaskSet_ServiceRegistry(CloudFormationProperty):
-  entity = "AWS::ECS::TaskSet"
-  tf_block_type = "service_registry"
+  def write(self, w):
+    with w.block("service_registry"):
+      self.property(w, "ContainerName", "container_name", StringValueConverter())
+      self.property(w, "ContainerPort", "container_port", BasicValueConverter())
+      self.property(w, "Port", "port", BasicValueConverter())
+      self.property(w, "RegistryArn", "registry_arn", StringValueConverter())
 
-  props = {
-    "ContainerName": (StringValueConverter(), "container_name"),
-    "ContainerPort": (BasicValueConverter(), "container_port"),
-    "Port": (BasicValueConverter(), "port"),
-    "RegistryArn": (StringValueConverter(), "registry_arn"),
-  }
 
 class AWS_ECS_CapacityProvider_ManagedScaling(CloudFormationProperty):
-  entity = "AWS::ECS::CapacityProvider"
-  tf_block_type = "managed_scaling"
+  def write(self, w):
+    with w.block("managed_scaling"):
+      self.property(w, "MinimumScalingStepSize", "minimum_scaling_step_size", BasicValueConverter())
+      self.property(w, "MaximumScalingStepSize", "maximum_scaling_step_size", BasicValueConverter())
+      self.property(w, "Status", "status", StringValueConverter())
+      self.property(w, "TargetCapacity", "target_capacity", BasicValueConverter())
 
-  props = {
-    "MinimumScalingStepSize": (BasicValueConverter(), "minimum_scaling_step_size"),
-    "MaximumScalingStepSize": (BasicValueConverter(), "maximum_scaling_step_size"),
-    "Status": (StringValueConverter(), "status"),
-    "TargetCapacity": (BasicValueConverter(), "target_capacity"),
-  }
 
 class AWS_ECS_Service_AwsVpcConfiguration(CloudFormationProperty):
-  entity = "AWS::ECS::Service"
-  tf_block_type = "aws_vpc_configuration"
+  def write(self, w):
+    with w.block("aws_vpc_configuration"):
+      self.property(w, "AssignPublicIp", "assign_public_ip", StringValueConverter())
+      self.property(w, "SecurityGroups", "security_groups", ListValueConverter(StringValueConverter()))
+      self.property(w, "Subnets", "subnets", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "AssignPublicIp": (StringValueConverter(), "assign_public_ip"),
-    "SecurityGroups": (ListValueConverter(StringValueConverter()), "security_groups"),
-    "Subnets": (ListValueConverter(StringValueConverter()), "subnets"),
-  }
 
 class AWS_ECS_Service_NetworkConfiguration(CloudFormationProperty):
-  entity = "AWS::ECS::Service"
-  tf_block_type = "network_configuration"
+  def write(self, w):
+    with w.block("network_configuration"):
+      self.block(w, "AwsvpcConfiguration", AWS_ECS_Service_AwsVpcConfiguration)
 
-  props = {
-    "AwsvpcConfiguration": (AWS_ECS_Service_AwsVpcConfiguration, "awsvpc_configuration"),
-  }
 
 class AWS_ECS_TaskDefinition_Tmpfs(CloudFormationProperty):
-  entity = "AWS::ECS::TaskDefinition"
-  tf_block_type = "tmpfs"
+  def write(self, w):
+    with w.block("tmpfs"):
+      self.property(w, "ContainerPath", "container_path", StringValueConverter())
+      self.property(w, "MountOptions", "mount_options", ListValueConverter(StringValueConverter()))
+      self.property(w, "Size", "size", BasicValueConverter())
 
-  props = {
-    "ContainerPath": (StringValueConverter(), "container_path"),
-    "MountOptions": (ListValueConverter(StringValueConverter()), "mount_options"),
-    "Size": (BasicValueConverter(), "size"),
-  }
 
 class AWS_ECS_TaskDefinition_ResourceRequirement(CloudFormationProperty):
-  entity = "AWS::ECS::TaskDefinition"
-  tf_block_type = "resource_requirement"
+  def write(self, w):
+    with w.block("resource_requirement"):
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "Value", "value", StringValueConverter())
 
-  props = {
-    "Type": (StringValueConverter(), "type"),
-    "Value": (StringValueConverter(), "value"),
-  }
 
 class AWS_ECS_TaskDefinition_DockerVolumeConfiguration(CloudFormationProperty):
-  entity = "AWS::ECS::TaskDefinition"
-  tf_block_type = "docker_volume_configuration"
+  def write(self, w):
+    with w.block("docker_volume_configuration"):
+      self.property(w, "Autoprovision", "autoprovision", BasicValueConverter())
+      self.property(w, "Driver", "driver", StringValueConverter())
+      self.property(w, "DriverOpts", "driver_opts", MapValueConverter(StringValueConverter()))
+      self.property(w, "Labels", "labels", MapValueConverter(StringValueConverter()))
+      self.property(w, "Scope", "scope", StringValueConverter())
 
-  props = {
-    "Autoprovision": (BasicValueConverter(), "autoprovision"),
-    "Driver": (StringValueConverter(), "driver"),
-    "DriverOpts": (MapValueConverter(StringValueConverter()), "driver_opts"),
-    "Labels": (MapValueConverter(StringValueConverter()), "labels"),
-    "Scope": (StringValueConverter(), "scope"),
-  }
 
 class AWS_ECS_TaskDefinition_KeyValuePair(CloudFormationProperty):
-  entity = "AWS::ECS::TaskDefinition"
-  tf_block_type = "key_value_pair"
+  def write(self, w):
+    with w.block("key_value_pair"):
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Value", "value", StringValueConverter())
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-    "Value": (StringValueConverter(), "value"),
-  }
 
 class AWS_ECS_TaskDefinition_MountPoint(CloudFormationProperty):
-  entity = "AWS::ECS::TaskDefinition"
-  tf_block_type = "mount_point"
+  def write(self, w):
+    with w.block("mount_point"):
+      self.property(w, "ContainerPath", "container_path", StringValueConverter())
+      self.property(w, "ReadOnly", "read_only", BasicValueConverter())
+      self.property(w, "SourceVolume", "source_volume", StringValueConverter())
 
-  props = {
-    "ContainerPath": (StringValueConverter(), "container_path"),
-    "ReadOnly": (BasicValueConverter(), "read_only"),
-    "SourceVolume": (StringValueConverter(), "source_volume"),
-  }
 
 class AWS_ECS_Service_ServiceRegistry(CloudFormationProperty):
-  entity = "AWS::ECS::Service"
-  tf_block_type = "service_registry"
+  def write(self, w):
+    with w.block("service_registry"):
+      self.property(w, "ContainerName", "container_name", StringValueConverter())
+      self.property(w, "ContainerPort", "container_port", BasicValueConverter())
+      self.property(w, "Port", "port", BasicValueConverter())
+      self.property(w, "RegistryArn", "registry_arn", StringValueConverter())
 
-  props = {
-    "ContainerName": (StringValueConverter(), "container_name"),
-    "ContainerPort": (BasicValueConverter(), "container_port"),
-    "Port": (BasicValueConverter(), "port"),
-    "RegistryArn": (StringValueConverter(), "registry_arn"),
-  }
 
 class AWS_ECS_TaskDefinition_KernelCapabilities(CloudFormationProperty):
-  entity = "AWS::ECS::TaskDefinition"
-  tf_block_type = "kernel_capabilities"
+  def write(self, w):
+    with w.block("kernel_capabilities"):
+      self.property(w, "Add", "add", ListValueConverter(StringValueConverter()))
+      self.property(w, "Drop", "drop", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "Add": (ListValueConverter(StringValueConverter()), "add"),
-    "Drop": (ListValueConverter(StringValueConverter()), "drop"),
-  }
 
 class AWS_ECS_CapacityProvider_AutoScalingGroupProvider(CloudFormationProperty):
-  entity = "AWS::ECS::CapacityProvider"
-  tf_block_type = "auto_scaling_group_provider"
+  def write(self, w):
+    with w.block("auto_scaling_group_provider"):
+      self.property(w, "AutoScalingGroupArn", "auto_scaling_group_arn", StringValueConverter())
+      self.block(w, "ManagedScaling", AWS_ECS_CapacityProvider_ManagedScaling)
+      self.property(w, "ManagedTerminationProtection", "managed_termination_protection", StringValueConverter())
 
-  props = {
-    "AutoScalingGroupArn": (StringValueConverter(), "auto_scaling_group_arn"),
-    "ManagedScaling": (AWS_ECS_CapacityProvider_ManagedScaling, "managed_scaling"),
-    "ManagedTerminationProtection": (StringValueConverter(), "managed_termination_protection"),
-  }
 
 class AWS_ECS_TaskDefinition_HealthCheck(CloudFormationProperty):
-  entity = "AWS::ECS::TaskDefinition"
-  tf_block_type = "health_check"
+  def write(self, w):
+    with w.block("health_check"):
+      self.property(w, "Command", "command", ListValueConverter(StringValueConverter()))
+      self.property(w, "Interval", "interval", BasicValueConverter())
+      self.property(w, "Retries", "retries", BasicValueConverter())
+      self.property(w, "StartPeriod", "start_period", BasicValueConverter())
+      self.property(w, "Timeout", "timeout", BasicValueConverter())
 
-  props = {
-    "Command": (ListValueConverter(StringValueConverter()), "command"),
-    "Interval": (BasicValueConverter(), "interval"),
-    "Retries": (BasicValueConverter(), "retries"),
-    "StartPeriod": (BasicValueConverter(), "start_period"),
-    "Timeout": (BasicValueConverter(), "timeout"),
-  }
 
 class AWS_ECS_TaskDefinition_PortMapping(CloudFormationProperty):
-  entity = "AWS::ECS::TaskDefinition"
-  tf_block_type = "port_mapping"
+  def write(self, w):
+    with w.block("port_mapping"):
+      self.property(w, "ContainerPort", "container_port", BasicValueConverter())
+      self.property(w, "HostPort", "host_port", BasicValueConverter())
+      self.property(w, "Protocol", "protocol", StringValueConverter())
 
-  props = {
-    "ContainerPort": (BasicValueConverter(), "container_port"),
-    "HostPort": (BasicValueConverter(), "host_port"),
-    "Protocol": (StringValueConverter(), "protocol"),
-  }
 
 class AWS_ECS_TaskDefinition_Ulimit(CloudFormationProperty):
-  entity = "AWS::ECS::TaskDefinition"
-  tf_block_type = "ulimit"
+  def write(self, w):
+    with w.block("ulimit"):
+      self.property(w, "HardLimit", "hard_limit", BasicValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "SoftLimit", "soft_limit", BasicValueConverter())
 
-  props = {
-    "HardLimit": (BasicValueConverter(), "hard_limit"),
-    "Name": (StringValueConverter(), "name"),
-    "SoftLimit": (BasicValueConverter(), "soft_limit"),
-  }
 
 class AWS_ECS_TaskDefinition_LinuxParameters(CloudFormationProperty):
-  entity = "AWS::ECS::TaskDefinition"
-  tf_block_type = "linux_parameters"
+  def write(self, w):
+    with w.block("linux_parameters"):
+      self.block(w, "Capabilities", AWS_ECS_TaskDefinition_KernelCapabilities)
+      self.repeated_block(w, "Devices", AWS_ECS_TaskDefinition_Device)
+      self.property(w, "InitProcessEnabled", "init_process_enabled", BasicValueConverter())
+      self.property(w, "MaxSwap", "max_swap", BasicValueConverter())
+      self.property(w, "SharedMemorySize", "shared_memory_size", BasicValueConverter())
+      self.property(w, "Swappiness", "swappiness", BasicValueConverter())
+      self.repeated_block(w, "Tmpfs", AWS_ECS_TaskDefinition_Tmpfs)
 
-  props = {
-    "Capabilities": (AWS_ECS_TaskDefinition_KernelCapabilities, "capabilities"),
-    "Devices": (BlockValueConverter(AWS_ECS_TaskDefinition_Device), None),
-    "InitProcessEnabled": (BasicValueConverter(), "init_process_enabled"),
-    "MaxSwap": (BasicValueConverter(), "max_swap"),
-    "SharedMemorySize": (BasicValueConverter(), "shared_memory_size"),
-    "Swappiness": (BasicValueConverter(), "swappiness"),
-    "Tmpfs": (BlockValueConverter(AWS_ECS_TaskDefinition_Tmpfs), None),
-  }
 
 class AWS_ECS_TaskDefinition_ContainerDependency(CloudFormationProperty):
-  entity = "AWS::ECS::TaskDefinition"
-  tf_block_type = "container_dependency"
+  def write(self, w):
+    with w.block("container_dependency"):
+      self.property(w, "Condition", "condition", StringValueConverter())
+      self.property(w, "ContainerName", "container_name", StringValueConverter())
 
-  props = {
-    "Condition": (StringValueConverter(), "condition"),
-    "ContainerName": (StringValueConverter(), "container_name"),
-  }
 
 class AWS_ECS_TaskDefinition_ProxyConfiguration(CloudFormationProperty):
-  entity = "AWS::ECS::TaskDefinition"
-  tf_block_type = "proxy_configuration"
+  def write(self, w):
+    with w.block("proxy_configuration"):
+      self.property(w, "ContainerName", "container_name", StringValueConverter())
+      self.repeated_block(w, "ProxyConfigurationProperties", AWS_ECS_TaskDefinition_KeyValuePair)
+      self.property(w, "Type", "type", StringValueConverter())
 
-  props = {
-    "ContainerName": (StringValueConverter(), "container_name"),
-    "ProxyConfigurationProperties": (BlockValueConverter(AWS_ECS_TaskDefinition_KeyValuePair), None),
-    "Type": (StringValueConverter(), "type"),
-  }
 
 class AWS_ECS_TaskSet_Scale(CloudFormationProperty):
-  entity = "AWS::ECS::TaskSet"
-  tf_block_type = "scale"
+  def write(self, w):
+    with w.block("scale"):
+      self.property(w, "Unit", "unit", StringValueConverter())
+      self.property(w, "Value", "value", BasicValueConverter())
 
-  props = {
-    "Unit": (StringValueConverter(), "unit"),
-    "Value": (BasicValueConverter(), "value"),
-  }
 
 class AWS_ECS_TaskDefinition_HostVolumeProperties(CloudFormationProperty):
-  entity = "AWS::ECS::TaskDefinition"
-  tf_block_type = "host_volume_properties"
+  def write(self, w):
+    with w.block("host_volume_properties"):
+      self.property(w, "SourcePath", "source_path", StringValueConverter())
 
-  props = {
-    "SourcePath": (StringValueConverter(), "source_path"),
-  }
 
 class AWS_ECS_Cluster_CapacityProviderStrategyItem(CloudFormationProperty):
-  entity = "AWS::ECS::Cluster"
-  tf_block_type = "capacity_provider_strategy_item"
+  def write(self, w):
+    with w.block("capacity_provider_strategy_item"):
+      self.property(w, "CapacityProvider", "capacity_provider", StringValueConverter())
+      self.property(w, "Weight", "weight", BasicValueConverter())
+      self.property(w, "Base", "base", BasicValueConverter())
 
-  props = {
-    "CapacityProvider": (StringValueConverter(), "capacity_provider"),
-    "Weight": (BasicValueConverter(), "weight"),
-    "Base": (BasicValueConverter(), "base"),
-  }
 
 class AWS_ECS_TaskDefinition_RepositoryCredentials(CloudFormationProperty):
-  entity = "AWS::ECS::TaskDefinition"
-  tf_block_type = "repository_credentials"
+  def write(self, w):
+    with w.block("repository_credentials"):
+      self.property(w, "CredentialsParameter", "credentials_parameter", StringValueConverter())
 
-  props = {
-    "CredentialsParameter": (StringValueConverter(), "credentials_parameter"),
-  }
 
 class AWS_ECS_Cluster(CloudFormationResource):
-  terraform_resource = "aws_ecs_cluster"
+  cfn_type = "AWS::ECS::Cluster"
+  tf_type = "aws_ecs_cluster"
+  ref = "arn"
 
-  resource_type = "AWS::ECS::Cluster"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "ClusterName", "cluster_name", StringValueConverter())
+      self.repeated_block(w, "ClusterSettings", AWS_ECS_Cluster_ClusterSettings)
+      self.property(w, "CapacityProviders", "capacity_providers", ListValueConverter(StringValueConverter()))
+      self.repeated_block(w, "DefaultCapacityProviderStrategy", AWS_ECS_Cluster_CapacityProviderStrategyItem)
 
-  props = {
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "ClusterName": (StringValueConverter(), "cluster_name"),
-    "ClusterSettings": (BlockValueConverter(AWS_ECS_Cluster_ClusterSettings), None),
-    "CapacityProviders": (ListValueConverter(StringValueConverter()), "capacity_providers"),
-    "DefaultCapacityProviderStrategy": (BlockValueConverter(AWS_ECS_Cluster_CapacityProviderStrategyItem), None),
-  }
 
 class AWS_ECS_CapacityProvider(CloudFormationResource):
-  terraform_resource = "aws_ecs_capacity_provider"
+  cfn_type = "AWS::ECS::CapacityProvider"
+  tf_type = "aws_ecs_capacity_provider"
+  ref = "arn"
 
-  resource_type = "AWS::ECS::CapacityProvider"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "AutoScalingGroupProvider", AWS_ECS_CapacityProvider_AutoScalingGroupProvider)
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "AutoScalingGroupProvider": (AWS_ECS_CapacityProvider_AutoScalingGroupProvider, "auto_scaling_group_provider"),
-    "Name": (StringValueConverter(), "name"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 
 class AWS_ECS_PrimaryTaskSet(CloudFormationResource):
-  terraform_resource = "aws_ecs_primary_task_set"
+  cfn_type = "AWS::ECS::PrimaryTaskSet"
+  tf_type = "aws_ecs_primary_task_set"
+  ref = "arn"
 
-  resource_type = "AWS::ECS::PrimaryTaskSet"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Cluster", "cluster", StringValueConverter())
+      self.property(w, "TaskSetId", "task_set_id", StringValueConverter())
+      self.property(w, "Service", "service", StringValueConverter())
 
-  props = {
-    "Cluster": (StringValueConverter(), "cluster"),
-    "TaskSetId": (StringValueConverter(), "task_set_id"),
-    "Service": (StringValueConverter(), "service"),
-  }
 
 class AWS_ECS_Service(CloudFormationResource):
-  terraform_resource = "aws_ecs_service"
+  cfn_type = "AWS::ECS::Service"
+  tf_type = "aws_ecs_service"
+  ref = "arn"
 
-  resource_type = "AWS::ECS::Service"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Cluster", "cluster", StringValueConverter())
+      self.block(w, "DeploymentConfiguration", AWS_ECS_Service_DeploymentConfiguration)
+      self.block(w, "DeploymentController", AWS_ECS_Service_DeploymentController)
+      self.property(w, "DesiredCount", "desired_count", BasicValueConverter())
+      self.property(w, "EnableECSManagedTags", "enable_ecs_managed_tags", BasicValueConverter())
+      self.property(w, "HealthCheckGracePeriodSeconds", "health_check_grace_period_seconds", BasicValueConverter())
+      self.property(w, "LaunchType", "launch_type", StringValueConverter())
+      self.repeated_block(w, "LoadBalancers", AWS_ECS_Service_LoadBalancer)
+      self.block(w, "NetworkConfiguration", AWS_ECS_Service_NetworkConfiguration)
+      self.repeated_block(w, "PlacementConstraints", AWS_ECS_Service_PlacementConstraint)
+      self.repeated_block(w, "PlacementStrategies", AWS_ECS_Service_PlacementStrategy)
+      self.property(w, "PlatformVersion", "platform_version", StringValueConverter())
+      self.property(w, "PropagateTags", "propagate_tags", StringValueConverter())
+      self.property(w, "Role", "role", StringValueConverter())
+      self.property(w, "SchedulingStrategy", "scheduling_strategy", StringValueConverter())
+      self.property(w, "ServiceName", "service_name", StringValueConverter())
+      self.repeated_block(w, "ServiceRegistries", AWS_ECS_Service_ServiceRegistry)
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "TaskDefinition", "task_definition", StringValueConverter())
 
-  props = {
-    "Cluster": (StringValueConverter(), "cluster"),
-    "DeploymentConfiguration": (AWS_ECS_Service_DeploymentConfiguration, "deployment_configuration"),
-    "DeploymentController": (AWS_ECS_Service_DeploymentController, "deployment_controller"),
-    "DesiredCount": (BasicValueConverter(), "desired_count"),
-    "EnableECSManagedTags": (BasicValueConverter(), "enable_ecs_managed_tags"),
-    "HealthCheckGracePeriodSeconds": (BasicValueConverter(), "health_check_grace_period_seconds"),
-    "LaunchType": (StringValueConverter(), "launch_type"),
-    "LoadBalancers": (BlockValueConverter(AWS_ECS_Service_LoadBalancer), None),
-    "NetworkConfiguration": (AWS_ECS_Service_NetworkConfiguration, "network_configuration"),
-    "PlacementConstraints": (BlockValueConverter(AWS_ECS_Service_PlacementConstraint), None),
-    "PlacementStrategies": (BlockValueConverter(AWS_ECS_Service_PlacementStrategy), None),
-    "PlatformVersion": (StringValueConverter(), "platform_version"),
-    "PropagateTags": (StringValueConverter(), "propagate_tags"),
-    "Role": (StringValueConverter(), "role"),
-    "SchedulingStrategy": (StringValueConverter(), "scheduling_strategy"),
-    "ServiceName": (StringValueConverter(), "service_name"),
-    "ServiceRegistries": (BlockValueConverter(AWS_ECS_Service_ServiceRegistry), None),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "TaskDefinition": (StringValueConverter(), "task_definition"),
-  }
 
 class AWS_ECS_TaskSet(CloudFormationResource):
-  terraform_resource = "aws_ecs_task_set"
+  cfn_type = "AWS::ECS::TaskSet"
+  tf_type = "aws_ecs_task_set"
+  ref = "arn"
 
-  resource_type = "AWS::ECS::TaskSet"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Cluster", "cluster", StringValueConverter())
+      self.property(w, "ExternalId", "external_id", StringValueConverter())
+      self.property(w, "LaunchType", "launch_type", StringValueConverter())
+      self.repeated_block(w, "LoadBalancers", AWS_ECS_TaskSet_LoadBalancer)
+      self.block(w, "NetworkConfiguration", AWS_ECS_TaskSet_NetworkConfiguration)
+      self.property(w, "PlatformVersion", "platform_version", StringValueConverter())
+      self.block(w, "Scale", AWS_ECS_TaskSet_Scale)
+      self.property(w, "Service", "service", StringValueConverter())
+      self.repeated_block(w, "ServiceRegistries", AWS_ECS_TaskSet_ServiceRegistry)
+      self.property(w, "TaskDefinition", "task_definition", StringValueConverter())
 
-  props = {
-    "Cluster": (StringValueConverter(), "cluster"),
-    "ExternalId": (StringValueConverter(), "external_id"),
-    "LaunchType": (StringValueConverter(), "launch_type"),
-    "LoadBalancers": (BlockValueConverter(AWS_ECS_TaskSet_LoadBalancer), None),
-    "NetworkConfiguration": (AWS_ECS_TaskSet_NetworkConfiguration, "network_configuration"),
-    "PlatformVersion": (StringValueConverter(), "platform_version"),
-    "Scale": (AWS_ECS_TaskSet_Scale, "scale"),
-    "Service": (StringValueConverter(), "service"),
-    "ServiceRegistries": (BlockValueConverter(AWS_ECS_TaskSet_ServiceRegistry), None),
-    "TaskDefinition": (StringValueConverter(), "task_definition"),
-  }
 
 class AWS_ECS_TaskDefinition_LogConfiguration(CloudFormationProperty):
-  entity = "AWS::ECS::TaskDefinition"
-  tf_block_type = "log_configuration"
+  def write(self, w):
+    with w.block("log_configuration"):
+      self.property(w, "LogDriver", "log_driver", StringValueConverter())
+      self.property(w, "Options", "options", MapValueConverter(StringValueConverter()))
+      self.repeated_block(w, "SecretOptions", AWS_ECS_TaskDefinition_Secret)
 
-  props = {
-    "LogDriver": (StringValueConverter(), "log_driver"),
-    "Options": (MapValueConverter(StringValueConverter()), "options"),
-    "SecretOptions": (BlockValueConverter(AWS_ECS_TaskDefinition_Secret), None),
-  }
 
 class AWS_ECS_TaskDefinition_Volume(CloudFormationProperty):
-  entity = "AWS::ECS::TaskDefinition"
-  tf_block_type = "volume"
+  def write(self, w):
+    with w.block("volume"):
+      self.block(w, "DockerVolumeConfiguration", AWS_ECS_TaskDefinition_DockerVolumeConfiguration)
+      self.block(w, "Host", AWS_ECS_TaskDefinition_HostVolumeProperties)
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "DockerVolumeConfiguration": (AWS_ECS_TaskDefinition_DockerVolumeConfiguration, "docker_volume_configuration"),
-    "Host": (AWS_ECS_TaskDefinition_HostVolumeProperties, "host"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_ECS_TaskDefinition_ContainerDefinition(CloudFormationProperty):
-  entity = "AWS::ECS::TaskDefinition"
-  tf_block_type = "container_definition"
+  def write(self, w):
+    with w.block("container_definition"):
+      self.property(w, "Command", "command", ListValueConverter(StringValueConverter()))
+      self.property(w, "Cpu", "cpu", BasicValueConverter())
+      self.repeated_block(w, "DependsOn", AWS_ECS_TaskDefinition_ContainerDependency)
+      self.property(w, "DisableNetworking", "disable_networking", BasicValueConverter())
+      self.property(w, "DnsSearchDomains", "dns_search_domains", ListValueConverter(StringValueConverter()))
+      self.property(w, "DnsServers", "dns_servers", ListValueConverter(StringValueConverter()))
+      self.property(w, "DockerLabels", "docker_labels", MapValueConverter(StringValueConverter()))
+      self.property(w, "DockerSecurityOptions", "docker_security_options", ListValueConverter(StringValueConverter()))
+      self.property(w, "EntryPoint", "entry_point", ListValueConverter(StringValueConverter()))
+      self.repeated_block(w, "Environment", AWS_ECS_TaskDefinition_KeyValuePair)
+      self.property(w, "Essential", "essential", BasicValueConverter())
+      self.repeated_block(w, "ExtraHosts", AWS_ECS_TaskDefinition_HostEntry)
+      self.block(w, "FirelensConfiguration", AWS_ECS_TaskDefinition_FirelensConfiguration)
+      self.block(w, "HealthCheck", AWS_ECS_TaskDefinition_HealthCheck)
+      self.property(w, "Hostname", "hostname", StringValueConverter())
+      self.property(w, "Image", "image", StringValueConverter())
+      self.property(w, "Interactive", "interactive", BasicValueConverter())
+      self.property(w, "Links", "links", ListValueConverter(StringValueConverter()))
+      self.block(w, "LinuxParameters", AWS_ECS_TaskDefinition_LinuxParameters)
+      self.block(w, "LogConfiguration", AWS_ECS_TaskDefinition_LogConfiguration)
+      self.property(w, "Memory", "memory", BasicValueConverter())
+      self.property(w, "MemoryReservation", "memory_reservation", BasicValueConverter())
+      self.repeated_block(w, "MountPoints", AWS_ECS_TaskDefinition_MountPoint)
+      self.property(w, "Name", "name", StringValueConverter())
+      self.repeated_block(w, "PortMappings", AWS_ECS_TaskDefinition_PortMapping)
+      self.property(w, "Privileged", "privileged", BasicValueConverter())
+      self.property(w, "PseudoTerminal", "pseudo_terminal", BasicValueConverter())
+      self.property(w, "ReadonlyRootFilesystem", "readonly_root_filesystem", BasicValueConverter())
+      self.block(w, "RepositoryCredentials", AWS_ECS_TaskDefinition_RepositoryCredentials)
+      self.repeated_block(w, "ResourceRequirements", AWS_ECS_TaskDefinition_ResourceRequirement)
+      self.repeated_block(w, "Secrets", AWS_ECS_TaskDefinition_Secret)
+      self.property(w, "StartTimeout", "start_timeout", BasicValueConverter())
+      self.property(w, "StopTimeout", "stop_timeout", BasicValueConverter())
+      self.repeated_block(w, "SystemControls", AWS_ECS_TaskDefinition_SystemControl)
+      self.repeated_block(w, "Ulimits", AWS_ECS_TaskDefinition_Ulimit)
+      self.property(w, "User", "user", StringValueConverter())
+      self.repeated_block(w, "VolumesFrom", AWS_ECS_TaskDefinition_VolumeFrom)
+      self.property(w, "WorkingDirectory", "working_directory", StringValueConverter())
 
-  props = {
-    "Command": (ListValueConverter(StringValueConverter()), "command"),
-    "Cpu": (BasicValueConverter(), "cpu"),
-    "DependsOn": (BlockValueConverter(AWS_ECS_TaskDefinition_ContainerDependency), None),
-    "DisableNetworking": (BasicValueConverter(), "disable_networking"),
-    "DnsSearchDomains": (ListValueConverter(StringValueConverter()), "dns_search_domains"),
-    "DnsServers": (ListValueConverter(StringValueConverter()), "dns_servers"),
-    "DockerLabels": (MapValueConverter(StringValueConverter()), "docker_labels"),
-    "DockerSecurityOptions": (ListValueConverter(StringValueConverter()), "docker_security_options"),
-    "EntryPoint": (ListValueConverter(StringValueConverter()), "entry_point"),
-    "Environment": (BlockValueConverter(AWS_ECS_TaskDefinition_KeyValuePair), None),
-    "Essential": (BasicValueConverter(), "essential"),
-    "ExtraHosts": (BlockValueConverter(AWS_ECS_TaskDefinition_HostEntry), None),
-    "FirelensConfiguration": (AWS_ECS_TaskDefinition_FirelensConfiguration, "firelens_configuration"),
-    "HealthCheck": (AWS_ECS_TaskDefinition_HealthCheck, "health_check"),
-    "Hostname": (StringValueConverter(), "hostname"),
-    "Image": (StringValueConverter(), "image"),
-    "Interactive": (BasicValueConverter(), "interactive"),
-    "Links": (ListValueConverter(StringValueConverter()), "links"),
-    "LinuxParameters": (AWS_ECS_TaskDefinition_LinuxParameters, "linux_parameters"),
-    "LogConfiguration": (AWS_ECS_TaskDefinition_LogConfiguration, "log_configuration"),
-    "Memory": (BasicValueConverter(), "memory"),
-    "MemoryReservation": (BasicValueConverter(), "memory_reservation"),
-    "MountPoints": (BlockValueConverter(AWS_ECS_TaskDefinition_MountPoint), None),
-    "Name": (StringValueConverter(), "name"),
-    "PortMappings": (BlockValueConverter(AWS_ECS_TaskDefinition_PortMapping), None),
-    "Privileged": (BasicValueConverter(), "privileged"),
-    "PseudoTerminal": (BasicValueConverter(), "pseudo_terminal"),
-    "ReadonlyRootFilesystem": (BasicValueConverter(), "readonly_root_filesystem"),
-    "RepositoryCredentials": (AWS_ECS_TaskDefinition_RepositoryCredentials, "repository_credentials"),
-    "ResourceRequirements": (BlockValueConverter(AWS_ECS_TaskDefinition_ResourceRequirement), None),
-    "Secrets": (BlockValueConverter(AWS_ECS_TaskDefinition_Secret), None),
-    "StartTimeout": (BasicValueConverter(), "start_timeout"),
-    "StopTimeout": (BasicValueConverter(), "stop_timeout"),
-    "SystemControls": (BlockValueConverter(AWS_ECS_TaskDefinition_SystemControl), None),
-    "Ulimits": (BlockValueConverter(AWS_ECS_TaskDefinition_Ulimit), None),
-    "User": (StringValueConverter(), "user"),
-    "VolumesFrom": (BlockValueConverter(AWS_ECS_TaskDefinition_VolumeFrom), None),
-    "WorkingDirectory": (StringValueConverter(), "working_directory"),
-  }
 
 class AWS_ECS_TaskDefinition(CloudFormationResource):
-  terraform_resource = "aws_ecs_task_definition"
+  cfn_type = "AWS::ECS::TaskDefinition"
+  tf_type = "aws_ecs_task_definition"
+  ref = "arn"
 
-  resource_type = "AWS::ECS::TaskDefinition"
+  def write(self, w):
+    with self.resource_block(w):
+      self.repeated_block(w, "ContainerDefinitions", AWS_ECS_TaskDefinition_ContainerDefinition)
+      self.property(w, "Cpu", "cpu", StringValueConverter())
+      self.property(w, "ExecutionRoleArn", "execution_role_arn", StringValueConverter())
+      self.property(w, "Family", "family", StringValueConverter())
+      self.repeated_block(w, "InferenceAccelerators", AWS_ECS_TaskDefinition_InferenceAccelerator)
+      self.property(w, "IpcMode", "ipc_mode", StringValueConverter())
+      self.property(w, "Memory", "memory", StringValueConverter())
+      self.property(w, "NetworkMode", "network_mode", StringValueConverter())
+      self.property(w, "PidMode", "pid_mode", StringValueConverter())
+      self.repeated_block(w, "PlacementConstraints", AWS_ECS_TaskDefinition_TaskDefinitionPlacementConstraint)
+      self.block(w, "ProxyConfiguration", AWS_ECS_TaskDefinition_ProxyConfiguration)
+      self.property(w, "RequiresCompatibilities", "requires_compatibilities", ListValueConverter(StringValueConverter()))
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "TaskRoleArn", "task_role_arn", StringValueConverter())
+      self.repeated_block(w, "Volumes", AWS_ECS_TaskDefinition_Volume)
 
-  props = {
-    "ContainerDefinitions": (BlockValueConverter(AWS_ECS_TaskDefinition_ContainerDefinition), None),
-    "Cpu": (StringValueConverter(), "cpu"),
-    "ExecutionRoleArn": (StringValueConverter(), "execution_role_arn"),
-    "Family": (StringValueConverter(), "family"),
-    "InferenceAccelerators": (BlockValueConverter(AWS_ECS_TaskDefinition_InferenceAccelerator), None),
-    "IpcMode": (StringValueConverter(), "ipc_mode"),
-    "Memory": (StringValueConverter(), "memory"),
-    "NetworkMode": (StringValueConverter(), "network_mode"),
-    "PidMode": (StringValueConverter(), "pid_mode"),
-    "PlacementConstraints": (BlockValueConverter(AWS_ECS_TaskDefinition_TaskDefinitionPlacementConstraint), None),
-    "ProxyConfiguration": (AWS_ECS_TaskDefinition_ProxyConfiguration, "proxy_configuration"),
-    "RequiresCompatibilities": (ListValueConverter(StringValueConverter()), "requires_compatibilities"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "TaskRoleArn": (StringValueConverter(), "task_role_arn"),
-    "Volumes": (BlockValueConverter(AWS_ECS_TaskDefinition_Volume), None),
-  }
 

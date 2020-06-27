@@ -1,218 +1,183 @@
 from . import *
 
 class AWS_CodeDeploy_DeploymentGroup_S3Location(CloudFormationProperty):
-  entity = "AWS::CodeDeploy::DeploymentGroup"
-  tf_block_type = "s3_location"
+  def write(self, w):
+    with w.block("s3_location"):
+      self.property(w, "Bucket", "bucket", StringValueConverter())
+      self.property(w, "BundleType", "bundle_type", StringValueConverter())
+      self.property(w, "ETag", "e_tag", StringValueConverter())
+      self.property(w, "Key", "key", StringValueConverter())
+      self.property(w, "Version", "version", StringValueConverter())
 
-  props = {
-    "Bucket": (StringValueConverter(), "bucket"),
-    "BundleType": (StringValueConverter(), "bundle_type"),
-    "ETag": (StringValueConverter(), "e_tag"),
-    "Key": (StringValueConverter(), "key"),
-    "Version": (StringValueConverter(), "version"),
-  }
 
 class AWS_CodeDeploy_DeploymentGroup_TagFilter(CloudFormationProperty):
-  entity = "AWS::CodeDeploy::DeploymentGroup"
-  tf_block_type = "tag_filter"
+  def write(self, w):
+    with w.block("tag_filter"):
+      self.property(w, "Key", "key", StringValueConverter())
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "Value", "value", StringValueConverter())
 
-  props = {
-    "Key": (StringValueConverter(), "key"),
-    "Type": (StringValueConverter(), "type"),
-    "Value": (StringValueConverter(), "value"),
-  }
 
 class AWS_CodeDeploy_DeploymentGroup_GitHubLocation(CloudFormationProperty):
-  entity = "AWS::CodeDeploy::DeploymentGroup"
-  tf_block_type = "git_hub_location"
+  def write(self, w):
+    with w.block("git_hub_location"):
+      self.property(w, "CommitId", "commit_id", StringValueConverter())
+      self.property(w, "Repository", "repository", StringValueConverter())
 
-  props = {
-    "CommitId": (StringValueConverter(), "commit_id"),
-    "Repository": (StringValueConverter(), "repository"),
-  }
 
 class AWS_CodeDeploy_DeploymentGroup_TargetGroupInfo(CloudFormationProperty):
-  entity = "AWS::CodeDeploy::DeploymentGroup"
-  tf_block_type = "target_group_info"
+  def write(self, w):
+    with w.block("target_group_info"):
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_CodeDeploy_DeploymentGroup_ELBInfo(CloudFormationProperty):
-  entity = "AWS::CodeDeploy::DeploymentGroup"
-  tf_block_type = "elb_info"
+  def write(self, w):
+    with w.block("elb_info"):
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_CodeDeploy_DeploymentGroup_OnPremisesTagSetListObject(CloudFormationProperty):
-  entity = "AWS::CodeDeploy::DeploymentGroup"
-  tf_block_type = "on_premises_tag_set_list_object"
+  def write(self, w):
+    with w.block("on_premises_tag_set_list_object"):
+      self.repeated_block(w, "OnPremisesTagGroup", AWS_CodeDeploy_DeploymentGroup_TagFilter)
 
-  props = {
-    "OnPremisesTagGroup": (BlockValueConverter(AWS_CodeDeploy_DeploymentGroup_TagFilter), None),
-  }
 
 class AWS_CodeDeploy_DeploymentGroup_DeploymentStyle(CloudFormationProperty):
-  entity = "AWS::CodeDeploy::DeploymentGroup"
-  tf_block_type = "deployment_style"
+  def write(self, w):
+    with w.block("deployment_style"):
+      self.property(w, "DeploymentOption", "deployment_option", StringValueConverter())
+      self.property(w, "DeploymentType", "deployment_type", StringValueConverter())
 
-  props = {
-    "DeploymentOption": (StringValueConverter(), "deployment_option"),
-    "DeploymentType": (StringValueConverter(), "deployment_type"),
-  }
 
 class AWS_CodeDeploy_DeploymentGroup_Alarm(CloudFormationProperty):
-  entity = "AWS::CodeDeploy::DeploymentGroup"
-  tf_block_type = "alarm"
+  def write(self, w):
+    with w.block("alarm"):
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_CodeDeploy_DeploymentGroup_EC2TagFilter(CloudFormationProperty):
-  entity = "AWS::CodeDeploy::DeploymentGroup"
-  tf_block_type = "ec2_tag_filter"
+  def write(self, w):
+    with w.block("ec2_tag_filter"):
+      self.property(w, "Key", "key", StringValueConverter())
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "Value", "value", StringValueConverter())
 
-  props = {
-    "Key": (StringValueConverter(), "key"),
-    "Type": (StringValueConverter(), "type"),
-    "Value": (StringValueConverter(), "value"),
-  }
 
 class AWS_CodeDeploy_DeploymentGroup_OnPremisesTagSet(CloudFormationProperty):
-  entity = "AWS::CodeDeploy::DeploymentGroup"
-  tf_block_type = "on_premises_tag_set"
+  def write(self, w):
+    with w.block("on_premises_tag_set"):
+      self.repeated_block(w, "OnPremisesTagSetList", AWS_CodeDeploy_DeploymentGroup_OnPremisesTagSetListObject)
 
-  props = {
-    "OnPremisesTagSetList": (BlockValueConverter(AWS_CodeDeploy_DeploymentGroup_OnPremisesTagSetListObject), None),
-  }
 
 class AWS_CodeDeploy_DeploymentGroup_LoadBalancerInfo(CloudFormationProperty):
-  entity = "AWS::CodeDeploy::DeploymentGroup"
-  tf_block_type = "load_balancer_info"
+  def write(self, w):
+    with w.block("load_balancer_info"):
+      self.repeated_block(w, "ElbInfoList", AWS_CodeDeploy_DeploymentGroup_ELBInfo)
+      self.repeated_block(w, "TargetGroupInfoList", AWS_CodeDeploy_DeploymentGroup_TargetGroupInfo)
 
-  props = {
-    "ElbInfoList": (BlockValueConverter(AWS_CodeDeploy_DeploymentGroup_ELBInfo), None),
-    "TargetGroupInfoList": (BlockValueConverter(AWS_CodeDeploy_DeploymentGroup_TargetGroupInfo), None),
-  }
 
 class AWS_CodeDeploy_DeploymentGroup_RevisionLocation(CloudFormationProperty):
-  entity = "AWS::CodeDeploy::DeploymentGroup"
-  tf_block_type = "revision_location"
+  def write(self, w):
+    with w.block("revision_location"):
+      self.block(w, "GitHubLocation", AWS_CodeDeploy_DeploymentGroup_GitHubLocation)
+      self.property(w, "RevisionType", "revision_type", StringValueConverter())
+      self.block(w, "S3Location", AWS_CodeDeploy_DeploymentGroup_S3Location)
 
-  props = {
-    "GitHubLocation": (AWS_CodeDeploy_DeploymentGroup_GitHubLocation, "git_hub_location"),
-    "RevisionType": (StringValueConverter(), "revision_type"),
-    "S3Location": (AWS_CodeDeploy_DeploymentGroup_S3Location, "s3_location"),
-  }
 
 class AWS_CodeDeploy_DeploymentGroup_TriggerConfig(CloudFormationProperty):
-  entity = "AWS::CodeDeploy::DeploymentGroup"
-  tf_block_type = "trigger_config"
+  def write(self, w):
+    with w.block("trigger_config"):
+      self.property(w, "TriggerEvents", "trigger_events", ListValueConverter(StringValueConverter()))
+      self.property(w, "TriggerName", "trigger_name", StringValueConverter())
+      self.property(w, "TriggerTargetArn", "trigger_target_arn", StringValueConverter())
 
-  props = {
-    "TriggerEvents": (ListValueConverter(StringValueConverter()), "trigger_events"),
-    "TriggerName": (StringValueConverter(), "trigger_name"),
-    "TriggerTargetArn": (StringValueConverter(), "trigger_target_arn"),
-  }
 
 class AWS_CodeDeploy_DeploymentGroup_AlarmConfiguration(CloudFormationProperty):
-  entity = "AWS::CodeDeploy::DeploymentGroup"
-  tf_block_type = "alarm_configuration"
+  def write(self, w):
+    with w.block("alarm_configuration"):
+      self.repeated_block(w, "Alarms", AWS_CodeDeploy_DeploymentGroup_Alarm)
+      self.property(w, "Enabled", "enabled", BasicValueConverter())
+      self.property(w, "IgnorePollAlarmFailure", "ignore_poll_alarm_failure", BasicValueConverter())
 
-  props = {
-    "Alarms": (BlockValueConverter(AWS_CodeDeploy_DeploymentGroup_Alarm), None),
-    "Enabled": (BasicValueConverter(), "enabled"),
-    "IgnorePollAlarmFailure": (BasicValueConverter(), "ignore_poll_alarm_failure"),
-  }
 
 class AWS_CodeDeploy_DeploymentConfig_MinimumHealthyHosts(CloudFormationProperty):
-  entity = "AWS::CodeDeploy::DeploymentConfig"
-  tf_block_type = "minimum_healthy_hosts"
+  def write(self, w):
+    with w.block("minimum_healthy_hosts"):
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "Value", "value", BasicValueConverter())
 
-  props = {
-    "Type": (StringValueConverter(), "type"),
-    "Value": (BasicValueConverter(), "value"),
-  }
 
 class AWS_CodeDeploy_DeploymentGroup_AutoRollbackConfiguration(CloudFormationProperty):
-  entity = "AWS::CodeDeploy::DeploymentGroup"
-  tf_block_type = "auto_rollback_configuration"
+  def write(self, w):
+    with w.block("auto_rollback_configuration"):
+      self.property(w, "Enabled", "enabled", BasicValueConverter())
+      self.property(w, "Events", "events", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "Enabled": (BasicValueConverter(), "enabled"),
-    "Events": (ListValueConverter(StringValueConverter()), "events"),
-  }
 
 class AWS_CodeDeploy_DeploymentGroup_EC2TagSetListObject(CloudFormationProperty):
-  entity = "AWS::CodeDeploy::DeploymentGroup"
-  tf_block_type = "ec2_tag_set_list_object"
+  def write(self, w):
+    with w.block("ec2_tag_set_list_object"):
+      self.repeated_block(w, "Ec2TagGroup", AWS_CodeDeploy_DeploymentGroup_EC2TagFilter)
 
-  props = {
-    "Ec2TagGroup": (BlockValueConverter(AWS_CodeDeploy_DeploymentGroup_EC2TagFilter), None),
-  }
 
 class AWS_CodeDeploy_DeploymentConfig(CloudFormationResource):
-  terraform_resource = "aws_code_deploy_deployment_config"
+  cfn_type = "AWS::CodeDeploy::DeploymentConfig"
+  tf_type = "aws_code_deploy_deployment_config"
+  ref = "arn"
 
-  resource_type = "AWS::CodeDeploy::DeploymentConfig"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "DeploymentConfigName", "deployment_config_name", StringValueConverter())
+      self.block(w, "MinimumHealthyHosts", AWS_CodeDeploy_DeploymentConfig_MinimumHealthyHosts)
 
-  props = {
-    "DeploymentConfigName": (StringValueConverter(), "deployment_config_name"),
-    "MinimumHealthyHosts": (AWS_CodeDeploy_DeploymentConfig_MinimumHealthyHosts, "minimum_healthy_hosts"),
-  }
 
 class AWS_CodeDeploy_Application(CloudFormationResource):
-  terraform_resource = "aws_code_deploy_application"
+  cfn_type = "AWS::CodeDeploy::Application"
+  tf_type = "aws_code_deploy_application"
+  ref = "arn"
 
-  resource_type = "AWS::CodeDeploy::Application"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ApplicationName", "application_name", StringValueConverter())
+      self.property(w, "ComputePlatform", "compute_platform", StringValueConverter())
 
-  props = {
-    "ApplicationName": (StringValueConverter(), "application_name"),
-    "ComputePlatform": (StringValueConverter(), "compute_platform"),
-  }
 
 class AWS_CodeDeploy_DeploymentGroup_Deployment(CloudFormationProperty):
-  entity = "AWS::CodeDeploy::DeploymentGroup"
-  tf_block_type = "deployment"
+  def write(self, w):
+    with w.block("deployment"):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "IgnoreApplicationStopFailures", "ignore_application_stop_failures", BasicValueConverter())
+      self.block(w, "Revision", AWS_CodeDeploy_DeploymentGroup_RevisionLocation)
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "IgnoreApplicationStopFailures": (BasicValueConverter(), "ignore_application_stop_failures"),
-    "Revision": (AWS_CodeDeploy_DeploymentGroup_RevisionLocation, "revision"),
-  }
 
 class AWS_CodeDeploy_DeploymentGroup_EC2TagSet(CloudFormationProperty):
-  entity = "AWS::CodeDeploy::DeploymentGroup"
-  tf_block_type = "ec2_tag_set"
+  def write(self, w):
+    with w.block("ec2_tag_set"):
+      self.repeated_block(w, "Ec2TagSetList", AWS_CodeDeploy_DeploymentGroup_EC2TagSetListObject)
 
-  props = {
-    "Ec2TagSetList": (BlockValueConverter(AWS_CodeDeploy_DeploymentGroup_EC2TagSetListObject), None),
-  }
 
 class AWS_CodeDeploy_DeploymentGroup(CloudFormationResource):
-  terraform_resource = "aws_code_deploy_deployment_group"
+  cfn_type = "AWS::CodeDeploy::DeploymentGroup"
+  tf_type = "aws_code_deploy_deployment_group"
+  ref = "arn"
 
-  resource_type = "AWS::CodeDeploy::DeploymentGroup"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "AlarmConfiguration", AWS_CodeDeploy_DeploymentGroup_AlarmConfiguration)
+      self.property(w, "ApplicationName", "application_name", StringValueConverter())
+      self.block(w, "AutoRollbackConfiguration", AWS_CodeDeploy_DeploymentGroup_AutoRollbackConfiguration)
+      self.property(w, "AutoScalingGroups", "auto_scaling_groups", ListValueConverter(StringValueConverter()))
+      self.block(w, "Deployment", AWS_CodeDeploy_DeploymentGroup_Deployment)
+      self.property(w, "DeploymentConfigName", "deployment_config_name", StringValueConverter())
+      self.property(w, "DeploymentGroupName", "deployment_group_name", StringValueConverter())
+      self.block(w, "DeploymentStyle", AWS_CodeDeploy_DeploymentGroup_DeploymentStyle)
+      self.repeated_block(w, "Ec2TagFilters", AWS_CodeDeploy_DeploymentGroup_EC2TagFilter)
+      self.block(w, "Ec2TagSet", AWS_CodeDeploy_DeploymentGroup_EC2TagSet)
+      self.block(w, "LoadBalancerInfo", AWS_CodeDeploy_DeploymentGroup_LoadBalancerInfo)
+      self.repeated_block(w, "OnPremisesInstanceTagFilters", AWS_CodeDeploy_DeploymentGroup_TagFilter)
+      self.block(w, "OnPremisesTagSet", AWS_CodeDeploy_DeploymentGroup_OnPremisesTagSet)
+      self.property(w, "ServiceRoleArn", "service_role_arn", StringValueConverter())
+      self.repeated_block(w, "TriggerConfigurations", AWS_CodeDeploy_DeploymentGroup_TriggerConfig)
 
-  props = {
-    "AlarmConfiguration": (AWS_CodeDeploy_DeploymentGroup_AlarmConfiguration, "alarm_configuration"),
-    "ApplicationName": (StringValueConverter(), "application_name"),
-    "AutoRollbackConfiguration": (AWS_CodeDeploy_DeploymentGroup_AutoRollbackConfiguration, "auto_rollback_configuration"),
-    "AutoScalingGroups": (ListValueConverter(StringValueConverter()), "auto_scaling_groups"),
-    "Deployment": (AWS_CodeDeploy_DeploymentGroup_Deployment, "deployment"),
-    "DeploymentConfigName": (StringValueConverter(), "deployment_config_name"),
-    "DeploymentGroupName": (StringValueConverter(), "deployment_group_name"),
-    "DeploymentStyle": (AWS_CodeDeploy_DeploymentGroup_DeploymentStyle, "deployment_style"),
-    "Ec2TagFilters": (BlockValueConverter(AWS_CodeDeploy_DeploymentGroup_EC2TagFilter), None),
-    "Ec2TagSet": (AWS_CodeDeploy_DeploymentGroup_EC2TagSet, "ec2_tag_set"),
-    "LoadBalancerInfo": (AWS_CodeDeploy_DeploymentGroup_LoadBalancerInfo, "load_balancer_info"),
-    "OnPremisesInstanceTagFilters": (BlockValueConverter(AWS_CodeDeploy_DeploymentGroup_TagFilter), None),
-    "OnPremisesTagSet": (AWS_CodeDeploy_DeploymentGroup_OnPremisesTagSet, "on_premises_tag_set"),
-    "ServiceRoleArn": (StringValueConverter(), "service_role_arn"),
-    "TriggerConfigurations": (BlockValueConverter(AWS_CodeDeploy_DeploymentGroup_TriggerConfig), None),
-  }
 

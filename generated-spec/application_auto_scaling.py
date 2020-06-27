@@ -1,130 +1,114 @@
 from . import *
 
 class AWS_ApplicationAutoScaling_ScalingPolicy_MetricDimension(CloudFormationProperty):
-  entity = "AWS::ApplicationAutoScaling::ScalingPolicy"
-  tf_block_type = "metric_dimension"
+  def write(self, w):
+    with w.block("metric_dimension"):
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Value", "value", StringValueConverter())
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-    "Value": (StringValueConverter(), "value"),
-  }
 
 class AWS_ApplicationAutoScaling_ScalableTarget_SuspendedState(CloudFormationProperty):
-  entity = "AWS::ApplicationAutoScaling::ScalableTarget"
-  tf_block_type = "suspended_state"
+  def write(self, w):
+    with w.block("suspended_state"):
+      self.property(w, "DynamicScalingInSuspended", "dynamic_scaling_in_suspended", BasicValueConverter())
+      self.property(w, "DynamicScalingOutSuspended", "dynamic_scaling_out_suspended", BasicValueConverter())
+      self.property(w, "ScheduledScalingSuspended", "scheduled_scaling_suspended", BasicValueConverter())
 
-  props = {
-    "DynamicScalingInSuspended": (BasicValueConverter(), "dynamic_scaling_in_suspended"),
-    "DynamicScalingOutSuspended": (BasicValueConverter(), "dynamic_scaling_out_suspended"),
-    "ScheduledScalingSuspended": (BasicValueConverter(), "scheduled_scaling_suspended"),
-  }
 
 class AWS_ApplicationAutoScaling_ScalingPolicy_PredefinedMetricSpecification(CloudFormationProperty):
-  entity = "AWS::ApplicationAutoScaling::ScalingPolicy"
-  tf_block_type = "predefined_metric_specification"
+  def write(self, w):
+    with w.block("predefined_metric_specification"):
+      self.property(w, "PredefinedMetricType", "predefined_metric_type", StringValueConverter())
+      self.property(w, "ResourceLabel", "resource_label", StringValueConverter())
 
-  props = {
-    "PredefinedMetricType": (StringValueConverter(), "predefined_metric_type"),
-    "ResourceLabel": (StringValueConverter(), "resource_label"),
-  }
 
 class AWS_ApplicationAutoScaling_ScalingPolicy_CustomizedMetricSpecification(CloudFormationProperty):
-  entity = "AWS::ApplicationAutoScaling::ScalingPolicy"
-  tf_block_type = "customized_metric_specification"
+  def write(self, w):
+    with w.block("customized_metric_specification"):
+      self.repeated_block(w, "Dimensions", AWS_ApplicationAutoScaling_ScalingPolicy_MetricDimension)
+      self.property(w, "MetricName", "metric_name", StringValueConverter())
+      self.property(w, "Namespace", "namespace", StringValueConverter())
+      self.property(w, "Statistic", "statistic", StringValueConverter())
+      self.property(w, "Unit", "unit", StringValueConverter())
 
-  props = {
-    "Dimensions": (BlockValueConverter(AWS_ApplicationAutoScaling_ScalingPolicy_MetricDimension), None),
-    "MetricName": (StringValueConverter(), "metric_name"),
-    "Namespace": (StringValueConverter(), "namespace"),
-    "Statistic": (StringValueConverter(), "statistic"),
-    "Unit": (StringValueConverter(), "unit"),
-  }
 
 class AWS_ApplicationAutoScaling_ScalingPolicy_StepAdjustment(CloudFormationProperty):
-  entity = "AWS::ApplicationAutoScaling::ScalingPolicy"
-  tf_block_type = "step_adjustment"
+  def write(self, w):
+    with w.block("step_adjustment"):
+      self.property(w, "MetricIntervalLowerBound", "metric_interval_lower_bound", BasicValueConverter())
+      self.property(w, "MetricIntervalUpperBound", "metric_interval_upper_bound", BasicValueConverter())
+      self.property(w, "ScalingAdjustment", "scaling_adjustment", BasicValueConverter())
 
-  props = {
-    "MetricIntervalLowerBound": (BasicValueConverter(), "metric_interval_lower_bound"),
-    "MetricIntervalUpperBound": (BasicValueConverter(), "metric_interval_upper_bound"),
-    "ScalingAdjustment": (BasicValueConverter(), "scaling_adjustment"),
-  }
 
 class AWS_ApplicationAutoScaling_ScalingPolicy_TargetTrackingScalingPolicyConfiguration(CloudFormationProperty):
-  entity = "AWS::ApplicationAutoScaling::ScalingPolicy"
-  tf_block_type = "target_tracking_scaling_policy_configuration"
+  def write(self, w):
+    with w.block("target_tracking_scaling_policy_configuration"):
+      self.block(w, "CustomizedMetricSpecification", AWS_ApplicationAutoScaling_ScalingPolicy_CustomizedMetricSpecification)
+      self.property(w, "DisableScaleIn", "disable_scale_in", BasicValueConverter())
+      self.block(w, "PredefinedMetricSpecification", AWS_ApplicationAutoScaling_ScalingPolicy_PredefinedMetricSpecification)
+      self.property(w, "ScaleInCooldown", "scale_in_cooldown", BasicValueConverter())
+      self.property(w, "ScaleOutCooldown", "scale_out_cooldown", BasicValueConverter())
+      self.property(w, "TargetValue", "target_value", BasicValueConverter())
 
-  props = {
-    "CustomizedMetricSpecification": (AWS_ApplicationAutoScaling_ScalingPolicy_CustomizedMetricSpecification, "customized_metric_specification"),
-    "DisableScaleIn": (BasicValueConverter(), "disable_scale_in"),
-    "PredefinedMetricSpecification": (AWS_ApplicationAutoScaling_ScalingPolicy_PredefinedMetricSpecification, "predefined_metric_specification"),
-    "ScaleInCooldown": (BasicValueConverter(), "scale_in_cooldown"),
-    "ScaleOutCooldown": (BasicValueConverter(), "scale_out_cooldown"),
-    "TargetValue": (BasicValueConverter(), "target_value"),
-  }
 
 class AWS_ApplicationAutoScaling_ScalableTarget_ScalableTargetAction(CloudFormationProperty):
-  entity = "AWS::ApplicationAutoScaling::ScalableTarget"
-  tf_block_type = "scalable_target_action"
+  def write(self, w):
+    with w.block("scalable_target_action"):
+      self.property(w, "MaxCapacity", "max_capacity", BasicValueConverter())
+      self.property(w, "MinCapacity", "min_capacity", BasicValueConverter())
 
-  props = {
-    "MaxCapacity": (BasicValueConverter(), "max_capacity"),
-    "MinCapacity": (BasicValueConverter(), "min_capacity"),
-  }
 
 class AWS_ApplicationAutoScaling_ScalingPolicy_StepScalingPolicyConfiguration(CloudFormationProperty):
-  entity = "AWS::ApplicationAutoScaling::ScalingPolicy"
-  tf_block_type = "step_scaling_policy_configuration"
+  def write(self, w):
+    with w.block("step_scaling_policy_configuration"):
+      self.property(w, "AdjustmentType", "adjustment_type", StringValueConverter())
+      self.property(w, "Cooldown", "cooldown", BasicValueConverter())
+      self.property(w, "MetricAggregationType", "metric_aggregation_type", StringValueConverter())
+      self.property(w, "MinAdjustmentMagnitude", "min_adjustment_magnitude", BasicValueConverter())
+      self.repeated_block(w, "StepAdjustments", AWS_ApplicationAutoScaling_ScalingPolicy_StepAdjustment)
 
-  props = {
-    "AdjustmentType": (StringValueConverter(), "adjustment_type"),
-    "Cooldown": (BasicValueConverter(), "cooldown"),
-    "MetricAggregationType": (StringValueConverter(), "metric_aggregation_type"),
-    "MinAdjustmentMagnitude": (BasicValueConverter(), "min_adjustment_magnitude"),
-    "StepAdjustments": (BlockValueConverter(AWS_ApplicationAutoScaling_ScalingPolicy_StepAdjustment), None),
-  }
 
 class AWS_ApplicationAutoScaling_ScalableTarget_ScheduledAction(CloudFormationProperty):
-  entity = "AWS::ApplicationAutoScaling::ScalableTarget"
-  tf_block_type = "scheduled_action"
+  def write(self, w):
+    with w.block("scheduled_action"):
+      self.property(w, "EndTime", "end_time", StringValueConverter())
+      self.block(w, "ScalableTargetAction", AWS_ApplicationAutoScaling_ScalableTarget_ScalableTargetAction)
+      self.property(w, "Schedule", "schedule", StringValueConverter())
+      self.property(w, "ScheduledActionName", "scheduled_action_name", StringValueConverter())
+      self.property(w, "StartTime", "start_time", StringValueConverter())
 
-  props = {
-    "EndTime": (StringValueConverter(), "end_time"),
-    "ScalableTargetAction": (AWS_ApplicationAutoScaling_ScalableTarget_ScalableTargetAction, "scalable_target_action"),
-    "Schedule": (StringValueConverter(), "schedule"),
-    "ScheduledActionName": (StringValueConverter(), "scheduled_action_name"),
-    "StartTime": (StringValueConverter(), "start_time"),
-  }
 
 class AWS_ApplicationAutoScaling_ScalingPolicy(CloudFormationResource):
-  terraform_resource = "aws_application_auto_scaling_scaling_policy"
+  cfn_type = "AWS::ApplicationAutoScaling::ScalingPolicy"
+  tf_type = "aws_application_auto_scaling_scaling_policy"
+  ref = "arn"
 
-  resource_type = "AWS::ApplicationAutoScaling::ScalingPolicy"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "PolicyName", "policy_name", StringValueConverter())
+      self.property(w, "PolicyType", "policy_type", StringValueConverter())
+      self.property(w, "ResourceId", "resource_id", StringValueConverter())
+      self.property(w, "ScalableDimension", "scalable_dimension", StringValueConverter())
+      self.property(w, "ScalingTargetId", "scaling_target_id", StringValueConverter())
+      self.property(w, "ServiceNamespace", "service_namespace", StringValueConverter())
+      self.block(w, "StepScalingPolicyConfiguration", AWS_ApplicationAutoScaling_ScalingPolicy_StepScalingPolicyConfiguration)
+      self.block(w, "TargetTrackingScalingPolicyConfiguration", AWS_ApplicationAutoScaling_ScalingPolicy_TargetTrackingScalingPolicyConfiguration)
 
-  props = {
-    "PolicyName": (StringValueConverter(), "policy_name"),
-    "PolicyType": (StringValueConverter(), "policy_type"),
-    "ResourceId": (StringValueConverter(), "resource_id"),
-    "ScalableDimension": (StringValueConverter(), "scalable_dimension"),
-    "ScalingTargetId": (StringValueConverter(), "scaling_target_id"),
-    "ServiceNamespace": (StringValueConverter(), "service_namespace"),
-    "StepScalingPolicyConfiguration": (AWS_ApplicationAutoScaling_ScalingPolicy_StepScalingPolicyConfiguration, "step_scaling_policy_configuration"),
-    "TargetTrackingScalingPolicyConfiguration": (AWS_ApplicationAutoScaling_ScalingPolicy_TargetTrackingScalingPolicyConfiguration, "target_tracking_scaling_policy_configuration"),
-  }
 
 class AWS_ApplicationAutoScaling_ScalableTarget(CloudFormationResource):
-  terraform_resource = "aws_application_auto_scaling_scalable_target"
+  cfn_type = "AWS::ApplicationAutoScaling::ScalableTarget"
+  tf_type = "aws_application_auto_scaling_scalable_target"
+  ref = "arn"
 
-  resource_type = "AWS::ApplicationAutoScaling::ScalableTarget"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "MaxCapacity", "max_capacity", BasicValueConverter())
+      self.property(w, "MinCapacity", "min_capacity", BasicValueConverter())
+      self.property(w, "ResourceId", "resource_id", StringValueConverter())
+      self.property(w, "RoleARN", "role_arn", StringValueConverter())
+      self.property(w, "ScalableDimension", "scalable_dimension", StringValueConverter())
+      self.repeated_block(w, "ScheduledActions", AWS_ApplicationAutoScaling_ScalableTarget_ScheduledAction)
+      self.property(w, "ServiceNamespace", "service_namespace", StringValueConverter())
+      self.block(w, "SuspendedState", AWS_ApplicationAutoScaling_ScalableTarget_SuspendedState)
 
-  props = {
-    "MaxCapacity": (BasicValueConverter(), "max_capacity"),
-    "MinCapacity": (BasicValueConverter(), "min_capacity"),
-    "ResourceId": (StringValueConverter(), "resource_id"),
-    "RoleARN": (StringValueConverter(), "role_arn"),
-    "ScalableDimension": (StringValueConverter(), "scalable_dimension"),
-    "ScheduledActions": (BlockValueConverter(AWS_ApplicationAutoScaling_ScalableTarget_ScheduledAction), None),
-    "ServiceNamespace": (StringValueConverter(), "service_namespace"),
-    "SuspendedState": (AWS_ApplicationAutoScaling_ScalableTarget_SuspendedState, "suspended_state"),
-  }
 

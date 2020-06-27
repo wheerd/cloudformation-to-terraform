@@ -1,114 +1,95 @@
 from . import *
 
 class AWS_DynamoDB_Table_PointInTimeRecoverySpecification(CloudFormationProperty):
-  entity = "AWS::DynamoDB::Table"
-  tf_block_type = "point_in_time_recovery_specification"
+  def write(self, w):
+    with w.block("point_in_time_recovery_specification"):
+      self.property(w, "PointInTimeRecoveryEnabled", "point_in_time_recovery_enabled", BasicValueConverter())
 
-  props = {
-    "PointInTimeRecoveryEnabled": (BasicValueConverter(), "point_in_time_recovery_enabled"),
-  }
 
 class AWS_DynamoDB_Table_SSESpecification(CloudFormationProperty):
-  entity = "AWS::DynamoDB::Table"
-  tf_block_type = "sse_specification"
+  def write(self, w):
+    with w.block("sse_specification"):
+      self.property(w, "KMSMasterKeyId", "kms_master_key_id", StringValueConverter())
+      self.property(w, "SSEEnabled", "sse_enabled", BasicValueConverter())
+      self.property(w, "SSEType", "sse_type", StringValueConverter())
 
-  props = {
-    "KMSMasterKeyId": (StringValueConverter(), "kms_master_key_id"),
-    "SSEEnabled": (BasicValueConverter(), "sse_enabled"),
-    "SSEType": (StringValueConverter(), "sse_type"),
-  }
 
 class AWS_DynamoDB_Table_TimeToLiveSpecification(CloudFormationProperty):
-  entity = "AWS::DynamoDB::Table"
-  tf_block_type = "time_to_live_specification"
+  def write(self, w):
+    with w.block("time_to_live_specification"):
+      self.property(w, "AttributeName", "attribute_name", StringValueConverter())
+      self.property(w, "Enabled", "enabled", BasicValueConverter())
 
-  props = {
-    "AttributeName": (StringValueConverter(), "attribute_name"),
-    "Enabled": (BasicValueConverter(), "enabled"),
-  }
 
 class AWS_DynamoDB_Table_AttributeDefinition(CloudFormationProperty):
-  entity = "AWS::DynamoDB::Table"
-  tf_block_type = "attribute_definition"
+  def write(self, w):
+    with w.block("attribute_definition"):
+      self.property(w, "AttributeName", "attribute_name", StringValueConverter())
+      self.property(w, "AttributeType", "attribute_type", StringValueConverter())
 
-  props = {
-    "AttributeName": (StringValueConverter(), "attribute_name"),
-    "AttributeType": (StringValueConverter(), "attribute_type"),
-  }
 
 class AWS_DynamoDB_Table_ProvisionedThroughput(CloudFormationProperty):
-  entity = "AWS::DynamoDB::Table"
-  tf_block_type = "provisioned_throughput"
+  def write(self, w):
+    with w.block("provisioned_throughput"):
+      self.property(w, "ReadCapacityUnits", "read_capacity_units", BasicValueConverter())
+      self.property(w, "WriteCapacityUnits", "write_capacity_units", BasicValueConverter())
 
-  props = {
-    "ReadCapacityUnits": (BasicValueConverter(), "read_capacity_units"),
-    "WriteCapacityUnits": (BasicValueConverter(), "write_capacity_units"),
-  }
 
 class AWS_DynamoDB_Table_KeySchema(CloudFormationProperty):
-  entity = "AWS::DynamoDB::Table"
-  tf_block_type = "key_schema"
+  def write(self, w):
+    with w.block("key_schema"):
+      self.property(w, "AttributeName", "attribute_name", StringValueConverter())
+      self.property(w, "KeyType", "key_type", StringValueConverter())
 
-  props = {
-    "AttributeName": (StringValueConverter(), "attribute_name"),
-    "KeyType": (StringValueConverter(), "key_type"),
-  }
 
 class AWS_DynamoDB_Table_Projection(CloudFormationProperty):
-  entity = "AWS::DynamoDB::Table"
-  tf_block_type = "projection"
+  def write(self, w):
+    with w.block("projection"):
+      self.property(w, "NonKeyAttributes", "non_key_attributes", ListValueConverter(StringValueConverter()))
+      self.property(w, "ProjectionType", "projection_type", StringValueConverter())
 
-  props = {
-    "NonKeyAttributes": (ListValueConverter(StringValueConverter()), "non_key_attributes"),
-    "ProjectionType": (StringValueConverter(), "projection_type"),
-  }
 
 class AWS_DynamoDB_Table_StreamSpecification(CloudFormationProperty):
-  entity = "AWS::DynamoDB::Table"
-  tf_block_type = "stream_specification"
+  def write(self, w):
+    with w.block("stream_specification"):
+      self.property(w, "StreamViewType", "stream_view_type", StringValueConverter())
 
-  props = {
-    "StreamViewType": (StringValueConverter(), "stream_view_type"),
-  }
 
 class AWS_DynamoDB_Table_LocalSecondaryIndex(CloudFormationProperty):
-  entity = "AWS::DynamoDB::Table"
-  tf_block_type = "local_secondary_index"
+  def write(self, w):
+    with w.block("local_secondary_index"):
+      self.property(w, "IndexName", "index_name", StringValueConverter())
+      self.repeated_block(w, "KeySchema", AWS_DynamoDB_Table_KeySchema)
+      self.block(w, "Projection", AWS_DynamoDB_Table_Projection)
 
-  props = {
-    "IndexName": (StringValueConverter(), "index_name"),
-    "KeySchema": (BlockValueConverter(AWS_DynamoDB_Table_KeySchema), None),
-    "Projection": (AWS_DynamoDB_Table_Projection, "projection"),
-  }
 
 class AWS_DynamoDB_Table_GlobalSecondaryIndex(CloudFormationProperty):
-  entity = "AWS::DynamoDB::Table"
-  tf_block_type = "global_secondary_index"
+  def write(self, w):
+    with w.block("global_secondary_index"):
+      self.property(w, "IndexName", "index_name", StringValueConverter())
+      self.repeated_block(w, "KeySchema", AWS_DynamoDB_Table_KeySchema)
+      self.block(w, "Projection", AWS_DynamoDB_Table_Projection)
+      self.block(w, "ProvisionedThroughput", AWS_DynamoDB_Table_ProvisionedThroughput)
 
-  props = {
-    "IndexName": (StringValueConverter(), "index_name"),
-    "KeySchema": (BlockValueConverter(AWS_DynamoDB_Table_KeySchema), None),
-    "Projection": (AWS_DynamoDB_Table_Projection, "projection"),
-    "ProvisionedThroughput": (AWS_DynamoDB_Table_ProvisionedThroughput, "provisioned_throughput"),
-  }
 
 class AWS_DynamoDB_Table(CloudFormationResource):
-  terraform_resource = "aws_dynamo_db_table"
+  cfn_type = "AWS::DynamoDB::Table"
+  tf_type = "aws_dynamo_db_table"
+  ref = "arn"
 
-  resource_type = "AWS::DynamoDB::Table"
+  def write(self, w):
+    with self.resource_block(w):
+      self.repeated_block(w, "AttributeDefinitions", AWS_DynamoDB_Table_AttributeDefinition)
+      self.property(w, "BillingMode", "billing_mode", StringValueConverter())
+      self.repeated_block(w, "GlobalSecondaryIndexes", AWS_DynamoDB_Table_GlobalSecondaryIndex)
+      self.repeated_block(w, "KeySchema", AWS_DynamoDB_Table_KeySchema)
+      self.repeated_block(w, "LocalSecondaryIndexes", AWS_DynamoDB_Table_LocalSecondaryIndex)
+      self.block(w, "PointInTimeRecoverySpecification", AWS_DynamoDB_Table_PointInTimeRecoverySpecification)
+      self.block(w, "ProvisionedThroughput", AWS_DynamoDB_Table_ProvisionedThroughput)
+      self.block(w, "SSESpecification", AWS_DynamoDB_Table_SSESpecification)
+      self.block(w, "StreamSpecification", AWS_DynamoDB_Table_StreamSpecification)
+      self.property(w, "TableName", "table_name", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.block(w, "TimeToLiveSpecification", AWS_DynamoDB_Table_TimeToLiveSpecification)
 
-  props = {
-    "AttributeDefinitions": (BlockValueConverter(AWS_DynamoDB_Table_AttributeDefinition), None),
-    "BillingMode": (StringValueConverter(), "billing_mode"),
-    "GlobalSecondaryIndexes": (BlockValueConverter(AWS_DynamoDB_Table_GlobalSecondaryIndex), None),
-    "KeySchema": (BlockValueConverter(AWS_DynamoDB_Table_KeySchema), None),
-    "LocalSecondaryIndexes": (BlockValueConverter(AWS_DynamoDB_Table_LocalSecondaryIndex), None),
-    "PointInTimeRecoverySpecification": (AWS_DynamoDB_Table_PointInTimeRecoverySpecification, "point_in_time_recovery_specification"),
-    "ProvisionedThroughput": (AWS_DynamoDB_Table_ProvisionedThroughput, "provisioned_throughput"),
-    "SSESpecification": (AWS_DynamoDB_Table_SSESpecification, "sse_specification"),
-    "StreamSpecification": (AWS_DynamoDB_Table_StreamSpecification, "stream_specification"),
-    "TableName": (StringValueConverter(), "table_name"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "TimeToLiveSpecification": (AWS_DynamoDB_Table_TimeToLiveSpecification, "time_to_live_specification"),
-  }
 

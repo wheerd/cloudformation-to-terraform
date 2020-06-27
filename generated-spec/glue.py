@@ -1,663 +1,588 @@
 from . import *
 
 class AWS_Glue_MLTransform_FindMatchesParameters(CloudFormationProperty):
-  entity = "AWS::Glue::MLTransform"
-  tf_block_type = "find_matches_parameters"
+  def write(self, w):
+    with w.block("find_matches_parameters"):
+      self.property(w, "PrecisionRecallTradeoff", "precision_recall_tradeoff", BasicValueConverter())
+      self.property(w, "EnforceProvidedLabels", "enforce_provided_labels", BasicValueConverter())
+      self.property(w, "PrimaryKeyColumnName", "primary_key_column_name", StringValueConverter())
+      self.property(w, "AccuracyCostTradeoff", "accuracy_cost_tradeoff", BasicValueConverter())
 
-  props = {
-    "PrecisionRecallTradeoff": (BasicValueConverter(), "precision_recall_tradeoff"),
-    "EnforceProvidedLabels": (BasicValueConverter(), "enforce_provided_labels"),
-    "PrimaryKeyColumnName": (StringValueConverter(), "primary_key_column_name"),
-    "AccuracyCostTradeoff": (BasicValueConverter(), "accuracy_cost_tradeoff"),
-  }
 
 class AWS_Glue_Partition_SerdeInfo(CloudFormationProperty):
-  entity = "AWS::Glue::Partition"
-  tf_block_type = "serde_info"
+  def write(self, w):
+    with w.block("serde_info"):
+      self.property(w, "Parameters", "parameters", StringValueConverter())
+      self.property(w, "SerializationLibrary", "serialization_library", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Parameters": (StringValueConverter(), "parameters"),
-    "SerializationLibrary": (StringValueConverter(), "serialization_library"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_Glue_Database_DatabaseInput(CloudFormationProperty):
-  entity = "AWS::Glue::Database"
-  tf_block_type = "database_input"
+  def write(self, w):
+    with w.block("database_input"):
+      self.property(w, "LocationUri", "location_uri", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "Parameters", "parameters", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "LocationUri": (StringValueConverter(), "location_uri"),
-    "Description": (StringValueConverter(), "description"),
-    "Parameters": (StringValueConverter(), "parameters"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_Glue_SecurityConfiguration_S3Encryption(CloudFormationProperty):
-  entity = "AWS::Glue::SecurityConfiguration"
-  tf_block_type = "s3_encryption"
+  def write(self, w):
+    with w.block("s3_encryption"):
+      self.property(w, "KmsKeyArn", "kms_key_arn", StringValueConverter())
+      self.property(w, "S3EncryptionMode", "s3_encryption_mode", StringValueConverter())
 
-  props = {
-    "KmsKeyArn": (StringValueConverter(), "kms_key_arn"),
-    "S3EncryptionMode": (StringValueConverter(), "s3_encryption_mode"),
-  }
 
 class AWS_Glue_Job_JobCommand(CloudFormationProperty):
-  entity = "AWS::Glue::Job"
-  tf_block_type = "job_command"
+  def write(self, w):
+    with w.block("job_command"):
+      self.property(w, "PythonVersion", "python_version", StringValueConverter())
+      self.property(w, "ScriptLocation", "script_location", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "PythonVersion": (StringValueConverter(), "python_version"),
-    "ScriptLocation": (StringValueConverter(), "script_location"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_Glue_Job_ConnectionsList(CloudFormationProperty):
-  entity = "AWS::Glue::Job"
-  tf_block_type = "connections_list"
+  def write(self, w):
+    with w.block("connections_list"):
+      self.property(w, "Connections", "connections", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "Connections": (ListValueConverter(StringValueConverter()), "connections"),
-  }
 
 class AWS_Glue_SecurityConfiguration_CloudWatchEncryption(CloudFormationProperty):
-  entity = "AWS::Glue::SecurityConfiguration"
-  tf_block_type = "cloud_watch_encryption"
+  def write(self, w):
+    with w.block("cloud_watch_encryption"):
+      self.property(w, "KmsKeyArn", "kms_key_arn", StringValueConverter())
+      self.property(w, "CloudWatchEncryptionMode", "cloud_watch_encryption_mode", StringValueConverter())
 
-  props = {
-    "KmsKeyArn": (StringValueConverter(), "kms_key_arn"),
-    "CloudWatchEncryptionMode": (StringValueConverter(), "cloud_watch_encryption_mode"),
-  }
 
 class AWS_Glue_Crawler_CatalogTarget(CloudFormationProperty):
-  entity = "AWS::Glue::Crawler"
-  tf_block_type = "catalog_target"
+  def write(self, w):
+    with w.block("catalog_target"):
+      self.property(w, "DatabaseName", "database_name", StringValueConverter())
+      self.property(w, "Tables", "tables", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "DatabaseName": (StringValueConverter(), "database_name"),
-    "Tables": (ListValueConverter(StringValueConverter()), "tables"),
-  }
 
 class AWS_Glue_Connection_PhysicalConnectionRequirements(CloudFormationProperty):
-  entity = "AWS::Glue::Connection"
-  tf_block_type = "physical_connection_requirements"
+  def write(self, w):
+    with w.block("physical_connection_requirements"):
+      self.property(w, "AvailabilityZone", "availability_zone", StringValueConverter())
+      self.property(w, "SecurityGroupIdList", "security_group_id_list", ListValueConverter(StringValueConverter()))
+      self.property(w, "SubnetId", "subnet_id", StringValueConverter())
 
-  props = {
-    "AvailabilityZone": (StringValueConverter(), "availability_zone"),
-    "SecurityGroupIdList": (ListValueConverter(StringValueConverter()), "security_group_id_list"),
-    "SubnetId": (StringValueConverter(), "subnet_id"),
-  }
 
 class AWS_Glue_Crawler_JdbcTarget(CloudFormationProperty):
-  entity = "AWS::Glue::Crawler"
-  tf_block_type = "jdbc_target"
+  def write(self, w):
+    with w.block("jdbc_target"):
+      self.property(w, "ConnectionName", "connection_name", StringValueConverter())
+      self.property(w, "Path", "path", StringValueConverter())
+      self.property(w, "Exclusions", "exclusions", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "ConnectionName": (StringValueConverter(), "connection_name"),
-    "Path": (StringValueConverter(), "path"),
-    "Exclusions": (ListValueConverter(StringValueConverter()), "exclusions"),
-  }
 
 class AWS_Glue_Crawler_Schedule(CloudFormationProperty):
-  entity = "AWS::Glue::Crawler"
-  tf_block_type = "schedule"
+  def write(self, w):
+    with w.block("schedule"):
+      self.property(w, "ScheduleExpression", "schedule_expression", StringValueConverter())
 
-  props = {
-    "ScheduleExpression": (StringValueConverter(), "schedule_expression"),
-  }
 
 class AWS_Glue_Trigger_Condition(CloudFormationProperty):
-  entity = "AWS::Glue::Trigger"
-  tf_block_type = "condition"
+  def write(self, w):
+    with w.block("condition"):
+      self.property(w, "CrawlerName", "crawler_name", StringValueConverter())
+      self.property(w, "State", "state", StringValueConverter())
+      self.property(w, "CrawlState", "crawl_state", StringValueConverter())
+      self.property(w, "LogicalOperator", "logical_operator", StringValueConverter())
+      self.property(w, "JobName", "job_name", StringValueConverter())
 
-  props = {
-    "CrawlerName": (StringValueConverter(), "crawler_name"),
-    "State": (StringValueConverter(), "state"),
-    "CrawlState": (StringValueConverter(), "crawl_state"),
-    "LogicalOperator": (StringValueConverter(), "logical_operator"),
-    "JobName": (StringValueConverter(), "job_name"),
-  }
 
 class AWS_Glue_Trigger_Predicate(CloudFormationProperty):
-  entity = "AWS::Glue::Trigger"
-  tf_block_type = "predicate"
+  def write(self, w):
+    with w.block("predicate"):
+      self.property(w, "Logical", "logical", StringValueConverter())
+      self.repeated_block(w, "Conditions", AWS_Glue_Trigger_Condition)
 
-  props = {
-    "Logical": (StringValueConverter(), "logical"),
-    "Conditions": (BlockValueConverter(AWS_Glue_Trigger_Condition), None),
-  }
 
 class AWS_Glue_Table_Order(CloudFormationProperty):
-  entity = "AWS::Glue::Table"
-  tf_block_type = "order"
+  def write(self, w):
+    with w.block("order"):
+      self.property(w, "Column", "column", StringValueConverter())
+      self.property(w, "SortOrder", "sort_order", BasicValueConverter())
 
-  props = {
-    "Column": (StringValueConverter(), "column"),
-    "SortOrder": (BasicValueConverter(), "sort_order"),
-  }
 
 class AWS_Glue_Partition_Column(CloudFormationProperty):
-  entity = "AWS::Glue::Partition"
-  tf_block_type = "column"
+  def write(self, w):
+    with w.block("column"):
+      self.property(w, "Comment", "comment", StringValueConverter())
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Comment": (StringValueConverter(), "comment"),
-    "Type": (StringValueConverter(), "type"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_Glue_Crawler_DynamoDBTarget(CloudFormationProperty):
-  entity = "AWS::Glue::Crawler"
-  tf_block_type = "dynamo_db_target"
+  def write(self, w):
+    with w.block("dynamo_db_target"):
+      self.property(w, "Path", "path", StringValueConverter())
 
-  props = {
-    "Path": (StringValueConverter(), "path"),
-  }
 
 class AWS_Glue_Table_Column(CloudFormationProperty):
-  entity = "AWS::Glue::Table"
-  tf_block_type = "column"
+  def write(self, w):
+    with w.block("column"):
+      self.property(w, "Comment", "comment", StringValueConverter())
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Comment": (StringValueConverter(), "comment"),
-    "Type": (StringValueConverter(), "type"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_Glue_DataCatalogEncryptionSettings_EncryptionAtRest(CloudFormationProperty):
-  entity = "AWS::Glue::DataCatalogEncryptionSettings"
-  tf_block_type = "encryption_at_rest"
+  def write(self, w):
+    with w.block("encryption_at_rest"):
+      self.property(w, "CatalogEncryptionMode", "catalog_encryption_mode", StringValueConverter())
+      self.property(w, "SseAwsKmsKeyId", "sse_aws_kms_key_id", StringValueConverter())
 
-  props = {
-    "CatalogEncryptionMode": (StringValueConverter(), "catalog_encryption_mode"),
-    "SseAwsKmsKeyId": (StringValueConverter(), "sse_aws_kms_key_id"),
-  }
 
 class AWS_Glue_Crawler_SchemaChangePolicy(CloudFormationProperty):
-  entity = "AWS::Glue::Crawler"
-  tf_block_type = "schema_change_policy"
+  def write(self, w):
+    with w.block("schema_change_policy"):
+      self.property(w, "UpdateBehavior", "update_behavior", StringValueConverter())
+      self.property(w, "DeleteBehavior", "delete_behavior", StringValueConverter())
 
-  props = {
-    "UpdateBehavior": (StringValueConverter(), "update_behavior"),
-    "DeleteBehavior": (StringValueConverter(), "delete_behavior"),
-  }
 
 class AWS_Glue_Classifier_CsvClassifier(CloudFormationProperty):
-  entity = "AWS::Glue::Classifier"
-  tf_block_type = "csv_classifier"
+  def write(self, w):
+    with w.block("csv_classifier"):
+      self.property(w, "QuoteSymbol", "quote_symbol", StringValueConverter())
+      self.property(w, "ContainsHeader", "contains_header", StringValueConverter())
+      self.property(w, "Delimiter", "delimiter", StringValueConverter())
+      self.property(w, "Header", "header", ListValueConverter(StringValueConverter()))
+      self.property(w, "AllowSingleColumn", "allow_single_column", BasicValueConverter())
+      self.property(w, "DisableValueTrimming", "disable_value_trimming", BasicValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "QuoteSymbol": (StringValueConverter(), "quote_symbol"),
-    "ContainsHeader": (StringValueConverter(), "contains_header"),
-    "Delimiter": (StringValueConverter(), "delimiter"),
-    "Header": (ListValueConverter(StringValueConverter()), "header"),
-    "AllowSingleColumn": (BasicValueConverter(), "allow_single_column"),
-    "DisableValueTrimming": (BasicValueConverter(), "disable_value_trimming"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_Glue_Partition_Order(CloudFormationProperty):
-  entity = "AWS::Glue::Partition"
-  tf_block_type = "order"
+  def write(self, w):
+    with w.block("order"):
+      self.property(w, "Column", "column", StringValueConverter())
+      self.property(w, "SortOrder", "sort_order", BasicValueConverter())
 
-  props = {
-    "Column": (StringValueConverter(), "column"),
-    "SortOrder": (BasicValueConverter(), "sort_order"),
-  }
 
 class AWS_Glue_Table_SkewedInfo(CloudFormationProperty):
-  entity = "AWS::Glue::Table"
-  tf_block_type = "skewed_info"
+  def write(self, w):
+    with w.block("skewed_info"):
+      self.property(w, "SkewedColumnNames", "skewed_column_names", ListValueConverter(StringValueConverter()))
+      self.property(w, "SkewedColumnValues", "skewed_column_values", ListValueConverter(StringValueConverter()))
+      self.property(w, "SkewedColumnValueLocationMaps", "skewed_column_value_location_maps", StringValueConverter())
 
-  props = {
-    "SkewedColumnNames": (ListValueConverter(StringValueConverter()), "skewed_column_names"),
-    "SkewedColumnValues": (ListValueConverter(StringValueConverter()), "skewed_column_values"),
-    "SkewedColumnValueLocationMaps": (StringValueConverter(), "skewed_column_value_location_maps"),
-  }
 
 class AWS_Glue_Trigger_NotificationProperty(CloudFormationProperty):
-  entity = "AWS::Glue::Trigger"
-  tf_block_type = "notification_property"
+  def write(self, w):
+    with w.block("notification_property"):
+      self.property(w, "NotifyDelayAfter", "notify_delay_after", BasicValueConverter())
 
-  props = {
-    "NotifyDelayAfter": (BasicValueConverter(), "notify_delay_after"),
-  }
 
 class AWS_Glue_Classifier_XMLClassifier(CloudFormationProperty):
-  entity = "AWS::Glue::Classifier"
-  tf_block_type = "xml_classifier"
+  def write(self, w):
+    with w.block("xml_classifier"):
+      self.property(w, "RowTag", "row_tag", StringValueConverter())
+      self.property(w, "Classification", "classification", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "RowTag": (StringValueConverter(), "row_tag"),
-    "Classification": (StringValueConverter(), "classification"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_Glue_MLTransform_TransformParameters(CloudFormationProperty):
-  entity = "AWS::Glue::MLTransform"
-  tf_block_type = "transform_parameters"
+  def write(self, w):
+    with w.block("transform_parameters"):
+      self.property(w, "TransformType", "transform_type", StringValueConverter())
+      self.block(w, "FindMatchesParameters", AWS_Glue_MLTransform_FindMatchesParameters)
 
-  props = {
-    "TransformType": (StringValueConverter(), "transform_type"),
-    "FindMatchesParameters": (AWS_Glue_MLTransform_FindMatchesParameters, "find_matches_parameters"),
-  }
 
 class AWS_Glue_Classifier_GrokClassifier(CloudFormationProperty):
-  entity = "AWS::Glue::Classifier"
-  tf_block_type = "grok_classifier"
+  def write(self, w):
+    with w.block("grok_classifier"):
+      self.property(w, "CustomPatterns", "custom_patterns", StringValueConverter())
+      self.property(w, "GrokPattern", "grok_pattern", StringValueConverter())
+      self.property(w, "Classification", "classification", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "CustomPatterns": (StringValueConverter(), "custom_patterns"),
-    "GrokPattern": (StringValueConverter(), "grok_pattern"),
-    "Classification": (StringValueConverter(), "classification"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_Glue_SecurityConfiguration_JobBookmarksEncryption(CloudFormationProperty):
-  entity = "AWS::Glue::SecurityConfiguration"
-  tf_block_type = "job_bookmarks_encryption"
+  def write(self, w):
+    with w.block("job_bookmarks_encryption"):
+      self.property(w, "KmsKeyArn", "kms_key_arn", StringValueConverter())
+      self.property(w, "JobBookmarksEncryptionMode", "job_bookmarks_encryption_mode", StringValueConverter())
 
-  props = {
-    "KmsKeyArn": (StringValueConverter(), "kms_key_arn"),
-    "JobBookmarksEncryptionMode": (StringValueConverter(), "job_bookmarks_encryption_mode"),
-  }
 
 class AWS_Glue_Table_SerdeInfo(CloudFormationProperty):
-  entity = "AWS::Glue::Table"
-  tf_block_type = "serde_info"
+  def write(self, w):
+    with w.block("serde_info"):
+      self.property(w, "Parameters", "parameters", StringValueConverter())
+      self.property(w, "SerializationLibrary", "serialization_library", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Parameters": (StringValueConverter(), "parameters"),
-    "SerializationLibrary": (StringValueConverter(), "serialization_library"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_Glue_Partition_SkewedInfo(CloudFormationProperty):
-  entity = "AWS::Glue::Partition"
-  tf_block_type = "skewed_info"
+  def write(self, w):
+    with w.block("skewed_info"):
+      self.property(w, "SkewedColumnNames", "skewed_column_names", ListValueConverter(StringValueConverter()))
+      self.property(w, "SkewedColumnValues", "skewed_column_values", ListValueConverter(StringValueConverter()))
+      self.property(w, "SkewedColumnValueLocationMaps", "skewed_column_value_location_maps", StringValueConverter())
 
-  props = {
-    "SkewedColumnNames": (ListValueConverter(StringValueConverter()), "skewed_column_names"),
-    "SkewedColumnValues": (ListValueConverter(StringValueConverter()), "skewed_column_values"),
-    "SkewedColumnValueLocationMaps": (StringValueConverter(), "skewed_column_value_location_maps"),
-  }
 
 class AWS_Glue_Crawler_S3Target(CloudFormationProperty):
-  entity = "AWS::Glue::Crawler"
-  tf_block_type = "s3_target"
+  def write(self, w):
+    with w.block("s3_target"):
+      self.property(w, "Path", "path", StringValueConverter())
+      self.property(w, "Exclusions", "exclusions", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "Path": (StringValueConverter(), "path"),
-    "Exclusions": (ListValueConverter(StringValueConverter()), "exclusions"),
-  }
 
 class AWS_Glue_Classifier_JsonClassifier(CloudFormationProperty):
-  entity = "AWS::Glue::Classifier"
-  tf_block_type = "json_classifier"
+  def write(self, w):
+    with w.block("json_classifier"):
+      self.property(w, "JsonPath", "json_path", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "JsonPath": (StringValueConverter(), "json_path"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_Glue_Job_NotificationProperty(CloudFormationProperty):
-  entity = "AWS::Glue::Job"
-  tf_block_type = "notification_property"
+  def write(self, w):
+    with w.block("notification_property"):
+      self.property(w, "NotifyDelayAfter", "notify_delay_after", BasicValueConverter())
 
-  props = {
-    "NotifyDelayAfter": (BasicValueConverter(), "notify_delay_after"),
-  }
 
 class AWS_Glue_Job_ExecutionProperty(CloudFormationProperty):
-  entity = "AWS::Glue::Job"
-  tf_block_type = "execution_property"
+  def write(self, w):
+    with w.block("execution_property"):
+      self.property(w, "MaxConcurrentRuns", "max_concurrent_runs", BasicValueConverter())
 
-  props = {
-    "MaxConcurrentRuns": (BasicValueConverter(), "max_concurrent_runs"),
-  }
 
 class AWS_Glue_SecurityConfiguration_S3Encryptions(CloudFormationProperty):
-  entity = "AWS::Glue::SecurityConfiguration"
-  tf_block_type = "s3_encryptions"
+  def write(self, w):
+    with w.block("s3_encryptions"):
+      pass
+
 
 class AWS_Glue_DataCatalogEncryptionSettings_ConnectionPasswordEncryption(CloudFormationProperty):
-  entity = "AWS::Glue::DataCatalogEncryptionSettings"
-  tf_block_type = "connection_password_encryption"
+  def write(self, w):
+    with w.block("connection_password_encryption"):
+      self.property(w, "ReturnConnectionPasswordEncrypted", "return_connection_password_encrypted", BasicValueConverter())
+      self.property(w, "KmsKeyId", "kms_key_id", StringValueConverter())
 
-  props = {
-    "ReturnConnectionPasswordEncrypted": (BasicValueConverter(), "return_connection_password_encrypted"),
-    "KmsKeyId": (StringValueConverter(), "kms_key_id"),
-  }
 
 class AWS_Glue_MLTransform_GlueTables(CloudFormationProperty):
-  entity = "AWS::Glue::MLTransform"
-  tf_block_type = "glue_tables"
+  def write(self, w):
+    with w.block("glue_tables"):
+      self.property(w, "ConnectionName", "connection_name", StringValueConverter())
+      self.property(w, "TableName", "table_name", StringValueConverter())
+      self.property(w, "DatabaseName", "database_name", StringValueConverter())
+      self.property(w, "CatalogId", "catalog_id", StringValueConverter())
 
-  props = {
-    "ConnectionName": (StringValueConverter(), "connection_name"),
-    "TableName": (StringValueConverter(), "table_name"),
-    "DatabaseName": (StringValueConverter(), "database_name"),
-    "CatalogId": (StringValueConverter(), "catalog_id"),
-  }
 
 class AWS_Glue_Workflow(CloudFormationResource):
-  terraform_resource = "aws_glue_workflow"
+  cfn_type = "AWS::Glue::Workflow"
+  tf_type = "aws_glue_workflow"
+  ref = "arn"
 
-  resource_type = "AWS::Glue::Workflow"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "DefaultRunProperties", "default_run_properties", StringValueConverter())
+      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "DefaultRunProperties": (StringValueConverter(), "default_run_properties"),
-    "Tags": (StringValueConverter(), "tags"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_Glue_Job(CloudFormationResource):
-  terraform_resource = "aws_glue_job"
+  cfn_type = "AWS::Glue::Job"
+  tf_type = "aws_glue_job"
+  ref = "arn"
 
-  resource_type = "AWS::Glue::Job"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "Connections", AWS_Glue_Job_ConnectionsList)
+      self.property(w, "MaxRetries", "max_retries", BasicValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "Timeout", "timeout", BasicValueConverter())
+      self.property(w, "AllocatedCapacity", "allocated_capacity", BasicValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Role", "role", StringValueConverter())
+      self.property(w, "DefaultArguments", "default_arguments", StringValueConverter())
+      self.block(w, "NotificationProperty", AWS_Glue_Job_NotificationProperty)
+      self.property(w, "WorkerType", "worker_type", StringValueConverter())
+      self.property(w, "LogUri", "log_uri", StringValueConverter())
+      self.block(w, "Command", AWS_Glue_Job_JobCommand)
+      self.property(w, "GlueVersion", "glue_version", StringValueConverter())
+      self.block(w, "ExecutionProperty", AWS_Glue_Job_ExecutionProperty)
+      self.property(w, "SecurityConfiguration", "security_configuration", StringValueConverter())
+      self.property(w, "NumberOfWorkers", "number_of_workers", BasicValueConverter())
+      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "MaxCapacity", "max_capacity", BasicValueConverter())
 
-  props = {
-    "Connections": (AWS_Glue_Job_ConnectionsList, "connections"),
-    "MaxRetries": (BasicValueConverter(), "max_retries"),
-    "Description": (StringValueConverter(), "description"),
-    "Timeout": (BasicValueConverter(), "timeout"),
-    "AllocatedCapacity": (BasicValueConverter(), "allocated_capacity"),
-    "Name": (StringValueConverter(), "name"),
-    "Role": (StringValueConverter(), "role"),
-    "DefaultArguments": (StringValueConverter(), "default_arguments"),
-    "NotificationProperty": (AWS_Glue_Job_NotificationProperty, "notification_property"),
-    "WorkerType": (StringValueConverter(), "worker_type"),
-    "LogUri": (StringValueConverter(), "log_uri"),
-    "Command": (AWS_Glue_Job_JobCommand, "command"),
-    "GlueVersion": (StringValueConverter(), "glue_version"),
-    "ExecutionProperty": (AWS_Glue_Job_ExecutionProperty, "execution_property"),
-    "SecurityConfiguration": (StringValueConverter(), "security_configuration"),
-    "NumberOfWorkers": (BasicValueConverter(), "number_of_workers"),
-    "Tags": (StringValueConverter(), "tags"),
-    "MaxCapacity": (BasicValueConverter(), "max_capacity"),
-  }
 
 class AWS_Glue_Database(CloudFormationResource):
-  terraform_resource = "aws_glue_database"
+  cfn_type = "AWS::Glue::Database"
+  tf_type = "aws_glue_database"
+  ref = "arn"
 
-  resource_type = "AWS::Glue::Database"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "DatabaseInput", AWS_Glue_Database_DatabaseInput)
+      self.property(w, "CatalogId", "catalog_id", StringValueConverter())
 
-  props = {
-    "DatabaseInput": (AWS_Glue_Database_DatabaseInput, "database_input"),
-    "CatalogId": (StringValueConverter(), "catalog_id"),
-  }
 
 class AWS_Glue_DevEndpoint(CloudFormationResource):
-  terraform_resource = "aws_glue_dev_endpoint"
+  cfn_type = "AWS::Glue::DevEndpoint"
+  tf_type = "aws_glue_dev_endpoint"
+  ref = "arn"
 
-  resource_type = "AWS::Glue::DevEndpoint"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ExtraJarsS3Path", "extra_jars_s3_path", StringValueConverter())
+      self.property(w, "PublicKey", "public_key", StringValueConverter())
+      self.property(w, "NumberOfNodes", "number_of_nodes", BasicValueConverter())
+      self.property(w, "Arguments", "arguments", StringValueConverter())
+      self.property(w, "SubnetId", "subnet_id", StringValueConverter())
+      self.property(w, "PublicKeys", "public_keys", ListValueConverter(StringValueConverter()))
+      self.property(w, "SecurityGroupIds", "security_group_ids", ListValueConverter(StringValueConverter()))
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
+      self.property(w, "WorkerType", "worker_type", StringValueConverter())
+      self.property(w, "EndpointName", "endpoint_name", StringValueConverter())
+      self.property(w, "GlueVersion", "glue_version", StringValueConverter())
+      self.property(w, "ExtraPythonLibsS3Path", "extra_python_libs_s3_path", StringValueConverter())
+      self.property(w, "SecurityConfiguration", "security_configuration", StringValueConverter())
+      self.property(w, "NumberOfWorkers", "number_of_workers", BasicValueConverter())
+      self.property(w, "Tags", "tags", StringValueConverter())
 
-  props = {
-    "ExtraJarsS3Path": (StringValueConverter(), "extra_jars_s3_path"),
-    "PublicKey": (StringValueConverter(), "public_key"),
-    "NumberOfNodes": (BasicValueConverter(), "number_of_nodes"),
-    "Arguments": (StringValueConverter(), "arguments"),
-    "SubnetId": (StringValueConverter(), "subnet_id"),
-    "PublicKeys": (ListValueConverter(StringValueConverter()), "public_keys"),
-    "SecurityGroupIds": (ListValueConverter(StringValueConverter()), "security_group_ids"),
-    "RoleArn": (StringValueConverter(), "role_arn"),
-    "WorkerType": (StringValueConverter(), "worker_type"),
-    "EndpointName": (StringValueConverter(), "endpoint_name"),
-    "GlueVersion": (StringValueConverter(), "glue_version"),
-    "ExtraPythonLibsS3Path": (StringValueConverter(), "extra_python_libs_s3_path"),
-    "SecurityConfiguration": (StringValueConverter(), "security_configuration"),
-    "NumberOfWorkers": (BasicValueConverter(), "number_of_workers"),
-    "Tags": (StringValueConverter(), "tags"),
-  }
 
 class AWS_Glue_Classifier(CloudFormationResource):
-  terraform_resource = "aws_glue_classifier"
+  cfn_type = "AWS::Glue::Classifier"
+  tf_type = "aws_glue_classifier"
+  ref = "arn"
 
-  resource_type = "AWS::Glue::Classifier"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "XMLClassifier", AWS_Glue_Classifier_XMLClassifier)
+      self.block(w, "JsonClassifier", AWS_Glue_Classifier_JsonClassifier)
+      self.block(w, "CsvClassifier", AWS_Glue_Classifier_CsvClassifier)
+      self.block(w, "GrokClassifier", AWS_Glue_Classifier_GrokClassifier)
 
-  props = {
-    "XMLClassifier": (AWS_Glue_Classifier_XMLClassifier, "xml_classifier"),
-    "JsonClassifier": (AWS_Glue_Classifier_JsonClassifier, "json_classifier"),
-    "CsvClassifier": (AWS_Glue_Classifier_CsvClassifier, "csv_classifier"),
-    "GrokClassifier": (AWS_Glue_Classifier_GrokClassifier, "grok_classifier"),
-  }
 
 class AWS_Glue_Crawler_Targets(CloudFormationProperty):
-  entity = "AWS::Glue::Crawler"
-  tf_block_type = "targets"
+  def write(self, w):
+    with w.block("targets"):
+      self.repeated_block(w, "S3Targets", AWS_Glue_Crawler_S3Target)
+      self.repeated_block(w, "CatalogTargets", AWS_Glue_Crawler_CatalogTarget)
+      self.repeated_block(w, "JdbcTargets", AWS_Glue_Crawler_JdbcTarget)
+      self.repeated_block(w, "DynamoDBTargets", AWS_Glue_Crawler_DynamoDBTarget)
 
-  props = {
-    "S3Targets": (BlockValueConverter(AWS_Glue_Crawler_S3Target), None),
-    "CatalogTargets": (BlockValueConverter(AWS_Glue_Crawler_CatalogTarget), None),
-    "JdbcTargets": (BlockValueConverter(AWS_Glue_Crawler_JdbcTarget), None),
-    "DynamoDBTargets": (BlockValueConverter(AWS_Glue_Crawler_DynamoDBTarget), None),
-  }
 
 class AWS_Glue_Connection_ConnectionInput(CloudFormationProperty):
-  entity = "AWS::Glue::Connection"
-  tf_block_type = "connection_input"
+  def write(self, w):
+    with w.block("connection_input"):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "ConnectionType", "connection_type", StringValueConverter())
+      self.property(w, "MatchCriteria", "match_criteria", ListValueConverter(StringValueConverter()))
+      self.block(w, "PhysicalConnectionRequirements", AWS_Glue_Connection_PhysicalConnectionRequirements)
+      self.property(w, "ConnectionProperties", "connection_properties", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "ConnectionType": (StringValueConverter(), "connection_type"),
-    "MatchCriteria": (ListValueConverter(StringValueConverter()), "match_criteria"),
-    "PhysicalConnectionRequirements": (AWS_Glue_Connection_PhysicalConnectionRequirements, "physical_connection_requirements"),
-    "ConnectionProperties": (StringValueConverter(), "connection_properties"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_Glue_DataCatalogEncryptionSettings_DataCatalogEncryptionSettings(CloudFormationProperty):
-  entity = "AWS::Glue::DataCatalogEncryptionSettings"
-  tf_block_type = "data_catalog_encryption_settings"
+  def write(self, w):
+    with w.block("data_catalog_encryption_settings"):
+      self.block(w, "ConnectionPasswordEncryption", AWS_Glue_DataCatalogEncryptionSettings_ConnectionPasswordEncryption)
+      self.block(w, "EncryptionAtRest", AWS_Glue_DataCatalogEncryptionSettings_EncryptionAtRest)
 
-  props = {
-    "ConnectionPasswordEncryption": (AWS_Glue_DataCatalogEncryptionSettings_ConnectionPasswordEncryption, "connection_password_encryption"),
-    "EncryptionAtRest": (AWS_Glue_DataCatalogEncryptionSettings_EncryptionAtRest, "encryption_at_rest"),
-  }
 
 class AWS_Glue_Partition_StorageDescriptor(CloudFormationProperty):
-  entity = "AWS::Glue::Partition"
-  tf_block_type = "storage_descriptor"
+  def write(self, w):
+    with w.block("storage_descriptor"):
+      self.property(w, "StoredAsSubDirectories", "stored_as_sub_directories", BasicValueConverter())
+      self.property(w, "Parameters", "parameters", StringValueConverter())
+      self.property(w, "BucketColumns", "bucket_columns", ListValueConverter(StringValueConverter()))
+      self.block(w, "SkewedInfo", AWS_Glue_Partition_SkewedInfo)
+      self.property(w, "InputFormat", "input_format", StringValueConverter())
+      self.property(w, "NumberOfBuckets", "number_of_buckets", BasicValueConverter())
+      self.property(w, "OutputFormat", "output_format", StringValueConverter())
+      self.repeated_block(w, "Columns", AWS_Glue_Partition_Column)
+      self.block(w, "SerdeInfo", AWS_Glue_Partition_SerdeInfo)
+      self.repeated_block(w, "SortColumns", AWS_Glue_Partition_Order)
+      self.property(w, "Compressed", "compressed", BasicValueConverter())
+      self.property(w, "Location", "location", StringValueConverter())
 
-  props = {
-    "StoredAsSubDirectories": (BasicValueConverter(), "stored_as_sub_directories"),
-    "Parameters": (StringValueConverter(), "parameters"),
-    "BucketColumns": (ListValueConverter(StringValueConverter()), "bucket_columns"),
-    "SkewedInfo": (AWS_Glue_Partition_SkewedInfo, "skewed_info"),
-    "InputFormat": (StringValueConverter(), "input_format"),
-    "NumberOfBuckets": (BasicValueConverter(), "number_of_buckets"),
-    "OutputFormat": (StringValueConverter(), "output_format"),
-    "Columns": (BlockValueConverter(AWS_Glue_Partition_Column), None),
-    "SerdeInfo": (AWS_Glue_Partition_SerdeInfo, "serde_info"),
-    "SortColumns": (BlockValueConverter(AWS_Glue_Partition_Order), None),
-    "Compressed": (BasicValueConverter(), "compressed"),
-    "Location": (StringValueConverter(), "location"),
-  }
 
 class AWS_Glue_Trigger_Action(CloudFormationProperty):
-  entity = "AWS::Glue::Trigger"
-  tf_block_type = "action"
+  def write(self, w):
+    with w.block("action"):
+      self.block(w, "NotificationProperty", AWS_Glue_Trigger_NotificationProperty)
+      self.property(w, "CrawlerName", "crawler_name", StringValueConverter())
+      self.property(w, "Timeout", "timeout", BasicValueConverter())
+      self.property(w, "JobName", "job_name", StringValueConverter())
+      self.property(w, "Arguments", "arguments", StringValueConverter())
+      self.property(w, "SecurityConfiguration", "security_configuration", StringValueConverter())
 
-  props = {
-    "NotificationProperty": (AWS_Glue_Trigger_NotificationProperty, "notification_property"),
-    "CrawlerName": (StringValueConverter(), "crawler_name"),
-    "Timeout": (BasicValueConverter(), "timeout"),
-    "JobName": (StringValueConverter(), "job_name"),
-    "Arguments": (StringValueConverter(), "arguments"),
-    "SecurityConfiguration": (StringValueConverter(), "security_configuration"),
-  }
 
 class AWS_Glue_Table_StorageDescriptor(CloudFormationProperty):
-  entity = "AWS::Glue::Table"
-  tf_block_type = "storage_descriptor"
+  def write(self, w):
+    with w.block("storage_descriptor"):
+      self.property(w, "StoredAsSubDirectories", "stored_as_sub_directories", BasicValueConverter())
+      self.property(w, "Parameters", "parameters", StringValueConverter())
+      self.property(w, "BucketColumns", "bucket_columns", ListValueConverter(StringValueConverter()))
+      self.block(w, "SkewedInfo", AWS_Glue_Table_SkewedInfo)
+      self.property(w, "InputFormat", "input_format", StringValueConverter())
+      self.property(w, "NumberOfBuckets", "number_of_buckets", BasicValueConverter())
+      self.property(w, "OutputFormat", "output_format", StringValueConverter())
+      self.repeated_block(w, "Columns", AWS_Glue_Table_Column)
+      self.block(w, "SerdeInfo", AWS_Glue_Table_SerdeInfo)
+      self.repeated_block(w, "SortColumns", AWS_Glue_Table_Order)
+      self.property(w, "Compressed", "compressed", BasicValueConverter())
+      self.property(w, "Location", "location", StringValueConverter())
 
-  props = {
-    "StoredAsSubDirectories": (BasicValueConverter(), "stored_as_sub_directories"),
-    "Parameters": (StringValueConverter(), "parameters"),
-    "BucketColumns": (ListValueConverter(StringValueConverter()), "bucket_columns"),
-    "SkewedInfo": (AWS_Glue_Table_SkewedInfo, "skewed_info"),
-    "InputFormat": (StringValueConverter(), "input_format"),
-    "NumberOfBuckets": (BasicValueConverter(), "number_of_buckets"),
-    "OutputFormat": (StringValueConverter(), "output_format"),
-    "Columns": (BlockValueConverter(AWS_Glue_Table_Column), None),
-    "SerdeInfo": (AWS_Glue_Table_SerdeInfo, "serde_info"),
-    "SortColumns": (BlockValueConverter(AWS_Glue_Table_Order), None),
-    "Compressed": (BasicValueConverter(), "compressed"),
-    "Location": (StringValueConverter(), "location"),
-  }
 
 class AWS_Glue_SecurityConfiguration_EncryptionConfiguration(CloudFormationProperty):
-  entity = "AWS::Glue::SecurityConfiguration"
-  tf_block_type = "encryption_configuration"
+  def write(self, w):
+    with w.block("encryption_configuration"):
+      self.block(w, "S3Encryptions", AWS_Glue_SecurityConfiguration_S3Encryptions)
+      self.block(w, "CloudWatchEncryption", AWS_Glue_SecurityConfiguration_CloudWatchEncryption)
+      self.block(w, "JobBookmarksEncryption", AWS_Glue_SecurityConfiguration_JobBookmarksEncryption)
 
-  props = {
-    "S3Encryptions": (AWS_Glue_SecurityConfiguration_S3Encryptions, "s3_encryptions"),
-    "CloudWatchEncryption": (AWS_Glue_SecurityConfiguration_CloudWatchEncryption, "cloud_watch_encryption"),
-    "JobBookmarksEncryption": (AWS_Glue_SecurityConfiguration_JobBookmarksEncryption, "job_bookmarks_encryption"),
-  }
 
 class AWS_Glue_Table_TableInput(CloudFormationProperty):
-  entity = "AWS::Glue::Table"
-  tf_block_type = "table_input"
+  def write(self, w):
+    with w.block("table_input"):
+      self.property(w, "Owner", "owner", StringValueConverter())
+      self.property(w, "ViewOriginalText", "view_original_text", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "TableType", "table_type", StringValueConverter())
+      self.property(w, "Parameters", "parameters", StringValueConverter())
+      self.property(w, "ViewExpandedText", "view_expanded_text", StringValueConverter())
+      self.block(w, "StorageDescriptor", AWS_Glue_Table_StorageDescriptor)
+      self.repeated_block(w, "PartitionKeys", AWS_Glue_Table_Column)
+      self.property(w, "Retention", "retention", BasicValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Owner": (StringValueConverter(), "owner"),
-    "ViewOriginalText": (StringValueConverter(), "view_original_text"),
-    "Description": (StringValueConverter(), "description"),
-    "TableType": (StringValueConverter(), "table_type"),
-    "Parameters": (StringValueConverter(), "parameters"),
-    "ViewExpandedText": (StringValueConverter(), "view_expanded_text"),
-    "StorageDescriptor": (AWS_Glue_Table_StorageDescriptor, "storage_descriptor"),
-    "PartitionKeys": (BlockValueConverter(AWS_Glue_Table_Column), None),
-    "Retention": (BasicValueConverter(), "retention"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_Glue_MLTransform_InputRecordTables(CloudFormationProperty):
-  entity = "AWS::Glue::MLTransform"
-  tf_block_type = "input_record_tables"
+  def write(self, w):
+    with w.block("input_record_tables"):
+      self.repeated_block(w, "GlueTables", AWS_Glue_MLTransform_GlueTables)
 
-  props = {
-    "GlueTables": (BlockValueConverter(AWS_Glue_MLTransform_GlueTables), None),
-  }
 
 class AWS_Glue_DataCatalogEncryptionSettings(CloudFormationResource):
-  terraform_resource = "aws_glue_data_catalog_encryption_settings"
+  cfn_type = "AWS::Glue::DataCatalogEncryptionSettings"
+  tf_type = "aws_glue_data_catalog_encryption_settings"
+  ref = "arn"
 
-  resource_type = "AWS::Glue::DataCatalogEncryptionSettings"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "DataCatalogEncryptionSettings", AWS_Glue_DataCatalogEncryptionSettings_DataCatalogEncryptionSettings)
+      self.property(w, "CatalogId", "catalog_id", StringValueConverter())
 
-  props = {
-    "DataCatalogEncryptionSettings": (AWS_Glue_DataCatalogEncryptionSettings_DataCatalogEncryptionSettings, "data_catalog_encryption_settings"),
-    "CatalogId": (StringValueConverter(), "catalog_id"),
-  }
 
 class AWS_Glue_Crawler(CloudFormationResource):
-  terraform_resource = "aws_glue_crawler"
+  cfn_type = "AWS::Glue::Crawler"
+  tf_type = "aws_glue_crawler"
+  ref = "arn"
 
-  resource_type = "AWS::Glue::Crawler"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Role", "role", StringValueConverter())
+      self.property(w, "Classifiers", "classifiers", ListValueConverter(StringValueConverter()))
+      self.property(w, "Description", "description", StringValueConverter())
+      self.block(w, "SchemaChangePolicy", AWS_Glue_Crawler_SchemaChangePolicy)
+      self.property(w, "Configuration", "configuration", StringValueConverter())
+      self.block(w, "Schedule", AWS_Glue_Crawler_Schedule)
+      self.property(w, "DatabaseName", "database_name", StringValueConverter())
+      self.block(w, "Targets", AWS_Glue_Crawler_Targets)
+      self.property(w, "CrawlerSecurityConfiguration", "crawler_security_configuration", StringValueConverter())
+      self.property(w, "TablePrefix", "table_prefix", StringValueConverter())
+      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Role": (StringValueConverter(), "role"),
-    "Classifiers": (ListValueConverter(StringValueConverter()), "classifiers"),
-    "Description": (StringValueConverter(), "description"),
-    "SchemaChangePolicy": (AWS_Glue_Crawler_SchemaChangePolicy, "schema_change_policy"),
-    "Configuration": (StringValueConverter(), "configuration"),
-    "Schedule": (AWS_Glue_Crawler_Schedule, "schedule"),
-    "DatabaseName": (StringValueConverter(), "database_name"),
-    "Targets": (AWS_Glue_Crawler_Targets, "targets"),
-    "CrawlerSecurityConfiguration": (StringValueConverter(), "crawler_security_configuration"),
-    "TablePrefix": (StringValueConverter(), "table_prefix"),
-    "Tags": (StringValueConverter(), "tags"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_Glue_MLTransform(CloudFormationResource):
-  terraform_resource = "aws_glue_ml_transform"
+  cfn_type = "AWS::Glue::MLTransform"
+  tf_type = "aws_glue_ml_transform"
+  ref = "arn"
 
-  resource_type = "AWS::Glue::MLTransform"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Role", "role", StringValueConverter())
+      self.property(w, "MaxRetries", "max_retries", BasicValueConverter())
+      self.property(w, "WorkerType", "worker_type", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "Timeout", "timeout", BasicValueConverter())
+      self.property(w, "GlueVersion", "glue_version", StringValueConverter())
+      self.block(w, "TransformParameters", AWS_Glue_MLTransform_TransformParameters)
+      self.block(w, "InputRecordTables", AWS_Glue_MLTransform_InputRecordTables)
+      self.property(w, "NumberOfWorkers", "number_of_workers", BasicValueConverter())
+      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "MaxCapacity", "max_capacity", BasicValueConverter())
 
-  props = {
-    "Role": (StringValueConverter(), "role"),
-    "MaxRetries": (BasicValueConverter(), "max_retries"),
-    "WorkerType": (StringValueConverter(), "worker_type"),
-    "Description": (StringValueConverter(), "description"),
-    "Timeout": (BasicValueConverter(), "timeout"),
-    "GlueVersion": (StringValueConverter(), "glue_version"),
-    "TransformParameters": (AWS_Glue_MLTransform_TransformParameters, "transform_parameters"),
-    "InputRecordTables": (AWS_Glue_MLTransform_InputRecordTables, "input_record_tables"),
-    "NumberOfWorkers": (BasicValueConverter(), "number_of_workers"),
-    "Tags": (StringValueConverter(), "tags"),
-    "Name": (StringValueConverter(), "name"),
-    "MaxCapacity": (BasicValueConverter(), "max_capacity"),
-  }
 
 class AWS_Glue_Table(CloudFormationResource):
-  terraform_resource = "aws_glue_table"
+  cfn_type = "AWS::Glue::Table"
+  tf_type = "aws_glue_table"
+  ref = "arn"
 
-  resource_type = "AWS::Glue::Table"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "TableInput", AWS_Glue_Table_TableInput)
+      self.property(w, "DatabaseName", "database_name", StringValueConverter())
+      self.property(w, "CatalogId", "catalog_id", StringValueConverter())
 
-  props = {
-    "TableInput": (AWS_Glue_Table_TableInput, "table_input"),
-    "DatabaseName": (StringValueConverter(), "database_name"),
-    "CatalogId": (StringValueConverter(), "catalog_id"),
-  }
 
 class AWS_Glue_Connection(CloudFormationResource):
-  terraform_resource = "aws_glue_connection"
+  cfn_type = "AWS::Glue::Connection"
+  tf_type = "aws_glue_connection"
+  ref = "arn"
 
-  resource_type = "AWS::Glue::Connection"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "ConnectionInput", AWS_Glue_Connection_ConnectionInput)
+      self.property(w, "CatalogId", "catalog_id", StringValueConverter())
 
-  props = {
-    "ConnectionInput": (AWS_Glue_Connection_ConnectionInput, "connection_input"),
-    "CatalogId": (StringValueConverter(), "catalog_id"),
-  }
 
 class AWS_Glue_Trigger(CloudFormationResource):
-  terraform_resource = "aws_glue_trigger"
+  cfn_type = "AWS::Glue::Trigger"
+  tf_type = "aws_glue_trigger"
+  ref = "arn"
 
-  resource_type = "AWS::Glue::Trigger"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "StartOnCreation", "start_on_creation", BasicValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.repeated_block(w, "Actions", AWS_Glue_Trigger_Action)
+      self.property(w, "WorkflowName", "workflow_name", StringValueConverter())
+      self.property(w, "Schedule", "schedule", StringValueConverter())
+      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
+      self.block(w, "Predicate", AWS_Glue_Trigger_Predicate)
 
-  props = {
-    "Type": (StringValueConverter(), "type"),
-    "StartOnCreation": (BasicValueConverter(), "start_on_creation"),
-    "Description": (StringValueConverter(), "description"),
-    "Actions": (BlockValueConverter(AWS_Glue_Trigger_Action), None),
-    "WorkflowName": (StringValueConverter(), "workflow_name"),
-    "Schedule": (StringValueConverter(), "schedule"),
-    "Tags": (StringValueConverter(), "tags"),
-    "Name": (StringValueConverter(), "name"),
-    "Predicate": (AWS_Glue_Trigger_Predicate, "predicate"),
-  }
 
 class AWS_Glue_SecurityConfiguration(CloudFormationResource):
-  terraform_resource = "aws_glue_security_configuration"
+  cfn_type = "AWS::Glue::SecurityConfiguration"
+  tf_type = "aws_glue_security_configuration"
+  ref = "arn"
 
-  resource_type = "AWS::Glue::SecurityConfiguration"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "EncryptionConfiguration", AWS_Glue_SecurityConfiguration_EncryptionConfiguration)
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "EncryptionConfiguration": (AWS_Glue_SecurityConfiguration_EncryptionConfiguration, "encryption_configuration"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_Glue_Partition_PartitionInput(CloudFormationProperty):
-  entity = "AWS::Glue::Partition"
-  tf_block_type = "partition_input"
+  def write(self, w):
+    with w.block("partition_input"):
+      self.property(w, "Parameters", "parameters", StringValueConverter())
+      self.block(w, "StorageDescriptor", AWS_Glue_Partition_StorageDescriptor)
+      self.property(w, "Values", "values", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "Parameters": (StringValueConverter(), "parameters"),
-    "StorageDescriptor": (AWS_Glue_Partition_StorageDescriptor, "storage_descriptor"),
-    "Values": (ListValueConverter(StringValueConverter()), "values"),
-  }
 
 class AWS_Glue_Partition(CloudFormationResource):
-  terraform_resource = "aws_glue_partition"
+  cfn_type = "AWS::Glue::Partition"
+  tf_type = "aws_glue_partition"
+  ref = "arn"
 
-  resource_type = "AWS::Glue::Partition"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "TableName", "table_name", StringValueConverter())
+      self.property(w, "DatabaseName", "database_name", StringValueConverter())
+      self.property(w, "CatalogId", "catalog_id", StringValueConverter())
+      self.block(w, "PartitionInput", AWS_Glue_Partition_PartitionInput)
 
-  props = {
-    "TableName": (StringValueConverter(), "table_name"),
-    "DatabaseName": (StringValueConverter(), "database_name"),
-    "CatalogId": (StringValueConverter(), "catalog_id"),
-    "PartitionInput": (AWS_Glue_Partition_PartitionInput, "partition_input"),
-  }
 

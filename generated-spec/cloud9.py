@@ -1,28 +1,27 @@
 from . import *
 
 class AWS_Cloud9_EnvironmentEC2_Repository(CloudFormationProperty):
-  entity = "AWS::Cloud9::EnvironmentEC2"
-  tf_block_type = "repository"
+  def write(self, w):
+    with w.block("repository"):
+      self.property(w, "PathComponent", "path_component", StringValueConverter())
+      self.property(w, "RepositoryUrl", "repository_url", StringValueConverter())
 
-  props = {
-    "PathComponent": (StringValueConverter(), "path_component"),
-    "RepositoryUrl": (StringValueConverter(), "repository_url"),
-  }
 
 class AWS_Cloud9_EnvironmentEC2(CloudFormationResource):
-  terraform_resource = "aws_cloud9_environment_ec2"
+  cfn_type = "AWS::Cloud9::EnvironmentEC2"
+  tf_type = "aws_cloud9_environment_ec2"
+  ref = "arn"
 
-  resource_type = "AWS::Cloud9::EnvironmentEC2"
+  def write(self, w):
+    with self.resource_block(w):
+      self.repeated_block(w, "Repositories", AWS_Cloud9_EnvironmentEC2_Repository)
+      self.property(w, "OwnerArn", "owner_arn", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "ConnectionType", "connection_type", StringValueConverter())
+      self.property(w, "AutomaticStopTimeMinutes", "automatic_stop_time_minutes", BasicValueConverter())
+      self.property(w, "SubnetId", "subnet_id", StringValueConverter())
+      self.property(w, "InstanceType", "instance_type", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Repositories": (BlockValueConverter(AWS_Cloud9_EnvironmentEC2_Repository), None),
-    "OwnerArn": (StringValueConverter(), "owner_arn"),
-    "Description": (StringValueConverter(), "description"),
-    "ConnectionType": (StringValueConverter(), "connection_type"),
-    "AutomaticStopTimeMinutes": (BasicValueConverter(), "automatic_stop_time_minutes"),
-    "SubnetId": (StringValueConverter(), "subnet_id"),
-    "InstanceType": (StringValueConverter(), "instance_type"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "Name": (StringValueConverter(), "name"),
-  }
 

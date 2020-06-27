@@ -1,27 +1,26 @@
 from . import *
 
 class AWS_CertificateManager_Certificate_DomainValidationOption(CloudFormationProperty):
-  entity = "AWS::CertificateManager::Certificate"
-  tf_block_type = "domain_validation_option"
+  def write(self, w):
+    with w.block("domain_validation_option"):
+      self.property(w, "DomainName", "domain_name", StringValueConverter())
+      self.property(w, "HostedZoneId", "hosted_zone_id", StringValueConverter())
+      self.property(w, "ValidationDomain", "validation_domain", StringValueConverter())
 
-  props = {
-    "DomainName": (StringValueConverter(), "domain_name"),
-    "HostedZoneId": (StringValueConverter(), "hosted_zone_id"),
-    "ValidationDomain": (StringValueConverter(), "validation_domain"),
-  }
 
 class AWS_CertificateManager_Certificate(CloudFormationResource):
-  terraform_resource = "aws_certificate_manager_certificate"
+  cfn_type = "AWS::CertificateManager::Certificate"
+  tf_type = "aws_certificate_manager_certificate"
+  ref = "arn"
 
-  resource_type = "AWS::CertificateManager::Certificate"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "CertificateAuthorityArn", "certificate_authority_arn", StringValueConverter())
+      self.property(w, "CertificateTransparencyLoggingPreference", "certificate_transparency_logging_preference", StringValueConverter())
+      self.property(w, "DomainName", "domain_name", StringValueConverter())
+      self.repeated_block(w, "DomainValidationOptions", AWS_CertificateManager_Certificate_DomainValidationOption)
+      self.property(w, "SubjectAlternativeNames", "subject_alternative_names", ListValueConverter(StringValueConverter()))
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "ValidationMethod", "validation_method", StringValueConverter())
 
-  props = {
-    "CertificateAuthorityArn": (StringValueConverter(), "certificate_authority_arn"),
-    "CertificateTransparencyLoggingPreference": (StringValueConverter(), "certificate_transparency_logging_preference"),
-    "DomainName": (StringValueConverter(), "domain_name"),
-    "DomainValidationOptions": (BlockValueConverter(AWS_CertificateManager_Certificate_DomainValidationOption), None),
-    "SubjectAlternativeNames": (ListValueConverter(StringValueConverter()), "subject_alternative_names"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "ValidationMethod": (StringValueConverter(), "validation_method"),
-  }
 

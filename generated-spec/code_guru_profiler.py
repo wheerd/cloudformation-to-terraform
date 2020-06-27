@@ -1,12 +1,13 @@
 from . import *
 
 class AWS_CodeGuruProfiler_ProfilingGroup(CloudFormationResource):
-  terraform_resource = "aws_code_guru_profiler_profiling_group"
+  cfn_type = "AWS::CodeGuruProfiler::ProfilingGroup"
+  tf_type = "aws_code_guru_profiler_profiling_group"
+  ref = "arn"
 
-  resource_type = "AWS::CodeGuruProfiler::ProfilingGroup"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ProfilingGroupName", "profiling_group_name", StringValueConverter())
+      self.property(w, "AgentPermissions", "agent_permissions", StringValueConverter())
 
-  props = {
-    "ProfilingGroupName": (StringValueConverter(), "profiling_group_name"),
-    "AgentPermissions": (StringValueConverter(), "agent_permissions"),
-  }
 

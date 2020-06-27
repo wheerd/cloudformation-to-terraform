@@ -1,22 +1,25 @@
 from . import *
 
 class AWS_Detective_MemberInvitation(CloudFormationResource):
-  terraform_resource = "aws_detective_member_invitation"
+  cfn_type = "AWS::Detective::MemberInvitation"
+  tf_type = "aws_detective_member_invitation"
+  ref = "arn"
 
-  resource_type = "AWS::Detective::MemberInvitation"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "GraphArn", "graph_arn", StringValueConverter())
+      self.property(w, "MemberId", "member_id", StringValueConverter())
+      self.property(w, "MemberEmailAddress", "member_email_address", StringValueConverter())
+      self.property(w, "Message", "message", StringValueConverter())
 
-  props = {
-    "GraphArn": (StringValueConverter(), "graph_arn"),
-    "MemberId": (StringValueConverter(), "member_id"),
-    "MemberEmailAddress": (StringValueConverter(), "member_email_address"),
-    "Message": (StringValueConverter(), "message"),
-  }
 
 class AWS_Detective_Graph(CloudFormationResource):
-  terraform_resource = "aws_detective_graph"
+  cfn_type = "AWS::Detective::Graph"
+  tf_type = "aws_detective_graph"
+  ref = "arn"
 
-  resource_type = "AWS::Detective::Graph"
+  def write(self, w):
+    with self.resource_block(w):
+      pass
 
-  props = {
-  }
 

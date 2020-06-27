@@ -1,418 +1,348 @@
 from . import *
 
 class AWS_IoTAnalytics_Dataset_DatasetContentVersionValue(CloudFormationProperty):
-  entity = "AWS::IoTAnalytics::Dataset"
-  tf_block_type = "dataset_content_version_value"
+  def write(self, w):
+    with w.block("dataset_content_version_value"):
+      self.property(w, "DatasetName", "dataset_name", StringValueConverter())
 
-  props = {
-    "DatasetName": (StringValueConverter(), "dataset_name"),
-  }
 
 class AWS_IoTAnalytics_Pipeline_DeviceShadowEnrich(CloudFormationProperty):
-  entity = "AWS::IoTAnalytics::Pipeline"
-  tf_block_type = "device_shadow_enrich"
+  def write(self, w):
+    with w.block("device_shadow_enrich"):
+      self.property(w, "Attribute", "attribute", StringValueConverter())
+      self.property(w, "Next", "next", StringValueConverter())
+      self.property(w, "ThingName", "thing_name", StringValueConverter())
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Attribute": (StringValueConverter(), "attribute"),
-    "Next": (StringValueConverter(), "next"),
-    "ThingName": (StringValueConverter(), "thing_name"),
-    "RoleArn": (StringValueConverter(), "role_arn"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_IoTAnalytics_Pipeline_Lambda(CloudFormationProperty):
-  entity = "AWS::IoTAnalytics::Pipeline"
-  tf_block_type = "lambda"
+  def write(self, w):
+    with w.block("lambda"):
+      self.property(w, "BatchSize", "batch_size", BasicValueConverter())
+      self.property(w, "Next", "next", StringValueConverter())
+      self.property(w, "LambdaName", "lambda_name", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "BatchSize": (BasicValueConverter(), "batch_size"),
-    "Next": (StringValueConverter(), "next"),
-    "LambdaName": (StringValueConverter(), "lambda_name"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_IoTAnalytics_Dataset_GlueConfiguration(CloudFormationProperty):
-  entity = "AWS::IoTAnalytics::Dataset"
-  tf_block_type = "glue_configuration"
+  def write(self, w):
+    with w.block("glue_configuration"):
+      self.property(w, "TableName", "table_name", StringValueConverter())
+      self.property(w, "DatabaseName", "database_name", StringValueConverter())
 
-  props = {
-    "TableName": (StringValueConverter(), "table_name"),
-    "DatabaseName": (StringValueConverter(), "database_name"),
-  }
 
 class AWS_IoTAnalytics_Dataset_OutputFileUriValue(CloudFormationProperty):
-  entity = "AWS::IoTAnalytics::Dataset"
-  tf_block_type = "output_file_uri_value"
+  def write(self, w):
+    with w.block("output_file_uri_value"):
+      self.property(w, "FileName", "file_name", StringValueConverter())
 
-  props = {
-    "FileName": (StringValueConverter(), "file_name"),
-  }
 
 class AWS_IoTAnalytics_Dataset_Variable(CloudFormationProperty):
-  entity = "AWS::IoTAnalytics::Dataset"
-  tf_block_type = "variable"
+  def write(self, w):
+    with w.block("variable"):
+      self.block(w, "DatasetContentVersionValue", AWS_IoTAnalytics_Dataset_DatasetContentVersionValue)
+      self.property(w, "DoubleValue", "double_value", BasicValueConverter())
+      self.block(w, "OutputFileUriValue", AWS_IoTAnalytics_Dataset_OutputFileUriValue)
+      self.property(w, "VariableName", "variable_name", StringValueConverter())
+      self.property(w, "StringValue", "string_value", StringValueConverter())
 
-  props = {
-    "DatasetContentVersionValue": (AWS_IoTAnalytics_Dataset_DatasetContentVersionValue, "dataset_content_version_value"),
-    "DoubleValue": (BasicValueConverter(), "double_value"),
-    "OutputFileUriValue": (AWS_IoTAnalytics_Dataset_OutputFileUriValue, "output_file_uri_value"),
-    "VariableName": (StringValueConverter(), "variable_name"),
-    "StringValue": (StringValueConverter(), "string_value"),
-  }
 
 class AWS_IoTAnalytics_Pipeline_SelectAttributes(CloudFormationProperty):
-  entity = "AWS::IoTAnalytics::Pipeline"
-  tf_block_type = "select_attributes"
+  def write(self, w):
+    with w.block("select_attributes"):
+      self.property(w, "Next", "next", StringValueConverter())
+      self.property(w, "Attributes", "attributes", ListValueConverter(StringValueConverter()))
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Next": (StringValueConverter(), "next"),
-    "Attributes": (ListValueConverter(StringValueConverter()), "attributes"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_IoTAnalytics_Dataset_DeltaTime(CloudFormationProperty):
-  entity = "AWS::IoTAnalytics::Dataset"
-  tf_block_type = "delta_time"
+  def write(self, w):
+    with w.block("delta_time"):
+      self.property(w, "TimeExpression", "time_expression", StringValueConverter())
+      self.property(w, "OffsetSeconds", "offset_seconds", BasicValueConverter())
 
-  props = {
-    "TimeExpression": (StringValueConverter(), "time_expression"),
-    "OffsetSeconds": (BasicValueConverter(), "offset_seconds"),
-  }
 
 class AWS_IoTAnalytics_Pipeline_Channel(CloudFormationProperty):
-  entity = "AWS::IoTAnalytics::Pipeline"
-  tf_block_type = "channel"
+  def write(self, w):
+    with w.block("channel"):
+      self.property(w, "ChannelName", "channel_name", StringValueConverter())
+      self.property(w, "Next", "next", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "ChannelName": (StringValueConverter(), "channel_name"),
-    "Next": (StringValueConverter(), "next"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_IoTAnalytics_Datastore_ServiceManagedS3(CloudFormationProperty):
-  entity = "AWS::IoTAnalytics::Datastore"
-  tf_block_type = "service_managed_s3"
+  def write(self, w):
+    with w.block("service_managed_s3"):
+      pass
 
-  props = {
-  }
 
 class AWS_IoTAnalytics_Pipeline_Filter(CloudFormationProperty):
-  entity = "AWS::IoTAnalytics::Pipeline"
-  tf_block_type = "filter"
+  def write(self, w):
+    with w.block("filter"):
+      self.property(w, "Filter", "filter", StringValueConverter())
+      self.property(w, "Next", "next", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Filter": (StringValueConverter(), "filter"),
-    "Next": (StringValueConverter(), "next"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_IoTAnalytics_Dataset_IotEventsDestinationConfiguration(CloudFormationProperty):
-  entity = "AWS::IoTAnalytics::Dataset"
-  tf_block_type = "iot_events_destination_configuration"
+  def write(self, w):
+    with w.block("iot_events_destination_configuration"):
+      self.property(w, "InputName", "input_name", StringValueConverter())
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
 
-  props = {
-    "InputName": (StringValueConverter(), "input_name"),
-    "RoleArn": (StringValueConverter(), "role_arn"),
-  }
 
 class AWS_IoTAnalytics_Datastore_RetentionPeriod(CloudFormationProperty):
-  entity = "AWS::IoTAnalytics::Datastore"
-  tf_block_type = "retention_period"
+  def write(self, w):
+    with w.block("retention_period"):
+      self.property(w, "NumberOfDays", "number_of_days", BasicValueConverter())
+      self.property(w, "Unlimited", "unlimited", BasicValueConverter())
 
-  props = {
-    "NumberOfDays": (BasicValueConverter(), "number_of_days"),
-    "Unlimited": (BasicValueConverter(), "unlimited"),
-  }
 
 class AWS_IoTAnalytics_Channel_CustomerManagedS3(CloudFormationProperty):
-  entity = "AWS::IoTAnalytics::Channel"
-  tf_block_type = "customer_managed_s3"
+  def write(self, w):
+    with w.block("customer_managed_s3"):
+      self.property(w, "Bucket", "bucket", StringValueConverter())
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
+      self.property(w, "KeyPrefix", "key_prefix", StringValueConverter())
 
-  props = {
-    "Bucket": (StringValueConverter(), "bucket"),
-    "RoleArn": (StringValueConverter(), "role_arn"),
-    "KeyPrefix": (StringValueConverter(), "key_prefix"),
-  }
 
 class AWS_IoTAnalytics_Pipeline_Math(CloudFormationProperty):
-  entity = "AWS::IoTAnalytics::Pipeline"
-  tf_block_type = "math"
+  def write(self, w):
+    with w.block("math"):
+      self.property(w, "Attribute", "attribute", StringValueConverter())
+      self.property(w, "Next", "next", StringValueConverter())
+      self.property(w, "Math", "math", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Attribute": (StringValueConverter(), "attribute"),
-    "Next": (StringValueConverter(), "next"),
-    "Math": (StringValueConverter(), "math"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_IoTAnalytics_Pipeline_RemoveAttributes(CloudFormationProperty):
-  entity = "AWS::IoTAnalytics::Pipeline"
-  tf_block_type = "remove_attributes"
+  def write(self, w):
+    with w.block("remove_attributes"):
+      self.property(w, "Next", "next", StringValueConverter())
+      self.property(w, "Attributes", "attributes", ListValueConverter(StringValueConverter()))
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Next": (StringValueConverter(), "next"),
-    "Attributes": (ListValueConverter(StringValueConverter()), "attributes"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_IoTAnalytics_Dataset_VersioningConfiguration(CloudFormationProperty):
-  entity = "AWS::IoTAnalytics::Dataset"
-  tf_block_type = "versioning_configuration"
+  def write(self, w):
+    with w.block("versioning_configuration"):
+      self.property(w, "MaxVersions", "max_versions", BasicValueConverter())
+      self.property(w, "Unlimited", "unlimited", BasicValueConverter())
 
-  props = {
-    "MaxVersions": (BasicValueConverter(), "max_versions"),
-    "Unlimited": (BasicValueConverter(), "unlimited"),
-  }
 
 class AWS_IoTAnalytics_Pipeline_Datastore(CloudFormationProperty):
-  entity = "AWS::IoTAnalytics::Pipeline"
-  tf_block_type = "datastore"
+  def write(self, w):
+    with w.block("datastore"):
+      self.property(w, "DatastoreName", "datastore_name", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "DatastoreName": (StringValueConverter(), "datastore_name"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_IoTAnalytics_Dataset_ResourceConfiguration(CloudFormationProperty):
-  entity = "AWS::IoTAnalytics::Dataset"
-  tf_block_type = "resource_configuration"
+  def write(self, w):
+    with w.block("resource_configuration"):
+      self.property(w, "VolumeSizeInGB", "volume_size_in_gb", BasicValueConverter())
+      self.property(w, "ComputeType", "compute_type", StringValueConverter())
 
-  props = {
-    "VolumeSizeInGB": (BasicValueConverter(), "volume_size_in_gb"),
-    "ComputeType": (StringValueConverter(), "compute_type"),
-  }
 
 class AWS_IoTAnalytics_Dataset_TriggeringDataset(CloudFormationProperty):
-  entity = "AWS::IoTAnalytics::Dataset"
-  tf_block_type = "triggering_dataset"
+  def write(self, w):
+    with w.block("triggering_dataset"):
+      self.property(w, "DatasetName", "dataset_name", StringValueConverter())
 
-  props = {
-    "DatasetName": (StringValueConverter(), "dataset_name"),
-  }
 
 class AWS_IoTAnalytics_Pipeline_AddAttributes(CloudFormationProperty):
-  entity = "AWS::IoTAnalytics::Pipeline"
-  tf_block_type = "add_attributes"
+  def write(self, w):
+    with w.block("add_attributes"):
+      self.property(w, "Next", "next", StringValueConverter())
+      self.property(w, "Attributes", "attributes", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Next": (StringValueConverter(), "next"),
-    "Attributes": (StringValueConverter(), "attributes"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_IoTAnalytics_Datastore_CustomerManagedS3(CloudFormationProperty):
-  entity = "AWS::IoTAnalytics::Datastore"
-  tf_block_type = "customer_managed_s3"
+  def write(self, w):
+    with w.block("customer_managed_s3"):
+      self.property(w, "Bucket", "bucket", StringValueConverter())
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
+      self.property(w, "KeyPrefix", "key_prefix", StringValueConverter())
 
-  props = {
-    "Bucket": (StringValueConverter(), "bucket"),
-    "RoleArn": (StringValueConverter(), "role_arn"),
-    "KeyPrefix": (StringValueConverter(), "key_prefix"),
-  }
 
 class AWS_IoTAnalytics_Dataset_Schedule(CloudFormationProperty):
-  entity = "AWS::IoTAnalytics::Dataset"
-  tf_block_type = "schedule"
+  def write(self, w):
+    with w.block("schedule"):
+      self.property(w, "ScheduleExpression", "schedule_expression", StringValueConverter())
 
-  props = {
-    "ScheduleExpression": (StringValueConverter(), "schedule_expression"),
-  }
 
 class AWS_IoTAnalytics_Pipeline_DeviceRegistryEnrich(CloudFormationProperty):
-  entity = "AWS::IoTAnalytics::Pipeline"
-  tf_block_type = "device_registry_enrich"
+  def write(self, w):
+    with w.block("device_registry_enrich"):
+      self.property(w, "Attribute", "attribute", StringValueConverter())
+      self.property(w, "Next", "next", StringValueConverter())
+      self.property(w, "ThingName", "thing_name", StringValueConverter())
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Attribute": (StringValueConverter(), "attribute"),
-    "Next": (StringValueConverter(), "next"),
-    "ThingName": (StringValueConverter(), "thing_name"),
-    "RoleArn": (StringValueConverter(), "role_arn"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_IoTAnalytics_Channel_RetentionPeriod(CloudFormationProperty):
-  entity = "AWS::IoTAnalytics::Channel"
-  tf_block_type = "retention_period"
+  def write(self, w):
+    with w.block("retention_period"):
+      self.property(w, "NumberOfDays", "number_of_days", BasicValueConverter())
+      self.property(w, "Unlimited", "unlimited", BasicValueConverter())
 
-  props = {
-    "NumberOfDays": (BasicValueConverter(), "number_of_days"),
-    "Unlimited": (BasicValueConverter(), "unlimited"),
-  }
 
 class AWS_IoTAnalytics_Dataset_RetentionPeriod(CloudFormationProperty):
-  entity = "AWS::IoTAnalytics::Dataset"
-  tf_block_type = "retention_period"
+  def write(self, w):
+    with w.block("retention_period"):
+      self.property(w, "NumberOfDays", "number_of_days", BasicValueConverter())
+      self.property(w, "Unlimited", "unlimited", BasicValueConverter())
 
-  props = {
-    "NumberOfDays": (BasicValueConverter(), "number_of_days"),
-    "Unlimited": (BasicValueConverter(), "unlimited"),
-  }
 
 class AWS_IoTAnalytics_Dataset_S3DestinationConfiguration(CloudFormationProperty):
-  entity = "AWS::IoTAnalytics::Dataset"
-  tf_block_type = "s3_destination_configuration"
+  def write(self, w):
+    with w.block("s3_destination_configuration"):
+      self.block(w, "GlueConfiguration", AWS_IoTAnalytics_Dataset_GlueConfiguration)
+      self.property(w, "Bucket", "bucket", StringValueConverter())
+      self.property(w, "Key", "key", StringValueConverter())
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
 
-  props = {
-    "GlueConfiguration": (AWS_IoTAnalytics_Dataset_GlueConfiguration, "glue_configuration"),
-    "Bucket": (StringValueConverter(), "bucket"),
-    "Key": (StringValueConverter(), "key"),
-    "RoleArn": (StringValueConverter(), "role_arn"),
-  }
 
 class AWS_IoTAnalytics_Channel_ServiceManagedS3(CloudFormationProperty):
-  entity = "AWS::IoTAnalytics::Channel"
-  tf_block_type = "service_managed_s3"
+  def write(self, w):
+    with w.block("service_managed_s3"):
+      pass
 
-  props = {
-  }
 
 class AWS_IoTAnalytics_Dataset_Filter(CloudFormationProperty):
-  entity = "AWS::IoTAnalytics::Dataset"
-  tf_block_type = "filter"
+  def write(self, w):
+    with w.block("filter"):
+      self.block(w, "DeltaTime", AWS_IoTAnalytics_Dataset_DeltaTime)
 
-  props = {
-    "DeltaTime": (AWS_IoTAnalytics_Dataset_DeltaTime, "delta_time"),
-  }
 
 class AWS_IoTAnalytics_Datastore_DatastoreStorage(CloudFormationProperty):
-  entity = "AWS::IoTAnalytics::Datastore"
-  tf_block_type = "datastore_storage"
+  def write(self, w):
+    with w.block("datastore_storage"):
+      self.block(w, "CustomerManagedS3", AWS_IoTAnalytics_Datastore_CustomerManagedS3)
+      self.block(w, "ServiceManagedS3", AWS_IoTAnalytics_Datastore_ServiceManagedS3)
 
-  props = {
-    "CustomerManagedS3": (AWS_IoTAnalytics_Datastore_CustomerManagedS3, "customer_managed_s3"),
-    "ServiceManagedS3": (AWS_IoTAnalytics_Datastore_ServiceManagedS3, "service_managed_s3"),
-  }
 
 class AWS_IoTAnalytics_Dataset_Trigger(CloudFormationProperty):
-  entity = "AWS::IoTAnalytics::Dataset"
-  tf_block_type = "trigger"
+  def write(self, w):
+    with w.block("trigger"):
+      self.block(w, "Schedule", AWS_IoTAnalytics_Dataset_Schedule)
+      self.block(w, "TriggeringDataset", AWS_IoTAnalytics_Dataset_TriggeringDataset)
 
-  props = {
-    "Schedule": (AWS_IoTAnalytics_Dataset_Schedule, "schedule"),
-    "TriggeringDataset": (AWS_IoTAnalytics_Dataset_TriggeringDataset, "triggering_dataset"),
-  }
 
 class AWS_IoTAnalytics_Dataset_ContainerAction(CloudFormationProperty):
-  entity = "AWS::IoTAnalytics::Dataset"
-  tf_block_type = "container_action"
+  def write(self, w):
+    with w.block("container_action"):
+      self.repeated_block(w, "Variables", AWS_IoTAnalytics_Dataset_Variable)
+      self.property(w, "ExecutionRoleArn", "execution_role_arn", StringValueConverter())
+      self.property(w, "Image", "image", StringValueConverter())
+      self.block(w, "ResourceConfiguration", AWS_IoTAnalytics_Dataset_ResourceConfiguration)
 
-  props = {
-    "Variables": (BlockValueConverter(AWS_IoTAnalytics_Dataset_Variable), None),
-    "ExecutionRoleArn": (StringValueConverter(), "execution_role_arn"),
-    "Image": (StringValueConverter(), "image"),
-    "ResourceConfiguration": (AWS_IoTAnalytics_Dataset_ResourceConfiguration, "resource_configuration"),
-  }
 
 class AWS_IoTAnalytics_Channel_ChannelStorage(CloudFormationProperty):
-  entity = "AWS::IoTAnalytics::Channel"
-  tf_block_type = "channel_storage"
+  def write(self, w):
+    with w.block("channel_storage"):
+      self.block(w, "CustomerManagedS3", AWS_IoTAnalytics_Channel_CustomerManagedS3)
+      self.block(w, "ServiceManagedS3", AWS_IoTAnalytics_Channel_ServiceManagedS3)
 
-  props = {
-    "CustomerManagedS3": (AWS_IoTAnalytics_Channel_CustomerManagedS3, "customer_managed_s3"),
-    "ServiceManagedS3": (AWS_IoTAnalytics_Channel_ServiceManagedS3, "service_managed_s3"),
-  }
 
 class AWS_IoTAnalytics_Pipeline_Activity(CloudFormationProperty):
-  entity = "AWS::IoTAnalytics::Pipeline"
-  tf_block_type = "activity"
+  def write(self, w):
+    with w.block("activity"):
+      self.block(w, "SelectAttributes", AWS_IoTAnalytics_Pipeline_SelectAttributes)
+      self.block(w, "Datastore", AWS_IoTAnalytics_Pipeline_Datastore)
+      self.block(w, "Filter", AWS_IoTAnalytics_Pipeline_Filter)
+      self.block(w, "AddAttributes", AWS_IoTAnalytics_Pipeline_AddAttributes)
+      self.block(w, "Channel", AWS_IoTAnalytics_Pipeline_Channel)
+      self.block(w, "DeviceShadowEnrich", AWS_IoTAnalytics_Pipeline_DeviceShadowEnrich)
+      self.block(w, "Math", AWS_IoTAnalytics_Pipeline_Math)
+      self.block(w, "Lambda", AWS_IoTAnalytics_Pipeline_Lambda)
+      self.block(w, "DeviceRegistryEnrich", AWS_IoTAnalytics_Pipeline_DeviceRegistryEnrich)
+      self.block(w, "RemoveAttributes", AWS_IoTAnalytics_Pipeline_RemoveAttributes)
 
-  props = {
-    "SelectAttributes": (AWS_IoTAnalytics_Pipeline_SelectAttributes, "select_attributes"),
-    "Datastore": (AWS_IoTAnalytics_Pipeline_Datastore, "datastore"),
-    "Filter": (AWS_IoTAnalytics_Pipeline_Filter, "filter"),
-    "AddAttributes": (AWS_IoTAnalytics_Pipeline_AddAttributes, "add_attributes"),
-    "Channel": (AWS_IoTAnalytics_Pipeline_Channel, "channel"),
-    "DeviceShadowEnrich": (AWS_IoTAnalytics_Pipeline_DeviceShadowEnrich, "device_shadow_enrich"),
-    "Math": (AWS_IoTAnalytics_Pipeline_Math, "math"),
-    "Lambda": (AWS_IoTAnalytics_Pipeline_Lambda, "lambda"),
-    "DeviceRegistryEnrich": (AWS_IoTAnalytics_Pipeline_DeviceRegistryEnrich, "device_registry_enrich"),
-    "RemoveAttributes": (AWS_IoTAnalytics_Pipeline_RemoveAttributes, "remove_attributes"),
-  }
 
 class AWS_IoTAnalytics_Dataset_QueryAction(CloudFormationProperty):
-  entity = "AWS::IoTAnalytics::Dataset"
-  tf_block_type = "query_action"
+  def write(self, w):
+    with w.block("query_action"):
+      self.repeated_block(w, "Filters", AWS_IoTAnalytics_Dataset_Filter)
+      self.property(w, "SqlQuery", "sql_query", StringValueConverter())
 
-  props = {
-    "Filters": (BlockValueConverter(AWS_IoTAnalytics_Dataset_Filter), None),
-    "SqlQuery": (StringValueConverter(), "sql_query"),
-  }
 
 class AWS_IoTAnalytics_Dataset_DatasetContentDeliveryRuleDestination(CloudFormationProperty):
-  entity = "AWS::IoTAnalytics::Dataset"
-  tf_block_type = "dataset_content_delivery_rule_destination"
+  def write(self, w):
+    with w.block("dataset_content_delivery_rule_destination"):
+      self.block(w, "IotEventsDestinationConfiguration", AWS_IoTAnalytics_Dataset_IotEventsDestinationConfiguration)
+      self.block(w, "S3DestinationConfiguration", AWS_IoTAnalytics_Dataset_S3DestinationConfiguration)
 
-  props = {
-    "IotEventsDestinationConfiguration": (AWS_IoTAnalytics_Dataset_IotEventsDestinationConfiguration, "iot_events_destination_configuration"),
-    "S3DestinationConfiguration": (AWS_IoTAnalytics_Dataset_S3DestinationConfiguration, "s3_destination_configuration"),
-  }
 
 class AWS_IoTAnalytics_Channel(CloudFormationResource):
-  terraform_resource = "aws_io_t_analytics_channel"
+  cfn_type = "AWS::IoTAnalytics::Channel"
+  tf_type = "aws_io_t_analytics_channel"
+  ref = "arn"
 
-  resource_type = "AWS::IoTAnalytics::Channel"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ChannelName", "channel_name", StringValueConverter())
+      self.block(w, "ChannelStorage", AWS_IoTAnalytics_Channel_ChannelStorage)
+      self.block(w, "RetentionPeriod", AWS_IoTAnalytics_Channel_RetentionPeriod)
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "ChannelName": (StringValueConverter(), "channel_name"),
-    "ChannelStorage": (AWS_IoTAnalytics_Channel_ChannelStorage, "channel_storage"),
-    "RetentionPeriod": (AWS_IoTAnalytics_Channel_RetentionPeriod, "retention_period"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 
 class AWS_IoTAnalytics_Datastore(CloudFormationResource):
-  terraform_resource = "aws_io_t_analytics_datastore"
+  cfn_type = "AWS::IoTAnalytics::Datastore"
+  tf_type = "aws_io_t_analytics_datastore"
+  ref = "arn"
 
-  resource_type = "AWS::IoTAnalytics::Datastore"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "DatastoreStorage", AWS_IoTAnalytics_Datastore_DatastoreStorage)
+      self.property(w, "DatastoreName", "datastore_name", StringValueConverter())
+      self.block(w, "RetentionPeriod", AWS_IoTAnalytics_Datastore_RetentionPeriod)
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "DatastoreStorage": (AWS_IoTAnalytics_Datastore_DatastoreStorage, "datastore_storage"),
-    "DatastoreName": (StringValueConverter(), "datastore_name"),
-    "RetentionPeriod": (AWS_IoTAnalytics_Datastore_RetentionPeriod, "retention_period"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 
 class AWS_IoTAnalytics_Pipeline(CloudFormationResource):
-  terraform_resource = "aws_io_t_analytics_pipeline"
+  cfn_type = "AWS::IoTAnalytics::Pipeline"
+  tf_type = "aws_io_t_analytics_pipeline"
+  ref = "arn"
 
-  resource_type = "AWS::IoTAnalytics::Pipeline"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "PipelineName", "pipeline_name", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.repeated_block(w, "PipelineActivities", AWS_IoTAnalytics_Pipeline_Activity)
 
-  props = {
-    "PipelineName": (StringValueConverter(), "pipeline_name"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "PipelineActivities": (BlockValueConverter(AWS_IoTAnalytics_Pipeline_Activity), None),
-  }
 
 class AWS_IoTAnalytics_Dataset_DatasetContentDeliveryRule(CloudFormationProperty):
-  entity = "AWS::IoTAnalytics::Dataset"
-  tf_block_type = "dataset_content_delivery_rule"
+  def write(self, w):
+    with w.block("dataset_content_delivery_rule"):
+      self.block(w, "Destination", AWS_IoTAnalytics_Dataset_DatasetContentDeliveryRuleDestination)
+      self.property(w, "EntryName", "entry_name", StringValueConverter())
 
-  props = {
-    "Destination": (AWS_IoTAnalytics_Dataset_DatasetContentDeliveryRuleDestination, "destination"),
-    "EntryName": (StringValueConverter(), "entry_name"),
-  }
 
 class AWS_IoTAnalytics_Dataset_Action(CloudFormationProperty):
-  entity = "AWS::IoTAnalytics::Dataset"
-  tf_block_type = "action"
+  def write(self, w):
+    with w.block("action"):
+      self.property(w, "ActionName", "action_name", StringValueConverter())
+      self.block(w, "ContainerAction", AWS_IoTAnalytics_Dataset_ContainerAction)
+      self.block(w, "QueryAction", AWS_IoTAnalytics_Dataset_QueryAction)
 
-  props = {
-    "ActionName": (StringValueConverter(), "action_name"),
-    "ContainerAction": (AWS_IoTAnalytics_Dataset_ContainerAction, "container_action"),
-    "QueryAction": (AWS_IoTAnalytics_Dataset_QueryAction, "query_action"),
-  }
 
 class AWS_IoTAnalytics_Dataset(CloudFormationResource):
-  terraform_resource = "aws_io_t_analytics_dataset"
+  cfn_type = "AWS::IoTAnalytics::Dataset"
+  tf_type = "aws_io_t_analytics_dataset"
+  ref = "arn"
 
-  resource_type = "AWS::IoTAnalytics::Dataset"
+  def write(self, w):
+    with self.resource_block(w):
+      self.repeated_block(w, "Actions", AWS_IoTAnalytics_Dataset_Action)
+      self.property(w, "DatasetName", "dataset_name", StringValueConverter())
+      self.repeated_block(w, "ContentDeliveryRules", AWS_IoTAnalytics_Dataset_DatasetContentDeliveryRule)
+      self.repeated_block(w, "Triggers", AWS_IoTAnalytics_Dataset_Trigger)
+      self.block(w, "VersioningConfiguration", AWS_IoTAnalytics_Dataset_VersioningConfiguration)
+      self.block(w, "RetentionPeriod", AWS_IoTAnalytics_Dataset_RetentionPeriod)
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "Actions": (BlockValueConverter(AWS_IoTAnalytics_Dataset_Action), None),
-    "DatasetName": (StringValueConverter(), "dataset_name"),
-    "ContentDeliveryRules": (BlockValueConverter(AWS_IoTAnalytics_Dataset_DatasetContentDeliveryRule), None),
-    "Triggers": (BlockValueConverter(AWS_IoTAnalytics_Dataset_Trigger), None),
-    "VersioningConfiguration": (AWS_IoTAnalytics_Dataset_VersioningConfiguration, "versioning_configuration"),
-    "RetentionPeriod": (AWS_IoTAnalytics_Dataset_RetentionPeriod, "retention_period"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 

@@ -1,411 +1,354 @@
 from . import *
 
 class AWS_ElasticLoadBalancingV2_ListenerCertificate_Certificate(CloudFormationProperty):
-  entity = "AWS::ElasticLoadBalancingV2::ListenerCertificate"
-  tf_block_type = "certificate"
+  def write(self, w):
+    with w.block("certificate"):
+      self.property(w, "CertificateArn", "certificate_arn", StringValueConverter())
 
-  props = {
-    "CertificateArn": (StringValueConverter(), "certificate_arn"),
-  }
 
 class AWS_ElasticLoadBalancingV2_TargetGroup_TargetGroupAttribute(CloudFormationProperty):
-  entity = "AWS::ElasticLoadBalancingV2::TargetGroup"
-  tf_block_type = "target_group_attribute"
+  def write(self, w):
+    with w.block("target_group_attribute"):
+      self.property(w, "Key", "key", StringValueConverter())
+      self.property(w, "Value", "value", StringValueConverter())
 
-  props = {
-    "Key": (StringValueConverter(), "key"),
-    "Value": (StringValueConverter(), "value"),
-  }
 
 class AWS_ElasticLoadBalancingV2_Listener_AuthenticateCognitoConfig(CloudFormationProperty):
-  entity = "AWS::ElasticLoadBalancingV2::Listener"
-  tf_block_type = "authenticate_cognito_config"
+  def write(self, w):
+    with w.block("authenticate_cognito_config"):
+      self.property(w, "AuthenticationRequestExtraParams", "authentication_request_extra_params", MapValueConverter(StringValueConverter()))
+      self.property(w, "OnUnauthenticatedRequest", "on_unauthenticated_request", StringValueConverter())
+      self.property(w, "Scope", "scope", StringValueConverter())
+      self.property(w, "SessionCookieName", "session_cookie_name", StringValueConverter())
+      self.property(w, "SessionTimeout", "session_timeout", BasicValueConverter())
+      self.property(w, "UserPoolArn", "user_pool_arn", StringValueConverter())
+      self.property(w, "UserPoolClientId", "user_pool_client_id", StringValueConverter())
+      self.property(w, "UserPoolDomain", "user_pool_domain", StringValueConverter())
 
-  props = {
-    "AuthenticationRequestExtraParams": (MapValueConverter(StringValueConverter()), "authentication_request_extra_params"),
-    "OnUnauthenticatedRequest": (StringValueConverter(), "on_unauthenticated_request"),
-    "Scope": (StringValueConverter(), "scope"),
-    "SessionCookieName": (StringValueConverter(), "session_cookie_name"),
-    "SessionTimeout": (BasicValueConverter(), "session_timeout"),
-    "UserPoolArn": (StringValueConverter(), "user_pool_arn"),
-    "UserPoolClientId": (StringValueConverter(), "user_pool_client_id"),
-    "UserPoolDomain": (StringValueConverter(), "user_pool_domain"),
-  }
 
 class AWS_ElasticLoadBalancingV2_ListenerRule_SourceIpConfig(CloudFormationProperty):
-  entity = "AWS::ElasticLoadBalancingV2::ListenerRule"
-  tf_block_type = "source_ip_config"
+  def write(self, w):
+    with w.block("source_ip_config"):
+      self.property(w, "Values", "values", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "Values": (ListValueConverter(StringValueConverter()), "values"),
-  }
 
 class AWS_ElasticLoadBalancingV2_ListenerRule_AuthenticateOidcConfig(CloudFormationProperty):
-  entity = "AWS::ElasticLoadBalancingV2::ListenerRule"
-  tf_block_type = "authenticate_oidc_config"
+  def write(self, w):
+    with w.block("authenticate_oidc_config"):
+      self.property(w, "AuthenticationRequestExtraParams", "authentication_request_extra_params", MapValueConverter(StringValueConverter()))
+      self.property(w, "AuthorizationEndpoint", "authorization_endpoint", StringValueConverter())
+      self.property(w, "ClientId", "client_id", StringValueConverter())
+      self.property(w, "ClientSecret", "client_secret", StringValueConverter())
+      self.property(w, "Issuer", "issuer", StringValueConverter())
+      self.property(w, "OnUnauthenticatedRequest", "on_unauthenticated_request", StringValueConverter())
+      self.property(w, "Scope", "scope", StringValueConverter())
+      self.property(w, "SessionCookieName", "session_cookie_name", StringValueConverter())
+      self.property(w, "SessionTimeout", "session_timeout", BasicValueConverter())
+      self.property(w, "TokenEndpoint", "token_endpoint", StringValueConverter())
+      self.property(w, "UserInfoEndpoint", "user_info_endpoint", StringValueConverter())
 
-  props = {
-    "AuthenticationRequestExtraParams": (MapValueConverter(StringValueConverter()), "authentication_request_extra_params"),
-    "AuthorizationEndpoint": (StringValueConverter(), "authorization_endpoint"),
-    "ClientId": (StringValueConverter(), "client_id"),
-    "ClientSecret": (StringValueConverter(), "client_secret"),
-    "Issuer": (StringValueConverter(), "issuer"),
-    "OnUnauthenticatedRequest": (StringValueConverter(), "on_unauthenticated_request"),
-    "Scope": (StringValueConverter(), "scope"),
-    "SessionCookieName": (StringValueConverter(), "session_cookie_name"),
-    "SessionTimeout": (BasicValueConverter(), "session_timeout"),
-    "TokenEndpoint": (StringValueConverter(), "token_endpoint"),
-    "UserInfoEndpoint": (StringValueConverter(), "user_info_endpoint"),
-  }
 
 class AWS_ElasticLoadBalancingV2_ListenerRule_AuthenticateCognitoConfig(CloudFormationProperty):
-  entity = "AWS::ElasticLoadBalancingV2::ListenerRule"
-  tf_block_type = "authenticate_cognito_config"
+  def write(self, w):
+    with w.block("authenticate_cognito_config"):
+      self.property(w, "AuthenticationRequestExtraParams", "authentication_request_extra_params", MapValueConverter(StringValueConverter()))
+      self.property(w, "OnUnauthenticatedRequest", "on_unauthenticated_request", StringValueConverter())
+      self.property(w, "Scope", "scope", StringValueConverter())
+      self.property(w, "SessionCookieName", "session_cookie_name", StringValueConverter())
+      self.property(w, "SessionTimeout", "session_timeout", BasicValueConverter())
+      self.property(w, "UserPoolArn", "user_pool_arn", StringValueConverter())
+      self.property(w, "UserPoolClientId", "user_pool_client_id", StringValueConverter())
+      self.property(w, "UserPoolDomain", "user_pool_domain", StringValueConverter())
 
-  props = {
-    "AuthenticationRequestExtraParams": (MapValueConverter(StringValueConverter()), "authentication_request_extra_params"),
-    "OnUnauthenticatedRequest": (StringValueConverter(), "on_unauthenticated_request"),
-    "Scope": (StringValueConverter(), "scope"),
-    "SessionCookieName": (StringValueConverter(), "session_cookie_name"),
-    "SessionTimeout": (BasicValueConverter(), "session_timeout"),
-    "UserPoolArn": (StringValueConverter(), "user_pool_arn"),
-    "UserPoolClientId": (StringValueConverter(), "user_pool_client_id"),
-    "UserPoolDomain": (StringValueConverter(), "user_pool_domain"),
-  }
 
 class AWS_ElasticLoadBalancingV2_ListenerRule_FixedResponseConfig(CloudFormationProperty):
-  entity = "AWS::ElasticLoadBalancingV2::ListenerRule"
-  tf_block_type = "fixed_response_config"
+  def write(self, w):
+    with w.block("fixed_response_config"):
+      self.property(w, "ContentType", "content_type", StringValueConverter())
+      self.property(w, "MessageBody", "message_body", StringValueConverter())
+      self.property(w, "StatusCode", "status_code", StringValueConverter())
 
-  props = {
-    "ContentType": (StringValueConverter(), "content_type"),
-    "MessageBody": (StringValueConverter(), "message_body"),
-    "StatusCode": (StringValueConverter(), "status_code"),
-  }
 
 class AWS_ElasticLoadBalancingV2_ListenerRule_QueryStringKeyValue(CloudFormationProperty):
-  entity = "AWS::ElasticLoadBalancingV2::ListenerRule"
-  tf_block_type = "query_string_key_value"
+  def write(self, w):
+    with w.block("query_string_key_value"):
+      self.property(w, "Key", "key", StringValueConverter())
+      self.property(w, "Value", "value", StringValueConverter())
 
-  props = {
-    "Key": (StringValueConverter(), "key"),
-    "Value": (StringValueConverter(), "value"),
-  }
 
 class AWS_ElasticLoadBalancingV2_ListenerRule_QueryStringConfig(CloudFormationProperty):
-  entity = "AWS::ElasticLoadBalancingV2::ListenerRule"
-  tf_block_type = "query_string_config"
+  def write(self, w):
+    with w.block("query_string_config"):
+      self.repeated_block(w, "Values", AWS_ElasticLoadBalancingV2_ListenerRule_QueryStringKeyValue)
 
-  props = {
-    "Values": (BlockValueConverter(AWS_ElasticLoadBalancingV2_ListenerRule_QueryStringKeyValue), None),
-  }
 
 class AWS_ElasticLoadBalancingV2_ListenerRule_PathPatternConfig(CloudFormationProperty):
-  entity = "AWS::ElasticLoadBalancingV2::ListenerRule"
-  tf_block_type = "path_pattern_config"
+  def write(self, w):
+    with w.block("path_pattern_config"):
+      self.property(w, "Values", "values", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "Values": (ListValueConverter(StringValueConverter()), "values"),
-  }
 
 class AWS_ElasticLoadBalancingV2_LoadBalancer_LoadBalancerAttribute(CloudFormationProperty):
-  entity = "AWS::ElasticLoadBalancingV2::LoadBalancer"
-  tf_block_type = "load_balancer_attribute"
+  def write(self, w):
+    with w.block("load_balancer_attribute"):
+      self.property(w, "Key", "key", StringValueConverter())
+      self.property(w, "Value", "value", StringValueConverter())
 
-  props = {
-    "Key": (StringValueConverter(), "key"),
-    "Value": (StringValueConverter(), "value"),
-  }
 
 class AWS_ElasticLoadBalancingV2_TargetGroup_Matcher(CloudFormationProperty):
-  entity = "AWS::ElasticLoadBalancingV2::TargetGroup"
-  tf_block_type = "matcher"
+  def write(self, w):
+    with w.block("matcher"):
+      self.property(w, "HttpCode", "http_code", StringValueConverter())
 
-  props = {
-    "HttpCode": (StringValueConverter(), "http_code"),
-  }
 
 class AWS_ElasticLoadBalancingV2_TargetGroup_TargetDescription(CloudFormationProperty):
-  entity = "AWS::ElasticLoadBalancingV2::TargetGroup"
-  tf_block_type = "target_description"
+  def write(self, w):
+    with w.block("target_description"):
+      self.property(w, "AvailabilityZone", "availability_zone", StringValueConverter())
+      self.property(w, "Id", "id", StringValueConverter())
+      self.property(w, "Port", "port", BasicValueConverter())
 
-  props = {
-    "AvailabilityZone": (StringValueConverter(), "availability_zone"),
-    "Id": (StringValueConverter(), "id"),
-    "Port": (BasicValueConverter(), "port"),
-  }
 
 class AWS_ElasticLoadBalancingV2_ListenerRule_HttpHeaderConfig(CloudFormationProperty):
-  entity = "AWS::ElasticLoadBalancingV2::ListenerRule"
-  tf_block_type = "http_header_config"
+  def write(self, w):
+    with w.block("http_header_config"):
+      self.property(w, "HttpHeaderName", "http_header_name", StringValueConverter())
+      self.property(w, "Values", "values", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "HttpHeaderName": (StringValueConverter(), "http_header_name"),
-    "Values": (ListValueConverter(StringValueConverter()), "values"),
-  }
 
 class AWS_ElasticLoadBalancingV2_ListenerRule_TargetGroupTuple(CloudFormationProperty):
-  entity = "AWS::ElasticLoadBalancingV2::ListenerRule"
-  tf_block_type = "target_group_tuple"
+  def write(self, w):
+    with w.block("target_group_tuple"):
+      self.property(w, "TargetGroupArn", "target_group_arn", StringValueConverter())
+      self.property(w, "Weight", "weight", BasicValueConverter())
 
-  props = {
-    "TargetGroupArn": (StringValueConverter(), "target_group_arn"),
-    "Weight": (BasicValueConverter(), "weight"),
-  }
 
 class AWS_ElasticLoadBalancingV2_Listener_AuthenticateOidcConfig(CloudFormationProperty):
-  entity = "AWS::ElasticLoadBalancingV2::Listener"
-  tf_block_type = "authenticate_oidc_config"
+  def write(self, w):
+    with w.block("authenticate_oidc_config"):
+      self.property(w, "AuthenticationRequestExtraParams", "authentication_request_extra_params", MapValueConverter(StringValueConverter()))
+      self.property(w, "AuthorizationEndpoint", "authorization_endpoint", StringValueConverter())
+      self.property(w, "ClientId", "client_id", StringValueConverter())
+      self.property(w, "ClientSecret", "client_secret", StringValueConverter())
+      self.property(w, "Issuer", "issuer", StringValueConverter())
+      self.property(w, "OnUnauthenticatedRequest", "on_unauthenticated_request", StringValueConverter())
+      self.property(w, "Scope", "scope", StringValueConverter())
+      self.property(w, "SessionCookieName", "session_cookie_name", StringValueConverter())
+      self.property(w, "SessionTimeout", "session_timeout", BasicValueConverter())
+      self.property(w, "TokenEndpoint", "token_endpoint", StringValueConverter())
+      self.property(w, "UserInfoEndpoint", "user_info_endpoint", StringValueConverter())
 
-  props = {
-    "AuthenticationRequestExtraParams": (MapValueConverter(StringValueConverter()), "authentication_request_extra_params"),
-    "AuthorizationEndpoint": (StringValueConverter(), "authorization_endpoint"),
-    "ClientId": (StringValueConverter(), "client_id"),
-    "ClientSecret": (StringValueConverter(), "client_secret"),
-    "Issuer": (StringValueConverter(), "issuer"),
-    "OnUnauthenticatedRequest": (StringValueConverter(), "on_unauthenticated_request"),
-    "Scope": (StringValueConverter(), "scope"),
-    "SessionCookieName": (StringValueConverter(), "session_cookie_name"),
-    "SessionTimeout": (BasicValueConverter(), "session_timeout"),
-    "TokenEndpoint": (StringValueConverter(), "token_endpoint"),
-    "UserInfoEndpoint": (StringValueConverter(), "user_info_endpoint"),
-  }
 
 class AWS_ElasticLoadBalancingV2_Listener_RedirectConfig(CloudFormationProperty):
-  entity = "AWS::ElasticLoadBalancingV2::Listener"
-  tf_block_type = "redirect_config"
+  def write(self, w):
+    with w.block("redirect_config"):
+      self.property(w, "Host", "host", StringValueConverter())
+      self.property(w, "Path", "path", StringValueConverter())
+      self.property(w, "Port", "port", StringValueConverter())
+      self.property(w, "Protocol", "protocol", StringValueConverter())
+      self.property(w, "Query", "query", StringValueConverter())
+      self.property(w, "StatusCode", "status_code", StringValueConverter())
 
-  props = {
-    "Host": (StringValueConverter(), "host"),
-    "Path": (StringValueConverter(), "path"),
-    "Port": (StringValueConverter(), "port"),
-    "Protocol": (StringValueConverter(), "protocol"),
-    "Query": (StringValueConverter(), "query"),
-    "StatusCode": (StringValueConverter(), "status_code"),
-  }
 
 class AWS_ElasticLoadBalancingV2_ListenerRule_HttpRequestMethodConfig(CloudFormationProperty):
-  entity = "AWS::ElasticLoadBalancingV2::ListenerRule"
-  tf_block_type = "http_request_method_config"
+  def write(self, w):
+    with w.block("http_request_method_config"):
+      self.property(w, "Values", "values", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "Values": (ListValueConverter(StringValueConverter()), "values"),
-  }
 
 class AWS_ElasticLoadBalancingV2_Listener_FixedResponseConfig(CloudFormationProperty):
-  entity = "AWS::ElasticLoadBalancingV2::Listener"
-  tf_block_type = "fixed_response_config"
+  def write(self, w):
+    with w.block("fixed_response_config"):
+      self.property(w, "ContentType", "content_type", StringValueConverter())
+      self.property(w, "MessageBody", "message_body", StringValueConverter())
+      self.property(w, "StatusCode", "status_code", StringValueConverter())
 
-  props = {
-    "ContentType": (StringValueConverter(), "content_type"),
-    "MessageBody": (StringValueConverter(), "message_body"),
-    "StatusCode": (StringValueConverter(), "status_code"),
-  }
 
 class AWS_ElasticLoadBalancingV2_Listener_Certificate(CloudFormationProperty):
-  entity = "AWS::ElasticLoadBalancingV2::Listener"
-  tf_block_type = "certificate"
+  def write(self, w):
+    with w.block("certificate"):
+      self.property(w, "CertificateArn", "certificate_arn", StringValueConverter())
 
-  props = {
-    "CertificateArn": (StringValueConverter(), "certificate_arn"),
-  }
 
 class AWS_ElasticLoadBalancingV2_ListenerRule_RedirectConfig(CloudFormationProperty):
-  entity = "AWS::ElasticLoadBalancingV2::ListenerRule"
-  tf_block_type = "redirect_config"
+  def write(self, w):
+    with w.block("redirect_config"):
+      self.property(w, "Host", "host", StringValueConverter())
+      self.property(w, "Path", "path", StringValueConverter())
+      self.property(w, "Port", "port", StringValueConverter())
+      self.property(w, "Protocol", "protocol", StringValueConverter())
+      self.property(w, "Query", "query", StringValueConverter())
+      self.property(w, "StatusCode", "status_code", StringValueConverter())
 
-  props = {
-    "Host": (StringValueConverter(), "host"),
-    "Path": (StringValueConverter(), "path"),
-    "Port": (StringValueConverter(), "port"),
-    "Protocol": (StringValueConverter(), "protocol"),
-    "Query": (StringValueConverter(), "query"),
-    "StatusCode": (StringValueConverter(), "status_code"),
-  }
 
 class AWS_ElasticLoadBalancingV2_ListenerRule_TargetGroupStickinessConfig(CloudFormationProperty):
-  entity = "AWS::ElasticLoadBalancingV2::ListenerRule"
-  tf_block_type = "target_group_stickiness_config"
+  def write(self, w):
+    with w.block("target_group_stickiness_config"):
+      self.property(w, "DurationSeconds", "duration_seconds", BasicValueConverter())
+      self.property(w, "Enabled", "enabled", BasicValueConverter())
 
-  props = {
-    "DurationSeconds": (BasicValueConverter(), "duration_seconds"),
-    "Enabled": (BasicValueConverter(), "enabled"),
-  }
 
 class AWS_ElasticLoadBalancingV2_LoadBalancer_SubnetMapping(CloudFormationProperty):
-  entity = "AWS::ElasticLoadBalancingV2::LoadBalancer"
-  tf_block_type = "subnet_mapping"
+  def write(self, w):
+    with w.block("subnet_mapping"):
+      self.property(w, "AllocationId", "allocation_id", StringValueConverter())
+      self.property(w, "PrivateIPv4Address", "private_i_pv4_address", StringValueConverter())
+      self.property(w, "SubnetId", "subnet_id", StringValueConverter())
 
-  props = {
-    "AllocationId": (StringValueConverter(), "allocation_id"),
-    "PrivateIPv4Address": (StringValueConverter(), "private_i_pv4_address"),
-    "SubnetId": (StringValueConverter(), "subnet_id"),
-  }
 
 class AWS_ElasticLoadBalancingV2_ListenerRule_HostHeaderConfig(CloudFormationProperty):
-  entity = "AWS::ElasticLoadBalancingV2::ListenerRule"
-  tf_block_type = "host_header_config"
+  def write(self, w):
+    with w.block("host_header_config"):
+      self.property(w, "Values", "values", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "Values": (ListValueConverter(StringValueConverter()), "values"),
-  }
 
 class AWS_ElasticLoadBalancingV2_Listener_TargetGroupStickinessConfig(CloudFormationProperty):
-  entity = "AWS::ElasticLoadBalancingV2::Listener"
-  tf_block_type = "target_group_stickiness_config"
+  def write(self, w):
+    with w.block("target_group_stickiness_config"):
+      self.property(w, "DurationSeconds", "duration_seconds", BasicValueConverter())
+      self.property(w, "Enabled", "enabled", BasicValueConverter())
 
-  props = {
-    "DurationSeconds": (BasicValueConverter(), "duration_seconds"),
-    "Enabled": (BasicValueConverter(), "enabled"),
-  }
 
 class AWS_ElasticLoadBalancingV2_Listener_TargetGroupTuple(CloudFormationProperty):
-  entity = "AWS::ElasticLoadBalancingV2::Listener"
-  tf_block_type = "target_group_tuple"
+  def write(self, w):
+    with w.block("target_group_tuple"):
+      self.property(w, "TargetGroupArn", "target_group_arn", StringValueConverter())
+      self.property(w, "Weight", "weight", BasicValueConverter())
 
-  props = {
-    "TargetGroupArn": (StringValueConverter(), "target_group_arn"),
-    "Weight": (BasicValueConverter(), "weight"),
-  }
 
 class AWS_ElasticLoadBalancingV2_LoadBalancer(CloudFormationResource):
-  terraform_resource = "aws_elastic_load_balancing_v2_load_balancer"
+  cfn_type = "AWS::ElasticLoadBalancingV2::LoadBalancer"
+  tf_type = "aws_elastic_load_balancing_v2_load_balancer"
+  ref = "arn"
 
-  resource_type = "AWS::ElasticLoadBalancingV2::LoadBalancer"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "IpAddressType", "ip_address_type", StringValueConverter())
+      self.repeated_block(w, "LoadBalancerAttributes", AWS_ElasticLoadBalancingV2_LoadBalancer_LoadBalancerAttribute)
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Scheme", "scheme", StringValueConverter())
+      self.property(w, "SecurityGroups", "security_groups", ListValueConverter(StringValueConverter()))
+      self.repeated_block(w, "SubnetMappings", AWS_ElasticLoadBalancingV2_LoadBalancer_SubnetMapping)
+      self.property(w, "Subnets", "subnets", ListValueConverter(StringValueConverter()))
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "Type", "type", StringValueConverter())
 
-  props = {
-    "IpAddressType": (StringValueConverter(), "ip_address_type"),
-    "LoadBalancerAttributes": (BlockValueConverter(AWS_ElasticLoadBalancingV2_LoadBalancer_LoadBalancerAttribute), None),
-    "Name": (StringValueConverter(), "name"),
-    "Scheme": (StringValueConverter(), "scheme"),
-    "SecurityGroups": (ListValueConverter(StringValueConverter()), "security_groups"),
-    "SubnetMappings": (BlockValueConverter(AWS_ElasticLoadBalancingV2_LoadBalancer_SubnetMapping), None),
-    "Subnets": (ListValueConverter(StringValueConverter()), "subnets"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "Type": (StringValueConverter(), "type"),
-  }
 
 class AWS_ElasticLoadBalancingV2_ListenerCertificate(CloudFormationResource):
-  terraform_resource = "aws_elastic_load_balancing_v2_listener_certificate"
+  cfn_type = "AWS::ElasticLoadBalancingV2::ListenerCertificate"
+  tf_type = "aws_elastic_load_balancing_v2_listener_certificate"
+  ref = "arn"
 
-  resource_type = "AWS::ElasticLoadBalancingV2::ListenerCertificate"
+  def write(self, w):
+    with self.resource_block(w):
+      self.repeated_block(w, "Certificates", AWS_ElasticLoadBalancingV2_ListenerCertificate_Certificate)
+      self.property(w, "ListenerArn", "listener_arn", StringValueConverter())
 
-  props = {
-    "Certificates": (BlockValueConverter(AWS_ElasticLoadBalancingV2_ListenerCertificate_Certificate), None),
-    "ListenerArn": (StringValueConverter(), "listener_arn"),
-  }
 
 class AWS_ElasticLoadBalancingV2_TargetGroup(CloudFormationResource):
-  terraform_resource = "aws_elastic_load_balancing_v2_target_group"
+  cfn_type = "AWS::ElasticLoadBalancingV2::TargetGroup"
+  tf_type = "aws_elastic_load_balancing_v2_target_group"
+  ref = "arn"
 
-  resource_type = "AWS::ElasticLoadBalancingV2::TargetGroup"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "HealthCheckEnabled", "health_check_enabled", BasicValueConverter())
+      self.property(w, "HealthCheckIntervalSeconds", "health_check_interval_seconds", BasicValueConverter())
+      self.property(w, "HealthCheckPath", "health_check_path", StringValueConverter())
+      self.property(w, "HealthCheckPort", "health_check_port", StringValueConverter())
+      self.property(w, "HealthCheckProtocol", "health_check_protocol", StringValueConverter())
+      self.property(w, "HealthCheckTimeoutSeconds", "health_check_timeout_seconds", BasicValueConverter())
+      self.property(w, "HealthyThresholdCount", "healthy_threshold_count", BasicValueConverter())
+      self.block(w, "Matcher", AWS_ElasticLoadBalancingV2_TargetGroup_Matcher)
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Port", "port", BasicValueConverter())
+      self.property(w, "Protocol", "protocol", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.repeated_block(w, "TargetGroupAttributes", AWS_ElasticLoadBalancingV2_TargetGroup_TargetGroupAttribute)
+      self.property(w, "TargetType", "target_type", StringValueConverter())
+      self.repeated_block(w, "Targets", AWS_ElasticLoadBalancingV2_TargetGroup_TargetDescription)
+      self.property(w, "UnhealthyThresholdCount", "unhealthy_threshold_count", BasicValueConverter())
+      self.property(w, "VpcId", "vpc_id", StringValueConverter())
 
-  props = {
-    "HealthCheckEnabled": (BasicValueConverter(), "health_check_enabled"),
-    "HealthCheckIntervalSeconds": (BasicValueConverter(), "health_check_interval_seconds"),
-    "HealthCheckPath": (StringValueConverter(), "health_check_path"),
-    "HealthCheckPort": (StringValueConverter(), "health_check_port"),
-    "HealthCheckProtocol": (StringValueConverter(), "health_check_protocol"),
-    "HealthCheckTimeoutSeconds": (BasicValueConverter(), "health_check_timeout_seconds"),
-    "HealthyThresholdCount": (BasicValueConverter(), "healthy_threshold_count"),
-    "Matcher": (AWS_ElasticLoadBalancingV2_TargetGroup_Matcher, "matcher"),
-    "Name": (StringValueConverter(), "name"),
-    "Port": (BasicValueConverter(), "port"),
-    "Protocol": (StringValueConverter(), "protocol"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "TargetGroupAttributes": (BlockValueConverter(AWS_ElasticLoadBalancingV2_TargetGroup_TargetGroupAttribute), None),
-    "TargetType": (StringValueConverter(), "target_type"),
-    "Targets": (BlockValueConverter(AWS_ElasticLoadBalancingV2_TargetGroup_TargetDescription), None),
-    "UnhealthyThresholdCount": (BasicValueConverter(), "unhealthy_threshold_count"),
-    "VpcId": (StringValueConverter(), "vpc_id"),
-  }
 
 class AWS_ElasticLoadBalancingV2_Listener_ForwardConfig(CloudFormationProperty):
-  entity = "AWS::ElasticLoadBalancingV2::Listener"
-  tf_block_type = "forward_config"
+  def write(self, w):
+    with w.block("forward_config"):
+      self.block(w, "TargetGroupStickinessConfig", AWS_ElasticLoadBalancingV2_Listener_TargetGroupStickinessConfig)
+      self.repeated_block(w, "TargetGroups", AWS_ElasticLoadBalancingV2_Listener_TargetGroupTuple)
 
-  props = {
-    "TargetGroupStickinessConfig": (AWS_ElasticLoadBalancingV2_Listener_TargetGroupStickinessConfig, "target_group_stickiness_config"),
-    "TargetGroups": (BlockValueConverter(AWS_ElasticLoadBalancingV2_Listener_TargetGroupTuple), None),
-  }
 
 class AWS_ElasticLoadBalancingV2_ListenerRule_ForwardConfig(CloudFormationProperty):
-  entity = "AWS::ElasticLoadBalancingV2::ListenerRule"
-  tf_block_type = "forward_config"
+  def write(self, w):
+    with w.block("forward_config"):
+      self.block(w, "TargetGroupStickinessConfig", AWS_ElasticLoadBalancingV2_ListenerRule_TargetGroupStickinessConfig)
+      self.repeated_block(w, "TargetGroups", AWS_ElasticLoadBalancingV2_ListenerRule_TargetGroupTuple)
 
-  props = {
-    "TargetGroupStickinessConfig": (AWS_ElasticLoadBalancingV2_ListenerRule_TargetGroupStickinessConfig, "target_group_stickiness_config"),
-    "TargetGroups": (BlockValueConverter(AWS_ElasticLoadBalancingV2_ListenerRule_TargetGroupTuple), None),
-  }
 
 class AWS_ElasticLoadBalancingV2_ListenerRule_RuleCondition(CloudFormationProperty):
-  entity = "AWS::ElasticLoadBalancingV2::ListenerRule"
-  tf_block_type = "rule_condition"
+  def write(self, w):
+    with w.block("rule_condition"):
+      self.property(w, "Field", "field", StringValueConverter())
+      self.block(w, "HostHeaderConfig", AWS_ElasticLoadBalancingV2_ListenerRule_HostHeaderConfig)
+      self.block(w, "HttpHeaderConfig", AWS_ElasticLoadBalancingV2_ListenerRule_HttpHeaderConfig)
+      self.block(w, "HttpRequestMethodConfig", AWS_ElasticLoadBalancingV2_ListenerRule_HttpRequestMethodConfig)
+      self.block(w, "PathPatternConfig", AWS_ElasticLoadBalancingV2_ListenerRule_PathPatternConfig)
+      self.block(w, "QueryStringConfig", AWS_ElasticLoadBalancingV2_ListenerRule_QueryStringConfig)
+      self.block(w, "SourceIpConfig", AWS_ElasticLoadBalancingV2_ListenerRule_SourceIpConfig)
+      self.property(w, "Values", "values", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "Field": (StringValueConverter(), "field"),
-    "HostHeaderConfig": (AWS_ElasticLoadBalancingV2_ListenerRule_HostHeaderConfig, "host_header_config"),
-    "HttpHeaderConfig": (AWS_ElasticLoadBalancingV2_ListenerRule_HttpHeaderConfig, "http_header_config"),
-    "HttpRequestMethodConfig": (AWS_ElasticLoadBalancingV2_ListenerRule_HttpRequestMethodConfig, "http_request_method_config"),
-    "PathPatternConfig": (AWS_ElasticLoadBalancingV2_ListenerRule_PathPatternConfig, "path_pattern_config"),
-    "QueryStringConfig": (AWS_ElasticLoadBalancingV2_ListenerRule_QueryStringConfig, "query_string_config"),
-    "SourceIpConfig": (AWS_ElasticLoadBalancingV2_ListenerRule_SourceIpConfig, "source_ip_config"),
-    "Values": (ListValueConverter(StringValueConverter()), "values"),
-  }
 
 class AWS_ElasticLoadBalancingV2_Listener_Action(CloudFormationProperty):
-  entity = "AWS::ElasticLoadBalancingV2::Listener"
-  tf_block_type = "action"
+  def write(self, w):
+    with w.block("action"):
+      self.block(w, "AuthenticateCognitoConfig", AWS_ElasticLoadBalancingV2_Listener_AuthenticateCognitoConfig)
+      self.block(w, "AuthenticateOidcConfig", AWS_ElasticLoadBalancingV2_Listener_AuthenticateOidcConfig)
+      self.block(w, "FixedResponseConfig", AWS_ElasticLoadBalancingV2_Listener_FixedResponseConfig)
+      self.block(w, "ForwardConfig", AWS_ElasticLoadBalancingV2_Listener_ForwardConfig)
+      self.property(w, "Order", "order", BasicValueConverter())
+      self.block(w, "RedirectConfig", AWS_ElasticLoadBalancingV2_Listener_RedirectConfig)
+      self.property(w, "TargetGroupArn", "target_group_arn", StringValueConverter())
+      self.property(w, "Type", "type", StringValueConverter())
 
-  props = {
-    "AuthenticateCognitoConfig": (AWS_ElasticLoadBalancingV2_Listener_AuthenticateCognitoConfig, "authenticate_cognito_config"),
-    "AuthenticateOidcConfig": (AWS_ElasticLoadBalancingV2_Listener_AuthenticateOidcConfig, "authenticate_oidc_config"),
-    "FixedResponseConfig": (AWS_ElasticLoadBalancingV2_Listener_FixedResponseConfig, "fixed_response_config"),
-    "ForwardConfig": (AWS_ElasticLoadBalancingV2_Listener_ForwardConfig, "forward_config"),
-    "Order": (BasicValueConverter(), "order"),
-    "RedirectConfig": (AWS_ElasticLoadBalancingV2_Listener_RedirectConfig, "redirect_config"),
-    "TargetGroupArn": (StringValueConverter(), "target_group_arn"),
-    "Type": (StringValueConverter(), "type"),
-  }
 
 class AWS_ElasticLoadBalancingV2_ListenerRule_Action(CloudFormationProperty):
-  entity = "AWS::ElasticLoadBalancingV2::ListenerRule"
-  tf_block_type = "action"
+  def write(self, w):
+    with w.block("action"):
+      self.block(w, "AuthenticateCognitoConfig", AWS_ElasticLoadBalancingV2_ListenerRule_AuthenticateCognitoConfig)
+      self.block(w, "AuthenticateOidcConfig", AWS_ElasticLoadBalancingV2_ListenerRule_AuthenticateOidcConfig)
+      self.block(w, "FixedResponseConfig", AWS_ElasticLoadBalancingV2_ListenerRule_FixedResponseConfig)
+      self.block(w, "ForwardConfig", AWS_ElasticLoadBalancingV2_ListenerRule_ForwardConfig)
+      self.property(w, "Order", "order", BasicValueConverter())
+      self.block(w, "RedirectConfig", AWS_ElasticLoadBalancingV2_ListenerRule_RedirectConfig)
+      self.property(w, "TargetGroupArn", "target_group_arn", StringValueConverter())
+      self.property(w, "Type", "type", StringValueConverter())
 
-  props = {
-    "AuthenticateCognitoConfig": (AWS_ElasticLoadBalancingV2_ListenerRule_AuthenticateCognitoConfig, "authenticate_cognito_config"),
-    "AuthenticateOidcConfig": (AWS_ElasticLoadBalancingV2_ListenerRule_AuthenticateOidcConfig, "authenticate_oidc_config"),
-    "FixedResponseConfig": (AWS_ElasticLoadBalancingV2_ListenerRule_FixedResponseConfig, "fixed_response_config"),
-    "ForwardConfig": (AWS_ElasticLoadBalancingV2_ListenerRule_ForwardConfig, "forward_config"),
-    "Order": (BasicValueConverter(), "order"),
-    "RedirectConfig": (AWS_ElasticLoadBalancingV2_ListenerRule_RedirectConfig, "redirect_config"),
-    "TargetGroupArn": (StringValueConverter(), "target_group_arn"),
-    "Type": (StringValueConverter(), "type"),
-  }
 
 class AWS_ElasticLoadBalancingV2_Listener(CloudFormationResource):
-  terraform_resource = "aws_elastic_load_balancing_v2_listener"
+  cfn_type = "AWS::ElasticLoadBalancingV2::Listener"
+  tf_type = "aws_elastic_load_balancing_v2_listener"
+  ref = "arn"
 
-  resource_type = "AWS::ElasticLoadBalancingV2::Listener"
+  def write(self, w):
+    with self.resource_block(w):
+      self.repeated_block(w, "Certificates", AWS_ElasticLoadBalancingV2_Listener_Certificate)
+      self.repeated_block(w, "DefaultActions", AWS_ElasticLoadBalancingV2_Listener_Action)
+      self.property(w, "LoadBalancerArn", "load_balancer_arn", StringValueConverter())
+      self.property(w, "Port", "port", BasicValueConverter())
+      self.property(w, "Protocol", "protocol", StringValueConverter())
+      self.property(w, "SslPolicy", "ssl_policy", StringValueConverter())
 
-  props = {
-    "Certificates": (BlockValueConverter(AWS_ElasticLoadBalancingV2_Listener_Certificate), None),
-    "DefaultActions": (BlockValueConverter(AWS_ElasticLoadBalancingV2_Listener_Action), None),
-    "LoadBalancerArn": (StringValueConverter(), "load_balancer_arn"),
-    "Port": (BasicValueConverter(), "port"),
-    "Protocol": (StringValueConverter(), "protocol"),
-    "SslPolicy": (StringValueConverter(), "ssl_policy"),
-  }
 
 class AWS_ElasticLoadBalancingV2_ListenerRule(CloudFormationResource):
-  terraform_resource = "aws_elastic_load_balancing_v2_listener_rule"
+  cfn_type = "AWS::ElasticLoadBalancingV2::ListenerRule"
+  tf_type = "aws_elastic_load_balancing_v2_listener_rule"
+  ref = "arn"
 
-  resource_type = "AWS::ElasticLoadBalancingV2::ListenerRule"
+  def write(self, w):
+    with self.resource_block(w):
+      self.repeated_block(w, "Actions", AWS_ElasticLoadBalancingV2_ListenerRule_Action)
+      self.repeated_block(w, "Conditions", AWS_ElasticLoadBalancingV2_ListenerRule_RuleCondition)
+      self.property(w, "ListenerArn", "listener_arn", StringValueConverter())
+      self.property(w, "Priority", "priority", BasicValueConverter())
 
-  props = {
-    "Actions": (BlockValueConverter(AWS_ElasticLoadBalancingV2_ListenerRule_Action), None),
-    "Conditions": (BlockValueConverter(AWS_ElasticLoadBalancingV2_ListenerRule_RuleCondition), None),
-    "ListenerArn": (StringValueConverter(), "listener_arn"),
-    "Priority": (BasicValueConverter(), "priority"),
-  }
 

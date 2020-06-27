@@ -1,56 +1,62 @@
 from . import *
 
 class AWS_CloudFormation_Stack(CloudFormationResource):
-  terraform_resource = "aws_cloud_formation_stack"
+  cfn_type = "AWS::CloudFormation::Stack"
+  tf_type = "aws_cloud_formation_stack"
+  ref = "arn"
 
-  resource_type = "AWS::CloudFormation::Stack"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "NotificationARNs", "notification_ar_ns", ListValueConverter(StringValueConverter()))
+      self.property(w, "Parameters", "parameters", MapValueConverter(StringValueConverter()))
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "TemplateURL", "template_url", StringValueConverter())
+      self.property(w, "TimeoutInMinutes", "timeout_in_minutes", BasicValueConverter())
 
-  props = {
-    "NotificationARNs": (ListValueConverter(StringValueConverter()), "notification_ar_ns"),
-    "Parameters": (MapValueConverter(StringValueConverter()), "parameters"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "TemplateURL": (StringValueConverter(), "template_url"),
-    "TimeoutInMinutes": (BasicValueConverter(), "timeout_in_minutes"),
-  }
 
 class AWS_CloudFormation_CustomResource(CloudFormationResource):
-  terraform_resource = "aws_cloud_formation_custom_resource"
+  cfn_type = "AWS::CloudFormation::CustomResource"
+  tf_type = "aws_cloud_formation_custom_resource"
+  ref = "arn"
 
-  resource_type = "AWS::CloudFormation::CustomResource"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ServiceToken", "service_token", StringValueConverter())
 
-  props = {
-    "ServiceToken": (StringValueConverter(), "service_token"),
-  }
 
 class AWS_CloudFormation_WaitCondition(CloudFormationResource):
-  terraform_resource = "aws_cloud_formation_wait_condition"
+  cfn_type = "AWS::CloudFormation::WaitCondition"
+  tf_type = "aws_cloud_formation_wait_condition"
+  ref = "arn"
 
-  resource_type = "AWS::CloudFormation::WaitCondition"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Count", "count", BasicValueConverter())
+      self.property(w, "Handle", "handle", StringValueConverter())
+      self.property(w, "Timeout", "timeout", StringValueConverter())
 
-  props = {
-    "Count": (BasicValueConverter(), "count"),
-    "Handle": (StringValueConverter(), "handle"),
-    "Timeout": (StringValueConverter(), "timeout"),
-  }
 
 class AWS_CloudFormation_WaitConditionHandle(CloudFormationResource):
-  terraform_resource = "aws_cloud_formation_wait_condition_handle"
+  cfn_type = "AWS::CloudFormation::WaitConditionHandle"
+  tf_type = "aws_cloud_formation_wait_condition_handle"
+  ref = "arn"
 
-  resource_type = "AWS::CloudFormation::WaitConditionHandle"
+  def write(self, w):
+    with self.resource_block(w):
+      pass
 
-  props = {
-  }
 
 class AWS_CloudFormation_Macro(CloudFormationResource):
-  terraform_resource = "aws_cloud_formation_macro"
+  cfn_type = "AWS::CloudFormation::Macro"
+  tf_type = "aws_cloud_formation_macro"
+  ref = "arn"
 
-  resource_type = "AWS::CloudFormation::Macro"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "FunctionName", "function_name", StringValueConverter())
+      self.property(w, "LogGroupName", "log_group_name", StringValueConverter())
+      self.property(w, "LogRoleARN", "log_role_arn", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "FunctionName": (StringValueConverter(), "function_name"),
-    "LogGroupName": (StringValueConverter(), "log_group_name"),
-    "LogRoleARN": (StringValueConverter(), "log_role_arn"),
-    "Name": (StringValueConverter(), "name"),
-  }
 

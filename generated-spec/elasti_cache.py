@@ -1,124 +1,128 @@
 from . import *
 
 class AWS_ElastiCache_ReplicationGroup_NodeGroupConfiguration(CloudFormationProperty):
-  entity = "AWS::ElastiCache::ReplicationGroup"
-  tf_block_type = "node_group_configuration"
+  def write(self, w):
+    with w.block("node_group_configuration"):
+      self.property(w, "NodeGroupId", "node_group_id", StringValueConverter())
+      self.property(w, "PrimaryAvailabilityZone", "primary_availability_zone", StringValueConverter())
+      self.property(w, "ReplicaAvailabilityZones", "replica_availability_zones", ListValueConverter(StringValueConverter()))
+      self.property(w, "ReplicaCount", "replica_count", BasicValueConverter())
+      self.property(w, "Slots", "slots", StringValueConverter())
 
-  props = {
-    "NodeGroupId": (StringValueConverter(), "node_group_id"),
-    "PrimaryAvailabilityZone": (StringValueConverter(), "primary_availability_zone"),
-    "ReplicaAvailabilityZones": (ListValueConverter(StringValueConverter()), "replica_availability_zones"),
-    "ReplicaCount": (BasicValueConverter(), "replica_count"),
-    "Slots": (StringValueConverter(), "slots"),
-  }
 
 class AWS_ElastiCache_SecurityGroup(CloudFormationResource):
-  terraform_resource = "aws_elasti_cache_security_group"
+  cfn_type = "AWS::ElastiCache::SecurityGroup"
+  tf_type = "aws_elasti_cache_security_group"
+  ref = "arn"
 
-  resource_type = "AWS::ElastiCache::SecurityGroup"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Description", "description", StringValueConverter())
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-  }
 
 class AWS_ElastiCache_SubnetGroup(CloudFormationResource):
-  terraform_resource = "aws_elasti_cache_subnet_group"
+  cfn_type = "AWS::ElastiCache::SubnetGroup"
+  tf_type = "aws_elasti_cache_subnet_group"
+  ref = "arn"
 
-  resource_type = "AWS::ElastiCache::SubnetGroup"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "CacheSubnetGroupName", "cache_subnet_group_name", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "SubnetIds", "subnet_ids", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "CacheSubnetGroupName": (StringValueConverter(), "cache_subnet_group_name"),
-    "Description": (StringValueConverter(), "description"),
-    "SubnetIds": (ListValueConverter(StringValueConverter()), "subnet_ids"),
-  }
 
 class AWS_ElastiCache_SecurityGroupIngress(CloudFormationResource):
-  terraform_resource = "aws_elasti_cache_security_group_ingress"
+  cfn_type = "AWS::ElastiCache::SecurityGroupIngress"
+  tf_type = "aws_elasti_cache_security_group_ingress"
+  ref = "arn"
 
-  resource_type = "AWS::ElastiCache::SecurityGroupIngress"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "CacheSecurityGroupName", "cache_security_group_name", StringValueConverter())
+      self.property(w, "EC2SecurityGroupName", "ec2_security_group_name", StringValueConverter())
+      self.property(w, "EC2SecurityGroupOwnerId", "ec2_security_group_owner_id", StringValueConverter())
 
-  props = {
-    "CacheSecurityGroupName": (StringValueConverter(), "cache_security_group_name"),
-    "EC2SecurityGroupName": (StringValueConverter(), "ec2_security_group_name"),
-    "EC2SecurityGroupOwnerId": (StringValueConverter(), "ec2_security_group_owner_id"),
-  }
 
 class AWS_ElastiCache_ReplicationGroup(CloudFormationResource):
-  terraform_resource = "aws_elasti_cache_replication_group"
+  cfn_type = "AWS::ElastiCache::ReplicationGroup"
+  tf_type = "aws_elasti_cache_replication_group"
+  ref = "arn"
 
-  resource_type = "AWS::ElastiCache::ReplicationGroup"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "AtRestEncryptionEnabled", "at_rest_encryption_enabled", BasicValueConverter())
+      self.property(w, "AuthToken", "auth_token", StringValueConverter())
+      self.property(w, "AutoMinorVersionUpgrade", "auto_minor_version_upgrade", BasicValueConverter())
+      self.property(w, "AutomaticFailoverEnabled", "automatic_failover_enabled", BasicValueConverter())
+      self.property(w, "CacheNodeType", "cache_node_type", StringValueConverter())
+      self.property(w, "CacheParameterGroupName", "cache_parameter_group_name", StringValueConverter())
+      self.property(w, "CacheSecurityGroupNames", "cache_security_group_names", ListValueConverter(StringValueConverter()))
+      self.property(w, "CacheSubnetGroupName", "cache_subnet_group_name", StringValueConverter())
+      self.property(w, "Engine", "engine", StringValueConverter())
+      self.property(w, "EngineVersion", "engine_version", StringValueConverter())
+      self.property(w, "KmsKeyId", "kms_key_id", StringValueConverter())
+      self.property(w, "MultiAZEnabled", "multi_az_enabled", BasicValueConverter())
+      self.repeated_block(w, "NodeGroupConfiguration", AWS_ElastiCache_ReplicationGroup_NodeGroupConfiguration)
+      self.property(w, "NotificationTopicArn", "notification_topic_arn", StringValueConverter())
+      self.property(w, "NumCacheClusters", "num_cache_clusters", BasicValueConverter())
+      self.property(w, "NumNodeGroups", "num_node_groups", BasicValueConverter())
+      self.property(w, "Port", "port", BasicValueConverter())
+      self.property(w, "PreferredCacheClusterAZs", "preferred_cache_cluster_a_zs", ListValueConverter(StringValueConverter()))
+      self.property(w, "PreferredMaintenanceWindow", "preferred_maintenance_window", StringValueConverter())
+      self.property(w, "PrimaryClusterId", "primary_cluster_id", StringValueConverter())
+      self.property(w, "ReplicasPerNodeGroup", "replicas_per_node_group", BasicValueConverter())
+      self.property(w, "ReplicationGroupDescription", "replication_group_description", StringValueConverter())
+      self.property(w, "ReplicationGroupId", "replication_group_id", StringValueConverter())
+      self.property(w, "SecurityGroupIds", "security_group_ids", ListValueConverter(StringValueConverter()))
+      self.property(w, "SnapshotArns", "snapshot_arns", ListValueConverter(StringValueConverter()))
+      self.property(w, "SnapshotName", "snapshot_name", StringValueConverter())
+      self.property(w, "SnapshotRetentionLimit", "snapshot_retention_limit", BasicValueConverter())
+      self.property(w, "SnapshotWindow", "snapshot_window", StringValueConverter())
+      self.property(w, "SnapshottingClusterId", "snapshotting_cluster_id", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "TransitEncryptionEnabled", "transit_encryption_enabled", BasicValueConverter())
 
-  props = {
-    "AtRestEncryptionEnabled": (BasicValueConverter(), "at_rest_encryption_enabled"),
-    "AuthToken": (StringValueConverter(), "auth_token"),
-    "AutoMinorVersionUpgrade": (BasicValueConverter(), "auto_minor_version_upgrade"),
-    "AutomaticFailoverEnabled": (BasicValueConverter(), "automatic_failover_enabled"),
-    "CacheNodeType": (StringValueConverter(), "cache_node_type"),
-    "CacheParameterGroupName": (StringValueConverter(), "cache_parameter_group_name"),
-    "CacheSecurityGroupNames": (ListValueConverter(StringValueConverter()), "cache_security_group_names"),
-    "CacheSubnetGroupName": (StringValueConverter(), "cache_subnet_group_name"),
-    "Engine": (StringValueConverter(), "engine"),
-    "EngineVersion": (StringValueConverter(), "engine_version"),
-    "KmsKeyId": (StringValueConverter(), "kms_key_id"),
-    "MultiAZEnabled": (BasicValueConverter(), "multi_az_enabled"),
-    "NodeGroupConfiguration": (BlockValueConverter(AWS_ElastiCache_ReplicationGroup_NodeGroupConfiguration), None),
-    "NotificationTopicArn": (StringValueConverter(), "notification_topic_arn"),
-    "NumCacheClusters": (BasicValueConverter(), "num_cache_clusters"),
-    "NumNodeGroups": (BasicValueConverter(), "num_node_groups"),
-    "Port": (BasicValueConverter(), "port"),
-    "PreferredCacheClusterAZs": (ListValueConverter(StringValueConverter()), "preferred_cache_cluster_a_zs"),
-    "PreferredMaintenanceWindow": (StringValueConverter(), "preferred_maintenance_window"),
-    "PrimaryClusterId": (StringValueConverter(), "primary_cluster_id"),
-    "ReplicasPerNodeGroup": (BasicValueConverter(), "replicas_per_node_group"),
-    "ReplicationGroupDescription": (StringValueConverter(), "replication_group_description"),
-    "ReplicationGroupId": (StringValueConverter(), "replication_group_id"),
-    "SecurityGroupIds": (ListValueConverter(StringValueConverter()), "security_group_ids"),
-    "SnapshotArns": (ListValueConverter(StringValueConverter()), "snapshot_arns"),
-    "SnapshotName": (StringValueConverter(), "snapshot_name"),
-    "SnapshotRetentionLimit": (BasicValueConverter(), "snapshot_retention_limit"),
-    "SnapshotWindow": (StringValueConverter(), "snapshot_window"),
-    "SnapshottingClusterId": (StringValueConverter(), "snapshotting_cluster_id"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "TransitEncryptionEnabled": (BasicValueConverter(), "transit_encryption_enabled"),
-  }
 
 class AWS_ElastiCache_ParameterGroup(CloudFormationResource):
-  terraform_resource = "aws_elasti_cache_parameter_group"
+  cfn_type = "AWS::ElastiCache::ParameterGroup"
+  tf_type = "aws_elasti_cache_parameter_group"
+  ref = "arn"
 
-  resource_type = "AWS::ElastiCache::ParameterGroup"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "CacheParameterGroupFamily", "cache_parameter_group_family", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "Properties", "properties", MapValueConverter(StringValueConverter()))
 
-  props = {
-    "CacheParameterGroupFamily": (StringValueConverter(), "cache_parameter_group_family"),
-    "Description": (StringValueConverter(), "description"),
-    "Properties": (MapValueConverter(StringValueConverter()), "properties"),
-  }
 
 class AWS_ElastiCache_CacheCluster(CloudFormationResource):
-  terraform_resource = "aws_elasti_cache_cache_cluster"
+  cfn_type = "AWS::ElastiCache::CacheCluster"
+  tf_type = "aws_elasti_cache_cache_cluster"
+  ref = "arn"
 
-  resource_type = "AWS::ElastiCache::CacheCluster"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "AZMode", "az_mode", StringValueConverter())
+      self.property(w, "AutoMinorVersionUpgrade", "auto_minor_version_upgrade", BasicValueConverter())
+      self.property(w, "CacheNodeType", "cache_node_type", StringValueConverter())
+      self.property(w, "CacheParameterGroupName", "cache_parameter_group_name", StringValueConverter())
+      self.property(w, "CacheSecurityGroupNames", "cache_security_group_names", ListValueConverter(StringValueConverter()))
+      self.property(w, "CacheSubnetGroupName", "cache_subnet_group_name", StringValueConverter())
+      self.property(w, "ClusterName", "cluster_name", StringValueConverter())
+      self.property(w, "Engine", "engine", StringValueConverter())
+      self.property(w, "EngineVersion", "engine_version", StringValueConverter())
+      self.property(w, "NotificationTopicArn", "notification_topic_arn", StringValueConverter())
+      self.property(w, "NumCacheNodes", "num_cache_nodes", BasicValueConverter())
+      self.property(w, "Port", "port", BasicValueConverter())
+      self.property(w, "PreferredAvailabilityZone", "preferred_availability_zone", StringValueConverter())
+      self.property(w, "PreferredAvailabilityZones", "preferred_availability_zones", ListValueConverter(StringValueConverter()))
+      self.property(w, "PreferredMaintenanceWindow", "preferred_maintenance_window", StringValueConverter())
+      self.property(w, "SnapshotArns", "snapshot_arns", ListValueConverter(StringValueConverter()))
+      self.property(w, "SnapshotName", "snapshot_name", StringValueConverter())
+      self.property(w, "SnapshotRetentionLimit", "snapshot_retention_limit", BasicValueConverter())
+      self.property(w, "SnapshotWindow", "snapshot_window", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "VpcSecurityGroupIds", "vpc_security_group_ids", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "AZMode": (StringValueConverter(), "az_mode"),
-    "AutoMinorVersionUpgrade": (BasicValueConverter(), "auto_minor_version_upgrade"),
-    "CacheNodeType": (StringValueConverter(), "cache_node_type"),
-    "CacheParameterGroupName": (StringValueConverter(), "cache_parameter_group_name"),
-    "CacheSecurityGroupNames": (ListValueConverter(StringValueConverter()), "cache_security_group_names"),
-    "CacheSubnetGroupName": (StringValueConverter(), "cache_subnet_group_name"),
-    "ClusterName": (StringValueConverter(), "cluster_name"),
-    "Engine": (StringValueConverter(), "engine"),
-    "EngineVersion": (StringValueConverter(), "engine_version"),
-    "NotificationTopicArn": (StringValueConverter(), "notification_topic_arn"),
-    "NumCacheNodes": (BasicValueConverter(), "num_cache_nodes"),
-    "Port": (BasicValueConverter(), "port"),
-    "PreferredAvailabilityZone": (StringValueConverter(), "preferred_availability_zone"),
-    "PreferredAvailabilityZones": (ListValueConverter(StringValueConverter()), "preferred_availability_zones"),
-    "PreferredMaintenanceWindow": (StringValueConverter(), "preferred_maintenance_window"),
-    "SnapshotArns": (ListValueConverter(StringValueConverter()), "snapshot_arns"),
-    "SnapshotName": (StringValueConverter(), "snapshot_name"),
-    "SnapshotRetentionLimit": (BasicValueConverter(), "snapshot_retention_limit"),
-    "SnapshotWindow": (StringValueConverter(), "snapshot_window"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "VpcSecurityGroupIds": (ListValueConverter(StringValueConverter()), "vpc_security_group_ids"),
-  }
 

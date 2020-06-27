@@ -1,58 +1,54 @@
 from . import *
 
 class AWS_FMS_Policy_ResourceTag(CloudFormationProperty):
-  entity = "AWS::FMS::Policy"
-  tf_block_type = "resource_tag"
+  def write(self, w):
+    with w.block("resource_tag"):
+      self.property(w, "Key", "key", StringValueConverter())
+      self.property(w, "Value", "value", StringValueConverter())
 
-  props = {
-    "Key": (StringValueConverter(), "key"),
-    "Value": (StringValueConverter(), "value"),
-  }
 
 class AWS_FMS_Policy_IEMap(CloudFormationProperty):
-  entity = "AWS::FMS::Policy"
-  tf_block_type = "ie_map"
+  def write(self, w):
+    with w.block("ie_map"):
+      self.property(w, "ACCOUNT", "account", ListValueConverter(StringValueConverter()))
+      self.property(w, "ORGUNIT", "orgunit", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "ACCOUNT": (ListValueConverter(StringValueConverter()), "account"),
-    "ORGUNIT": (ListValueConverter(StringValueConverter()), "orgunit"),
-  }
 
 class AWS_FMS_Policy_PolicyTag(CloudFormationProperty):
-  entity = "AWS::FMS::Policy"
-  tf_block_type = "policy_tag"
+  def write(self, w):
+    with w.block("policy_tag"):
+      self.property(w, "Key", "key", StringValueConverter())
+      self.property(w, "Value", "value", StringValueConverter())
 
-  props = {
-    "Key": (StringValueConverter(), "key"),
-    "Value": (StringValueConverter(), "value"),
-  }
 
 class AWS_FMS_NotificationChannel(CloudFormationResource):
-  terraform_resource = "aws_fms_notification_channel"
+  cfn_type = "AWS::FMS::NotificationChannel"
+  tf_type = "aws_fms_notification_channel"
+  ref = "arn"
 
-  resource_type = "AWS::FMS::NotificationChannel"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "SnsRoleName", "sns_role_name", StringValueConverter())
+      self.property(w, "SnsTopicArn", "sns_topic_arn", StringValueConverter())
 
-  props = {
-    "SnsRoleName": (StringValueConverter(), "sns_role_name"),
-    "SnsTopicArn": (StringValueConverter(), "sns_topic_arn"),
-  }
 
 class AWS_FMS_Policy(CloudFormationResource):
-  terraform_resource = "aws_fms_policy"
+  cfn_type = "AWS::FMS::Policy"
+  tf_type = "aws_fms_policy"
+  ref = "arn"
 
-  resource_type = "AWS::FMS::Policy"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "ExcludeMap", AWS_FMS_Policy_IEMap)
+      self.property(w, "ExcludeResourceTags", "exclude_resource_tags", BasicValueConverter())
+      self.block(w, "IncludeMap", AWS_FMS_Policy_IEMap)
+      self.property(w, "PolicyName", "policy_name", StringValueConverter())
+      self.property(w, "RemediationEnabled", "remediation_enabled", BasicValueConverter())
+      self.repeated_block(w, "ResourceTags", AWS_FMS_Policy_ResourceTag)
+      self.property(w, "ResourceType", "resource_type", StringValueConverter())
+      self.property(w, "ResourceTypeList", "resource_type_list", ListValueConverter(StringValueConverter()))
+      self.property(w, "SecurityServicePolicyData", "security_service_policy_data", StringValueConverter())
+      self.property(w, "DeleteAllPolicyResources", "delete_all_policy_resources", BasicValueConverter())
+      self.repeated_block(w, "Tags", AWS_FMS_Policy_PolicyTag)
 
-  props = {
-    "ExcludeMap": (AWS_FMS_Policy_IEMap, "exclude_map"),
-    "ExcludeResourceTags": (BasicValueConverter(), "exclude_resource_tags"),
-    "IncludeMap": (AWS_FMS_Policy_IEMap, "include_map"),
-    "PolicyName": (StringValueConverter(), "policy_name"),
-    "RemediationEnabled": (BasicValueConverter(), "remediation_enabled"),
-    "ResourceTags": (BlockValueConverter(AWS_FMS_Policy_ResourceTag), None),
-    "ResourceType": (StringValueConverter(), "resource_type"),
-    "ResourceTypeList": (ListValueConverter(StringValueConverter()), "resource_type_list"),
-    "SecurityServicePolicyData": (StringValueConverter(), "security_service_policy_data"),
-    "DeleteAllPolicyResources": (BasicValueConverter(), "delete_all_policy_resources"),
-    "Tags": (BlockValueConverter(AWS_FMS_Policy_PolicyTag), None),
-  }
 

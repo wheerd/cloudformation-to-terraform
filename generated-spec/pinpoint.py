@@ -1,599 +1,553 @@
 from . import *
 
 class AWS_Pinpoint_Campaign_MetricDimension(CloudFormationProperty):
-  entity = "AWS::Pinpoint::Campaign"
-  tf_block_type = "metric_dimension"
+  def write(self, w):
+    with w.block("metric_dimension"):
+      self.property(w, "ComparisonOperator", "comparison_operator", StringValueConverter())
+      self.property(w, "Value", "value", BasicValueConverter())
 
-  props = {
-    "ComparisonOperator": (StringValueConverter(), "comparison_operator"),
-    "Value": (BasicValueConverter(), "value"),
-  }
 
 class AWS_Pinpoint_Segment_Coordinates(CloudFormationProperty):
-  entity = "AWS::Pinpoint::Segment"
-  tf_block_type = "coordinates"
+  def write(self, w):
+    with w.block("coordinates"):
+      self.property(w, "Latitude", "latitude", BasicValueConverter())
+      self.property(w, "Longitude", "longitude", BasicValueConverter())
 
-  props = {
-    "Latitude": (BasicValueConverter(), "latitude"),
-    "Longitude": (BasicValueConverter(), "longitude"),
-  }
 
 class AWS_Pinpoint_Campaign_SetDimension(CloudFormationProperty):
-  entity = "AWS::Pinpoint::Campaign"
-  tf_block_type = "set_dimension"
+  def write(self, w):
+    with w.block("set_dimension"):
+      self.property(w, "DimensionType", "dimension_type", StringValueConverter())
+      self.property(w, "Values", "values", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "DimensionType": (StringValueConverter(), "dimension_type"),
-    "Values": (ListValueConverter(StringValueConverter()), "values"),
-  }
 
 class AWS_Pinpoint_PushTemplate_AndroidPushNotificationTemplate(CloudFormationProperty):
-  entity = "AWS::Pinpoint::PushTemplate"
-  tf_block_type = "android_push_notification_template"
+  def write(self, w):
+    with w.block("android_push_notification_template"):
+      self.property(w, "Action", "action", StringValueConverter())
+      self.property(w, "ImageUrl", "image_url", StringValueConverter())
+      self.property(w, "SmallImageIconUrl", "small_image_icon_url", StringValueConverter())
+      self.property(w, "Title", "title", StringValueConverter())
+      self.property(w, "ImageIconUrl", "image_icon_url", StringValueConverter())
+      self.property(w, "Sound", "sound", StringValueConverter())
+      self.property(w, "Body", "body", StringValueConverter())
+      self.property(w, "Url", "url", StringValueConverter())
 
-  props = {
-    "Action": (StringValueConverter(), "action"),
-    "ImageUrl": (StringValueConverter(), "image_url"),
-    "SmallImageIconUrl": (StringValueConverter(), "small_image_icon_url"),
-    "Title": (StringValueConverter(), "title"),
-    "ImageIconUrl": (StringValueConverter(), "image_icon_url"),
-    "Sound": (StringValueConverter(), "sound"),
-    "Body": (StringValueConverter(), "body"),
-    "Url": (StringValueConverter(), "url"),
-  }
 
 class AWS_Pinpoint_Campaign_EventDimensions(CloudFormationProperty):
-  entity = "AWS::Pinpoint::Campaign"
-  tf_block_type = "event_dimensions"
+  def write(self, w):
+    with w.block("event_dimensions"):
+      self.property(w, "Metrics", "metrics", StringValueConverter())
+      self.block(w, "EventType", AWS_Pinpoint_Campaign_SetDimension)
+      self.property(w, "Attributes", "attributes", StringValueConverter())
 
-  props = {
-    "Metrics": (StringValueConverter(), "metrics"),
-    "EventType": (AWS_Pinpoint_Campaign_SetDimension, "event_type"),
-    "Attributes": (StringValueConverter(), "attributes"),
-  }
 
 class AWS_Pinpoint_Segment_SourceSegments(CloudFormationProperty):
-  entity = "AWS::Pinpoint::Segment"
-  tf_block_type = "source_segments"
+  def write(self, w):
+    with w.block("source_segments"):
+      self.property(w, "Version", "version", BasicValueConverter())
+      self.property(w, "Id", "id", StringValueConverter())
 
-  props = {
-    "Version": (BasicValueConverter(), "version"),
-    "Id": (StringValueConverter(), "id"),
-  }
 
 class AWS_Pinpoint_Segment_AttributeDimension(CloudFormationProperty):
-  entity = "AWS::Pinpoint::Segment"
-  tf_block_type = "attribute_dimension"
+  def write(self, w):
+    with w.block("attribute_dimension"):
+      self.property(w, "AttributeType", "attribute_type", StringValueConverter())
+      self.property(w, "Values", "values", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "AttributeType": (StringValueConverter(), "attribute_type"),
-    "Values": (ListValueConverter(StringValueConverter()), "values"),
-  }
 
 class AWS_Pinpoint_Segment_GPSPoint(CloudFormationProperty):
-  entity = "AWS::Pinpoint::Segment"
-  tf_block_type = "gps_point"
+  def write(self, w):
+    with w.block("gps_point"):
+      self.property(w, "RangeInKilometers", "range_in_kilometers", BasicValueConverter())
+      self.block(w, "Coordinates", AWS_Pinpoint_Segment_Coordinates)
 
-  props = {
-    "RangeInKilometers": (BasicValueConverter(), "range_in_kilometers"),
-    "Coordinates": (AWS_Pinpoint_Segment_Coordinates, "coordinates"),
-  }
 
 class AWS_Pinpoint_Segment_Recency(CloudFormationProperty):
-  entity = "AWS::Pinpoint::Segment"
-  tf_block_type = "recency"
+  def write(self, w):
+    with w.block("recency"):
+      self.property(w, "Duration", "duration", StringValueConverter())
+      self.property(w, "RecencyType", "recency_type", StringValueConverter())
 
-  props = {
-    "Duration": (StringValueConverter(), "duration"),
-    "RecencyType": (StringValueConverter(), "recency_type"),
-  }
 
 class AWS_Pinpoint_ApplicationSettings_Limits(CloudFormationProperty):
-  entity = "AWS::Pinpoint::ApplicationSettings"
-  tf_block_type = "limits"
+  def write(self, w):
+    with w.block("limits"):
+      self.property(w, "Daily", "daily", BasicValueConverter())
+      self.property(w, "MaximumDuration", "maximum_duration", BasicValueConverter())
+      self.property(w, "Total", "total", BasicValueConverter())
+      self.property(w, "MessagesPerSecond", "messages_per_second", BasicValueConverter())
 
-  props = {
-    "Daily": (BasicValueConverter(), "daily"),
-    "MaximumDuration": (BasicValueConverter(), "maximum_duration"),
-    "Total": (BasicValueConverter(), "total"),
-    "MessagesPerSecond": (BasicValueConverter(), "messages_per_second"),
-  }
 
 class AWS_Pinpoint_Campaign_Limits(CloudFormationProperty):
-  entity = "AWS::Pinpoint::Campaign"
-  tf_block_type = "limits"
+  def write(self, w):
+    with w.block("limits"):
+      self.property(w, "Daily", "daily", BasicValueConverter())
+      self.property(w, "MaximumDuration", "maximum_duration", BasicValueConverter())
+      self.property(w, "Total", "total", BasicValueConverter())
+      self.property(w, "MessagesPerSecond", "messages_per_second", BasicValueConverter())
 
-  props = {
-    "Daily": (BasicValueConverter(), "daily"),
-    "MaximumDuration": (BasicValueConverter(), "maximum_duration"),
-    "Total": (BasicValueConverter(), "total"),
-    "MessagesPerSecond": (BasicValueConverter(), "messages_per_second"),
-  }
 
 class AWS_Pinpoint_Segment_SetDimension(CloudFormationProperty):
-  entity = "AWS::Pinpoint::Segment"
-  tf_block_type = "set_dimension"
+  def write(self, w):
+    with w.block("set_dimension"):
+      self.property(w, "DimensionType", "dimension_type", StringValueConverter())
+      self.property(w, "Values", "values", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "DimensionType": (StringValueConverter(), "dimension_type"),
-    "Values": (ListValueConverter(StringValueConverter()), "values"),
-  }
 
 class AWS_Pinpoint_Campaign_AttributeDimension(CloudFormationProperty):
-  entity = "AWS::Pinpoint::Campaign"
-  tf_block_type = "attribute_dimension"
+  def write(self, w):
+    with w.block("attribute_dimension"):
+      self.property(w, "AttributeType", "attribute_type", StringValueConverter())
+      self.property(w, "Values", "values", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "AttributeType": (StringValueConverter(), "attribute_type"),
-    "Values": (ListValueConverter(StringValueConverter()), "values"),
-  }
 
 class AWS_Pinpoint_Campaign_QuietTime(CloudFormationProperty):
-  entity = "AWS::Pinpoint::Campaign"
-  tf_block_type = "quiet_time"
+  def write(self, w):
+    with w.block("quiet_time"):
+      self.property(w, "Start", "start", StringValueConverter())
+      self.property(w, "End", "end", StringValueConverter())
 
-  props = {
-    "Start": (StringValueConverter(), "start"),
-    "End": (StringValueConverter(), "end"),
-  }
 
 class AWS_Pinpoint_Segment_Behavior(CloudFormationProperty):
-  entity = "AWS::Pinpoint::Segment"
-  tf_block_type = "behavior"
+  def write(self, w):
+    with w.block("behavior"):
+      self.block(w, "Recency", AWS_Pinpoint_Segment_Recency)
 
-  props = {
-    "Recency": (AWS_Pinpoint_Segment_Recency, "recency"),
-  }
 
 class AWS_Pinpoint_Campaign_CampaignHook(CloudFormationProperty):
-  entity = "AWS::Pinpoint::Campaign"
-  tf_block_type = "campaign_hook"
+  def write(self, w):
+    with w.block("campaign_hook"):
+      self.property(w, "Mode", "mode", StringValueConverter())
+      self.property(w, "WebUrl", "web_url", StringValueConverter())
+      self.property(w, "LambdaFunctionName", "lambda_function_name", StringValueConverter())
 
-  props = {
-    "Mode": (StringValueConverter(), "mode"),
-    "WebUrl": (StringValueConverter(), "web_url"),
-    "LambdaFunctionName": (StringValueConverter(), "lambda_function_name"),
-  }
 
 class AWS_Pinpoint_Segment_Location(CloudFormationProperty):
-  entity = "AWS::Pinpoint::Segment"
-  tf_block_type = "location"
+  def write(self, w):
+    with w.block("location"):
+      self.block(w, "GPSPoint", AWS_Pinpoint_Segment_GPSPoint)
+      self.block(w, "Country", AWS_Pinpoint_Segment_SetDimension)
 
-  props = {
-    "GPSPoint": (AWS_Pinpoint_Segment_GPSPoint, "gps_point"),
-    "Country": (AWS_Pinpoint_Segment_SetDimension, "country"),
-  }
 
 class AWS_Pinpoint_ApplicationSettings_CampaignHook(CloudFormationProperty):
-  entity = "AWS::Pinpoint::ApplicationSettings"
-  tf_block_type = "campaign_hook"
+  def write(self, w):
+    with w.block("campaign_hook"):
+      self.property(w, "Mode", "mode", StringValueConverter())
+      self.property(w, "WebUrl", "web_url", StringValueConverter())
+      self.property(w, "LambdaFunctionName", "lambda_function_name", StringValueConverter())
 
-  props = {
-    "Mode": (StringValueConverter(), "mode"),
-    "WebUrl": (StringValueConverter(), "web_url"),
-    "LambdaFunctionName": (StringValueConverter(), "lambda_function_name"),
-  }
 
 class AWS_Pinpoint_PushTemplate_DefaultPushNotificationTemplate(CloudFormationProperty):
-  entity = "AWS::Pinpoint::PushTemplate"
-  tf_block_type = "default_push_notification_template"
+  def write(self, w):
+    with w.block("default_push_notification_template"):
+      self.property(w, "Action", "action", StringValueConverter())
+      self.property(w, "Title", "title", StringValueConverter())
+      self.property(w, "Sound", "sound", StringValueConverter())
+      self.property(w, "Body", "body", StringValueConverter())
+      self.property(w, "Url", "url", StringValueConverter())
 
-  props = {
-    "Action": (StringValueConverter(), "action"),
-    "Title": (StringValueConverter(), "title"),
-    "Sound": (StringValueConverter(), "sound"),
-    "Body": (StringValueConverter(), "body"),
-    "Url": (StringValueConverter(), "url"),
-  }
 
 class AWS_Pinpoint_PushTemplate_APNSPushNotificationTemplate(CloudFormationProperty):
-  entity = "AWS::Pinpoint::PushTemplate"
-  tf_block_type = "apns_push_notification_template"
+  def write(self, w):
+    with w.block("apns_push_notification_template"):
+      self.property(w, "Action", "action", StringValueConverter())
+      self.property(w, "MediaUrl", "media_url", StringValueConverter())
+      self.property(w, "Title", "title", StringValueConverter())
+      self.property(w, "Sound", "sound", StringValueConverter())
+      self.property(w, "Body", "body", StringValueConverter())
+      self.property(w, "Url", "url", StringValueConverter())
 
-  props = {
-    "Action": (StringValueConverter(), "action"),
-    "MediaUrl": (StringValueConverter(), "media_url"),
-    "Title": (StringValueConverter(), "title"),
-    "Sound": (StringValueConverter(), "sound"),
-    "Body": (StringValueConverter(), "body"),
-    "Url": (StringValueConverter(), "url"),
-  }
 
 class AWS_Pinpoint_Campaign_Message(CloudFormationProperty):
-  entity = "AWS::Pinpoint::Campaign"
-  tf_block_type = "message"
+  def write(self, w):
+    with w.block("message"):
+      self.property(w, "JsonBody", "json_body", StringValueConverter())
+      self.property(w, "Action", "action", StringValueConverter())
+      self.property(w, "MediaUrl", "media_url", StringValueConverter())
+      self.property(w, "TimeToLive", "time_to_live", BasicValueConverter())
+      self.property(w, "ImageSmallIconUrl", "image_small_icon_url", StringValueConverter())
+      self.property(w, "ImageUrl", "image_url", StringValueConverter())
+      self.property(w, "Title", "title", StringValueConverter())
+      self.property(w, "ImageIconUrl", "image_icon_url", StringValueConverter())
+      self.property(w, "SilentPush", "silent_push", BasicValueConverter())
+      self.property(w, "Body", "body", StringValueConverter())
+      self.property(w, "RawContent", "raw_content", StringValueConverter())
+      self.property(w, "Url", "url", StringValueConverter())
 
-  props = {
-    "JsonBody": (StringValueConverter(), "json_body"),
-    "Action": (StringValueConverter(), "action"),
-    "MediaUrl": (StringValueConverter(), "media_url"),
-    "TimeToLive": (BasicValueConverter(), "time_to_live"),
-    "ImageSmallIconUrl": (StringValueConverter(), "image_small_icon_url"),
-    "ImageUrl": (StringValueConverter(), "image_url"),
-    "Title": (StringValueConverter(), "title"),
-    "ImageIconUrl": (StringValueConverter(), "image_icon_url"),
-    "SilentPush": (BasicValueConverter(), "silent_push"),
-    "Body": (StringValueConverter(), "body"),
-    "RawContent": (StringValueConverter(), "raw_content"),
-    "Url": (StringValueConverter(), "url"),
-  }
 
 class AWS_Pinpoint_Campaign_CampaignEventFilter(CloudFormationProperty):
-  entity = "AWS::Pinpoint::Campaign"
-  tf_block_type = "campaign_event_filter"
+  def write(self, w):
+    with w.block("campaign_event_filter"):
+      self.property(w, "FilterType", "filter_type", StringValueConverter())
+      self.block(w, "Dimensions", AWS_Pinpoint_Campaign_EventDimensions)
 
-  props = {
-    "FilterType": (StringValueConverter(), "filter_type"),
-    "Dimensions": (AWS_Pinpoint_Campaign_EventDimensions, "dimensions"),
-  }
 
 class AWS_Pinpoint_Campaign_CampaignSmsMessage(CloudFormationProperty):
-  entity = "AWS::Pinpoint::Campaign"
-  tf_block_type = "campaign_sms_message"
+  def write(self, w):
+    with w.block("campaign_sms_message"):
+      self.property(w, "SenderId", "sender_id", StringValueConverter())
+      self.property(w, "Body", "body", StringValueConverter())
+      self.property(w, "MessageType", "message_type", StringValueConverter())
 
-  props = {
-    "SenderId": (StringValueConverter(), "sender_id"),
-    "Body": (StringValueConverter(), "body"),
-    "MessageType": (StringValueConverter(), "message_type"),
-  }
 
 class AWS_Pinpoint_Campaign_CampaignEmailMessage(CloudFormationProperty):
-  entity = "AWS::Pinpoint::Campaign"
-  tf_block_type = "campaign_email_message"
+  def write(self, w):
+    with w.block("campaign_email_message"):
+      self.property(w, "FromAddress", "from_address", StringValueConverter())
+      self.property(w, "HtmlBody", "html_body", StringValueConverter())
+      self.property(w, "Title", "title", StringValueConverter())
+      self.property(w, "Body", "body", StringValueConverter())
 
-  props = {
-    "FromAddress": (StringValueConverter(), "from_address"),
-    "HtmlBody": (StringValueConverter(), "html_body"),
-    "Title": (StringValueConverter(), "title"),
-    "Body": (StringValueConverter(), "body"),
-  }
 
 class AWS_Pinpoint_ApplicationSettings_QuietTime(CloudFormationProperty):
-  entity = "AWS::Pinpoint::ApplicationSettings"
-  tf_block_type = "quiet_time"
+  def write(self, w):
+    with w.block("quiet_time"):
+      self.property(w, "Start", "start", StringValueConverter())
+      self.property(w, "End", "end", StringValueConverter())
 
-  props = {
-    "Start": (StringValueConverter(), "start"),
-    "End": (StringValueConverter(), "end"),
-  }
 
 class AWS_Pinpoint_SMSChannel(CloudFormationResource):
-  terraform_resource = "aws_pinpoint_sms_channel"
+  cfn_type = "AWS::Pinpoint::SMSChannel"
+  tf_type = "aws_pinpoint_sms_channel"
+  ref = "arn"
 
-  resource_type = "AWS::Pinpoint::SMSChannel"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ShortCode", "short_code", StringValueConverter())
+      self.property(w, "Enabled", "enabled", BasicValueConverter())
+      self.property(w, "ApplicationId", "application_id", StringValueConverter())
+      self.property(w, "SenderId", "sender_id", StringValueConverter())
 
-  props = {
-    "ShortCode": (StringValueConverter(), "short_code"),
-    "Enabled": (BasicValueConverter(), "enabled"),
-    "ApplicationId": (StringValueConverter(), "application_id"),
-    "SenderId": (StringValueConverter(), "sender_id"),
-  }
 
 class AWS_Pinpoint_VoiceChannel(CloudFormationResource):
-  terraform_resource = "aws_pinpoint_voice_channel"
+  cfn_type = "AWS::Pinpoint::VoiceChannel"
+  tf_type = "aws_pinpoint_voice_channel"
+  ref = "arn"
 
-  resource_type = "AWS::Pinpoint::VoiceChannel"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Enabled", "enabled", BasicValueConverter())
+      self.property(w, "ApplicationId", "application_id", StringValueConverter())
 
-  props = {
-    "Enabled": (BasicValueConverter(), "enabled"),
-    "ApplicationId": (StringValueConverter(), "application_id"),
-  }
 
 class AWS_Pinpoint_EventStream(CloudFormationResource):
-  terraform_resource = "aws_pinpoint_event_stream"
+  cfn_type = "AWS::Pinpoint::EventStream"
+  tf_type = "aws_pinpoint_event_stream"
+  ref = "arn"
 
-  resource_type = "AWS::Pinpoint::EventStream"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ApplicationId", "application_id", StringValueConverter())
+      self.property(w, "DestinationStreamArn", "destination_stream_arn", StringValueConverter())
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
 
-  props = {
-    "ApplicationId": (StringValueConverter(), "application_id"),
-    "DestinationStreamArn": (StringValueConverter(), "destination_stream_arn"),
-    "RoleArn": (StringValueConverter(), "role_arn"),
-  }
 
 class AWS_Pinpoint_EmailTemplate(CloudFormationResource):
-  terraform_resource = "aws_pinpoint_email_template"
+  cfn_type = "AWS::Pinpoint::EmailTemplate"
+  tf_type = "aws_pinpoint_email_template"
+  ref = "arn"
 
-  resource_type = "AWS::Pinpoint::EmailTemplate"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "HtmlPart", "html_part", StringValueConverter())
+      self.property(w, "TextPart", "text_part", StringValueConverter())
+      self.property(w, "TemplateName", "template_name", StringValueConverter())
+      self.property(w, "TemplateDescription", "template_description", StringValueConverter())
+      self.property(w, "DefaultSubstitutions", "default_substitutions", StringValueConverter())
+      self.property(w, "Subject", "subject", StringValueConverter())
+      self.property(w, "Tags", "tags", StringValueConverter())
 
-  props = {
-    "HtmlPart": (StringValueConverter(), "html_part"),
-    "TextPart": (StringValueConverter(), "text_part"),
-    "TemplateName": (StringValueConverter(), "template_name"),
-    "TemplateDescription": (StringValueConverter(), "template_description"),
-    "DefaultSubstitutions": (StringValueConverter(), "default_substitutions"),
-    "Subject": (StringValueConverter(), "subject"),
-    "Tags": (StringValueConverter(), "tags"),
-  }
 
 class AWS_Pinpoint_BaiduChannel(CloudFormationResource):
-  terraform_resource = "aws_pinpoint_baidu_channel"
+  cfn_type = "AWS::Pinpoint::BaiduChannel"
+  tf_type = "aws_pinpoint_baidu_channel"
+  ref = "arn"
 
-  resource_type = "AWS::Pinpoint::BaiduChannel"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "SecretKey", "secret_key", StringValueConverter())
+      self.property(w, "ApiKey", "api_key", StringValueConverter())
+      self.property(w, "Enabled", "enabled", BasicValueConverter())
+      self.property(w, "ApplicationId", "application_id", StringValueConverter())
 
-  props = {
-    "SecretKey": (StringValueConverter(), "secret_key"),
-    "ApiKey": (StringValueConverter(), "api_key"),
-    "Enabled": (BasicValueConverter(), "enabled"),
-    "ApplicationId": (StringValueConverter(), "application_id"),
-  }
 
 class AWS_Pinpoint_GCMChannel(CloudFormationResource):
-  terraform_resource = "aws_pinpoint_gcm_channel"
+  cfn_type = "AWS::Pinpoint::GCMChannel"
+  tf_type = "aws_pinpoint_gcm_channel"
+  ref = "arn"
 
-  resource_type = "AWS::Pinpoint::GCMChannel"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ApiKey", "api_key", StringValueConverter())
+      self.property(w, "Enabled", "enabled", BasicValueConverter())
+      self.property(w, "ApplicationId", "application_id", StringValueConverter())
 
-  props = {
-    "ApiKey": (StringValueConverter(), "api_key"),
-    "Enabled": (BasicValueConverter(), "enabled"),
-    "ApplicationId": (StringValueConverter(), "application_id"),
-  }
 
 class AWS_Pinpoint_APNSChannel(CloudFormationResource):
-  terraform_resource = "aws_pinpoint_apns_channel"
+  cfn_type = "AWS::Pinpoint::APNSChannel"
+  tf_type = "aws_pinpoint_apns_channel"
+  ref = "arn"
 
-  resource_type = "AWS::Pinpoint::APNSChannel"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "BundleId", "bundle_id", StringValueConverter())
+      self.property(w, "PrivateKey", "private_key", StringValueConverter())
+      self.property(w, "Enabled", "enabled", BasicValueConverter())
+      self.property(w, "DefaultAuthenticationMethod", "default_authentication_method", StringValueConverter())
+      self.property(w, "TokenKey", "token_key", StringValueConverter())
+      self.property(w, "ApplicationId", "application_id", StringValueConverter())
+      self.property(w, "TeamId", "team_id", StringValueConverter())
+      self.property(w, "Certificate", "certificate", StringValueConverter())
+      self.property(w, "TokenKeyId", "token_key_id", StringValueConverter())
 
-  props = {
-    "BundleId": (StringValueConverter(), "bundle_id"),
-    "PrivateKey": (StringValueConverter(), "private_key"),
-    "Enabled": (BasicValueConverter(), "enabled"),
-    "DefaultAuthenticationMethod": (StringValueConverter(), "default_authentication_method"),
-    "TokenKey": (StringValueConverter(), "token_key"),
-    "ApplicationId": (StringValueConverter(), "application_id"),
-    "TeamId": (StringValueConverter(), "team_id"),
-    "Certificate": (StringValueConverter(), "certificate"),
-    "TokenKeyId": (StringValueConverter(), "token_key_id"),
-  }
 
 class AWS_Pinpoint_SmsTemplate(CloudFormationResource):
-  terraform_resource = "aws_pinpoint_sms_template"
+  cfn_type = "AWS::Pinpoint::SmsTemplate"
+  tf_type = "aws_pinpoint_sms_template"
+  ref = "arn"
 
-  resource_type = "AWS::Pinpoint::SmsTemplate"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "TemplateName", "template_name", StringValueConverter())
+      self.property(w, "TemplateDescription", "template_description", StringValueConverter())
+      self.property(w, "DefaultSubstitutions", "default_substitutions", StringValueConverter())
+      self.property(w, "Body", "body", StringValueConverter())
+      self.property(w, "Tags", "tags", StringValueConverter())
 
-  props = {
-    "TemplateName": (StringValueConverter(), "template_name"),
-    "TemplateDescription": (StringValueConverter(), "template_description"),
-    "DefaultSubstitutions": (StringValueConverter(), "default_substitutions"),
-    "Body": (StringValueConverter(), "body"),
-    "Tags": (StringValueConverter(), "tags"),
-  }
 
 class AWS_Pinpoint_APNSSandboxChannel(CloudFormationResource):
-  terraform_resource = "aws_pinpoint_apns_sandbox_channel"
+  cfn_type = "AWS::Pinpoint::APNSSandboxChannel"
+  tf_type = "aws_pinpoint_apns_sandbox_channel"
+  ref = "arn"
 
-  resource_type = "AWS::Pinpoint::APNSSandboxChannel"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "BundleId", "bundle_id", StringValueConverter())
+      self.property(w, "PrivateKey", "private_key", StringValueConverter())
+      self.property(w, "Enabled", "enabled", BasicValueConverter())
+      self.property(w, "DefaultAuthenticationMethod", "default_authentication_method", StringValueConverter())
+      self.property(w, "TokenKey", "token_key", StringValueConverter())
+      self.property(w, "ApplicationId", "application_id", StringValueConverter())
+      self.property(w, "TeamId", "team_id", StringValueConverter())
+      self.property(w, "Certificate", "certificate", StringValueConverter())
+      self.property(w, "TokenKeyId", "token_key_id", StringValueConverter())
 
-  props = {
-    "BundleId": (StringValueConverter(), "bundle_id"),
-    "PrivateKey": (StringValueConverter(), "private_key"),
-    "Enabled": (BasicValueConverter(), "enabled"),
-    "DefaultAuthenticationMethod": (StringValueConverter(), "default_authentication_method"),
-    "TokenKey": (StringValueConverter(), "token_key"),
-    "ApplicationId": (StringValueConverter(), "application_id"),
-    "TeamId": (StringValueConverter(), "team_id"),
-    "Certificate": (StringValueConverter(), "certificate"),
-    "TokenKeyId": (StringValueConverter(), "token_key_id"),
-  }
 
 class AWS_Pinpoint_ADMChannel(CloudFormationResource):
-  terraform_resource = "aws_pinpoint_adm_channel"
+  cfn_type = "AWS::Pinpoint::ADMChannel"
+  tf_type = "aws_pinpoint_adm_channel"
+  ref = "arn"
 
-  resource_type = "AWS::Pinpoint::ADMChannel"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ClientSecret", "client_secret", StringValueConverter())
+      self.property(w, "Enabled", "enabled", BasicValueConverter())
+      self.property(w, "ClientId", "client_id", StringValueConverter())
+      self.property(w, "ApplicationId", "application_id", StringValueConverter())
 
-  props = {
-    "ClientSecret": (StringValueConverter(), "client_secret"),
-    "Enabled": (BasicValueConverter(), "enabled"),
-    "ClientId": (StringValueConverter(), "client_id"),
-    "ApplicationId": (StringValueConverter(), "application_id"),
-  }
 
 class AWS_Pinpoint_ApplicationSettings(CloudFormationResource):
-  terraform_resource = "aws_pinpoint_application_settings"
+  cfn_type = "AWS::Pinpoint::ApplicationSettings"
+  tf_type = "aws_pinpoint_application_settings"
+  ref = "arn"
 
-  resource_type = "AWS::Pinpoint::ApplicationSettings"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "QuietTime", AWS_Pinpoint_ApplicationSettings_QuietTime)
+      self.block(w, "Limits", AWS_Pinpoint_ApplicationSettings_Limits)
+      self.property(w, "ApplicationId", "application_id", StringValueConverter())
+      self.block(w, "CampaignHook", AWS_Pinpoint_ApplicationSettings_CampaignHook)
+      self.property(w, "CloudWatchMetricsEnabled", "cloud_watch_metrics_enabled", BasicValueConverter())
 
-  props = {
-    "QuietTime": (AWS_Pinpoint_ApplicationSettings_QuietTime, "quiet_time"),
-    "Limits": (AWS_Pinpoint_ApplicationSettings_Limits, "limits"),
-    "ApplicationId": (StringValueConverter(), "application_id"),
-    "CampaignHook": (AWS_Pinpoint_ApplicationSettings_CampaignHook, "campaign_hook"),
-    "CloudWatchMetricsEnabled": (BasicValueConverter(), "cloud_watch_metrics_enabled"),
-  }
 
 class AWS_Pinpoint_PushTemplate(CloudFormationResource):
-  terraform_resource = "aws_pinpoint_push_template"
+  cfn_type = "AWS::Pinpoint::PushTemplate"
+  tf_type = "aws_pinpoint_push_template"
+  ref = "arn"
 
-  resource_type = "AWS::Pinpoint::PushTemplate"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "GCM", AWS_Pinpoint_PushTemplate_AndroidPushNotificationTemplate)
+      self.block(w, "Baidu", AWS_Pinpoint_PushTemplate_AndroidPushNotificationTemplate)
+      self.property(w, "TemplateName", "template_name", StringValueConverter())
+      self.block(w, "ADM", AWS_Pinpoint_PushTemplate_AndroidPushNotificationTemplate)
+      self.block(w, "APNS", AWS_Pinpoint_PushTemplate_APNSPushNotificationTemplate)
+      self.property(w, "TemplateDescription", "template_description", StringValueConverter())
+      self.property(w, "DefaultSubstitutions", "default_substitutions", StringValueConverter())
+      self.block(w, "Default", AWS_Pinpoint_PushTemplate_DefaultPushNotificationTemplate)
+      self.property(w, "Tags", "tags", StringValueConverter())
 
-  props = {
-    "GCM": (AWS_Pinpoint_PushTemplate_AndroidPushNotificationTemplate, "gcm"),
-    "Baidu": (AWS_Pinpoint_PushTemplate_AndroidPushNotificationTemplate, "baidu"),
-    "TemplateName": (StringValueConverter(), "template_name"),
-    "ADM": (AWS_Pinpoint_PushTemplate_AndroidPushNotificationTemplate, "adm"),
-    "APNS": (AWS_Pinpoint_PushTemplate_APNSPushNotificationTemplate, "apns"),
-    "TemplateDescription": (StringValueConverter(), "template_description"),
-    "DefaultSubstitutions": (StringValueConverter(), "default_substitutions"),
-    "Default": (AWS_Pinpoint_PushTemplate_DefaultPushNotificationTemplate, "default"),
-    "Tags": (StringValueConverter(), "tags"),
-  }
 
 class AWS_Pinpoint_APNSVoipSandboxChannel(CloudFormationResource):
-  terraform_resource = "aws_pinpoint_apns_voip_sandbox_channel"
+  cfn_type = "AWS::Pinpoint::APNSVoipSandboxChannel"
+  tf_type = "aws_pinpoint_apns_voip_sandbox_channel"
+  ref = "arn"
 
-  resource_type = "AWS::Pinpoint::APNSVoipSandboxChannel"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "BundleId", "bundle_id", StringValueConverter())
+      self.property(w, "PrivateKey", "private_key", StringValueConverter())
+      self.property(w, "Enabled", "enabled", BasicValueConverter())
+      self.property(w, "DefaultAuthenticationMethod", "default_authentication_method", StringValueConverter())
+      self.property(w, "TokenKey", "token_key", StringValueConverter())
+      self.property(w, "ApplicationId", "application_id", StringValueConverter())
+      self.property(w, "TeamId", "team_id", StringValueConverter())
+      self.property(w, "Certificate", "certificate", StringValueConverter())
+      self.property(w, "TokenKeyId", "token_key_id", StringValueConverter())
 
-  props = {
-    "BundleId": (StringValueConverter(), "bundle_id"),
-    "PrivateKey": (StringValueConverter(), "private_key"),
-    "Enabled": (BasicValueConverter(), "enabled"),
-    "DefaultAuthenticationMethod": (StringValueConverter(), "default_authentication_method"),
-    "TokenKey": (StringValueConverter(), "token_key"),
-    "ApplicationId": (StringValueConverter(), "application_id"),
-    "TeamId": (StringValueConverter(), "team_id"),
-    "Certificate": (StringValueConverter(), "certificate"),
-    "TokenKeyId": (StringValueConverter(), "token_key_id"),
-  }
 
 class AWS_Pinpoint_APNSVoipChannel(CloudFormationResource):
-  terraform_resource = "aws_pinpoint_apns_voip_channel"
+  cfn_type = "AWS::Pinpoint::APNSVoipChannel"
+  tf_type = "aws_pinpoint_apns_voip_channel"
+  ref = "arn"
 
-  resource_type = "AWS::Pinpoint::APNSVoipChannel"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "BundleId", "bundle_id", StringValueConverter())
+      self.property(w, "PrivateKey", "private_key", StringValueConverter())
+      self.property(w, "Enabled", "enabled", BasicValueConverter())
+      self.property(w, "DefaultAuthenticationMethod", "default_authentication_method", StringValueConverter())
+      self.property(w, "TokenKey", "token_key", StringValueConverter())
+      self.property(w, "ApplicationId", "application_id", StringValueConverter())
+      self.property(w, "TeamId", "team_id", StringValueConverter())
+      self.property(w, "Certificate", "certificate", StringValueConverter())
+      self.property(w, "TokenKeyId", "token_key_id", StringValueConverter())
 
-  props = {
-    "BundleId": (StringValueConverter(), "bundle_id"),
-    "PrivateKey": (StringValueConverter(), "private_key"),
-    "Enabled": (BasicValueConverter(), "enabled"),
-    "DefaultAuthenticationMethod": (StringValueConverter(), "default_authentication_method"),
-    "TokenKey": (StringValueConverter(), "token_key"),
-    "ApplicationId": (StringValueConverter(), "application_id"),
-    "TeamId": (StringValueConverter(), "team_id"),
-    "Certificate": (StringValueConverter(), "certificate"),
-    "TokenKeyId": (StringValueConverter(), "token_key_id"),
-  }
 
 class AWS_Pinpoint_EmailChannel(CloudFormationResource):
-  terraform_resource = "aws_pinpoint_email_channel"
+  cfn_type = "AWS::Pinpoint::EmailChannel"
+  tf_type = "aws_pinpoint_email_channel"
+  ref = "arn"
 
-  resource_type = "AWS::Pinpoint::EmailChannel"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ConfigurationSet", "configuration_set", StringValueConverter())
+      self.property(w, "FromAddress", "from_address", StringValueConverter())
+      self.property(w, "Enabled", "enabled", BasicValueConverter())
+      self.property(w, "ApplicationId", "application_id", StringValueConverter())
+      self.property(w, "Identity", "identity", StringValueConverter())
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
 
-  props = {
-    "ConfigurationSet": (StringValueConverter(), "configuration_set"),
-    "FromAddress": (StringValueConverter(), "from_address"),
-    "Enabled": (BasicValueConverter(), "enabled"),
-    "ApplicationId": (StringValueConverter(), "application_id"),
-    "Identity": (StringValueConverter(), "identity"),
-    "RoleArn": (StringValueConverter(), "role_arn"),
-  }
 
 class AWS_Pinpoint_App(CloudFormationResource):
-  terraform_resource = "aws_pinpoint_app"
+  cfn_type = "AWS::Pinpoint::App"
+  tf_type = "aws_pinpoint_app"
+  ref = "arn"
 
-  resource_type = "AWS::Pinpoint::App"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Tags": (StringValueConverter(), "tags"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_Pinpoint_Segment_Demographic(CloudFormationProperty):
-  entity = "AWS::Pinpoint::Segment"
-  tf_block_type = "demographic"
+  def write(self, w):
+    with w.block("demographic"):
+      self.block(w, "AppVersion", AWS_Pinpoint_Segment_SetDimension)
+      self.block(w, "DeviceType", AWS_Pinpoint_Segment_SetDimension)
+      self.block(w, "Platform", AWS_Pinpoint_Segment_SetDimension)
+      self.block(w, "Channel", AWS_Pinpoint_Segment_SetDimension)
+      self.block(w, "Model", AWS_Pinpoint_Segment_SetDimension)
+      self.block(w, "Make", AWS_Pinpoint_Segment_SetDimension)
 
-  props = {
-    "AppVersion": (AWS_Pinpoint_Segment_SetDimension, "app_version"),
-    "DeviceType": (AWS_Pinpoint_Segment_SetDimension, "device_type"),
-    "Platform": (AWS_Pinpoint_Segment_SetDimension, "platform"),
-    "Channel": (AWS_Pinpoint_Segment_SetDimension, "channel"),
-    "Model": (AWS_Pinpoint_Segment_SetDimension, "model"),
-    "Make": (AWS_Pinpoint_Segment_SetDimension, "make"),
-  }
 
 class AWS_Pinpoint_Campaign_Schedule(CloudFormationProperty):
-  entity = "AWS::Pinpoint::Campaign"
-  tf_block_type = "schedule"
+  def write(self, w):
+    with w.block("schedule"):
+      self.property(w, "TimeZone", "time_zone", StringValueConverter())
+      self.block(w, "QuietTime", AWS_Pinpoint_Campaign_QuietTime)
+      self.property(w, "EndTime", "end_time", StringValueConverter())
+      self.property(w, "StartTime", "start_time", StringValueConverter())
+      self.property(w, "Frequency", "frequency", StringValueConverter())
+      self.block(w, "EventFilter", AWS_Pinpoint_Campaign_CampaignEventFilter)
+      self.property(w, "IsLocalTime", "is_local_time", BasicValueConverter())
 
-  props = {
-    "TimeZone": (StringValueConverter(), "time_zone"),
-    "QuietTime": (AWS_Pinpoint_Campaign_QuietTime, "quiet_time"),
-    "EndTime": (StringValueConverter(), "end_time"),
-    "StartTime": (StringValueConverter(), "start_time"),
-    "Frequency": (StringValueConverter(), "frequency"),
-    "EventFilter": (AWS_Pinpoint_Campaign_CampaignEventFilter, "event_filter"),
-    "IsLocalTime": (BasicValueConverter(), "is_local_time"),
-  }
 
 class AWS_Pinpoint_Campaign_MessageConfiguration(CloudFormationProperty):
-  entity = "AWS::Pinpoint::Campaign"
-  tf_block_type = "message_configuration"
+  def write(self, w):
+    with w.block("message_configuration"):
+      self.block(w, "APNSMessage", AWS_Pinpoint_Campaign_Message)
+      self.block(w, "BaiduMessage", AWS_Pinpoint_Campaign_Message)
+      self.block(w, "DefaultMessage", AWS_Pinpoint_Campaign_Message)
+      self.block(w, "EmailMessage", AWS_Pinpoint_Campaign_CampaignEmailMessage)
+      self.block(w, "GCMMessage", AWS_Pinpoint_Campaign_Message)
+      self.block(w, "SMSMessage", AWS_Pinpoint_Campaign_CampaignSmsMessage)
+      self.block(w, "ADMMessage", AWS_Pinpoint_Campaign_Message)
 
-  props = {
-    "APNSMessage": (AWS_Pinpoint_Campaign_Message, "apns_message"),
-    "BaiduMessage": (AWS_Pinpoint_Campaign_Message, "baidu_message"),
-    "DefaultMessage": (AWS_Pinpoint_Campaign_Message, "default_message"),
-    "EmailMessage": (AWS_Pinpoint_Campaign_CampaignEmailMessage, "email_message"),
-    "GCMMessage": (AWS_Pinpoint_Campaign_Message, "gcm_message"),
-    "SMSMessage": (AWS_Pinpoint_Campaign_CampaignSmsMessage, "sms_message"),
-    "ADMMessage": (AWS_Pinpoint_Campaign_Message, "adm_message"),
-  }
 
 class AWS_Pinpoint_Campaign_WriteTreatmentResource(CloudFormationProperty):
-  entity = "AWS::Pinpoint::Campaign"
-  tf_block_type = "write_treatment_resource"
+  def write(self, w):
+    with w.block("write_treatment_resource"):
+      self.property(w, "TreatmentDescription", "treatment_description", StringValueConverter())
+      self.block(w, "MessageConfiguration", AWS_Pinpoint_Campaign_MessageConfiguration)
+      self.block(w, "Schedule", AWS_Pinpoint_Campaign_Schedule)
+      self.property(w, "SizePercent", "size_percent", BasicValueConverter())
+      self.property(w, "TreatmentName", "treatment_name", StringValueConverter())
 
-  props = {
-    "TreatmentDescription": (StringValueConverter(), "treatment_description"),
-    "MessageConfiguration": (AWS_Pinpoint_Campaign_MessageConfiguration, "message_configuration"),
-    "Schedule": (AWS_Pinpoint_Campaign_Schedule, "schedule"),
-    "SizePercent": (BasicValueConverter(), "size_percent"),
-    "TreatmentName": (StringValueConverter(), "treatment_name"),
-  }
 
 class AWS_Pinpoint_Campaign(CloudFormationResource):
-  terraform_resource = "aws_pinpoint_campaign"
+  cfn_type = "AWS::Pinpoint::Campaign"
+  tf_type = "aws_pinpoint_campaign"
+  ref = "arn"
 
-  resource_type = "AWS::Pinpoint::Campaign"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "SegmentId", "segment_id", StringValueConverter())
+      self.property(w, "IsPaused", "is_paused", BasicValueConverter())
+      self.repeated_block(w, "AdditionalTreatments", AWS_Pinpoint_Campaign_WriteTreatmentResource)
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "SegmentVersion", "segment_version", BasicValueConverter())
+      self.property(w, "TreatmentDescription", "treatment_description", StringValueConverter())
+      self.block(w, "MessageConfiguration", AWS_Pinpoint_Campaign_MessageConfiguration)
+      self.block(w, "Limits", AWS_Pinpoint_Campaign_Limits)
+      self.property(w, "HoldoutPercent", "holdout_percent", BasicValueConverter())
+      self.block(w, "Schedule", AWS_Pinpoint_Campaign_Schedule)
+      self.property(w, "ApplicationId", "application_id", StringValueConverter())
+      self.block(w, "CampaignHook", AWS_Pinpoint_Campaign_CampaignHook)
+      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "TreatmentName", "treatment_name", StringValueConverter())
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "SegmentId": (StringValueConverter(), "segment_id"),
-    "IsPaused": (BasicValueConverter(), "is_paused"),
-    "AdditionalTreatments": (BlockValueConverter(AWS_Pinpoint_Campaign_WriteTreatmentResource), None),
-    "Name": (StringValueConverter(), "name"),
-    "SegmentVersion": (BasicValueConverter(), "segment_version"),
-    "TreatmentDescription": (StringValueConverter(), "treatment_description"),
-    "MessageConfiguration": (AWS_Pinpoint_Campaign_MessageConfiguration, "message_configuration"),
-    "Limits": (AWS_Pinpoint_Campaign_Limits, "limits"),
-    "HoldoutPercent": (BasicValueConverter(), "holdout_percent"),
-    "Schedule": (AWS_Pinpoint_Campaign_Schedule, "schedule"),
-    "ApplicationId": (StringValueConverter(), "application_id"),
-    "CampaignHook": (AWS_Pinpoint_Campaign_CampaignHook, "campaign_hook"),
-    "Tags": (StringValueConverter(), "tags"),
-    "TreatmentName": (StringValueConverter(), "treatment_name"),
-  }
 
 class AWS_Pinpoint_Segment_SegmentDimensions(CloudFormationProperty):
-  entity = "AWS::Pinpoint::Segment"
-  tf_block_type = "segment_dimensions"
+  def write(self, w):
+    with w.block("segment_dimensions"):
+      self.block(w, "Demographic", AWS_Pinpoint_Segment_Demographic)
+      self.property(w, "Metrics", "metrics", StringValueConverter())
+      self.property(w, "Attributes", "attributes", StringValueConverter())
+      self.block(w, "Behavior", AWS_Pinpoint_Segment_Behavior)
+      self.property(w, "UserAttributes", "user_attributes", StringValueConverter())
+      self.block(w, "Location", AWS_Pinpoint_Segment_Location)
 
-  props = {
-    "Demographic": (AWS_Pinpoint_Segment_Demographic, "demographic"),
-    "Metrics": (StringValueConverter(), "metrics"),
-    "Attributes": (StringValueConverter(), "attributes"),
-    "Behavior": (AWS_Pinpoint_Segment_Behavior, "behavior"),
-    "UserAttributes": (StringValueConverter(), "user_attributes"),
-    "Location": (AWS_Pinpoint_Segment_Location, "location"),
-  }
 
 class AWS_Pinpoint_Segment_Groups(CloudFormationProperty):
-  entity = "AWS::Pinpoint::Segment"
-  tf_block_type = "groups"
+  def write(self, w):
+    with w.block("groups"):
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "SourceType", "source_type", StringValueConverter())
+      self.repeated_block(w, "Dimensions", AWS_Pinpoint_Segment_SegmentDimensions)
+      self.repeated_block(w, "SourceSegments", AWS_Pinpoint_Segment_SourceSegments)
 
-  props = {
-    "Type": (StringValueConverter(), "type"),
-    "SourceType": (StringValueConverter(), "source_type"),
-    "Dimensions": (BlockValueConverter(AWS_Pinpoint_Segment_SegmentDimensions), None),
-    "SourceSegments": (BlockValueConverter(AWS_Pinpoint_Segment_SourceSegments), None),
-  }
 
 class AWS_Pinpoint_Segment_SegmentGroups(CloudFormationProperty):
-  entity = "AWS::Pinpoint::Segment"
-  tf_block_type = "segment_groups"
+  def write(self, w):
+    with w.block("segment_groups"):
+      self.repeated_block(w, "Groups", AWS_Pinpoint_Segment_Groups)
+      self.property(w, "Include", "include", StringValueConverter())
 
-  props = {
-    "Groups": (BlockValueConverter(AWS_Pinpoint_Segment_Groups), None),
-    "Include": (StringValueConverter(), "include"),
-  }
 
 class AWS_Pinpoint_Segment(CloudFormationResource):
-  terraform_resource = "aws_pinpoint_segment"
+  cfn_type = "AWS::Pinpoint::Segment"
+  tf_type = "aws_pinpoint_segment"
+  ref = "arn"
 
-  resource_type = "AWS::Pinpoint::Segment"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "SegmentGroups", AWS_Pinpoint_Segment_SegmentGroups)
+      self.block(w, "Dimensions", AWS_Pinpoint_Segment_SegmentDimensions)
+      self.property(w, "ApplicationId", "application_id", StringValueConverter())
+      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "SegmentGroups": (AWS_Pinpoint_Segment_SegmentGroups, "segment_groups"),
-    "Dimensions": (AWS_Pinpoint_Segment_SegmentDimensions, "dimensions"),
-    "ApplicationId": (StringValueConverter(), "application_id"),
-    "Tags": (StringValueConverter(), "tags"),
-    "Name": (StringValueConverter(), "name"),
-  }
 

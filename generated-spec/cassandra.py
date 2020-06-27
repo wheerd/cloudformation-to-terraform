@@ -1,61 +1,55 @@
 from . import *
 
 class AWS_Cassandra_Table_Column(CloudFormationProperty):
-  entity = "AWS::Cassandra::Table"
-  tf_block_type = "column"
+  def write(self, w):
+    with w.block("column"):
+      self.property(w, "ColumnName", "column_name", StringValueConverter())
+      self.property(w, "ColumnType", "column_type", StringValueConverter())
 
-  props = {
-    "ColumnName": (StringValueConverter(), "column_name"),
-    "ColumnType": (StringValueConverter(), "column_type"),
-  }
 
 class AWS_Cassandra_Table_ClusteringKeyColumn(CloudFormationProperty):
-  entity = "AWS::Cassandra::Table"
-  tf_block_type = "clustering_key_column"
+  def write(self, w):
+    with w.block("clustering_key_column"):
+      self.block(w, "Column", AWS_Cassandra_Table_Column)
+      self.property(w, "OrderBy", "order_by", StringValueConverter())
 
-  props = {
-    "Column": (AWS_Cassandra_Table_Column, "column"),
-    "OrderBy": (StringValueConverter(), "order_by"),
-  }
 
 class AWS_Cassandra_Table_ProvisionedThroughput(CloudFormationProperty):
-  entity = "AWS::Cassandra::Table"
-  tf_block_type = "provisioned_throughput"
+  def write(self, w):
+    with w.block("provisioned_throughput"):
+      self.property(w, "ReadCapacityUnits", "read_capacity_units", BasicValueConverter())
+      self.property(w, "WriteCapacityUnits", "write_capacity_units", BasicValueConverter())
 
-  props = {
-    "ReadCapacityUnits": (BasicValueConverter(), "read_capacity_units"),
-    "WriteCapacityUnits": (BasicValueConverter(), "write_capacity_units"),
-  }
 
 class AWS_Cassandra_Keyspace(CloudFormationResource):
-  terraform_resource = "aws_cassandra_keyspace"
+  cfn_type = "AWS::Cassandra::Keyspace"
+  tf_type = "aws_cassandra_keyspace"
+  ref = "arn"
 
-  resource_type = "AWS::Cassandra::Keyspace"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "KeyspaceName", "keyspace_name", StringValueConverter())
 
-  props = {
-    "KeyspaceName": (StringValueConverter(), "keyspace_name"),
-  }
 
 class AWS_Cassandra_Table_BillingMode(CloudFormationProperty):
-  entity = "AWS::Cassandra::Table"
-  tf_block_type = "billing_mode"
+  def write(self, w):
+    with w.block("billing_mode"):
+      self.property(w, "Mode", "mode", StringValueConverter())
+      self.block(w, "ProvisionedThroughput", AWS_Cassandra_Table_ProvisionedThroughput)
 
-  props = {
-    "Mode": (StringValueConverter(), "mode"),
-    "ProvisionedThroughput": (AWS_Cassandra_Table_ProvisionedThroughput, "provisioned_throughput"),
-  }
 
 class AWS_Cassandra_Table(CloudFormationResource):
-  terraform_resource = "aws_cassandra_table"
+  cfn_type = "AWS::Cassandra::Table"
+  tf_type = "aws_cassandra_table"
+  ref = "arn"
 
-  resource_type = "AWS::Cassandra::Table"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "KeyspaceName", "keyspace_name", StringValueConverter())
+      self.property(w, "TableName", "table_name", StringValueConverter())
+      self.repeated_block(w, "RegularColumns", AWS_Cassandra_Table_Column)
+      self.repeated_block(w, "PartitionKeyColumns", AWS_Cassandra_Table_Column)
+      self.repeated_block(w, "ClusteringKeyColumns", AWS_Cassandra_Table_ClusteringKeyColumn)
+      self.block(w, "BillingMode", AWS_Cassandra_Table_BillingMode)
 
-  props = {
-    "KeyspaceName": (StringValueConverter(), "keyspace_name"),
-    "TableName": (StringValueConverter(), "table_name"),
-    "RegularColumns": (BlockValueConverter(AWS_Cassandra_Table_Column), None),
-    "PartitionKeyColumns": (BlockValueConverter(AWS_Cassandra_Table_Column), None),
-    "ClusteringKeyColumns": (BlockValueConverter(AWS_Cassandra_Table_ClusteringKeyColumn), None),
-    "BillingMode": (AWS_Cassandra_Table_BillingMode, "billing_mode"),
-  }
 

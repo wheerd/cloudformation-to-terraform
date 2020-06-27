@@ -1,11 +1,12 @@
 from . import *
 
 class AWS_SDB_Domain(CloudFormationResource):
-  terraform_resource = "aws_sdb_domain"
+  cfn_type = "AWS::SDB::Domain"
+  tf_type = "aws_sdb_domain"
+  ref = "arn"
 
-  resource_type = "AWS::SDB::Domain"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Description", "description", StringValueConverter())
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-  }
 

@@ -1,92 +1,79 @@
 from . import *
 
 class AWS_Budgets_Budget_CostTypes(CloudFormationProperty):
-  entity = "AWS::Budgets::Budget"
-  tf_block_type = "cost_types"
+  def write(self, w):
+    with w.block("cost_types"):
+      self.property(w, "IncludeSupport", "include_support", BasicValueConverter())
+      self.property(w, "IncludeOtherSubscription", "include_other_subscription", BasicValueConverter())
+      self.property(w, "IncludeTax", "include_tax", BasicValueConverter())
+      self.property(w, "IncludeSubscription", "include_subscription", BasicValueConverter())
+      self.property(w, "UseBlended", "use_blended", BasicValueConverter())
+      self.property(w, "IncludeUpfront", "include_upfront", BasicValueConverter())
+      self.property(w, "IncludeDiscount", "include_discount", BasicValueConverter())
+      self.property(w, "IncludeCredit", "include_credit", BasicValueConverter())
+      self.property(w, "IncludeRecurring", "include_recurring", BasicValueConverter())
+      self.property(w, "UseAmortized", "use_amortized", BasicValueConverter())
+      self.property(w, "IncludeRefund", "include_refund", BasicValueConverter())
 
-  props = {
-    "IncludeSupport": (BasicValueConverter(), "include_support"),
-    "IncludeOtherSubscription": (BasicValueConverter(), "include_other_subscription"),
-    "IncludeTax": (BasicValueConverter(), "include_tax"),
-    "IncludeSubscription": (BasicValueConverter(), "include_subscription"),
-    "UseBlended": (BasicValueConverter(), "use_blended"),
-    "IncludeUpfront": (BasicValueConverter(), "include_upfront"),
-    "IncludeDiscount": (BasicValueConverter(), "include_discount"),
-    "IncludeCredit": (BasicValueConverter(), "include_credit"),
-    "IncludeRecurring": (BasicValueConverter(), "include_recurring"),
-    "UseAmortized": (BasicValueConverter(), "use_amortized"),
-    "IncludeRefund": (BasicValueConverter(), "include_refund"),
-  }
 
 class AWS_Budgets_Budget_Subscriber(CloudFormationProperty):
-  entity = "AWS::Budgets::Budget"
-  tf_block_type = "subscriber"
+  def write(self, w):
+    with w.block("subscriber"):
+      self.property(w, "SubscriptionType", "subscription_type", StringValueConverter())
+      self.property(w, "Address", "address", StringValueConverter())
 
-  props = {
-    "SubscriptionType": (StringValueConverter(), "subscription_type"),
-    "Address": (StringValueConverter(), "address"),
-  }
 
 class AWS_Budgets_Budget_Notification(CloudFormationProperty):
-  entity = "AWS::Budgets::Budget"
-  tf_block_type = "notification"
+  def write(self, w):
+    with w.block("notification"):
+      self.property(w, "ComparisonOperator", "comparison_operator", StringValueConverter())
+      self.property(w, "NotificationType", "notification_type", StringValueConverter())
+      self.property(w, "Threshold", "threshold", BasicValueConverter())
+      self.property(w, "ThresholdType", "threshold_type", StringValueConverter())
 
-  props = {
-    "ComparisonOperator": (StringValueConverter(), "comparison_operator"),
-    "NotificationType": (StringValueConverter(), "notification_type"),
-    "Threshold": (BasicValueConverter(), "threshold"),
-    "ThresholdType": (StringValueConverter(), "threshold_type"),
-  }
 
 class AWS_Budgets_Budget_TimePeriod(CloudFormationProperty):
-  entity = "AWS::Budgets::Budget"
-  tf_block_type = "time_period"
+  def write(self, w):
+    with w.block("time_period"):
+      self.property(w, "Start", "start", StringValueConverter())
+      self.property(w, "End", "end", StringValueConverter())
 
-  props = {
-    "Start": (StringValueConverter(), "start"),
-    "End": (StringValueConverter(), "end"),
-  }
 
 class AWS_Budgets_Budget_Spend(CloudFormationProperty):
-  entity = "AWS::Budgets::Budget"
-  tf_block_type = "spend"
+  def write(self, w):
+    with w.block("spend"):
+      self.property(w, "Amount", "amount", BasicValueConverter())
+      self.property(w, "Unit", "unit", StringValueConverter())
 
-  props = {
-    "Amount": (BasicValueConverter(), "amount"),
-    "Unit": (StringValueConverter(), "unit"),
-  }
 
 class AWS_Budgets_Budget_BudgetData(CloudFormationProperty):
-  entity = "AWS::Budgets::Budget"
-  tf_block_type = "budget_data"
+  def write(self, w):
+    with w.block("budget_data"):
+      self.block(w, "BudgetLimit", AWS_Budgets_Budget_Spend)
+      self.block(w, "TimePeriod", AWS_Budgets_Budget_TimePeriod)
+      self.property(w, "TimeUnit", "time_unit", StringValueConverter())
+      self.property(w, "PlannedBudgetLimits", "planned_budget_limits", StringValueConverter())
+      self.property(w, "CostFilters", "cost_filters", StringValueConverter())
+      self.property(w, "BudgetName", "budget_name", StringValueConverter())
+      self.block(w, "CostTypes", AWS_Budgets_Budget_CostTypes)
+      self.property(w, "BudgetType", "budget_type", StringValueConverter())
 
-  props = {
-    "BudgetLimit": (AWS_Budgets_Budget_Spend, "budget_limit"),
-    "TimePeriod": (AWS_Budgets_Budget_TimePeriod, "time_period"),
-    "TimeUnit": (StringValueConverter(), "time_unit"),
-    "PlannedBudgetLimits": (StringValueConverter(), "planned_budget_limits"),
-    "CostFilters": (StringValueConverter(), "cost_filters"),
-    "BudgetName": (StringValueConverter(), "budget_name"),
-    "CostTypes": (AWS_Budgets_Budget_CostTypes, "cost_types"),
-    "BudgetType": (StringValueConverter(), "budget_type"),
-  }
 
 class AWS_Budgets_Budget_NotificationWithSubscribers(CloudFormationProperty):
-  entity = "AWS::Budgets::Budget"
-  tf_block_type = "notification_with_subscribers"
+  def write(self, w):
+    with w.block("notification_with_subscribers"):
+      self.repeated_block(w, "Subscribers", AWS_Budgets_Budget_Subscriber)
+      self.block(w, "Notification", AWS_Budgets_Budget_Notification)
 
-  props = {
-    "Subscribers": (BlockValueConverter(AWS_Budgets_Budget_Subscriber), None),
-    "Notification": (AWS_Budgets_Budget_Notification, "notification"),
-  }
 
 class AWS_Budgets_Budget(CloudFormationResource):
-  terraform_resource = "aws_budgets_budget"
+  cfn_type = "AWS::Budgets::Budget"
+  tf_type = "aws_budgets_budget"
+  ref = "arn"
 
-  resource_type = "AWS::Budgets::Budget"
+  def write(self, w):
+    with self.resource_block(w):
+      self.repeated_block(w, "NotificationsWithSubscribers", AWS_Budgets_Budget_NotificationWithSubscribers)
+      self.block(w, "Budget", AWS_Budgets_Budget_BudgetData)
 
-  props = {
-    "NotificationsWithSubscribers": (BlockValueConverter(AWS_Budgets_Budget_NotificationWithSubscribers), None),
-    "Budget": (AWS_Budgets_Budget_BudgetData, "budget"),
-  }
 

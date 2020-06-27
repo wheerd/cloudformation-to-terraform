@@ -1,61 +1,54 @@
 from . import *
 
 class AWS_Synthetics_Canary_Code(CloudFormationProperty):
-  entity = "AWS::Synthetics::Canary"
-  tf_block_type = "code"
+  def write(self, w):
+    with w.block("code"):
+      self.property(w, "S3Bucket", "s3_bucket", StringValueConverter())
+      self.property(w, "S3Key", "s3_key", StringValueConverter())
+      self.property(w, "S3ObjectVersion", "s3_object_version", StringValueConverter())
+      self.property(w, "Script", "script", StringValueConverter())
+      self.property(w, "Handler", "handler", StringValueConverter())
 
-  props = {
-    "S3Bucket": (StringValueConverter(), "s3_bucket"),
-    "S3Key": (StringValueConverter(), "s3_key"),
-    "S3ObjectVersion": (StringValueConverter(), "s3_object_version"),
-    "Script": (StringValueConverter(), "script"),
-    "Handler": (StringValueConverter(), "handler"),
-  }
 
 class AWS_Synthetics_Canary_VPCConfig(CloudFormationProperty):
-  entity = "AWS::Synthetics::Canary"
-  tf_block_type = "vpc_config"
+  def write(self, w):
+    with w.block("vpc_config"):
+      self.property(w, "VpcId", "vpc_id", StringValueConverter())
+      self.property(w, "SubnetIds", "subnet_ids", ListValueConverter(StringValueConverter()))
+      self.property(w, "SecurityGroupIds", "security_group_ids", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "VpcId": (StringValueConverter(), "vpc_id"),
-    "SubnetIds": (ListValueConverter(StringValueConverter()), "subnet_ids"),
-    "SecurityGroupIds": (ListValueConverter(StringValueConverter()), "security_group_ids"),
-  }
 
 class AWS_Synthetics_Canary_RunConfig(CloudFormationProperty):
-  entity = "AWS::Synthetics::Canary"
-  tf_block_type = "run_config"
+  def write(self, w):
+    with w.block("run_config"):
+      self.property(w, "TimeoutInSeconds", "timeout_in_seconds", BasicValueConverter())
 
-  props = {
-    "TimeoutInSeconds": (BasicValueConverter(), "timeout_in_seconds"),
-  }
 
 class AWS_Synthetics_Canary_Schedule(CloudFormationProperty):
-  entity = "AWS::Synthetics::Canary"
-  tf_block_type = "schedule"
+  def write(self, w):
+    with w.block("schedule"):
+      self.property(w, "Expression", "expression", StringValueConverter())
+      self.property(w, "DurationInSeconds", "duration_in_seconds", StringValueConverter())
 
-  props = {
-    "Expression": (StringValueConverter(), "expression"),
-    "DurationInSeconds": (StringValueConverter(), "duration_in_seconds"),
-  }
 
 class AWS_Synthetics_Canary(CloudFormationResource):
-  terraform_resource = "aws_synthetics_canary"
+  cfn_type = "AWS::Synthetics::Canary"
+  tf_type = "aws_synthetics_canary"
+  ref = "arn"
 
-  resource_type = "AWS::Synthetics::Canary"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Name", "name", StringValueConverter())
+      self.block(w, "Code", AWS_Synthetics_Canary_Code)
+      self.property(w, "ArtifactS3Location", "artifact_s3_location", StringValueConverter())
+      self.block(w, "Schedule", AWS_Synthetics_Canary_Schedule)
+      self.property(w, "ExecutionRoleArn", "execution_role_arn", StringValueConverter())
+      self.property(w, "RuntimeVersion", "runtime_version", StringValueConverter())
+      self.property(w, "SuccessRetentionPeriod", "success_retention_period", BasicValueConverter())
+      self.property(w, "FailureRetentionPeriod", "failure_retention_period", BasicValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.block(w, "VPCConfig", AWS_Synthetics_Canary_VPCConfig)
+      self.block(w, "RunConfig", AWS_Synthetics_Canary_RunConfig)
+      self.property(w, "StartCanaryAfterCreation", "start_canary_after_creation", BasicValueConverter())
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-    "Code": (AWS_Synthetics_Canary_Code, "code"),
-    "ArtifactS3Location": (StringValueConverter(), "artifact_s3_location"),
-    "Schedule": (AWS_Synthetics_Canary_Schedule, "schedule"),
-    "ExecutionRoleArn": (StringValueConverter(), "execution_role_arn"),
-    "RuntimeVersion": (StringValueConverter(), "runtime_version"),
-    "SuccessRetentionPeriod": (BasicValueConverter(), "success_retention_period"),
-    "FailureRetentionPeriod": (BasicValueConverter(), "failure_retention_period"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "VPCConfig": (AWS_Synthetics_Canary_VPCConfig, "vpc_config"),
-    "RunConfig": (AWS_Synthetics_Canary_RunConfig, "run_config"),
-    "StartCanaryAfterCreation": (BasicValueConverter(), "start_canary_after_creation"),
-  }
 

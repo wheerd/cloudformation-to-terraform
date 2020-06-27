@@ -1,251 +1,234 @@
 from . import *
 
 class AWS_WAFRegional_Rule_Predicate(CloudFormationProperty):
-  entity = "AWS::WAFRegional::Rule"
-  tf_block_type = "predicate"
+  def write(self, w):
+    with w.block("predicate"):
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "DataId", "data_id", StringValueConverter())
+      self.property(w, "Negated", "negated", BasicValueConverter())
 
-  props = {
-    "Type": (StringValueConverter(), "type"),
-    "DataId": (StringValueConverter(), "data_id"),
-    "Negated": (BasicValueConverter(), "negated"),
-  }
 
 class AWS_WAFRegional_WebACL_Action(CloudFormationProperty):
-  entity = "AWS::WAFRegional::WebACL"
-  tf_block_type = "action"
+  def write(self, w):
+    with w.block("action"):
+      self.property(w, "Type", "type", StringValueConverter())
 
-  props = {
-    "Type": (StringValueConverter(), "type"),
-  }
 
 class AWS_WAFRegional_WebACL_Rule(CloudFormationProperty):
-  entity = "AWS::WAFRegional::WebACL"
-  tf_block_type = "rule"
+  def write(self, w):
+    with w.block("rule"):
+      self.block(w, "Action", AWS_WAFRegional_WebACL_Action)
+      self.property(w, "Priority", "priority", BasicValueConverter())
+      self.property(w, "RuleId", "rule_id", StringValueConverter())
 
-  props = {
-    "Action": (AWS_WAFRegional_WebACL_Action, "action"),
-    "Priority": (BasicValueConverter(), "priority"),
-    "RuleId": (StringValueConverter(), "rule_id"),
-  }
 
 class AWS_WAFRegional_IPSet_IPSetDescriptor(CloudFormationProperty):
-  entity = "AWS::WAFRegional::IPSet"
-  tf_block_type = "ip_set_descriptor"
+  def write(self, w):
+    with w.block("ip_set_descriptor"):
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "Value", "value", StringValueConverter())
 
-  props = {
-    "Type": (StringValueConverter(), "type"),
-    "Value": (StringValueConverter(), "value"),
-  }
 
 class AWS_WAFRegional_ByteMatchSet_FieldToMatch(CloudFormationProperty):
-  entity = "AWS::WAFRegional::ByteMatchSet"
-  tf_block_type = "field_to_match"
+  def write(self, w):
+    with w.block("field_to_match"):
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "Data", "data", StringValueConverter())
 
-  props = {
-    "Type": (StringValueConverter(), "type"),
-    "Data": (StringValueConverter(), "data"),
-  }
 
 class AWS_WAFRegional_XssMatchSet_FieldToMatch(CloudFormationProperty):
-  entity = "AWS::WAFRegional::XssMatchSet"
-  tf_block_type = "field_to_match"
+  def write(self, w):
+    with w.block("field_to_match"):
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "Data", "data", StringValueConverter())
 
-  props = {
-    "Type": (StringValueConverter(), "type"),
-    "Data": (StringValueConverter(), "data"),
-  }
 
 class AWS_WAFRegional_SizeConstraintSet_FieldToMatch(CloudFormationProperty):
-  entity = "AWS::WAFRegional::SizeConstraintSet"
-  tf_block_type = "field_to_match"
+  def write(self, w):
+    with w.block("field_to_match"):
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "Data", "data", StringValueConverter())
 
-  props = {
-    "Type": (StringValueConverter(), "type"),
-    "Data": (StringValueConverter(), "data"),
-  }
 
 class AWS_WAFRegional_GeoMatchSet_GeoMatchConstraint(CloudFormationProperty):
-  entity = "AWS::WAFRegional::GeoMatchSet"
-  tf_block_type = "geo_match_constraint"
+  def write(self, w):
+    with w.block("geo_match_constraint"):
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "Value", "value", StringValueConverter())
 
-  props = {
-    "Type": (StringValueConverter(), "type"),
-    "Value": (StringValueConverter(), "value"),
-  }
 
 class AWS_WAFRegional_SqlInjectionMatchSet_FieldToMatch(CloudFormationProperty):
-  entity = "AWS::WAFRegional::SqlInjectionMatchSet"
-  tf_block_type = "field_to_match"
+  def write(self, w):
+    with w.block("field_to_match"):
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "Data", "data", StringValueConverter())
 
-  props = {
-    "Type": (StringValueConverter(), "type"),
-    "Data": (StringValueConverter(), "data"),
-  }
 
 class AWS_WAFRegional_RateBasedRule_Predicate(CloudFormationProperty):
-  entity = "AWS::WAFRegional::RateBasedRule"
-  tf_block_type = "predicate"
+  def write(self, w):
+    with w.block("predicate"):
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "DataId", "data_id", StringValueConverter())
+      self.property(w, "Negated", "negated", BasicValueConverter())
 
-  props = {
-    "Type": (StringValueConverter(), "type"),
-    "DataId": (StringValueConverter(), "data_id"),
-    "Negated": (BasicValueConverter(), "negated"),
-  }
 
 class AWS_WAFRegional_RateBasedRule(CloudFormationResource):
-  terraform_resource = "aws_waf_regional_rate_based_rule"
+  cfn_type = "AWS::WAFRegional::RateBasedRule"
+  tf_type = "aws_waf_regional_rate_based_rule"
+  ref = "arn"
 
-  resource_type = "AWS::WAFRegional::RateBasedRule"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "MetricName", "metric_name", StringValueConverter())
+      self.property(w, "RateLimit", "rate_limit", BasicValueConverter())
+      self.repeated_block(w, "MatchPredicates", AWS_WAFRegional_RateBasedRule_Predicate)
+      self.property(w, "RateKey", "rate_key", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "MetricName": (StringValueConverter(), "metric_name"),
-    "RateLimit": (BasicValueConverter(), "rate_limit"),
-    "MatchPredicates": (BlockValueConverter(AWS_WAFRegional_RateBasedRule_Predicate), None),
-    "RateKey": (StringValueConverter(), "rate_key"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_WAFRegional_GeoMatchSet(CloudFormationResource):
-  terraform_resource = "aws_waf_regional_geo_match_set"
+  cfn_type = "AWS::WAFRegional::GeoMatchSet"
+  tf_type = "aws_waf_regional_geo_match_set"
+  ref = "arn"
 
-  resource_type = "AWS::WAFRegional::GeoMatchSet"
+  def write(self, w):
+    with self.resource_block(w):
+      self.repeated_block(w, "GeoMatchConstraints", AWS_WAFRegional_GeoMatchSet_GeoMatchConstraint)
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "GeoMatchConstraints": (BlockValueConverter(AWS_WAFRegional_GeoMatchSet_GeoMatchConstraint), None),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_WAFRegional_RegexPatternSet(CloudFormationResource):
-  terraform_resource = "aws_waf_regional_regex_pattern_set"
+  cfn_type = "AWS::WAFRegional::RegexPatternSet"
+  tf_type = "aws_waf_regional_regex_pattern_set"
+  ref = "arn"
 
-  resource_type = "AWS::WAFRegional::RegexPatternSet"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "RegexPatternStrings", "regex_pattern_strings", ListValueConverter(StringValueConverter()))
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "RegexPatternStrings": (ListValueConverter(StringValueConverter()), "regex_pattern_strings"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_WAFRegional_WebACLAssociation(CloudFormationResource):
-  terraform_resource = "aws_waf_regional_web_acl_association"
+  cfn_type = "AWS::WAFRegional::WebACLAssociation"
+  tf_type = "aws_waf_regional_web_acl_association"
+  ref = "arn"
 
-  resource_type = "AWS::WAFRegional::WebACLAssociation"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ResourceArn", "resource_arn", StringValueConverter())
+      self.property(w, "WebACLId", "web_acl_id", StringValueConverter())
 
-  props = {
-    "ResourceArn": (StringValueConverter(), "resource_arn"),
-    "WebACLId": (StringValueConverter(), "web_acl_id"),
-  }
 
 class AWS_WAFRegional_WebACL(CloudFormationResource):
-  terraform_resource = "aws_waf_regional_web_acl"
+  cfn_type = "AWS::WAFRegional::WebACL"
+  tf_type = "aws_waf_regional_web_acl"
+  ref = "arn"
 
-  resource_type = "AWS::WAFRegional::WebACL"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "MetricName", "metric_name", StringValueConverter())
+      self.block(w, "DefaultAction", AWS_WAFRegional_WebACL_Action)
+      self.repeated_block(w, "Rules", AWS_WAFRegional_WebACL_Rule)
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "MetricName": (StringValueConverter(), "metric_name"),
-    "DefaultAction": (AWS_WAFRegional_WebACL_Action, "default_action"),
-    "Rules": (BlockValueConverter(AWS_WAFRegional_WebACL_Rule), None),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_WAFRegional_IPSet(CloudFormationResource):
-  terraform_resource = "aws_waf_regional_ip_set"
+  cfn_type = "AWS::WAFRegional::IPSet"
+  tf_type = "aws_waf_regional_ip_set"
+  ref = "arn"
 
-  resource_type = "AWS::WAFRegional::IPSet"
+  def write(self, w):
+    with self.resource_block(w):
+      self.repeated_block(w, "IPSetDescriptors", AWS_WAFRegional_IPSet_IPSetDescriptor)
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "IPSetDescriptors": (BlockValueConverter(AWS_WAFRegional_IPSet_IPSetDescriptor), None),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_WAFRegional_Rule(CloudFormationResource):
-  terraform_resource = "aws_waf_regional_rule"
+  cfn_type = "AWS::WAFRegional::Rule"
+  tf_type = "aws_waf_regional_rule"
+  ref = "arn"
 
-  resource_type = "AWS::WAFRegional::Rule"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "MetricName", "metric_name", StringValueConverter())
+      self.repeated_block(w, "Predicates", AWS_WAFRegional_Rule_Predicate)
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "MetricName": (StringValueConverter(), "metric_name"),
-    "Predicates": (BlockValueConverter(AWS_WAFRegional_Rule_Predicate), None),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_WAFRegional_ByteMatchSet_ByteMatchTuple(CloudFormationProperty):
-  entity = "AWS::WAFRegional::ByteMatchSet"
-  tf_block_type = "byte_match_tuple"
+  def write(self, w):
+    with w.block("byte_match_tuple"):
+      self.property(w, "TargetString", "target_string", StringValueConverter())
+      self.property(w, "TargetStringBase64", "target_string_base64", StringValueConverter())
+      self.property(w, "PositionalConstraint", "positional_constraint", StringValueConverter())
+      self.property(w, "TextTransformation", "text_transformation", StringValueConverter())
+      self.block(w, "FieldToMatch", AWS_WAFRegional_ByteMatchSet_FieldToMatch)
 
-  props = {
-    "TargetString": (StringValueConverter(), "target_string"),
-    "TargetStringBase64": (StringValueConverter(), "target_string_base64"),
-    "PositionalConstraint": (StringValueConverter(), "positional_constraint"),
-    "TextTransformation": (StringValueConverter(), "text_transformation"),
-    "FieldToMatch": (AWS_WAFRegional_ByteMatchSet_FieldToMatch, "field_to_match"),
-  }
 
 class AWS_WAFRegional_SizeConstraintSet_SizeConstraint(CloudFormationProperty):
-  entity = "AWS::WAFRegional::SizeConstraintSet"
-  tf_block_type = "size_constraint"
+  def write(self, w):
+    with w.block("size_constraint"):
+      self.property(w, "ComparisonOperator", "comparison_operator", StringValueConverter())
+      self.property(w, "Size", "size", BasicValueConverter())
+      self.property(w, "TextTransformation", "text_transformation", StringValueConverter())
+      self.block(w, "FieldToMatch", AWS_WAFRegional_SizeConstraintSet_FieldToMatch)
 
-  props = {
-    "ComparisonOperator": (StringValueConverter(), "comparison_operator"),
-    "Size": (BasicValueConverter(), "size"),
-    "TextTransformation": (StringValueConverter(), "text_transformation"),
-    "FieldToMatch": (AWS_WAFRegional_SizeConstraintSet_FieldToMatch, "field_to_match"),
-  }
 
 class AWS_WAFRegional_SqlInjectionMatchSet_SqlInjectionMatchTuple(CloudFormationProperty):
-  entity = "AWS::WAFRegional::SqlInjectionMatchSet"
-  tf_block_type = "sql_injection_match_tuple"
+  def write(self, w):
+    with w.block("sql_injection_match_tuple"):
+      self.property(w, "TextTransformation", "text_transformation", StringValueConverter())
+      self.block(w, "FieldToMatch", AWS_WAFRegional_SqlInjectionMatchSet_FieldToMatch)
 
-  props = {
-    "TextTransformation": (StringValueConverter(), "text_transformation"),
-    "FieldToMatch": (AWS_WAFRegional_SqlInjectionMatchSet_FieldToMatch, "field_to_match"),
-  }
 
 class AWS_WAFRegional_XssMatchSet_XssMatchTuple(CloudFormationProperty):
-  entity = "AWS::WAFRegional::XssMatchSet"
-  tf_block_type = "xss_match_tuple"
+  def write(self, w):
+    with w.block("xss_match_tuple"):
+      self.property(w, "TextTransformation", "text_transformation", StringValueConverter())
+      self.block(w, "FieldToMatch", AWS_WAFRegional_XssMatchSet_FieldToMatch)
 
-  props = {
-    "TextTransformation": (StringValueConverter(), "text_transformation"),
-    "FieldToMatch": (AWS_WAFRegional_XssMatchSet_FieldToMatch, "field_to_match"),
-  }
 
 class AWS_WAFRegional_SqlInjectionMatchSet(CloudFormationResource):
-  terraform_resource = "aws_waf_regional_sql_injection_match_set"
+  cfn_type = "AWS::WAFRegional::SqlInjectionMatchSet"
+  tf_type = "aws_waf_regional_sql_injection_match_set"
+  ref = "arn"
 
-  resource_type = "AWS::WAFRegional::SqlInjectionMatchSet"
+  def write(self, w):
+    with self.resource_block(w):
+      self.repeated_block(w, "SqlInjectionMatchTuples", AWS_WAFRegional_SqlInjectionMatchSet_SqlInjectionMatchTuple)
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "SqlInjectionMatchTuples": (BlockValueConverter(AWS_WAFRegional_SqlInjectionMatchSet_SqlInjectionMatchTuple), None),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_WAFRegional_SizeConstraintSet(CloudFormationResource):
-  terraform_resource = "aws_waf_regional_size_constraint_set"
+  cfn_type = "AWS::WAFRegional::SizeConstraintSet"
+  tf_type = "aws_waf_regional_size_constraint_set"
+  ref = "arn"
 
-  resource_type = "AWS::WAFRegional::SizeConstraintSet"
+  def write(self, w):
+    with self.resource_block(w):
+      self.repeated_block(w, "SizeConstraints", AWS_WAFRegional_SizeConstraintSet_SizeConstraint)
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "SizeConstraints": (BlockValueConverter(AWS_WAFRegional_SizeConstraintSet_SizeConstraint), None),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_WAFRegional_XssMatchSet(CloudFormationResource):
-  terraform_resource = "aws_waf_regional_xss_match_set"
+  cfn_type = "AWS::WAFRegional::XssMatchSet"
+  tf_type = "aws_waf_regional_xss_match_set"
+  ref = "arn"
 
-  resource_type = "AWS::WAFRegional::XssMatchSet"
+  def write(self, w):
+    with self.resource_block(w):
+      self.repeated_block(w, "XssMatchTuples", AWS_WAFRegional_XssMatchSet_XssMatchTuple)
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "XssMatchTuples": (BlockValueConverter(AWS_WAFRegional_XssMatchSet_XssMatchTuple), None),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_WAFRegional_ByteMatchSet(CloudFormationResource):
-  terraform_resource = "aws_waf_regional_byte_match_set"
+  cfn_type = "AWS::WAFRegional::ByteMatchSet"
+  tf_type = "aws_waf_regional_byte_match_set"
+  ref = "arn"
 
-  resource_type = "AWS::WAFRegional::ByteMatchSet"
+  def write(self, w):
+    with self.resource_block(w):
+      self.repeated_block(w, "ByteMatchTuples", AWS_WAFRegional_ByteMatchSet_ByteMatchTuple)
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "ByteMatchTuples": (BlockValueConverter(AWS_WAFRegional_ByteMatchSet_ByteMatchTuple), None),
-    "Name": (StringValueConverter(), "name"),
-  }
 

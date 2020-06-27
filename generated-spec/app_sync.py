@@ -1,291 +1,266 @@
 from . import *
 
 class AWS_AppSync_GraphQLApi_Tags(CloudFormationProperty):
-  entity = "AWS::AppSync::GraphQLApi"
-  tf_block_type = "tags"
+  def write(self, w):
+    with w.block("tags"):
+      pass
+
 
 class AWS_AppSync_DataSource_AwsIamConfig(CloudFormationProperty):
-  entity = "AWS::AppSync::DataSource"
-  tf_block_type = "aws_iam_config"
+  def write(self, w):
+    with w.block("aws_iam_config"):
+      self.property(w, "SigningRegion", "signing_region", StringValueConverter())
+      self.property(w, "SigningServiceName", "signing_service_name", StringValueConverter())
 
-  props = {
-    "SigningRegion": (StringValueConverter(), "signing_region"),
-    "SigningServiceName": (StringValueConverter(), "signing_service_name"),
-  }
 
 class AWS_AppSync_GraphQLApi_UserPoolConfig(CloudFormationProperty):
-  entity = "AWS::AppSync::GraphQLApi"
-  tf_block_type = "user_pool_config"
+  def write(self, w):
+    with w.block("user_pool_config"):
+      self.property(w, "AppIdClientRegex", "app_id_client_regex", StringValueConverter())
+      self.property(w, "UserPoolId", "user_pool_id", StringValueConverter())
+      self.property(w, "AwsRegion", "aws_region", StringValueConverter())
+      self.property(w, "DefaultAction", "default_action", StringValueConverter())
 
-  props = {
-    "AppIdClientRegex": (StringValueConverter(), "app_id_client_regex"),
-    "UserPoolId": (StringValueConverter(), "user_pool_id"),
-    "AwsRegion": (StringValueConverter(), "aws_region"),
-    "DefaultAction": (StringValueConverter(), "default_action"),
-  }
 
 class AWS_AppSync_DataSource_AuthorizationConfig(CloudFormationProperty):
-  entity = "AWS::AppSync::DataSource"
-  tf_block_type = "authorization_config"
+  def write(self, w):
+    with w.block("authorization_config"):
+      self.block(w, "AwsIamConfig", AWS_AppSync_DataSource_AwsIamConfig)
+      self.property(w, "AuthorizationType", "authorization_type", StringValueConverter())
 
-  props = {
-    "AwsIamConfig": (AWS_AppSync_DataSource_AwsIamConfig, "aws_iam_config"),
-    "AuthorizationType": (StringValueConverter(), "authorization_type"),
-  }
 
 class AWS_AppSync_Resolver_LambdaConflictHandlerConfig(CloudFormationProperty):
-  entity = "AWS::AppSync::Resolver"
-  tf_block_type = "lambda_conflict_handler_config"
+  def write(self, w):
+    with w.block("lambda_conflict_handler_config"):
+      self.property(w, "LambdaConflictHandlerArn", "lambda_conflict_handler_arn", StringValueConverter())
 
-  props = {
-    "LambdaConflictHandlerArn": (StringValueConverter(), "lambda_conflict_handler_arn"),
-  }
 
 class AWS_AppSync_Resolver_PipelineConfig(CloudFormationProperty):
-  entity = "AWS::AppSync::Resolver"
-  tf_block_type = "pipeline_config"
+  def write(self, w):
+    with w.block("pipeline_config"):
+      self.property(w, "Functions", "functions", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "Functions": (ListValueConverter(StringValueConverter()), "functions"),
-  }
 
 class AWS_AppSync_Resolver_SyncConfig(CloudFormationProperty):
-  entity = "AWS::AppSync::Resolver"
-  tf_block_type = "sync_config"
+  def write(self, w):
+    with w.block("sync_config"):
+      self.property(w, "ConflictHandler", "conflict_handler", StringValueConverter())
+      self.property(w, "ConflictDetection", "conflict_detection", StringValueConverter())
+      self.block(w, "LambdaConflictHandlerConfig", AWS_AppSync_Resolver_LambdaConflictHandlerConfig)
 
-  props = {
-    "ConflictHandler": (StringValueConverter(), "conflict_handler"),
-    "ConflictDetection": (StringValueConverter(), "conflict_detection"),
-    "LambdaConflictHandlerConfig": (AWS_AppSync_Resolver_LambdaConflictHandlerConfig, "lambda_conflict_handler_config"),
-  }
 
 class AWS_AppSync_GraphQLApi_OpenIDConnectConfig(CloudFormationProperty):
-  entity = "AWS::AppSync::GraphQLApi"
-  tf_block_type = "open_id_connect_config"
+  def write(self, w):
+    with w.block("open_id_connect_config"):
+      self.property(w, "Issuer", "issuer", StringValueConverter())
+      self.property(w, "ClientId", "client_id", StringValueConverter())
+      self.property(w, "AuthTTL", "auth_ttl", BasicValueConverter())
+      self.property(w, "IatTTL", "iat_ttl", BasicValueConverter())
 
-  props = {
-    "Issuer": (StringValueConverter(), "issuer"),
-    "ClientId": (StringValueConverter(), "client_id"),
-    "AuthTTL": (BasicValueConverter(), "auth_ttl"),
-    "IatTTL": (BasicValueConverter(), "iat_ttl"),
-  }
 
 class AWS_AppSync_GraphQLApi_LogConfig(CloudFormationProperty):
-  entity = "AWS::AppSync::GraphQLApi"
-  tf_block_type = "log_config"
+  def write(self, w):
+    with w.block("log_config"):
+      self.property(w, "CloudWatchLogsRoleArn", "cloud_watch_logs_role_arn", StringValueConverter())
+      self.property(w, "ExcludeVerboseContent", "exclude_verbose_content", BasicValueConverter())
+      self.property(w, "FieldLogLevel", "field_log_level", StringValueConverter())
 
-  props = {
-    "CloudWatchLogsRoleArn": (StringValueConverter(), "cloud_watch_logs_role_arn"),
-    "ExcludeVerboseContent": (BasicValueConverter(), "exclude_verbose_content"),
-    "FieldLogLevel": (StringValueConverter(), "field_log_level"),
-  }
 
 class AWS_AppSync_DataSource_RdsHttpEndpointConfig(CloudFormationProperty):
-  entity = "AWS::AppSync::DataSource"
-  tf_block_type = "rds_http_endpoint_config"
+  def write(self, w):
+    with w.block("rds_http_endpoint_config"):
+      self.property(w, "AwsRegion", "aws_region", StringValueConverter())
+      self.property(w, "Schema", "schema", StringValueConverter())
+      self.property(w, "DatabaseName", "database_name", StringValueConverter())
+      self.property(w, "DbClusterIdentifier", "db_cluster_identifier", StringValueConverter())
+      self.property(w, "AwsSecretStoreArn", "aws_secret_store_arn", StringValueConverter())
 
-  props = {
-    "AwsRegion": (StringValueConverter(), "aws_region"),
-    "Schema": (StringValueConverter(), "schema"),
-    "DatabaseName": (StringValueConverter(), "database_name"),
-    "DbClusterIdentifier": (StringValueConverter(), "db_cluster_identifier"),
-    "AwsSecretStoreArn": (StringValueConverter(), "aws_secret_store_arn"),
-  }
 
 class AWS_AppSync_DataSource_LambdaConfig(CloudFormationProperty):
-  entity = "AWS::AppSync::DataSource"
-  tf_block_type = "lambda_config"
+  def write(self, w):
+    with w.block("lambda_config"):
+      self.property(w, "LambdaFunctionArn", "lambda_function_arn", StringValueConverter())
 
-  props = {
-    "LambdaFunctionArn": (StringValueConverter(), "lambda_function_arn"),
-  }
 
 class AWS_AppSync_DataSource_HttpConfig(CloudFormationProperty):
-  entity = "AWS::AppSync::DataSource"
-  tf_block_type = "http_config"
+  def write(self, w):
+    with w.block("http_config"):
+      self.property(w, "Endpoint", "endpoint", StringValueConverter())
+      self.block(w, "AuthorizationConfig", AWS_AppSync_DataSource_AuthorizationConfig)
 
-  props = {
-    "Endpoint": (StringValueConverter(), "endpoint"),
-    "AuthorizationConfig": (AWS_AppSync_DataSource_AuthorizationConfig, "authorization_config"),
-  }
 
 class AWS_AppSync_GraphQLApi_CognitoUserPoolConfig(CloudFormationProperty):
-  entity = "AWS::AppSync::GraphQLApi"
-  tf_block_type = "cognito_user_pool_config"
+  def write(self, w):
+    with w.block("cognito_user_pool_config"):
+      self.property(w, "AppIdClientRegex", "app_id_client_regex", StringValueConverter())
+      self.property(w, "UserPoolId", "user_pool_id", StringValueConverter())
+      self.property(w, "AwsRegion", "aws_region", StringValueConverter())
 
-  props = {
-    "AppIdClientRegex": (StringValueConverter(), "app_id_client_regex"),
-    "UserPoolId": (StringValueConverter(), "user_pool_id"),
-    "AwsRegion": (StringValueConverter(), "aws_region"),
-  }
 
 class AWS_AppSync_GraphQLApi_AdditionalAuthenticationProviders(CloudFormationProperty):
-  entity = "AWS::AppSync::GraphQLApi"
-  tf_block_type = "additional_authentication_providers"
+  def write(self, w):
+    with w.block("additional_authentication_providers"):
+      pass
+
 
 class AWS_AppSync_Resolver_CachingConfig(CloudFormationProperty):
-  entity = "AWS::AppSync::Resolver"
-  tf_block_type = "caching_config"
+  def write(self, w):
+    with w.block("caching_config"):
+      self.property(w, "CachingKeys", "caching_keys", ListValueConverter(StringValueConverter()))
+      self.property(w, "Ttl", "ttl", BasicValueConverter())
 
-  props = {
-    "CachingKeys": (ListValueConverter(StringValueConverter()), "caching_keys"),
-    "Ttl": (BasicValueConverter(), "ttl"),
-  }
 
 class AWS_AppSync_GraphQLApi_AdditionalAuthenticationProvider(CloudFormationProperty):
-  entity = "AWS::AppSync::GraphQLApi"
-  tf_block_type = "additional_authentication_provider"
+  def write(self, w):
+    with w.block("additional_authentication_provider"):
+      self.block(w, "OpenIDConnectConfig", AWS_AppSync_GraphQLApi_OpenIDConnectConfig)
+      self.block(w, "UserPoolConfig", AWS_AppSync_GraphQLApi_CognitoUserPoolConfig)
+      self.property(w, "AuthenticationType", "authentication_type", StringValueConverter())
 
-  props = {
-    "OpenIDConnectConfig": (AWS_AppSync_GraphQLApi_OpenIDConnectConfig, "open_id_connect_config"),
-    "UserPoolConfig": (AWS_AppSync_GraphQLApi_CognitoUserPoolConfig, "user_pool_config"),
-    "AuthenticationType": (StringValueConverter(), "authentication_type"),
-  }
 
 class AWS_AppSync_DataSource_ElasticsearchConfig(CloudFormationProperty):
-  entity = "AWS::AppSync::DataSource"
-  tf_block_type = "elasticsearch_config"
+  def write(self, w):
+    with w.block("elasticsearch_config"):
+      self.property(w, "AwsRegion", "aws_region", StringValueConverter())
+      self.property(w, "Endpoint", "endpoint", StringValueConverter())
 
-  props = {
-    "AwsRegion": (StringValueConverter(), "aws_region"),
-    "Endpoint": (StringValueConverter(), "endpoint"),
-  }
 
 class AWS_AppSync_DataSource_DeltaSyncConfig(CloudFormationProperty):
-  entity = "AWS::AppSync::DataSource"
-  tf_block_type = "delta_sync_config"
+  def write(self, w):
+    with w.block("delta_sync_config"):
+      self.property(w, "BaseTableTTL", "base_table_ttl", StringValueConverter())
+      self.property(w, "DeltaSyncTableTTL", "delta_sync_table_ttl", StringValueConverter())
+      self.property(w, "DeltaSyncTableName", "delta_sync_table_name", StringValueConverter())
 
-  props = {
-    "BaseTableTTL": (StringValueConverter(), "base_table_ttl"),
-    "DeltaSyncTableTTL": (StringValueConverter(), "delta_sync_table_ttl"),
-    "DeltaSyncTableName": (StringValueConverter(), "delta_sync_table_name"),
-  }
 
 class AWS_AppSync_Resolver(CloudFormationResource):
-  terraform_resource = "aws_app_sync_resolver"
+  cfn_type = "AWS::AppSync::Resolver"
+  tf_type = "aws_app_sync_resolver"
+  ref = "arn"
 
-  resource_type = "AWS::AppSync::Resolver"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ResponseMappingTemplateS3Location", "response_mapping_template_s3_location", StringValueConverter())
+      self.property(w, "TypeName", "type_name", StringValueConverter())
+      self.block(w, "PipelineConfig", AWS_AppSync_Resolver_PipelineConfig)
+      self.property(w, "DataSourceName", "data_source_name", StringValueConverter())
+      self.property(w, "RequestMappingTemplate", "request_mapping_template", StringValueConverter())
+      self.property(w, "ResponseMappingTemplate", "response_mapping_template", StringValueConverter())
+      self.property(w, "Kind", "kind", StringValueConverter())
+      self.block(w, "CachingConfig", AWS_AppSync_Resolver_CachingConfig)
+      self.block(w, "SyncConfig", AWS_AppSync_Resolver_SyncConfig)
+      self.property(w, "RequestMappingTemplateS3Location", "request_mapping_template_s3_location", StringValueConverter())
+      self.property(w, "ApiId", "api_id", StringValueConverter())
+      self.property(w, "FieldName", "field_name", StringValueConverter())
 
-  props = {
-    "ResponseMappingTemplateS3Location": (StringValueConverter(), "response_mapping_template_s3_location"),
-    "TypeName": (StringValueConverter(), "type_name"),
-    "PipelineConfig": (AWS_AppSync_Resolver_PipelineConfig, "pipeline_config"),
-    "DataSourceName": (StringValueConverter(), "data_source_name"),
-    "RequestMappingTemplate": (StringValueConverter(), "request_mapping_template"),
-    "ResponseMappingTemplate": (StringValueConverter(), "response_mapping_template"),
-    "Kind": (StringValueConverter(), "kind"),
-    "CachingConfig": (AWS_AppSync_Resolver_CachingConfig, "caching_config"),
-    "SyncConfig": (AWS_AppSync_Resolver_SyncConfig, "sync_config"),
-    "RequestMappingTemplateS3Location": (StringValueConverter(), "request_mapping_template_s3_location"),
-    "ApiId": (StringValueConverter(), "api_id"),
-    "FieldName": (StringValueConverter(), "field_name"),
-  }
 
 class AWS_AppSync_GraphQLSchema(CloudFormationResource):
-  terraform_resource = "aws_app_sync_graph_ql_schema"
+  cfn_type = "AWS::AppSync::GraphQLSchema"
+  tf_type = "aws_app_sync_graph_ql_schema"
+  ref = "arn"
 
-  resource_type = "AWS::AppSync::GraphQLSchema"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Definition", "definition", StringValueConverter())
+      self.property(w, "DefinitionS3Location", "definition_s3_location", StringValueConverter())
+      self.property(w, "ApiId", "api_id", StringValueConverter())
 
-  props = {
-    "Definition": (StringValueConverter(), "definition"),
-    "DefinitionS3Location": (StringValueConverter(), "definition_s3_location"),
-    "ApiId": (StringValueConverter(), "api_id"),
-  }
 
 class AWS_AppSync_GraphQLApi(CloudFormationResource):
-  terraform_resource = "aws_app_sync_graph_ql_api"
+  cfn_type = "AWS::AppSync::GraphQLApi"
+  tf_type = "aws_app_sync_graph_ql_api"
+  ref = "arn"
 
-  resource_type = "AWS::AppSync::GraphQLApi"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "OpenIDConnectConfig", AWS_AppSync_GraphQLApi_OpenIDConnectConfig)
+      self.property(w, "XrayEnabled", "xray_enabled", BasicValueConverter())
+      self.block(w, "UserPoolConfig", AWS_AppSync_GraphQLApi_UserPoolConfig)
+      self.block(w, "Tags", AWS_AppSync_GraphQLApi_Tags)
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "AuthenticationType", "authentication_type", StringValueConverter())
+      self.block(w, "LogConfig", AWS_AppSync_GraphQLApi_LogConfig)
+      self.block(w, "AdditionalAuthenticationProviders", AWS_AppSync_GraphQLApi_AdditionalAuthenticationProviders)
 
-  props = {
-    "OpenIDConnectConfig": (AWS_AppSync_GraphQLApi_OpenIDConnectConfig, "open_id_connect_config"),
-    "XrayEnabled": (BasicValueConverter(), "xray_enabled"),
-    "UserPoolConfig": (AWS_AppSync_GraphQLApi_UserPoolConfig, "user_pool_config"),
-    "Tags": (AWS_AppSync_GraphQLApi_Tags, "tags"),
-    "Name": (StringValueConverter(), "name"),
-    "AuthenticationType": (StringValueConverter(), "authentication_type"),
-    "LogConfig": (AWS_AppSync_GraphQLApi_LogConfig, "log_config"),
-    "AdditionalAuthenticationProviders": (AWS_AppSync_GraphQLApi_AdditionalAuthenticationProviders, "additional_authentication_providers"),
-  }
 
 class AWS_AppSync_ApiKey(CloudFormationResource):
-  terraform_resource = "aws_app_sync_api_key"
+  cfn_type = "AWS::AppSync::ApiKey"
+  tf_type = "aws_app_sync_api_key"
+  ref = "arn"
 
-  resource_type = "AWS::AppSync::ApiKey"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "Expires", "expires", BasicValueConverter())
+      self.property(w, "ApiId", "api_id", StringValueConverter())
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "Expires": (BasicValueConverter(), "expires"),
-    "ApiId": (StringValueConverter(), "api_id"),
-  }
 
 class AWS_AppSync_FunctionConfiguration(CloudFormationResource):
-  terraform_resource = "aws_app_sync_function_configuration"
+  cfn_type = "AWS::AppSync::FunctionConfiguration"
+  tf_type = "aws_app_sync_function_configuration"
+  ref = "arn"
 
-  resource_type = "AWS::AppSync::FunctionConfiguration"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ResponseMappingTemplateS3Location", "response_mapping_template_s3_location", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "DataSourceName", "data_source_name", StringValueConverter())
+      self.property(w, "RequestMappingTemplate", "request_mapping_template", StringValueConverter())
+      self.property(w, "ResponseMappingTemplate", "response_mapping_template", StringValueConverter())
+      self.property(w, "FunctionVersion", "function_version", StringValueConverter())
+      self.property(w, "RequestMappingTemplateS3Location", "request_mapping_template_s3_location", StringValueConverter())
+      self.property(w, "ApiId", "api_id", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "ResponseMappingTemplateS3Location": (StringValueConverter(), "response_mapping_template_s3_location"),
-    "Description": (StringValueConverter(), "description"),
-    "DataSourceName": (StringValueConverter(), "data_source_name"),
-    "RequestMappingTemplate": (StringValueConverter(), "request_mapping_template"),
-    "ResponseMappingTemplate": (StringValueConverter(), "response_mapping_template"),
-    "FunctionVersion": (StringValueConverter(), "function_version"),
-    "RequestMappingTemplateS3Location": (StringValueConverter(), "request_mapping_template_s3_location"),
-    "ApiId": (StringValueConverter(), "api_id"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_AppSync_ApiCache(CloudFormationResource):
-  terraform_resource = "aws_app_sync_api_cache"
+  cfn_type = "AWS::AppSync::ApiCache"
+  tf_type = "aws_app_sync_api_cache"
+  ref = "arn"
 
-  resource_type = "AWS::AppSync::ApiCache"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "TransitEncryptionEnabled", "transit_encryption_enabled", BasicValueConverter())
+      self.property(w, "AtRestEncryptionEnabled", "at_rest_encryption_enabled", BasicValueConverter())
+      self.property(w, "ApiId", "api_id", StringValueConverter())
+      self.property(w, "ApiCachingBehavior", "api_caching_behavior", StringValueConverter())
+      self.property(w, "Ttl", "ttl", BasicValueConverter())
 
-  props = {
-    "Type": (StringValueConverter(), "type"),
-    "TransitEncryptionEnabled": (BasicValueConverter(), "transit_encryption_enabled"),
-    "AtRestEncryptionEnabled": (BasicValueConverter(), "at_rest_encryption_enabled"),
-    "ApiId": (StringValueConverter(), "api_id"),
-    "ApiCachingBehavior": (StringValueConverter(), "api_caching_behavior"),
-    "Ttl": (BasicValueConverter(), "ttl"),
-  }
 
 class AWS_AppSync_DataSource_RelationalDatabaseConfig(CloudFormationProperty):
-  entity = "AWS::AppSync::DataSource"
-  tf_block_type = "relational_database_config"
+  def write(self, w):
+    with w.block("relational_database_config"):
+      self.block(w, "RdsHttpEndpointConfig", AWS_AppSync_DataSource_RdsHttpEndpointConfig)
+      self.property(w, "RelationalDatabaseSourceType", "relational_database_source_type", StringValueConverter())
 
-  props = {
-    "RdsHttpEndpointConfig": (AWS_AppSync_DataSource_RdsHttpEndpointConfig, "rds_http_endpoint_config"),
-    "RelationalDatabaseSourceType": (StringValueConverter(), "relational_database_source_type"),
-  }
 
 class AWS_AppSync_DataSource_DynamoDBConfig(CloudFormationProperty):
-  entity = "AWS::AppSync::DataSource"
-  tf_block_type = "dynamo_db_config"
+  def write(self, w):
+    with w.block("dynamo_db_config"):
+      self.property(w, "TableName", "table_name", StringValueConverter())
+      self.property(w, "AwsRegion", "aws_region", StringValueConverter())
+      self.property(w, "Versioned", "versioned", BasicValueConverter())
+      self.block(w, "DeltaSyncConfig", AWS_AppSync_DataSource_DeltaSyncConfig)
+      self.property(w, "UseCallerCredentials", "use_caller_credentials", BasicValueConverter())
 
-  props = {
-    "TableName": (StringValueConverter(), "table_name"),
-    "AwsRegion": (StringValueConverter(), "aws_region"),
-    "Versioned": (BasicValueConverter(), "versioned"),
-    "DeltaSyncConfig": (AWS_AppSync_DataSource_DeltaSyncConfig, "delta_sync_config"),
-    "UseCallerCredentials": (BasicValueConverter(), "use_caller_credentials"),
-  }
 
 class AWS_AppSync_DataSource(CloudFormationResource):
-  terraform_resource = "aws_app_sync_data_source"
+  cfn_type = "AWS::AppSync::DataSource"
+  tf_type = "aws_app_sync_data_source"
+  ref = "arn"
 
-  resource_type = "AWS::AppSync::DataSource"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "ServiceRoleArn", "service_role_arn", StringValueConverter())
+      self.block(w, "HttpConfig", AWS_AppSync_DataSource_HttpConfig)
+      self.block(w, "RelationalDatabaseConfig", AWS_AppSync_DataSource_RelationalDatabaseConfig)
+      self.block(w, "LambdaConfig", AWS_AppSync_DataSource_LambdaConfig)
+      self.property(w, "ApiId", "api_id", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
+      self.block(w, "DynamoDBConfig", AWS_AppSync_DataSource_DynamoDBConfig)
+      self.block(w, "ElasticsearchConfig", AWS_AppSync_DataSource_ElasticsearchConfig)
 
-  props = {
-    "Type": (StringValueConverter(), "type"),
-    "Description": (StringValueConverter(), "description"),
-    "ServiceRoleArn": (StringValueConverter(), "service_role_arn"),
-    "HttpConfig": (AWS_AppSync_DataSource_HttpConfig, "http_config"),
-    "RelationalDatabaseConfig": (AWS_AppSync_DataSource_RelationalDatabaseConfig, "relational_database_config"),
-    "LambdaConfig": (AWS_AppSync_DataSource_LambdaConfig, "lambda_config"),
-    "ApiId": (StringValueConverter(), "api_id"),
-    "Name": (StringValueConverter(), "name"),
-    "DynamoDBConfig": (AWS_AppSync_DataSource_DynamoDBConfig, "dynamo_db_config"),
-    "ElasticsearchConfig": (AWS_AppSync_DataSource_ElasticsearchConfig, "elasticsearch_config"),
-  }
 

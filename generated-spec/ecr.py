@@ -1,23 +1,22 @@
 from . import *
 
 class AWS_ECR_Repository_LifecyclePolicy(CloudFormationProperty):
-  entity = "AWS::ECR::Repository"
-  tf_block_type = "lifecycle_policy"
+  def write(self, w):
+    with w.block("lifecycle_policy"):
+      self.property(w, "LifecyclePolicyText", "lifecycle_policy_text", StringValueConverter())
+      self.property(w, "RegistryId", "registry_id", StringValueConverter())
 
-  props = {
-    "LifecyclePolicyText": (StringValueConverter(), "lifecycle_policy_text"),
-    "RegistryId": (StringValueConverter(), "registry_id"),
-  }
 
 class AWS_ECR_Repository(CloudFormationResource):
-  terraform_resource = "aws_ecr_repository"
+  cfn_type = "AWS::ECR::Repository"
+  tf_type = "aws_ecr_repository"
+  ref = "arn"
 
-  resource_type = "AWS::ECR::Repository"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "LifecyclePolicy", AWS_ECR_Repository_LifecyclePolicy)
+      self.property(w, "RepositoryName", "repository_name", StringValueConverter())
+      self.property(w, "RepositoryPolicyText", "repository_policy_text", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "LifecyclePolicy": (AWS_ECR_Repository_LifecyclePolicy, "lifecycle_policy"),
-    "RepositoryName": (StringValueConverter(), "repository_name"),
-    "RepositoryPolicyText": (StringValueConverter(), "repository_policy_text"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 

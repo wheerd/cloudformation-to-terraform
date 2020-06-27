@@ -1,546 +1,447 @@
 from . import *
 
 class AWS_S3_AccessPoint_PublicAccessBlockConfiguration(CloudFormationProperty):
-  entity = "AWS::S3::AccessPoint"
-  tf_block_type = "public_access_block_configuration"
+  def write(self, w):
+    with w.block("public_access_block_configuration"):
+      self.property(w, "BlockPublicAcls", "block_public_acls", BasicValueConverter())
+      self.property(w, "IgnorePublicAcls", "ignore_public_acls", BasicValueConverter())
+      self.property(w, "BlockPublicPolicy", "block_public_policy", BasicValueConverter())
+      self.property(w, "RestrictPublicBuckets", "restrict_public_buckets", BasicValueConverter())
 
-  props = {
-    "BlockPublicAcls": (BasicValueConverter(), "block_public_acls"),
-    "IgnorePublicAcls": (BasicValueConverter(), "ignore_public_acls"),
-    "BlockPublicPolicy": (BasicValueConverter(), "block_public_policy"),
-    "RestrictPublicBuckets": (BasicValueConverter(), "restrict_public_buckets"),
-  }
 
 class AWS_S3_Bucket_RoutingRuleCondition(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "routing_rule_condition"
+  def write(self, w):
+    with w.block("routing_rule_condition"):
+      self.property(w, "HttpErrorCodeReturnedEquals", "http_error_code_returned_equals", StringValueConverter())
+      self.property(w, "KeyPrefixEquals", "key_prefix_equals", StringValueConverter())
 
-  props = {
-    "HttpErrorCodeReturnedEquals": (StringValueConverter(), "http_error_code_returned_equals"),
-    "KeyPrefixEquals": (StringValueConverter(), "key_prefix_equals"),
-  }
 
 class AWS_S3_Bucket_CorsRule(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "cors_rule"
+  def write(self, w):
+    with w.block("cors_rule"):
+      self.property(w, "AllowedHeaders", "allowed_headers", ListValueConverter(StringValueConverter()))
+      self.property(w, "AllowedMethods", "allowed_methods", ListValueConverter(StringValueConverter()))
+      self.property(w, "AllowedOrigins", "allowed_origins", ListValueConverter(StringValueConverter()))
+      self.property(w, "ExposedHeaders", "exposed_headers", ListValueConverter(StringValueConverter()))
+      self.property(w, "Id", "id", StringValueConverter())
+      self.property(w, "MaxAge", "max_age", BasicValueConverter())
 
-  props = {
-    "AllowedHeaders": (ListValueConverter(StringValueConverter()), "allowed_headers"),
-    "AllowedMethods": (ListValueConverter(StringValueConverter()), "allowed_methods"),
-    "AllowedOrigins": (ListValueConverter(StringValueConverter()), "allowed_origins"),
-    "ExposedHeaders": (ListValueConverter(StringValueConverter()), "exposed_headers"),
-    "Id": (StringValueConverter(), "id"),
-    "MaxAge": (BasicValueConverter(), "max_age"),
-  }
 
 class AWS_S3_Bucket_Destination(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "destination"
+  def write(self, w):
+    with w.block("destination"):
+      self.property(w, "BucketAccountId", "bucket_account_id", StringValueConverter())
+      self.property(w, "BucketArn", "bucket_arn", StringValueConverter())
+      self.property(w, "Format", "format", StringValueConverter())
+      self.property(w, "Prefix", "prefix", StringValueConverter())
 
-  props = {
-    "BucketAccountId": (StringValueConverter(), "bucket_account_id"),
-    "BucketArn": (StringValueConverter(), "bucket_arn"),
-    "Format": (StringValueConverter(), "format"),
-    "Prefix": (StringValueConverter(), "prefix"),
-  }
 
 class AWS_S3_Bucket_AccessControlTranslation(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "access_control_translation"
+  def write(self, w):
+    with w.block("access_control_translation"):
+      self.property(w, "Owner", "owner", StringValueConverter())
 
-  props = {
-    "Owner": (StringValueConverter(), "owner"),
-  }
 
 class AWS_S3_Bucket_VersioningConfiguration(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "versioning_configuration"
+  def write(self, w):
+    with w.block("versioning_configuration"):
+      self.property(w, "Status", "status", StringValueConverter())
 
-  props = {
-    "Status": (StringValueConverter(), "status"),
-  }
 
 class AWS_S3_Bucket_ServerSideEncryptionByDefault(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "server_side_encryption_by_default"
+  def write(self, w):
+    with w.block("server_side_encryption_by_default"):
+      self.property(w, "KMSMasterKeyID", "kms_master_key_id", StringValueConverter())
+      self.property(w, "SSEAlgorithm", "sse_algorithm", StringValueConverter())
 
-  props = {
-    "KMSMasterKeyID": (StringValueConverter(), "kms_master_key_id"),
-    "SSEAlgorithm": (StringValueConverter(), "sse_algorithm"),
-  }
 
 class AWS_S3_Bucket_RedirectAllRequestsTo(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "redirect_all_requests_to"
+  def write(self, w):
+    with w.block("redirect_all_requests_to"):
+      self.property(w, "HostName", "host_name", StringValueConverter())
+      self.property(w, "Protocol", "protocol", StringValueConverter())
 
-  props = {
-    "HostName": (StringValueConverter(), "host_name"),
-    "Protocol": (StringValueConverter(), "protocol"),
-  }
 
 class AWS_S3_Bucket_InventoryConfiguration(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "inventory_configuration"
+  def write(self, w):
+    with w.block("inventory_configuration"):
+      self.block(w, "Destination", AWS_S3_Bucket_Destination)
+      self.property(w, "Enabled", "enabled", BasicValueConverter())
+      self.property(w, "Id", "id", StringValueConverter())
+      self.property(w, "IncludedObjectVersions", "included_object_versions", StringValueConverter())
+      self.property(w, "OptionalFields", "optional_fields", ListValueConverter(StringValueConverter()))
+      self.property(w, "Prefix", "prefix", StringValueConverter())
+      self.property(w, "ScheduleFrequency", "schedule_frequency", StringValueConverter())
 
-  props = {
-    "Destination": (AWS_S3_Bucket_Destination, "destination"),
-    "Enabled": (BasicValueConverter(), "enabled"),
-    "Id": (StringValueConverter(), "id"),
-    "IncludedObjectVersions": (StringValueConverter(), "included_object_versions"),
-    "OptionalFields": (ListValueConverter(StringValueConverter()), "optional_fields"),
-    "Prefix": (StringValueConverter(), "prefix"),
-    "ScheduleFrequency": (StringValueConverter(), "schedule_frequency"),
-  }
 
 class AWS_S3_Bucket_SseKmsEncryptedObjects(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "sse_kms_encrypted_objects"
+  def write(self, w):
+    with w.block("sse_kms_encrypted_objects"):
+      self.property(w, "Status", "status", StringValueConverter())
 
-  props = {
-    "Status": (StringValueConverter(), "status"),
-  }
 
 class AWS_S3_Bucket_CorsConfiguration(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "cors_configuration"
+  def write(self, w):
+    with w.block("cors_configuration"):
+      self.repeated_block(w, "CorsRules", AWS_S3_Bucket_CorsRule)
 
-  props = {
-    "CorsRules": (BlockValueConverter(AWS_S3_Bucket_CorsRule), None),
-  }
 
 class AWS_S3_Bucket_AccelerateConfiguration(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "accelerate_configuration"
+  def write(self, w):
+    with w.block("accelerate_configuration"):
+      self.property(w, "AccelerationStatus", "acceleration_status", StringValueConverter())
 
-  props = {
-    "AccelerationStatus": (StringValueConverter(), "acceleration_status"),
-  }
 
 class AWS_S3_Bucket_NoncurrentVersionTransition(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "noncurrent_version_transition"
+  def write(self, w):
+    with w.block("noncurrent_version_transition"):
+      self.property(w, "StorageClass", "storage_class", StringValueConverter())
+      self.property(w, "TransitionInDays", "transition_in_days", BasicValueConverter())
 
-  props = {
-    "StorageClass": (StringValueConverter(), "storage_class"),
-    "TransitionInDays": (BasicValueConverter(), "transition_in_days"),
-  }
 
 class AWS_S3_Bucket_AbortIncompleteMultipartUpload(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "abort_incomplete_multipart_upload"
+  def write(self, w):
+    with w.block("abort_incomplete_multipart_upload"):
+      self.property(w, "DaysAfterInitiation", "days_after_initiation", BasicValueConverter())
 
-  props = {
-    "DaysAfterInitiation": (BasicValueConverter(), "days_after_initiation"),
-  }
 
 class AWS_S3_Bucket_DeleteMarkerReplication(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "delete_marker_replication"
+  def write(self, w):
+    with w.block("delete_marker_replication"):
+      self.property(w, "Status", "status", StringValueConverter())
 
-  props = {
-    "Status": (StringValueConverter(), "status"),
-  }
 
 class AWS_S3_Bucket_PublicAccessBlockConfiguration(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "public_access_block_configuration"
+  def write(self, w):
+    with w.block("public_access_block_configuration"):
+      self.property(w, "BlockPublicAcls", "block_public_acls", BasicValueConverter())
+      self.property(w, "BlockPublicPolicy", "block_public_policy", BasicValueConverter())
+      self.property(w, "IgnorePublicAcls", "ignore_public_acls", BasicValueConverter())
+      self.property(w, "RestrictPublicBuckets", "restrict_public_buckets", BasicValueConverter())
 
-  props = {
-    "BlockPublicAcls": (BasicValueConverter(), "block_public_acls"),
-    "BlockPublicPolicy": (BasicValueConverter(), "block_public_policy"),
-    "IgnorePublicAcls": (BasicValueConverter(), "ignore_public_acls"),
-    "RestrictPublicBuckets": (BasicValueConverter(), "restrict_public_buckets"),
-  }
 
 class AWS_S3_Bucket_DefaultRetention(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "default_retention"
+  def write(self, w):
+    with w.block("default_retention"):
+      self.property(w, "Days", "days", BasicValueConverter())
+      self.property(w, "Mode", "mode", StringValueConverter())
+      self.property(w, "Years", "years", BasicValueConverter())
 
-  props = {
-    "Days": (BasicValueConverter(), "days"),
-    "Mode": (StringValueConverter(), "mode"),
-    "Years": (BasicValueConverter(), "years"),
-  }
 
 class AWS_S3_Bucket_ServerSideEncryptionRule(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "server_side_encryption_rule"
+  def write(self, w):
+    with w.block("server_side_encryption_rule"):
+      self.block(w, "ServerSideEncryptionByDefault", AWS_S3_Bucket_ServerSideEncryptionByDefault)
 
-  props = {
-    "ServerSideEncryptionByDefault": (AWS_S3_Bucket_ServerSideEncryptionByDefault, "server_side_encryption_by_default"),
-  }
 
 class AWS_S3_Bucket_SourceSelectionCriteria(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "source_selection_criteria"
+  def write(self, w):
+    with w.block("source_selection_criteria"):
+      self.block(w, "SseKmsEncryptedObjects", AWS_S3_Bucket_SseKmsEncryptedObjects)
 
-  props = {
-    "SseKmsEncryptedObjects": (AWS_S3_Bucket_SseKmsEncryptedObjects, "sse_kms_encrypted_objects"),
-  }
 
 class AWS_S3_Bucket_LoggingConfiguration(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "logging_configuration"
+  def write(self, w):
+    with w.block("logging_configuration"):
+      self.property(w, "DestinationBucketName", "destination_bucket_name", StringValueConverter())
+      self.property(w, "LogFilePrefix", "log_file_prefix", StringValueConverter())
 
-  props = {
-    "DestinationBucketName": (StringValueConverter(), "destination_bucket_name"),
-    "LogFilePrefix": (StringValueConverter(), "log_file_prefix"),
-  }
 
 class AWS_S3_AccessPoint_VpcConfiguration(CloudFormationProperty):
-  entity = "AWS::S3::AccessPoint"
-  tf_block_type = "vpc_configuration"
+  def write(self, w):
+    with w.block("vpc_configuration"):
+      self.property(w, "VpcId", "vpc_id", StringValueConverter())
 
-  props = {
-    "VpcId": (StringValueConverter(), "vpc_id"),
-  }
 
 class AWS_S3_Bucket_EncryptionConfiguration(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "encryption_configuration"
+  def write(self, w):
+    with w.block("encryption_configuration"):
+      self.property(w, "ReplicaKmsKeyID", "replica_kms_key_id", StringValueConverter())
 
-  props = {
-    "ReplicaKmsKeyID": (StringValueConverter(), "replica_kms_key_id"),
-  }
 
 class AWS_S3_Bucket_RedirectRule(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "redirect_rule"
+  def write(self, w):
+    with w.block("redirect_rule"):
+      self.property(w, "HostName", "host_name", StringValueConverter())
+      self.property(w, "HttpRedirectCode", "http_redirect_code", StringValueConverter())
+      self.property(w, "Protocol", "protocol", StringValueConverter())
+      self.property(w, "ReplaceKeyPrefixWith", "replace_key_prefix_with", StringValueConverter())
+      self.property(w, "ReplaceKeyWith", "replace_key_with", StringValueConverter())
 
-  props = {
-    "HostName": (StringValueConverter(), "host_name"),
-    "HttpRedirectCode": (StringValueConverter(), "http_redirect_code"),
-    "Protocol": (StringValueConverter(), "protocol"),
-    "ReplaceKeyPrefixWith": (StringValueConverter(), "replace_key_prefix_with"),
-    "ReplaceKeyWith": (StringValueConverter(), "replace_key_with"),
-  }
 
 class AWS_S3_Bucket_ObjectLockRule(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "object_lock_rule"
+  def write(self, w):
+    with w.block("object_lock_rule"):
+      self.block(w, "DefaultRetention", AWS_S3_Bucket_DefaultRetention)
 
-  props = {
-    "DefaultRetention": (AWS_S3_Bucket_DefaultRetention, "default_retention"),
-  }
 
 class AWS_S3_Bucket_TagFilter(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "tag_filter"
+  def write(self, w):
+    with w.block("tag_filter"):
+      self.property(w, "Key", "key", StringValueConverter())
+      self.property(w, "Value", "value", StringValueConverter())
 
-  props = {
-    "Key": (StringValueConverter(), "key"),
-    "Value": (StringValueConverter(), "value"),
-  }
 
 class AWS_S3_Bucket_Transition(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "transition"
+  def write(self, w):
+    with w.block("transition"):
+      self.property(w, "StorageClass", "storage_class", StringValueConverter())
+      self.property(w, "TransitionDate", "transition_date", StringValueConverter())
+      self.property(w, "TransitionInDays", "transition_in_days", BasicValueConverter())
 
-  props = {
-    "StorageClass": (StringValueConverter(), "storage_class"),
-    "TransitionDate": (StringValueConverter(), "transition_date"),
-    "TransitionInDays": (BasicValueConverter(), "transition_in_days"),
-  }
 
 class AWS_S3_Bucket_DataExport(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "data_export"
+  def write(self, w):
+    with w.block("data_export"):
+      self.block(w, "Destination", AWS_S3_Bucket_Destination)
+      self.property(w, "OutputSchemaVersion", "output_schema_version", StringValueConverter())
 
-  props = {
-    "Destination": (AWS_S3_Bucket_Destination, "destination"),
-    "OutputSchemaVersion": (StringValueConverter(), "output_schema_version"),
-  }
 
 class AWS_S3_Bucket_ReplicationTimeValue(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "replication_time_value"
+  def write(self, w):
+    with w.block("replication_time_value"):
+      self.property(w, "Minutes", "minutes", BasicValueConverter())
 
-  props = {
-    "Minutes": (BasicValueConverter(), "minutes"),
-  }
 
 class AWS_S3_Bucket_FilterRule(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "filter_rule"
+  def write(self, w):
+    with w.block("filter_rule"):
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Value", "value", StringValueConverter())
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-    "Value": (StringValueConverter(), "value"),
-  }
 
 class AWS_S3_Bucket_ReplicationRuleAndOperator(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "replication_rule_and_operator"
+  def write(self, w):
+    with w.block("replication_rule_and_operator"):
+      self.property(w, "Prefix", "prefix", StringValueConverter())
+      self.repeated_block(w, "TagFilters", AWS_S3_Bucket_TagFilter)
 
-  props = {
-    "Prefix": (StringValueConverter(), "prefix"),
-    "TagFilters": (BlockValueConverter(AWS_S3_Bucket_TagFilter), None),
-  }
 
 class AWS_S3_AccessPoint(CloudFormationResource):
-  terraform_resource = "aws_s3_access_point"
+  cfn_type = "AWS::S3::AccessPoint"
+  tf_type = "aws_s3_access_point"
+  ref = "arn"
 
-  resource_type = "AWS::S3::AccessPoint"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Bucket", "bucket", StringValueConverter())
+      self.block(w, "VpcConfiguration", AWS_S3_AccessPoint_VpcConfiguration)
+      self.block(w, "PublicAccessBlockConfiguration", AWS_S3_AccessPoint_PublicAccessBlockConfiguration)
+      self.property(w, "Policy", "policy", StringValueConverter())
+      self.property(w, "PolicyStatus", "policy_status", StringValueConverter())
+      self.property(w, "NetworkOrigin", "network_origin", StringValueConverter())
+      self.property(w, "CreationDate", "creation_date", StringValueConverter())
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-    "Bucket": (StringValueConverter(), "bucket"),
-    "VpcConfiguration": (AWS_S3_AccessPoint_VpcConfiguration, "vpc_configuration"),
-    "PublicAccessBlockConfiguration": (AWS_S3_AccessPoint_PublicAccessBlockConfiguration, "public_access_block_configuration"),
-    "Policy": (StringValueConverter(), "policy"),
-    "PolicyStatus": (StringValueConverter(), "policy_status"),
-    "NetworkOrigin": (StringValueConverter(), "network_origin"),
-    "CreationDate": (StringValueConverter(), "creation_date"),
-  }
 
 class AWS_S3_BucketPolicy(CloudFormationResource):
-  terraform_resource = "aws_s3_bucket_policy"
+  cfn_type = "AWS::S3::BucketPolicy"
+  tf_type = "aws_s3_bucket_policy"
+  ref = "arn"
 
-  resource_type = "AWS::S3::BucketPolicy"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Bucket", "bucket", StringValueConverter())
+      self.property(w, "PolicyDocument", "policy_document", StringValueConverter())
 
-  props = {
-    "Bucket": (StringValueConverter(), "bucket"),
-    "PolicyDocument": (StringValueConverter(), "policy_document"),
-  }
 
 class AWS_S3_Bucket_BucketEncryption(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "bucket_encryption"
+  def write(self, w):
+    with w.block("bucket_encryption"):
+      self.repeated_block(w, "ServerSideEncryptionConfiguration", AWS_S3_Bucket_ServerSideEncryptionRule)
 
-  props = {
-    "ServerSideEncryptionConfiguration": (BlockValueConverter(AWS_S3_Bucket_ServerSideEncryptionRule), None),
-  }
 
 class AWS_S3_Bucket_Metrics(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "metrics"
+  def write(self, w):
+    with w.block("metrics"):
+      self.block(w, "EventThreshold", AWS_S3_Bucket_ReplicationTimeValue)
+      self.property(w, "Status", "status", StringValueConverter())
 
-  props = {
-    "EventThreshold": (AWS_S3_Bucket_ReplicationTimeValue, "event_threshold"),
-    "Status": (StringValueConverter(), "status"),
-  }
 
 class AWS_S3_Bucket_ReplicationTime(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "replication_time"
+  def write(self, w):
+    with w.block("replication_time"):
+      self.property(w, "Status", "status", StringValueConverter())
+      self.block(w, "Time", AWS_S3_Bucket_ReplicationTimeValue)
 
-  props = {
-    "Status": (StringValueConverter(), "status"),
-    "Time": (AWS_S3_Bucket_ReplicationTimeValue, "time"),
-  }
 
 class AWS_S3_Bucket_S3KeyFilter(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "s3_key_filter"
+  def write(self, w):
+    with w.block("s3_key_filter"):
+      self.repeated_block(w, "Rules", AWS_S3_Bucket_FilterRule)
 
-  props = {
-    "Rules": (BlockValueConverter(AWS_S3_Bucket_FilterRule), None),
-  }
 
 class AWS_S3_Bucket_ObjectLockConfiguration(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "object_lock_configuration"
+  def write(self, w):
+    with w.block("object_lock_configuration"):
+      self.property(w, "ObjectLockEnabled", "object_lock_enabled", StringValueConverter())
+      self.block(w, "Rule", AWS_S3_Bucket_ObjectLockRule)
 
-  props = {
-    "ObjectLockEnabled": (StringValueConverter(), "object_lock_enabled"),
-    "Rule": (AWS_S3_Bucket_ObjectLockRule, "rule"),
-  }
 
 class AWS_S3_Bucket_ReplicationDestination(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "replication_destination"
+  def write(self, w):
+    with w.block("replication_destination"):
+      self.block(w, "AccessControlTranslation", AWS_S3_Bucket_AccessControlTranslation)
+      self.property(w, "Account", "account", StringValueConverter())
+      self.property(w, "Bucket", "bucket", StringValueConverter())
+      self.block(w, "EncryptionConfiguration", AWS_S3_Bucket_EncryptionConfiguration)
+      self.block(w, "Metrics", AWS_S3_Bucket_Metrics)
+      self.block(w, "ReplicationTime", AWS_S3_Bucket_ReplicationTime)
+      self.property(w, "StorageClass", "storage_class", StringValueConverter())
 
-  props = {
-    "AccessControlTranslation": (AWS_S3_Bucket_AccessControlTranslation, "access_control_translation"),
-    "Account": (StringValueConverter(), "account"),
-    "Bucket": (StringValueConverter(), "bucket"),
-    "EncryptionConfiguration": (AWS_S3_Bucket_EncryptionConfiguration, "encryption_configuration"),
-    "Metrics": (AWS_S3_Bucket_Metrics, "metrics"),
-    "ReplicationTime": (AWS_S3_Bucket_ReplicationTime, "replication_time"),
-    "StorageClass": (StringValueConverter(), "storage_class"),
-  }
 
 class AWS_S3_Bucket_NotificationFilter(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "notification_filter"
+  def write(self, w):
+    with w.block("notification_filter"):
+      self.block(w, "S3Key", AWS_S3_Bucket_S3KeyFilter)
 
-  props = {
-    "S3Key": (AWS_S3_Bucket_S3KeyFilter, "s3_key"),
-  }
 
 class AWS_S3_Bucket_LambdaConfiguration(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "lambda_configuration"
+  def write(self, w):
+    with w.block("lambda_configuration"):
+      self.property(w, "Event", "event", StringValueConverter())
+      self.block(w, "Filter", AWS_S3_Bucket_NotificationFilter)
+      self.property(w, "Function", "function", StringValueConverter())
 
-  props = {
-    "Event": (StringValueConverter(), "event"),
-    "Filter": (AWS_S3_Bucket_NotificationFilter, "filter"),
-    "Function": (StringValueConverter(), "function"),
-  }
 
 class AWS_S3_Bucket_StorageClassAnalysis(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "storage_class_analysis"
+  def write(self, w):
+    with w.block("storage_class_analysis"):
+      self.block(w, "DataExport", AWS_S3_Bucket_DataExport)
 
-  props = {
-    "DataExport": (AWS_S3_Bucket_DataExport, "data_export"),
-  }
 
 class AWS_S3_Bucket_RoutingRule(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "routing_rule"
+  def write(self, w):
+    with w.block("routing_rule"):
+      self.block(w, "RedirectRule", AWS_S3_Bucket_RedirectRule)
+      self.block(w, "RoutingRuleCondition", AWS_S3_Bucket_RoutingRuleCondition)
 
-  props = {
-    "RedirectRule": (AWS_S3_Bucket_RedirectRule, "redirect_rule"),
-    "RoutingRuleCondition": (AWS_S3_Bucket_RoutingRuleCondition, "routing_rule_condition"),
-  }
 
 class AWS_S3_Bucket_WebsiteConfiguration(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "website_configuration"
+  def write(self, w):
+    with w.block("website_configuration"):
+      self.property(w, "ErrorDocument", "error_document", StringValueConverter())
+      self.property(w, "IndexDocument", "index_document", StringValueConverter())
+      self.block(w, "RedirectAllRequestsTo", AWS_S3_Bucket_RedirectAllRequestsTo)
+      self.repeated_block(w, "RoutingRules", AWS_S3_Bucket_RoutingRule)
 
-  props = {
-    "ErrorDocument": (StringValueConverter(), "error_document"),
-    "IndexDocument": (StringValueConverter(), "index_document"),
-    "RedirectAllRequestsTo": (AWS_S3_Bucket_RedirectAllRequestsTo, "redirect_all_requests_to"),
-    "RoutingRules": (BlockValueConverter(AWS_S3_Bucket_RoutingRule), None),
-  }
 
 class AWS_S3_Bucket_Rule(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "rule"
+  def write(self, w):
+    with w.block("rule"):
+      self.block(w, "AbortIncompleteMultipartUpload", AWS_S3_Bucket_AbortIncompleteMultipartUpload)
+      self.property(w, "ExpirationDate", "expiration_date", StringValueConverter())
+      self.property(w, "ExpirationInDays", "expiration_in_days", BasicValueConverter())
+      self.property(w, "Id", "id", StringValueConverter())
+      self.property(w, "NoncurrentVersionExpirationInDays", "noncurrent_version_expiration_in_days", BasicValueConverter())
+      self.block(w, "NoncurrentVersionTransition", AWS_S3_Bucket_NoncurrentVersionTransition)
+      self.repeated_block(w, "NoncurrentVersionTransitions", AWS_S3_Bucket_NoncurrentVersionTransition)
+      self.property(w, "Prefix", "prefix", StringValueConverter())
+      self.property(w, "Status", "status", StringValueConverter())
+      self.repeated_block(w, "TagFilters", AWS_S3_Bucket_TagFilter)
+      self.block(w, "Transition", AWS_S3_Bucket_Transition)
+      self.repeated_block(w, "Transitions", AWS_S3_Bucket_Transition)
 
-  props = {
-    "AbortIncompleteMultipartUpload": (AWS_S3_Bucket_AbortIncompleteMultipartUpload, "abort_incomplete_multipart_upload"),
-    "ExpirationDate": (StringValueConverter(), "expiration_date"),
-    "ExpirationInDays": (BasicValueConverter(), "expiration_in_days"),
-    "Id": (StringValueConverter(), "id"),
-    "NoncurrentVersionExpirationInDays": (BasicValueConverter(), "noncurrent_version_expiration_in_days"),
-    "NoncurrentVersionTransition": (AWS_S3_Bucket_NoncurrentVersionTransition, "noncurrent_version_transition"),
-    "NoncurrentVersionTransitions": (BlockValueConverter(AWS_S3_Bucket_NoncurrentVersionTransition), None),
-    "Prefix": (StringValueConverter(), "prefix"),
-    "Status": (StringValueConverter(), "status"),
-    "TagFilters": (BlockValueConverter(AWS_S3_Bucket_TagFilter), None),
-    "Transition": (AWS_S3_Bucket_Transition, "transition"),
-    "Transitions": (BlockValueConverter(AWS_S3_Bucket_Transition), None),
-  }
 
 class AWS_S3_Bucket_TopicConfiguration(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "topic_configuration"
+  def write(self, w):
+    with w.block("topic_configuration"):
+      self.property(w, "Event", "event", StringValueConverter())
+      self.block(w, "Filter", AWS_S3_Bucket_NotificationFilter)
+      self.property(w, "Topic", "topic", StringValueConverter())
 
-  props = {
-    "Event": (StringValueConverter(), "event"),
-    "Filter": (AWS_S3_Bucket_NotificationFilter, "filter"),
-    "Topic": (StringValueConverter(), "topic"),
-  }
 
 class AWS_S3_Bucket_MetricsConfiguration(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "metrics_configuration"
+  def write(self, w):
+    with w.block("metrics_configuration"):
+      self.property(w, "Id", "id", StringValueConverter())
+      self.property(w, "Prefix", "prefix", StringValueConverter())
+      self.repeated_block(w, "TagFilters", AWS_S3_Bucket_TagFilter)
 
-  props = {
-    "Id": (StringValueConverter(), "id"),
-    "Prefix": (StringValueConverter(), "prefix"),
-    "TagFilters": (BlockValueConverter(AWS_S3_Bucket_TagFilter), None),
-  }
 
 class AWS_S3_Bucket_ReplicationRuleFilter(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "replication_rule_filter"
+  def write(self, w):
+    with w.block("replication_rule_filter"):
+      self.block(w, "And", AWS_S3_Bucket_ReplicationRuleAndOperator)
+      self.property(w, "Prefix", "prefix", StringValueConverter())
+      self.block(w, "TagFilter", AWS_S3_Bucket_TagFilter)
 
-  props = {
-    "And": (AWS_S3_Bucket_ReplicationRuleAndOperator, "and"),
-    "Prefix": (StringValueConverter(), "prefix"),
-    "TagFilter": (AWS_S3_Bucket_TagFilter, "tag_filter"),
-  }
 
 class AWS_S3_Bucket_LifecycleConfiguration(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "lifecycle_configuration"
+  def write(self, w):
+    with w.block("lifecycle_configuration"):
+      self.repeated_block(w, "Rules", AWS_S3_Bucket_Rule)
 
-  props = {
-    "Rules": (BlockValueConverter(AWS_S3_Bucket_Rule), None),
-  }
 
 class AWS_S3_Bucket_QueueConfiguration(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "queue_configuration"
+  def write(self, w):
+    with w.block("queue_configuration"):
+      self.property(w, "Event", "event", StringValueConverter())
+      self.block(w, "Filter", AWS_S3_Bucket_NotificationFilter)
+      self.property(w, "Queue", "queue", StringValueConverter())
 
-  props = {
-    "Event": (StringValueConverter(), "event"),
-    "Filter": (AWS_S3_Bucket_NotificationFilter, "filter"),
-    "Queue": (StringValueConverter(), "queue"),
-  }
 
 class AWS_S3_Bucket_ReplicationRule(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "replication_rule"
+  def write(self, w):
+    with w.block("replication_rule"):
+      self.block(w, "DeleteMarkerReplication", AWS_S3_Bucket_DeleteMarkerReplication)
+      self.block(w, "Destination", AWS_S3_Bucket_ReplicationDestination)
+      self.block(w, "Filter", AWS_S3_Bucket_ReplicationRuleFilter)
+      self.property(w, "Id", "id", StringValueConverter())
+      self.property(w, "Prefix", "prefix", StringValueConverter())
+      self.property(w, "Priority", "priority", BasicValueConverter())
+      self.block(w, "SourceSelectionCriteria", AWS_S3_Bucket_SourceSelectionCriteria)
+      self.property(w, "Status", "status", StringValueConverter())
 
-  props = {
-    "DeleteMarkerReplication": (AWS_S3_Bucket_DeleteMarkerReplication, "delete_marker_replication"),
-    "Destination": (AWS_S3_Bucket_ReplicationDestination, "destination"),
-    "Filter": (AWS_S3_Bucket_ReplicationRuleFilter, "filter"),
-    "Id": (StringValueConverter(), "id"),
-    "Prefix": (StringValueConverter(), "prefix"),
-    "Priority": (BasicValueConverter(), "priority"),
-    "SourceSelectionCriteria": (AWS_S3_Bucket_SourceSelectionCriteria, "source_selection_criteria"),
-    "Status": (StringValueConverter(), "status"),
-  }
 
 class AWS_S3_Bucket_AnalyticsConfiguration(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "analytics_configuration"
+  def write(self, w):
+    with w.block("analytics_configuration"):
+      self.property(w, "Id", "id", StringValueConverter())
+      self.property(w, "Prefix", "prefix", StringValueConverter())
+      self.block(w, "StorageClassAnalysis", AWS_S3_Bucket_StorageClassAnalysis)
+      self.repeated_block(w, "TagFilters", AWS_S3_Bucket_TagFilter)
 
-  props = {
-    "Id": (StringValueConverter(), "id"),
-    "Prefix": (StringValueConverter(), "prefix"),
-    "StorageClassAnalysis": (AWS_S3_Bucket_StorageClassAnalysis, "storage_class_analysis"),
-    "TagFilters": (BlockValueConverter(AWS_S3_Bucket_TagFilter), None),
-  }
 
 class AWS_S3_Bucket_NotificationConfiguration(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "notification_configuration"
+  def write(self, w):
+    with w.block("notification_configuration"):
+      self.repeated_block(w, "LambdaConfigurations", AWS_S3_Bucket_LambdaConfiguration)
+      self.repeated_block(w, "QueueConfigurations", AWS_S3_Bucket_QueueConfiguration)
+      self.repeated_block(w, "TopicConfigurations", AWS_S3_Bucket_TopicConfiguration)
 
-  props = {
-    "LambdaConfigurations": (BlockValueConverter(AWS_S3_Bucket_LambdaConfiguration), None),
-    "QueueConfigurations": (BlockValueConverter(AWS_S3_Bucket_QueueConfiguration), None),
-    "TopicConfigurations": (BlockValueConverter(AWS_S3_Bucket_TopicConfiguration), None),
-  }
 
 class AWS_S3_Bucket_ReplicationConfiguration(CloudFormationProperty):
-  entity = "AWS::S3::Bucket"
-  tf_block_type = "replication_configuration"
+  def write(self, w):
+    with w.block("replication_configuration"):
+      self.property(w, "Role", "role", StringValueConverter())
+      self.repeated_block(w, "Rules", AWS_S3_Bucket_ReplicationRule)
 
-  props = {
-    "Role": (StringValueConverter(), "role"),
-    "Rules": (BlockValueConverter(AWS_S3_Bucket_ReplicationRule), None),
-  }
 
 class AWS_S3_Bucket(CloudFormationResource):
-  terraform_resource = "aws_s3_bucket"
+  cfn_type = "AWS::S3::Bucket"
+  tf_type = "aws_s3_bucket"
+  ref = "arn"
 
-  resource_type = "AWS::S3::Bucket"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "AccelerateConfiguration", AWS_S3_Bucket_AccelerateConfiguration)
+      self.property(w, "AccessControl", "access_control", StringValueConverter())
+      self.repeated_block(w, "AnalyticsConfigurations", AWS_S3_Bucket_AnalyticsConfiguration)
+      self.block(w, "BucketEncryption", AWS_S3_Bucket_BucketEncryption)
+      self.property(w, "BucketName", "bucket_name", StringValueConverter())
+      self.block(w, "CorsConfiguration", AWS_S3_Bucket_CorsConfiguration)
+      self.repeated_block(w, "InventoryConfigurations", AWS_S3_Bucket_InventoryConfiguration)
+      self.block(w, "LifecycleConfiguration", AWS_S3_Bucket_LifecycleConfiguration)
+      self.block(w, "LoggingConfiguration", AWS_S3_Bucket_LoggingConfiguration)
+      self.repeated_block(w, "MetricsConfigurations", AWS_S3_Bucket_MetricsConfiguration)
+      self.block(w, "NotificationConfiguration", AWS_S3_Bucket_NotificationConfiguration)
+      self.block(w, "ObjectLockConfiguration", AWS_S3_Bucket_ObjectLockConfiguration)
+      self.property(w, "ObjectLockEnabled", "object_lock_enabled", BasicValueConverter())
+      self.block(w, "PublicAccessBlockConfiguration", AWS_S3_Bucket_PublicAccessBlockConfiguration)
+      self.block(w, "ReplicationConfiguration", AWS_S3_Bucket_ReplicationConfiguration)
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.block(w, "VersioningConfiguration", AWS_S3_Bucket_VersioningConfiguration)
+      self.block(w, "WebsiteConfiguration", AWS_S3_Bucket_WebsiteConfiguration)
 
-  props = {
-    "AccelerateConfiguration": (AWS_S3_Bucket_AccelerateConfiguration, "accelerate_configuration"),
-    "AccessControl": (StringValueConverter(), "access_control"),
-    "AnalyticsConfigurations": (BlockValueConverter(AWS_S3_Bucket_AnalyticsConfiguration), None),
-    "BucketEncryption": (AWS_S3_Bucket_BucketEncryption, "bucket_encryption"),
-    "BucketName": (StringValueConverter(), "bucket_name"),
-    "CorsConfiguration": (AWS_S3_Bucket_CorsConfiguration, "cors_configuration"),
-    "InventoryConfigurations": (BlockValueConverter(AWS_S3_Bucket_InventoryConfiguration), None),
-    "LifecycleConfiguration": (AWS_S3_Bucket_LifecycleConfiguration, "lifecycle_configuration"),
-    "LoggingConfiguration": (AWS_S3_Bucket_LoggingConfiguration, "logging_configuration"),
-    "MetricsConfigurations": (BlockValueConverter(AWS_S3_Bucket_MetricsConfiguration), None),
-    "NotificationConfiguration": (AWS_S3_Bucket_NotificationConfiguration, "notification_configuration"),
-    "ObjectLockConfiguration": (AWS_S3_Bucket_ObjectLockConfiguration, "object_lock_configuration"),
-    "ObjectLockEnabled": (BasicValueConverter(), "object_lock_enabled"),
-    "PublicAccessBlockConfiguration": (AWS_S3_Bucket_PublicAccessBlockConfiguration, "public_access_block_configuration"),
-    "ReplicationConfiguration": (AWS_S3_Bucket_ReplicationConfiguration, "replication_configuration"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "VersioningConfiguration": (AWS_S3_Bucket_VersioningConfiguration, "versioning_configuration"),
-    "WebsiteConfiguration": (AWS_S3_Bucket_WebsiteConfiguration, "website_configuration"),
-  }
 

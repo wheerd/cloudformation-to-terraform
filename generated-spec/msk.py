@@ -1,179 +1,144 @@
 from . import *
 
 class AWS_MSK_Cluster_ConfigurationInfo(CloudFormationProperty):
-  entity = "AWS::MSK::Cluster"
-  tf_block_type = "configuration_info"
+  def write(self, w):
+    with w.block("configuration_info"):
+      self.property(w, "Revision", "revision", BasicValueConverter())
+      self.property(w, "Arn", "arn", StringValueConverter())
 
-  props = {
-    "Revision": (BasicValueConverter(), "revision"),
-    "Arn": (StringValueConverter(), "arn"),
-  }
 
 class AWS_MSK_Cluster_S3(CloudFormationProperty):
-  entity = "AWS::MSK::Cluster"
-  tf_block_type = "s3"
+  def write(self, w):
+    with w.block("s3"):
+      self.property(w, "Bucket", "bucket", StringValueConverter())
+      self.property(w, "Enabled", "enabled", BasicValueConverter())
+      self.property(w, "Prefix", "prefix", StringValueConverter())
 
-  props = {
-    "Bucket": (StringValueConverter(), "bucket"),
-    "Enabled": (BasicValueConverter(), "enabled"),
-    "Prefix": (StringValueConverter(), "prefix"),
-  }
 
 class AWS_MSK_Cluster_CloudWatchLogs(CloudFormationProperty):
-  entity = "AWS::MSK::Cluster"
-  tf_block_type = "cloud_watch_logs"
+  def write(self, w):
+    with w.block("cloud_watch_logs"):
+      self.property(w, "LogGroup", "log_group", StringValueConverter())
+      self.property(w, "Enabled", "enabled", BasicValueConverter())
 
-  props = {
-    "LogGroup": (StringValueConverter(), "log_group"),
-    "Enabled": (BasicValueConverter(), "enabled"),
-  }
 
 class AWS_MSK_Cluster_JmxExporter(CloudFormationProperty):
-  entity = "AWS::MSK::Cluster"
-  tf_block_type = "jmx_exporter"
+  def write(self, w):
+    with w.block("jmx_exporter"):
+      self.property(w, "EnabledInBroker", "enabled_in_broker", BasicValueConverter())
 
-  props = {
-    "EnabledInBroker": (BasicValueConverter(), "enabled_in_broker"),
-  }
 
 class AWS_MSK_Cluster_EncryptionAtRest(CloudFormationProperty):
-  entity = "AWS::MSK::Cluster"
-  tf_block_type = "encryption_at_rest"
+  def write(self, w):
+    with w.block("encryption_at_rest"):
+      self.property(w, "DataVolumeKMSKeyId", "data_volume_kms_key_id", StringValueConverter())
 
-  props = {
-    "DataVolumeKMSKeyId": (StringValueConverter(), "data_volume_kms_key_id"),
-  }
 
 class AWS_MSK_Cluster_NodeExporter(CloudFormationProperty):
-  entity = "AWS::MSK::Cluster"
-  tf_block_type = "node_exporter"
+  def write(self, w):
+    with w.block("node_exporter"):
+      self.property(w, "EnabledInBroker", "enabled_in_broker", BasicValueConverter())
 
-  props = {
-    "EnabledInBroker": (BasicValueConverter(), "enabled_in_broker"),
-  }
 
 class AWS_MSK_Cluster_EBSStorageInfo(CloudFormationProperty):
-  entity = "AWS::MSK::Cluster"
-  tf_block_type = "ebs_storage_info"
+  def write(self, w):
+    with w.block("ebs_storage_info"):
+      self.property(w, "VolumeSize", "volume_size", BasicValueConverter())
 
-  props = {
-    "VolumeSize": (BasicValueConverter(), "volume_size"),
-  }
 
 class AWS_MSK_Cluster_Firehose(CloudFormationProperty):
-  entity = "AWS::MSK::Cluster"
-  tf_block_type = "firehose"
+  def write(self, w):
+    with w.block("firehose"):
+      self.property(w, "DeliveryStream", "delivery_stream", StringValueConverter())
+      self.property(w, "Enabled", "enabled", BasicValueConverter())
 
-  props = {
-    "DeliveryStream": (StringValueConverter(), "delivery_stream"),
-    "Enabled": (BasicValueConverter(), "enabled"),
-  }
 
 class AWS_MSK_Cluster_EncryptionInTransit(CloudFormationProperty):
-  entity = "AWS::MSK::Cluster"
-  tf_block_type = "encryption_in_transit"
+  def write(self, w):
+    with w.block("encryption_in_transit"):
+      self.property(w, "ClientBroker", "client_broker", StringValueConverter())
+      self.property(w, "InCluster", "in_cluster", BasicValueConverter())
 
-  props = {
-    "ClientBroker": (StringValueConverter(), "client_broker"),
-    "InCluster": (BasicValueConverter(), "in_cluster"),
-  }
 
 class AWS_MSK_Cluster_Prometheus(CloudFormationProperty):
-  entity = "AWS::MSK::Cluster"
-  tf_block_type = "prometheus"
+  def write(self, w):
+    with w.block("prometheus"):
+      self.block(w, "JmxExporter", AWS_MSK_Cluster_JmxExporter)
+      self.block(w, "NodeExporter", AWS_MSK_Cluster_NodeExporter)
 
-  props = {
-    "JmxExporter": (AWS_MSK_Cluster_JmxExporter, "jmx_exporter"),
-    "NodeExporter": (AWS_MSK_Cluster_NodeExporter, "node_exporter"),
-  }
 
 class AWS_MSK_Cluster_Tls(CloudFormationProperty):
-  entity = "AWS::MSK::Cluster"
-  tf_block_type = "tls"
+  def write(self, w):
+    with w.block("tls"):
+      self.property(w, "CertificateAuthorityArnList", "certificate_authority_arn_list", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "CertificateAuthorityArnList": (ListValueConverter(StringValueConverter()), "certificate_authority_arn_list"),
-  }
 
 class AWS_MSK_Cluster_OpenMonitoring(CloudFormationProperty):
-  entity = "AWS::MSK::Cluster"
-  tf_block_type = "open_monitoring"
+  def write(self, w):
+    with w.block("open_monitoring"):
+      self.block(w, "Prometheus", AWS_MSK_Cluster_Prometheus)
 
-  props = {
-    "Prometheus": (AWS_MSK_Cluster_Prometheus, "prometheus"),
-  }
 
 class AWS_MSK_Cluster_EncryptionInfo(CloudFormationProperty):
-  entity = "AWS::MSK::Cluster"
-  tf_block_type = "encryption_info"
+  def write(self, w):
+    with w.block("encryption_info"):
+      self.block(w, "EncryptionAtRest", AWS_MSK_Cluster_EncryptionAtRest)
+      self.block(w, "EncryptionInTransit", AWS_MSK_Cluster_EncryptionInTransit)
 
-  props = {
-    "EncryptionAtRest": (AWS_MSK_Cluster_EncryptionAtRest, "encryption_at_rest"),
-    "EncryptionInTransit": (AWS_MSK_Cluster_EncryptionInTransit, "encryption_in_transit"),
-  }
 
 class AWS_MSK_Cluster_StorageInfo(CloudFormationProperty):
-  entity = "AWS::MSK::Cluster"
-  tf_block_type = "storage_info"
+  def write(self, w):
+    with w.block("storage_info"):
+      self.block(w, "EBSStorageInfo", AWS_MSK_Cluster_EBSStorageInfo)
 
-  props = {
-    "EBSStorageInfo": (AWS_MSK_Cluster_EBSStorageInfo, "ebs_storage_info"),
-  }
 
 class AWS_MSK_Cluster_BrokerLogs(CloudFormationProperty):
-  entity = "AWS::MSK::Cluster"
-  tf_block_type = "broker_logs"
+  def write(self, w):
+    with w.block("broker_logs"):
+      self.block(w, "S3", AWS_MSK_Cluster_S3)
+      self.block(w, "Firehose", AWS_MSK_Cluster_Firehose)
+      self.block(w, "CloudWatchLogs", AWS_MSK_Cluster_CloudWatchLogs)
 
-  props = {
-    "S3": (AWS_MSK_Cluster_S3, "s3"),
-    "Firehose": (AWS_MSK_Cluster_Firehose, "firehose"),
-    "CloudWatchLogs": (AWS_MSK_Cluster_CloudWatchLogs, "cloud_watch_logs"),
-  }
 
 class AWS_MSK_Cluster_ClientAuthentication(CloudFormationProperty):
-  entity = "AWS::MSK::Cluster"
-  tf_block_type = "client_authentication"
+  def write(self, w):
+    with w.block("client_authentication"):
+      self.block(w, "Tls", AWS_MSK_Cluster_Tls)
 
-  props = {
-    "Tls": (AWS_MSK_Cluster_Tls, "tls"),
-  }
 
 class AWS_MSK_Cluster_LoggingInfo(CloudFormationProperty):
-  entity = "AWS::MSK::Cluster"
-  tf_block_type = "logging_info"
+  def write(self, w):
+    with w.block("logging_info"):
+      self.block(w, "BrokerLogs", AWS_MSK_Cluster_BrokerLogs)
 
-  props = {
-    "BrokerLogs": (AWS_MSK_Cluster_BrokerLogs, "broker_logs"),
-  }
 
 class AWS_MSK_Cluster_BrokerNodeGroupInfo(CloudFormationProperty):
-  entity = "AWS::MSK::Cluster"
-  tf_block_type = "broker_node_group_info"
+  def write(self, w):
+    with w.block("broker_node_group_info"):
+      self.property(w, "SecurityGroups", "security_groups", ListValueConverter(StringValueConverter()))
+      self.property(w, "ClientSubnets", "client_subnets", ListValueConverter(StringValueConverter()))
+      self.block(w, "StorageInfo", AWS_MSK_Cluster_StorageInfo)
+      self.property(w, "BrokerAZDistribution", "broker_az_distribution", StringValueConverter())
+      self.property(w, "InstanceType", "instance_type", StringValueConverter())
 
-  props = {
-    "SecurityGroups": (ListValueConverter(StringValueConverter()), "security_groups"),
-    "ClientSubnets": (ListValueConverter(StringValueConverter()), "client_subnets"),
-    "StorageInfo": (AWS_MSK_Cluster_StorageInfo, "storage_info"),
-    "BrokerAZDistribution": (StringValueConverter(), "broker_az_distribution"),
-    "InstanceType": (StringValueConverter(), "instance_type"),
-  }
 
 class AWS_MSK_Cluster(CloudFormationResource):
-  terraform_resource = "aws_msk_cluster"
+  cfn_type = "AWS::MSK::Cluster"
+  tf_type = "aws_msk_cluster"
+  ref = "arn"
 
-  resource_type = "AWS::MSK::Cluster"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "BrokerNodeGroupInfo", AWS_MSK_Cluster_BrokerNodeGroupInfo)
+      self.property(w, "EnhancedMonitoring", "enhanced_monitoring", StringValueConverter())
+      self.property(w, "KafkaVersion", "kafka_version", StringValueConverter())
+      self.property(w, "NumberOfBrokerNodes", "number_of_broker_nodes", BasicValueConverter())
+      self.block(w, "EncryptionInfo", AWS_MSK_Cluster_EncryptionInfo)
+      self.block(w, "OpenMonitoring", AWS_MSK_Cluster_OpenMonitoring)
+      self.property(w, "ClusterName", "cluster_name", StringValueConverter())
+      self.block(w, "ClientAuthentication", AWS_MSK_Cluster_ClientAuthentication)
+      self.block(w, "LoggingInfo", AWS_MSK_Cluster_LoggingInfo)
+      self.property(w, "Tags", "tags", StringValueConverter())
+      self.block(w, "ConfigurationInfo", AWS_MSK_Cluster_ConfigurationInfo)
 
-  props = {
-    "BrokerNodeGroupInfo": (AWS_MSK_Cluster_BrokerNodeGroupInfo, "broker_node_group_info"),
-    "EnhancedMonitoring": (StringValueConverter(), "enhanced_monitoring"),
-    "KafkaVersion": (StringValueConverter(), "kafka_version"),
-    "NumberOfBrokerNodes": (BasicValueConverter(), "number_of_broker_nodes"),
-    "EncryptionInfo": (AWS_MSK_Cluster_EncryptionInfo, "encryption_info"),
-    "OpenMonitoring": (AWS_MSK_Cluster_OpenMonitoring, "open_monitoring"),
-    "ClusterName": (StringValueConverter(), "cluster_name"),
-    "ClientAuthentication": (AWS_MSK_Cluster_ClientAuthentication, "client_authentication"),
-    "LoggingInfo": (AWS_MSK_Cluster_LoggingInfo, "logging_info"),
-    "Tags": (StringValueConverter(), "tags"),
-    "ConfigurationInfo": (AWS_MSK_Cluster_ConfigurationInfo, "configuration_info"),
-  }
 

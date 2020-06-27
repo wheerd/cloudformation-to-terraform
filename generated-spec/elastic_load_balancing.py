@@ -1,109 +1,94 @@
 from . import *
 
 class AWS_ElasticLoadBalancing_LoadBalancer_AccessLoggingPolicy(CloudFormationProperty):
-  entity = "AWS::ElasticLoadBalancing::LoadBalancer"
-  tf_block_type = "access_logging_policy"
+  def write(self, w):
+    with w.block("access_logging_policy"):
+      self.property(w, "EmitInterval", "emit_interval", BasicValueConverter())
+      self.property(w, "Enabled", "enabled", BasicValueConverter())
+      self.property(w, "S3BucketName", "s3_bucket_name", StringValueConverter())
+      self.property(w, "S3BucketPrefix", "s3_bucket_prefix", StringValueConverter())
 
-  props = {
-    "EmitInterval": (BasicValueConverter(), "emit_interval"),
-    "Enabled": (BasicValueConverter(), "enabled"),
-    "S3BucketName": (StringValueConverter(), "s3_bucket_name"),
-    "S3BucketPrefix": (StringValueConverter(), "s3_bucket_prefix"),
-  }
 
 class AWS_ElasticLoadBalancing_LoadBalancer_LBCookieStickinessPolicy(CloudFormationProperty):
-  entity = "AWS::ElasticLoadBalancing::LoadBalancer"
-  tf_block_type = "lb_cookie_stickiness_policy"
+  def write(self, w):
+    with w.block("lb_cookie_stickiness_policy"):
+      self.property(w, "CookieExpirationPeriod", "cookie_expiration_period", StringValueConverter())
+      self.property(w, "PolicyName", "policy_name", StringValueConverter())
 
-  props = {
-    "CookieExpirationPeriod": (StringValueConverter(), "cookie_expiration_period"),
-    "PolicyName": (StringValueConverter(), "policy_name"),
-  }
 
 class AWS_ElasticLoadBalancing_LoadBalancer_Listeners(CloudFormationProperty):
-  entity = "AWS::ElasticLoadBalancing::LoadBalancer"
-  tf_block_type = "listeners"
+  def write(self, w):
+    with w.block("listeners"):
+      self.property(w, "InstancePort", "instance_port", StringValueConverter())
+      self.property(w, "InstanceProtocol", "instance_protocol", StringValueConverter())
+      self.property(w, "LoadBalancerPort", "load_balancer_port", StringValueConverter())
+      self.property(w, "PolicyNames", "policy_names", ListValueConverter(StringValueConverter()))
+      self.property(w, "Protocol", "protocol", StringValueConverter())
+      self.property(w, "SSLCertificateId", "ssl_certificate_id", StringValueConverter())
 
-  props = {
-    "InstancePort": (StringValueConverter(), "instance_port"),
-    "InstanceProtocol": (StringValueConverter(), "instance_protocol"),
-    "LoadBalancerPort": (StringValueConverter(), "load_balancer_port"),
-    "PolicyNames": (ListValueConverter(StringValueConverter()), "policy_names"),
-    "Protocol": (StringValueConverter(), "protocol"),
-    "SSLCertificateId": (StringValueConverter(), "ssl_certificate_id"),
-  }
 
 class AWS_ElasticLoadBalancing_LoadBalancer_HealthCheck(CloudFormationProperty):
-  entity = "AWS::ElasticLoadBalancing::LoadBalancer"
-  tf_block_type = "health_check"
+  def write(self, w):
+    with w.block("health_check"):
+      self.property(w, "HealthyThreshold", "healthy_threshold", StringValueConverter())
+      self.property(w, "Interval", "interval", StringValueConverter())
+      self.property(w, "Target", "target", StringValueConverter())
+      self.property(w, "Timeout", "timeout", StringValueConverter())
+      self.property(w, "UnhealthyThreshold", "unhealthy_threshold", StringValueConverter())
 
-  props = {
-    "HealthyThreshold": (StringValueConverter(), "healthy_threshold"),
-    "Interval": (StringValueConverter(), "interval"),
-    "Target": (StringValueConverter(), "target"),
-    "Timeout": (StringValueConverter(), "timeout"),
-    "UnhealthyThreshold": (StringValueConverter(), "unhealthy_threshold"),
-  }
 
 class AWS_ElasticLoadBalancing_LoadBalancer_ConnectionSettings(CloudFormationProperty):
-  entity = "AWS::ElasticLoadBalancing::LoadBalancer"
-  tf_block_type = "connection_settings"
+  def write(self, w):
+    with w.block("connection_settings"):
+      self.property(w, "IdleTimeout", "idle_timeout", BasicValueConverter())
 
-  props = {
-    "IdleTimeout": (BasicValueConverter(), "idle_timeout"),
-  }
 
 class AWS_ElasticLoadBalancing_LoadBalancer_ConnectionDrainingPolicy(CloudFormationProperty):
-  entity = "AWS::ElasticLoadBalancing::LoadBalancer"
-  tf_block_type = "connection_draining_policy"
+  def write(self, w):
+    with w.block("connection_draining_policy"):
+      self.property(w, "Enabled", "enabled", BasicValueConverter())
+      self.property(w, "Timeout", "timeout", BasicValueConverter())
 
-  props = {
-    "Enabled": (BasicValueConverter(), "enabled"),
-    "Timeout": (BasicValueConverter(), "timeout"),
-  }
 
 class AWS_ElasticLoadBalancing_LoadBalancer_Policies(CloudFormationProperty):
-  entity = "AWS::ElasticLoadBalancing::LoadBalancer"
-  tf_block_type = "policies"
+  def write(self, w):
+    with w.block("policies"):
+      self.property(w, "Attributes", "attributes", ListValueConverter(StringValueConverter()))
+      self.property(w, "InstancePorts", "instance_ports", ListValueConverter(StringValueConverter()))
+      self.property(w, "LoadBalancerPorts", "load_balancer_ports", ListValueConverter(StringValueConverter()))
+      self.property(w, "PolicyName", "policy_name", StringValueConverter())
+      self.property(w, "PolicyType", "policy_type", StringValueConverter())
 
-  props = {
-    "Attributes": (ListValueConverter(StringValueConverter()), "attributes"),
-    "InstancePorts": (ListValueConverter(StringValueConverter()), "instance_ports"),
-    "LoadBalancerPorts": (ListValueConverter(StringValueConverter()), "load_balancer_ports"),
-    "PolicyName": (StringValueConverter(), "policy_name"),
-    "PolicyType": (StringValueConverter(), "policy_type"),
-  }
 
 class AWS_ElasticLoadBalancing_LoadBalancer_AppCookieStickinessPolicy(CloudFormationProperty):
-  entity = "AWS::ElasticLoadBalancing::LoadBalancer"
-  tf_block_type = "app_cookie_stickiness_policy"
+  def write(self, w):
+    with w.block("app_cookie_stickiness_policy"):
+      self.property(w, "CookieName", "cookie_name", StringValueConverter())
+      self.property(w, "PolicyName", "policy_name", StringValueConverter())
 
-  props = {
-    "CookieName": (StringValueConverter(), "cookie_name"),
-    "PolicyName": (StringValueConverter(), "policy_name"),
-  }
 
 class AWS_ElasticLoadBalancing_LoadBalancer(CloudFormationResource):
-  terraform_resource = "aws_elastic_load_balancing_load_balancer"
+  cfn_type = "AWS::ElasticLoadBalancing::LoadBalancer"
+  tf_type = "aws_elastic_load_balancing_load_balancer"
+  ref = "arn"
 
-  resource_type = "AWS::ElasticLoadBalancing::LoadBalancer"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "AccessLoggingPolicy", AWS_ElasticLoadBalancing_LoadBalancer_AccessLoggingPolicy)
+      self.repeated_block(w, "AppCookieStickinessPolicy", AWS_ElasticLoadBalancing_LoadBalancer_AppCookieStickinessPolicy)
+      self.property(w, "AvailabilityZones", "availability_zones", ListValueConverter(StringValueConverter()))
+      self.block(w, "ConnectionDrainingPolicy", AWS_ElasticLoadBalancing_LoadBalancer_ConnectionDrainingPolicy)
+      self.block(w, "ConnectionSettings", AWS_ElasticLoadBalancing_LoadBalancer_ConnectionSettings)
+      self.property(w, "CrossZone", "cross_zone", BasicValueConverter())
+      self.block(w, "HealthCheck", AWS_ElasticLoadBalancing_LoadBalancer_HealthCheck)
+      self.property(w, "Instances", "instances", ListValueConverter(StringValueConverter()))
+      self.repeated_block(w, "LBCookieStickinessPolicy", AWS_ElasticLoadBalancing_LoadBalancer_LBCookieStickinessPolicy)
+      self.repeated_block(w, "Listeners", AWS_ElasticLoadBalancing_LoadBalancer_Listeners)
+      self.property(w, "LoadBalancerName", "load_balancer_name", StringValueConverter())
+      self.repeated_block(w, "Policies", AWS_ElasticLoadBalancing_LoadBalancer_Policies)
+      self.property(w, "Scheme", "scheme", StringValueConverter())
+      self.property(w, "SecurityGroups", "security_groups", ListValueConverter(StringValueConverter()))
+      self.property(w, "Subnets", "subnets", ListValueConverter(StringValueConverter()))
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "AccessLoggingPolicy": (AWS_ElasticLoadBalancing_LoadBalancer_AccessLoggingPolicy, "access_logging_policy"),
-    "AppCookieStickinessPolicy": (BlockValueConverter(AWS_ElasticLoadBalancing_LoadBalancer_AppCookieStickinessPolicy), None),
-    "AvailabilityZones": (ListValueConverter(StringValueConverter()), "availability_zones"),
-    "ConnectionDrainingPolicy": (AWS_ElasticLoadBalancing_LoadBalancer_ConnectionDrainingPolicy, "connection_draining_policy"),
-    "ConnectionSettings": (AWS_ElasticLoadBalancing_LoadBalancer_ConnectionSettings, "connection_settings"),
-    "CrossZone": (BasicValueConverter(), "cross_zone"),
-    "HealthCheck": (AWS_ElasticLoadBalancing_LoadBalancer_HealthCheck, "health_check"),
-    "Instances": (ListValueConverter(StringValueConverter()), "instances"),
-    "LBCookieStickinessPolicy": (BlockValueConverter(AWS_ElasticLoadBalancing_LoadBalancer_LBCookieStickinessPolicy), None),
-    "Listeners": (BlockValueConverter(AWS_ElasticLoadBalancing_LoadBalancer_Listeners), None),
-    "LoadBalancerName": (StringValueConverter(), "load_balancer_name"),
-    "Policies": (BlockValueConverter(AWS_ElasticLoadBalancing_LoadBalancer_Policies), None),
-    "Scheme": (StringValueConverter(), "scheme"),
-    "SecurityGroups": (ListValueConverter(StringValueConverter()), "security_groups"),
-    "Subnets": (ListValueConverter(StringValueConverter()), "subnets"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 

@@ -1,90 +1,85 @@
 from . import *
 
 class AWS_ACMPCA_CertificateAuthority_Subject(CloudFormationProperty):
-  entity = "AWS::ACMPCA::CertificateAuthority"
-  tf_block_type = "subject"
+  def write(self, w):
+    with w.block("subject"):
+      self.property(w, "Country", "country", StringValueConverter())
+      self.property(w, "Organization", "organization", StringValueConverter())
+      self.property(w, "OrganizationalUnit", "organizational_unit", StringValueConverter())
+      self.property(w, "DistinguishedNameQualifier", "distinguished_name_qualifier", StringValueConverter())
+      self.property(w, "State", "state", StringValueConverter())
+      self.property(w, "CommonName", "common_name", StringValueConverter())
+      self.property(w, "SerialNumber", "serial_number", StringValueConverter())
+      self.property(w, "Locality", "locality", StringValueConverter())
+      self.property(w, "Title", "title", StringValueConverter())
+      self.property(w, "Surname", "surname", StringValueConverter())
+      self.property(w, "GivenName", "given_name", StringValueConverter())
+      self.property(w, "Initials", "initials", StringValueConverter())
+      self.property(w, "Pseudonym", "pseudonym", StringValueConverter())
+      self.property(w, "GenerationQualifier", "generation_qualifier", StringValueConverter())
 
-  props = {
-    "Country": (StringValueConverter(), "country"),
-    "Organization": (StringValueConverter(), "organization"),
-    "OrganizationalUnit": (StringValueConverter(), "organizational_unit"),
-    "DistinguishedNameQualifier": (StringValueConverter(), "distinguished_name_qualifier"),
-    "State": (StringValueConverter(), "state"),
-    "CommonName": (StringValueConverter(), "common_name"),
-    "SerialNumber": (StringValueConverter(), "serial_number"),
-    "Locality": (StringValueConverter(), "locality"),
-    "Title": (StringValueConverter(), "title"),
-    "Surname": (StringValueConverter(), "surname"),
-    "GivenName": (StringValueConverter(), "given_name"),
-    "Initials": (StringValueConverter(), "initials"),
-    "Pseudonym": (StringValueConverter(), "pseudonym"),
-    "GenerationQualifier": (StringValueConverter(), "generation_qualifier"),
-  }
 
 class AWS_ACMPCA_Certificate_Validity(CloudFormationProperty):
-  entity = "AWS::ACMPCA::Certificate"
-  tf_block_type = "validity"
+  def write(self, w):
+    with w.block("validity"):
+      self.property(w, "Value", "value", BasicValueConverter())
+      self.property(w, "Type", "type", StringValueConverter())
 
-  props = {
-    "Value": (BasicValueConverter(), "value"),
-    "Type": (StringValueConverter(), "type"),
-  }
 
 class AWS_ACMPCA_CertificateAuthority_CrlConfiguration(CloudFormationProperty):
-  entity = "AWS::ACMPCA::CertificateAuthority"
-  tf_block_type = "crl_configuration"
+  def write(self, w):
+    with w.block("crl_configuration"):
+      self.property(w, "Enabled", "enabled", BasicValueConverter())
+      self.property(w, "ExpirationInDays", "expiration_in_days", BasicValueConverter())
+      self.property(w, "CustomCname", "custom_cname", StringValueConverter())
+      self.property(w, "S3BucketName", "s3_bucket_name", StringValueConverter())
 
-  props = {
-    "Enabled": (BasicValueConverter(), "enabled"),
-    "ExpirationInDays": (BasicValueConverter(), "expiration_in_days"),
-    "CustomCname": (StringValueConverter(), "custom_cname"),
-    "S3BucketName": (StringValueConverter(), "s3_bucket_name"),
-  }
 
 class AWS_ACMPCA_CertificateAuthorityActivation(CloudFormationResource):
-  terraform_resource = "aws_acmpca_certificate_authority_activation"
+  cfn_type = "AWS::ACMPCA::CertificateAuthorityActivation"
+  tf_type = "aws_acmpca_certificate_authority_activation"
+  ref = "arn"
 
-  resource_type = "AWS::ACMPCA::CertificateAuthorityActivation"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "CertificateAuthorityArn", "certificate_authority_arn", StringValueConverter())
+      self.property(w, "Certificate", "certificate", StringValueConverter())
+      self.property(w, "CertificateChain", "certificate_chain", StringValueConverter())
+      self.property(w, "Status", "status", StringValueConverter())
 
-  props = {
-    "CertificateAuthorityArn": (StringValueConverter(), "certificate_authority_arn"),
-    "Certificate": (StringValueConverter(), "certificate"),
-    "CertificateChain": (StringValueConverter(), "certificate_chain"),
-    "Status": (StringValueConverter(), "status"),
-  }
 
 class AWS_ACMPCA_Certificate(CloudFormationResource):
-  terraform_resource = "aws_acmpca_certificate"
+  cfn_type = "AWS::ACMPCA::Certificate"
+  tf_type = "aws_acmpca_certificate"
+  ref = "arn"
 
-  resource_type = "AWS::ACMPCA::Certificate"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "CertificateAuthorityArn", "certificate_authority_arn", StringValueConverter())
+      self.property(w, "CertificateSigningRequest", "certificate_signing_request", StringValueConverter())
+      self.property(w, "SigningAlgorithm", "signing_algorithm", StringValueConverter())
+      self.property(w, "TemplateArn", "template_arn", StringValueConverter())
+      self.block(w, "Validity", AWS_ACMPCA_Certificate_Validity)
 
-  props = {
-    "CertificateAuthorityArn": (StringValueConverter(), "certificate_authority_arn"),
-    "CertificateSigningRequest": (StringValueConverter(), "certificate_signing_request"),
-    "SigningAlgorithm": (StringValueConverter(), "signing_algorithm"),
-    "TemplateArn": (StringValueConverter(), "template_arn"),
-    "Validity": (AWS_ACMPCA_Certificate_Validity, "validity"),
-  }
 
 class AWS_ACMPCA_CertificateAuthority_RevocationConfiguration(CloudFormationProperty):
-  entity = "AWS::ACMPCA::CertificateAuthority"
-  tf_block_type = "revocation_configuration"
+  def write(self, w):
+    with w.block("revocation_configuration"):
+      self.block(w, "CrlConfiguration", AWS_ACMPCA_CertificateAuthority_CrlConfiguration)
 
-  props = {
-    "CrlConfiguration": (AWS_ACMPCA_CertificateAuthority_CrlConfiguration, "crl_configuration"),
-  }
 
 class AWS_ACMPCA_CertificateAuthority(CloudFormationResource):
-  terraform_resource = "aws_acmpca_certificate_authority"
+  cfn_type = "AWS::ACMPCA::CertificateAuthority"
+  tf_type = "aws_acmpca_certificate_authority"
+  ref = "arn"
 
-  resource_type = "AWS::ACMPCA::CertificateAuthority"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "KeyAlgorithm", "key_algorithm", StringValueConverter())
+      self.property(w, "SigningAlgorithm", "signing_algorithm", StringValueConverter())
+      self.block(w, "Subject", AWS_ACMPCA_CertificateAuthority_Subject)
+      self.block(w, "RevocationConfiguration", AWS_ACMPCA_CertificateAuthority_RevocationConfiguration)
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "Type": (StringValueConverter(), "type"),
-    "KeyAlgorithm": (StringValueConverter(), "key_algorithm"),
-    "SigningAlgorithm": (StringValueConverter(), "signing_algorithm"),
-    "Subject": (AWS_ACMPCA_CertificateAuthority_Subject, "subject"),
-    "RevocationConfiguration": (AWS_ACMPCA_CertificateAuthority_RevocationConfiguration, "revocation_configuration"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 

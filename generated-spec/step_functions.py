@@ -1,86 +1,78 @@
 from . import *
 
 class AWS_StepFunctions_Activity_TagsEntry(CloudFormationProperty):
-  entity = "AWS::StepFunctions::Activity"
-  tf_block_type = "tags_entry"
+  def write(self, w):
+    with w.block("tags_entry"):
+      self.property(w, "Value", "value", StringValueConverter())
+      self.property(w, "Key", "key", StringValueConverter())
 
-  props = {
-    "Value": (StringValueConverter(), "value"),
-    "Key": (StringValueConverter(), "key"),
-  }
 
 class AWS_StepFunctions_StateMachine_TagsEntry(CloudFormationProperty):
-  entity = "AWS::StepFunctions::StateMachine"
-  tf_block_type = "tags_entry"
+  def write(self, w):
+    with w.block("tags_entry"):
+      self.property(w, "Value", "value", StringValueConverter())
+      self.property(w, "Key", "key", StringValueConverter())
 
-  props = {
-    "Value": (StringValueConverter(), "value"),
-    "Key": (StringValueConverter(), "key"),
-  }
 
 class AWS_StepFunctions_StateMachine_S3Location(CloudFormationProperty):
-  entity = "AWS::StepFunctions::StateMachine"
-  tf_block_type = "s3_location"
+  def write(self, w):
+    with w.block("s3_location"):
+      self.property(w, "Bucket", "bucket", StringValueConverter())
+      self.property(w, "Version", "version", StringValueConverter())
+      self.property(w, "Key", "key", StringValueConverter())
 
-  props = {
-    "Bucket": (StringValueConverter(), "bucket"),
-    "Version": (StringValueConverter(), "version"),
-    "Key": (StringValueConverter(), "key"),
-  }
 
 class AWS_StepFunctions_StateMachine_CloudWatchLogsLogGroup(CloudFormationProperty):
-  entity = "AWS::StepFunctions::StateMachine"
-  tf_block_type = "cloud_watch_logs_log_group"
+  def write(self, w):
+    with w.block("cloud_watch_logs_log_group"):
+      self.property(w, "LogGroupArn", "log_group_arn", StringValueConverter())
 
-  props = {
-    "LogGroupArn": (StringValueConverter(), "log_group_arn"),
-  }
 
 class AWS_StepFunctions_StateMachine_LogDestination(CloudFormationProperty):
-  entity = "AWS::StepFunctions::StateMachine"
-  tf_block_type = "log_destination"
+  def write(self, w):
+    with w.block("log_destination"):
+      self.block(w, "CloudWatchLogsLogGroup", AWS_StepFunctions_StateMachine_CloudWatchLogsLogGroup)
 
-  props = {
-    "CloudWatchLogsLogGroup": (AWS_StepFunctions_StateMachine_CloudWatchLogsLogGroup, "cloud_watch_logs_log_group"),
-  }
 
 class AWS_StepFunctions_StateMachine_DefinitionSubstitutions(CloudFormationProperty):
-  entity = "AWS::StepFunctions::StateMachine"
-  tf_block_type = "definition_substitutions"
+  def write(self, w):
+    with w.block("definition_substitutions"):
+      pass
+
 
 class AWS_StepFunctions_Activity(CloudFormationResource):
-  terraform_resource = "aws_step_functions_activity"
+  cfn_type = "AWS::StepFunctions::Activity"
+  tf_type = "aws_step_functions_activity"
+  ref = "arn"
 
-  resource_type = "AWS::StepFunctions::Activity"
+  def write(self, w):
+    with self.resource_block(w):
+      self.repeated_block(w, "Tags", AWS_StepFunctions_Activity_TagsEntry)
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Tags": (BlockValueConverter(AWS_StepFunctions_Activity_TagsEntry), None),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_StepFunctions_StateMachine_LoggingConfiguration(CloudFormationProperty):
-  entity = "AWS::StepFunctions::StateMachine"
-  tf_block_type = "logging_configuration"
+  def write(self, w):
+    with w.block("logging_configuration"):
+      self.property(w, "IncludeExecutionData", "include_execution_data", BasicValueConverter())
+      self.repeated_block(w, "Destinations", AWS_StepFunctions_StateMachine_LogDestination)
+      self.property(w, "Level", "level", StringValueConverter())
 
-  props = {
-    "IncludeExecutionData": (BasicValueConverter(), "include_execution_data"),
-    "Destinations": (BlockValueConverter(AWS_StepFunctions_StateMachine_LogDestination), None),
-    "Level": (StringValueConverter(), "level"),
-  }
 
 class AWS_StepFunctions_StateMachine(CloudFormationResource):
-  terraform_resource = "aws_step_functions_state_machine"
+  cfn_type = "AWS::StepFunctions::StateMachine"
+  tf_type = "aws_step_functions_state_machine"
+  ref = "arn"
 
-  resource_type = "AWS::StepFunctions::StateMachine"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "DefinitionString", "definition_string", StringValueConverter())
+      self.block(w, "LoggingConfiguration", AWS_StepFunctions_StateMachine_LoggingConfiguration)
+      self.block(w, "DefinitionSubstitutions", AWS_StepFunctions_StateMachine_DefinitionSubstitutions)
+      self.block(w, "DefinitionS3Location", AWS_StepFunctions_StateMachine_S3Location)
+      self.property(w, "StateMachineName", "state_machine_name", StringValueConverter())
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
+      self.repeated_block(w, "Tags", AWS_StepFunctions_StateMachine_TagsEntry)
+      self.property(w, "StateMachineType", "state_machine_type", StringValueConverter())
 
-  props = {
-    "DefinitionString": (StringValueConverter(), "definition_string"),
-    "LoggingConfiguration": (AWS_StepFunctions_StateMachine_LoggingConfiguration, "logging_configuration"),
-    "DefinitionSubstitutions": (AWS_StepFunctions_StateMachine_DefinitionSubstitutions, "definition_substitutions"),
-    "DefinitionS3Location": (AWS_StepFunctions_StateMachine_S3Location, "definition_s3_location"),
-    "StateMachineName": (StringValueConverter(), "state_machine_name"),
-    "RoleArn": (StringValueConverter(), "role_arn"),
-    "Tags": (BlockValueConverter(AWS_StepFunctions_StateMachine_TagsEntry), None),
-    "StateMachineType": (StringValueConverter(), "state_machine_type"),
-  }
 

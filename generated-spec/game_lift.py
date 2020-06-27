@@ -1,214 +1,199 @@
 from . import *
 
 class AWS_GameLift_GameSessionQueue_Destination(CloudFormationProperty):
-  entity = "AWS::GameLift::GameSessionQueue"
-  tf_block_type = "destination"
+  def write(self, w):
+    with w.block("destination"):
+      self.property(w, "DestinationArn", "destination_arn", StringValueConverter())
 
-  props = {
-    "DestinationArn": (StringValueConverter(), "destination_arn"),
-  }
 
 class AWS_GameLift_Fleet_IpPermission(CloudFormationProperty):
-  entity = "AWS::GameLift::Fleet"
-  tf_block_type = "ip_permission"
+  def write(self, w):
+    with w.block("ip_permission"):
+      self.property(w, "FromPort", "from_port", BasicValueConverter())
+      self.property(w, "IpRange", "ip_range", StringValueConverter())
+      self.property(w, "Protocol", "protocol", StringValueConverter())
+      self.property(w, "ToPort", "to_port", BasicValueConverter())
 
-  props = {
-    "FromPort": (BasicValueConverter(), "from_port"),
-    "IpRange": (StringValueConverter(), "ip_range"),
-    "Protocol": (StringValueConverter(), "protocol"),
-    "ToPort": (BasicValueConverter(), "to_port"),
-  }
 
 class AWS_GameLift_Fleet_ServerProcess(CloudFormationProperty):
-  entity = "AWS::GameLift::Fleet"
-  tf_block_type = "server_process"
+  def write(self, w):
+    with w.block("server_process"):
+      self.property(w, "ConcurrentExecutions", "concurrent_executions", BasicValueConverter())
+      self.property(w, "LaunchPath", "launch_path", StringValueConverter())
+      self.property(w, "Parameters", "parameters", StringValueConverter())
 
-  props = {
-    "ConcurrentExecutions": (BasicValueConverter(), "concurrent_executions"),
-    "LaunchPath": (StringValueConverter(), "launch_path"),
-    "Parameters": (StringValueConverter(), "parameters"),
-  }
 
 class AWS_GameLift_Fleet_ResourceCreationLimitPolicy(CloudFormationProperty):
-  entity = "AWS::GameLift::Fleet"
-  tf_block_type = "resource_creation_limit_policy"
+  def write(self, w):
+    with w.block("resource_creation_limit_policy"):
+      self.property(w, "NewGameSessionsPerCreator", "new_game_sessions_per_creator", BasicValueConverter())
+      self.property(w, "PolicyPeriodInMinutes", "policy_period_in_minutes", BasicValueConverter())
 
-  props = {
-    "NewGameSessionsPerCreator": (BasicValueConverter(), "new_game_sessions_per_creator"),
-    "PolicyPeriodInMinutes": (BasicValueConverter(), "policy_period_in_minutes"),
-  }
 
 class AWS_GameLift_Build_S3Location(CloudFormationProperty):
-  entity = "AWS::GameLift::Build"
-  tf_block_type = "s3_location"
+  def write(self, w):
+    with w.block("s3_location"):
+      self.property(w, "Bucket", "bucket", StringValueConverter())
+      self.property(w, "Key", "key", StringValueConverter())
+      self.property(w, "ObjectVersion", "object_version", StringValueConverter())
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
 
-  props = {
-    "Bucket": (StringValueConverter(), "bucket"),
-    "Key": (StringValueConverter(), "key"),
-    "ObjectVersion": (StringValueConverter(), "object_version"),
-    "RoleArn": (StringValueConverter(), "role_arn"),
-  }
 
 class AWS_GameLift_Alias_RoutingStrategy(CloudFormationProperty):
-  entity = "AWS::GameLift::Alias"
-  tf_block_type = "routing_strategy"
+  def write(self, w):
+    with w.block("routing_strategy"):
+      self.property(w, "FleetId", "fleet_id", StringValueConverter())
+      self.property(w, "Message", "message", StringValueConverter())
+      self.property(w, "Type", "type", StringValueConverter())
 
-  props = {
-    "FleetId": (StringValueConverter(), "fleet_id"),
-    "Message": (StringValueConverter(), "message"),
-    "Type": (StringValueConverter(), "type"),
-  }
 
 class AWS_GameLift_Fleet_CertificateConfiguration(CloudFormationProperty):
-  entity = "AWS::GameLift::Fleet"
-  tf_block_type = "certificate_configuration"
+  def write(self, w):
+    with w.block("certificate_configuration"):
+      self.property(w, "CertificateType", "certificate_type", StringValueConverter())
 
-  props = {
-    "CertificateType": (StringValueConverter(), "certificate_type"),
-  }
 
 class AWS_GameLift_Fleet_RuntimeConfiguration(CloudFormationProperty):
-  entity = "AWS::GameLift::Fleet"
-  tf_block_type = "runtime_configuration"
+  def write(self, w):
+    with w.block("runtime_configuration"):
+      self.property(w, "GameSessionActivationTimeoutSeconds", "game_session_activation_timeout_seconds", BasicValueConverter())
+      self.property(w, "MaxConcurrentGameSessionActivations", "max_concurrent_game_session_activations", BasicValueConverter())
+      self.repeated_block(w, "ServerProcesses", AWS_GameLift_Fleet_ServerProcess)
 
-  props = {
-    "GameSessionActivationTimeoutSeconds": (BasicValueConverter(), "game_session_activation_timeout_seconds"),
-    "MaxConcurrentGameSessionActivations": (BasicValueConverter(), "max_concurrent_game_session_activations"),
-    "ServerProcesses": (BlockValueConverter(AWS_GameLift_Fleet_ServerProcess), None),
-  }
 
 class AWS_GameLift_Script_S3Location(CloudFormationProperty):
-  entity = "AWS::GameLift::Script"
-  tf_block_type = "s3_location"
+  def write(self, w):
+    with w.block("s3_location"):
+      self.property(w, "ObjectVersion", "object_version", StringValueConverter())
+      self.property(w, "Bucket", "bucket", StringValueConverter())
+      self.property(w, "Key", "key", StringValueConverter())
+      self.property(w, "RoleArn", "role_arn", StringValueConverter())
 
-  props = {
-    "ObjectVersion": (StringValueConverter(), "object_version"),
-    "Bucket": (StringValueConverter(), "bucket"),
-    "Key": (StringValueConverter(), "key"),
-    "RoleArn": (StringValueConverter(), "role_arn"),
-  }
 
 class AWS_GameLift_MatchmakingConfiguration_GameProperty(CloudFormationProperty):
-  entity = "AWS::GameLift::MatchmakingConfiguration"
-  tf_block_type = "game_property"
+  def write(self, w):
+    with w.block("game_property"):
+      self.property(w, "Value", "value", StringValueConverter())
+      self.property(w, "Key", "key", StringValueConverter())
 
-  props = {
-    "Value": (StringValueConverter(), "value"),
-    "Key": (StringValueConverter(), "key"),
-  }
 
 class AWS_GameLift_GameSessionQueue_PlayerLatencyPolicy(CloudFormationProperty):
-  entity = "AWS::GameLift::GameSessionQueue"
-  tf_block_type = "player_latency_policy"
+  def write(self, w):
+    with w.block("player_latency_policy"):
+      self.property(w, "PolicyDurationSeconds", "policy_duration_seconds", BasicValueConverter())
+      self.property(w, "MaximumIndividualPlayerLatencyMilliseconds", "maximum_individual_player_latency_milliseconds", BasicValueConverter())
 
-  props = {
-    "PolicyDurationSeconds": (BasicValueConverter(), "policy_duration_seconds"),
-    "MaximumIndividualPlayerLatencyMilliseconds": (BasicValueConverter(), "maximum_individual_player_latency_milliseconds"),
-  }
 
 class AWS_GameLift_Fleet(CloudFormationResource):
-  terraform_resource = "aws_game_lift_fleet"
+  cfn_type = "AWS::GameLift::Fleet"
+  tf_type = "aws_game_lift_fleet"
+  ref = "arn"
 
-  resource_type = "AWS::GameLift::Fleet"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "BuildId", "build_id", StringValueConverter())
+      self.block(w, "CertificateConfiguration", AWS_GameLift_Fleet_CertificateConfiguration)
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "DesiredEC2Instances", "desired_ec2_instances", BasicValueConverter())
+      self.repeated_block(w, "EC2InboundPermissions", AWS_GameLift_Fleet_IpPermission)
+      self.property(w, "EC2InstanceType", "ec2_instance_type", StringValueConverter())
+      self.property(w, "FleetType", "fleet_type", StringValueConverter())
+      self.property(w, "InstanceRoleARN", "instance_role_arn", StringValueConverter())
+      self.property(w, "LogPaths", "log_paths", ListValueConverter(StringValueConverter()))
+      self.property(w, "MaxSize", "max_size", BasicValueConverter())
+      self.property(w, "MetricGroups", "metric_groups", ListValueConverter(StringValueConverter()))
+      self.property(w, "MinSize", "min_size", BasicValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "NewGameSessionProtectionPolicy", "new_game_session_protection_policy", StringValueConverter())
+      self.property(w, "PeerVpcAwsAccountId", "peer_vpc_aws_account_id", StringValueConverter())
+      self.property(w, "PeerVpcId", "peer_vpc_id", StringValueConverter())
+      self.block(w, "ResourceCreationLimitPolicy", AWS_GameLift_Fleet_ResourceCreationLimitPolicy)
+      self.block(w, "RuntimeConfiguration", AWS_GameLift_Fleet_RuntimeConfiguration)
+      self.property(w, "ScriptId", "script_id", StringValueConverter())
+      self.property(w, "ServerLaunchParameters", "server_launch_parameters", StringValueConverter())
+      self.property(w, "ServerLaunchPath", "server_launch_path", StringValueConverter())
 
-  props = {
-    "BuildId": (StringValueConverter(), "build_id"),
-    "CertificateConfiguration": (AWS_GameLift_Fleet_CertificateConfiguration, "certificate_configuration"),
-    "Description": (StringValueConverter(), "description"),
-    "DesiredEC2Instances": (BasicValueConverter(), "desired_ec2_instances"),
-    "EC2InboundPermissions": (BlockValueConverter(AWS_GameLift_Fleet_IpPermission), None),
-    "EC2InstanceType": (StringValueConverter(), "ec2_instance_type"),
-    "FleetType": (StringValueConverter(), "fleet_type"),
-    "InstanceRoleARN": (StringValueConverter(), "instance_role_arn"),
-    "LogPaths": (ListValueConverter(StringValueConverter()), "log_paths"),
-    "MaxSize": (BasicValueConverter(), "max_size"),
-    "MetricGroups": (ListValueConverter(StringValueConverter()), "metric_groups"),
-    "MinSize": (BasicValueConverter(), "min_size"),
-    "Name": (StringValueConverter(), "name"),
-    "NewGameSessionProtectionPolicy": (StringValueConverter(), "new_game_session_protection_policy"),
-    "PeerVpcAwsAccountId": (StringValueConverter(), "peer_vpc_aws_account_id"),
-    "PeerVpcId": (StringValueConverter(), "peer_vpc_id"),
-    "ResourceCreationLimitPolicy": (AWS_GameLift_Fleet_ResourceCreationLimitPolicy, "resource_creation_limit_policy"),
-    "RuntimeConfiguration": (AWS_GameLift_Fleet_RuntimeConfiguration, "runtime_configuration"),
-    "ScriptId": (StringValueConverter(), "script_id"),
-    "ServerLaunchParameters": (StringValueConverter(), "server_launch_parameters"),
-    "ServerLaunchPath": (StringValueConverter(), "server_launch_path"),
-  }
 
 class AWS_GameLift_MatchmakingConfiguration(CloudFormationResource):
-  terraform_resource = "aws_game_lift_matchmaking_configuration"
+  cfn_type = "AWS::GameLift::MatchmakingConfiguration"
+  tf_type = "aws_game_lift_matchmaking_configuration"
+  ref = "arn"
 
-  resource_type = "AWS::GameLift::MatchmakingConfiguration"
+  def write(self, w):
+    with self.resource_block(w):
+      self.repeated_block(w, "GameProperties", AWS_GameLift_MatchmakingConfiguration_GameProperty)
+      self.property(w, "GameSessionData", "game_session_data", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "AcceptanceTimeoutSeconds", "acceptance_timeout_seconds", BasicValueConverter())
+      self.property(w, "NotificationTarget", "notification_target", StringValueConverter())
+      self.property(w, "CustomEventData", "custom_event_data", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "AdditionalPlayerCount", "additional_player_count", BasicValueConverter())
+      self.property(w, "BackfillMode", "backfill_mode", StringValueConverter())
+      self.property(w, "RequestTimeoutSeconds", "request_timeout_seconds", BasicValueConverter())
+      self.property(w, "AcceptanceRequired", "acceptance_required", BasicValueConverter())
+      self.property(w, "RuleSetName", "rule_set_name", StringValueConverter())
+      self.property(w, "GameSessionQueueArns", "game_session_queue_arns", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "GameProperties": (BlockValueConverter(AWS_GameLift_MatchmakingConfiguration_GameProperty), None),
-    "GameSessionData": (StringValueConverter(), "game_session_data"),
-    "Description": (StringValueConverter(), "description"),
-    "AcceptanceTimeoutSeconds": (BasicValueConverter(), "acceptance_timeout_seconds"),
-    "NotificationTarget": (StringValueConverter(), "notification_target"),
-    "CustomEventData": (StringValueConverter(), "custom_event_data"),
-    "Name": (StringValueConverter(), "name"),
-    "AdditionalPlayerCount": (BasicValueConverter(), "additional_player_count"),
-    "BackfillMode": (StringValueConverter(), "backfill_mode"),
-    "RequestTimeoutSeconds": (BasicValueConverter(), "request_timeout_seconds"),
-    "AcceptanceRequired": (BasicValueConverter(), "acceptance_required"),
-    "RuleSetName": (StringValueConverter(), "rule_set_name"),
-    "GameSessionQueueArns": (ListValueConverter(StringValueConverter()), "game_session_queue_arns"),
-  }
 
 class AWS_GameLift_Alias(CloudFormationResource):
-  terraform_resource = "aws_game_lift_alias"
+  cfn_type = "AWS::GameLift::Alias"
+  tf_type = "aws_game_lift_alias"
+  ref = "arn"
 
-  resource_type = "AWS::GameLift::Alias"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
+      self.block(w, "RoutingStrategy", AWS_GameLift_Alias_RoutingStrategy)
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "Name": (StringValueConverter(), "name"),
-    "RoutingStrategy": (AWS_GameLift_Alias_RoutingStrategy, "routing_strategy"),
-  }
 
 class AWS_GameLift_Build(CloudFormationResource):
-  terraform_resource = "aws_game_lift_build"
+  cfn_type = "AWS::GameLift::Build"
+  tf_type = "aws_game_lift_build"
+  ref = "arn"
 
-  resource_type = "AWS::GameLift::Build"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "OperatingSystem", "operating_system", StringValueConverter())
+      self.block(w, "StorageLocation", AWS_GameLift_Build_S3Location)
+      self.property(w, "Version", "version", StringValueConverter())
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-    "OperatingSystem": (StringValueConverter(), "operating_system"),
-    "StorageLocation": (AWS_GameLift_Build_S3Location, "storage_location"),
-    "Version": (StringValueConverter(), "version"),
-  }
 
 class AWS_GameLift_MatchmakingRuleSet(CloudFormationResource):
-  terraform_resource = "aws_game_lift_matchmaking_rule_set"
+  cfn_type = "AWS::GameLift::MatchmakingRuleSet"
+  tf_type = "aws_game_lift_matchmaking_rule_set"
+  ref = "arn"
 
-  resource_type = "AWS::GameLift::MatchmakingRuleSet"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "RuleSetBody", "rule_set_body", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "RuleSetBody": (StringValueConverter(), "rule_set_body"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_GameLift_GameSessionQueue(CloudFormationResource):
-  terraform_resource = "aws_game_lift_game_session_queue"
+  cfn_type = "AWS::GameLift::GameSessionQueue"
+  tf_type = "aws_game_lift_game_session_queue"
+  ref = "arn"
 
-  resource_type = "AWS::GameLift::GameSessionQueue"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "TimeoutInSeconds", "timeout_in_seconds", BasicValueConverter())
+      self.repeated_block(w, "PlayerLatencyPolicies", AWS_GameLift_GameSessionQueue_PlayerLatencyPolicy)
+      self.repeated_block(w, "Destinations", AWS_GameLift_GameSessionQueue_Destination)
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "TimeoutInSeconds": (BasicValueConverter(), "timeout_in_seconds"),
-    "PlayerLatencyPolicies": (BlockValueConverter(AWS_GameLift_GameSessionQueue_PlayerLatencyPolicy), None),
-    "Destinations": (BlockValueConverter(AWS_GameLift_GameSessionQueue_Destination), None),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_GameLift_Script(CloudFormationResource):
-  terraform_resource = "aws_game_lift_script"
+  cfn_type = "AWS::GameLift::Script"
+  tf_type = "aws_game_lift_script"
+  ref = "arn"
 
-  resource_type = "AWS::GameLift::Script"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Version", "version", StringValueConverter())
+      self.block(w, "StorageLocation", AWS_GameLift_Script_S3Location)
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Version": (StringValueConverter(), "version"),
-    "StorageLocation": (AWS_GameLift_Script_S3Location, "storage_location"),
-    "Name": (StringValueConverter(), "name"),
-  }
 

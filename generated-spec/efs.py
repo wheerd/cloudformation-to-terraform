@@ -1,98 +1,89 @@
 from . import *
 
 class AWS_EFS_AccessPoint_AccessPointTag(CloudFormationProperty):
-  entity = "AWS::EFS::AccessPoint"
-  tf_block_type = "access_point_tag"
+  def write(self, w):
+    with w.block("access_point_tag"):
+      self.property(w, "Key", "key", StringValueConverter())
+      self.property(w, "Value", "value", StringValueConverter())
 
-  props = {
-    "Key": (StringValueConverter(), "key"),
-    "Value": (StringValueConverter(), "value"),
-  }
 
 class AWS_EFS_AccessPoint_CreationInfo(CloudFormationProperty):
-  entity = "AWS::EFS::AccessPoint"
-  tf_block_type = "creation_info"
+  def write(self, w):
+    with w.block("creation_info"):
+      self.property(w, "OwnerUid", "owner_uid", StringValueConverter())
+      self.property(w, "OwnerGid", "owner_gid", StringValueConverter())
+      self.property(w, "Permissions", "permissions", StringValueConverter())
 
-  props = {
-    "OwnerUid": (StringValueConverter(), "owner_uid"),
-    "OwnerGid": (StringValueConverter(), "owner_gid"),
-    "Permissions": (StringValueConverter(), "permissions"),
-  }
 
 class AWS_EFS_FileSystem_ElasticFileSystemTag(CloudFormationProperty):
-  entity = "AWS::EFS::FileSystem"
-  tf_block_type = "elastic_file_system_tag"
+  def write(self, w):
+    with w.block("elastic_file_system_tag"):
+      self.property(w, "Key", "key", StringValueConverter())
+      self.property(w, "Value", "value", StringValueConverter())
 
-  props = {
-    "Key": (StringValueConverter(), "key"),
-    "Value": (StringValueConverter(), "value"),
-  }
 
 class AWS_EFS_AccessPoint_RootDirectory(CloudFormationProperty):
-  entity = "AWS::EFS::AccessPoint"
-  tf_block_type = "root_directory"
+  def write(self, w):
+    with w.block("root_directory"):
+      self.property(w, "Path", "path", StringValueConverter())
+      self.block(w, "CreationInfo", AWS_EFS_AccessPoint_CreationInfo)
 
-  props = {
-    "Path": (StringValueConverter(), "path"),
-    "CreationInfo": (AWS_EFS_AccessPoint_CreationInfo, "creation_info"),
-  }
 
 class AWS_EFS_FileSystem_LifecyclePolicy(CloudFormationProperty):
-  entity = "AWS::EFS::FileSystem"
-  tf_block_type = "lifecycle_policy"
+  def write(self, w):
+    with w.block("lifecycle_policy"):
+      self.property(w, "TransitionToIA", "transition_to_ia", StringValueConverter())
 
-  props = {
-    "TransitionToIA": (StringValueConverter(), "transition_to_ia"),
-  }
 
 class AWS_EFS_AccessPoint_PosixUser(CloudFormationProperty):
-  entity = "AWS::EFS::AccessPoint"
-  tf_block_type = "posix_user"
+  def write(self, w):
+    with w.block("posix_user"):
+      self.property(w, "Uid", "uid", StringValueConverter())
+      self.property(w, "Gid", "gid", StringValueConverter())
+      self.property(w, "SecondaryGids", "secondary_gids", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "Uid": (StringValueConverter(), "uid"),
-    "Gid": (StringValueConverter(), "gid"),
-    "SecondaryGids": (ListValueConverter(StringValueConverter()), "secondary_gids"),
-  }
 
 class AWS_EFS_MountTarget(CloudFormationResource):
-  terraform_resource = "aws_efs_mount_target"
+  cfn_type = "AWS::EFS::MountTarget"
+  tf_type = "aws_efs_mount_target"
+  ref = "arn"
 
-  resource_type = "AWS::EFS::MountTarget"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "FileSystemId", "file_system_id", StringValueConverter())
+      self.property(w, "IpAddress", "ip_address", StringValueConverter())
+      self.property(w, "SecurityGroups", "security_groups", ListValueConverter(StringValueConverter()))
+      self.property(w, "SubnetId", "subnet_id", StringValueConverter())
 
-  props = {
-    "FileSystemId": (StringValueConverter(), "file_system_id"),
-    "IpAddress": (StringValueConverter(), "ip_address"),
-    "SecurityGroups": (ListValueConverter(StringValueConverter()), "security_groups"),
-    "SubnetId": (StringValueConverter(), "subnet_id"),
-  }
 
 class AWS_EFS_FileSystem(CloudFormationResource):
-  terraform_resource = "aws_efs_file_system"
+  cfn_type = "AWS::EFS::FileSystem"
+  tf_type = "aws_efs_file_system"
+  ref = "arn"
 
-  resource_type = "AWS::EFS::FileSystem"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Encrypted", "encrypted", BasicValueConverter())
+      self.repeated_block(w, "FileSystemTags", AWS_EFS_FileSystem_ElasticFileSystemTag)
+      self.property(w, "KmsKeyId", "kms_key_id", StringValueConverter())
+      self.repeated_block(w, "LifecyclePolicies", AWS_EFS_FileSystem_LifecyclePolicy)
+      self.property(w, "PerformanceMode", "performance_mode", StringValueConverter())
+      self.property(w, "ProvisionedThroughputInMibps", "provisioned_throughput_in_mibps", BasicValueConverter())
+      self.property(w, "ThroughputMode", "throughput_mode", StringValueConverter())
+      self.property(w, "FileSystemPolicy", "file_system_policy", StringValueConverter())
 
-  props = {
-    "Encrypted": (BasicValueConverter(), "encrypted"),
-    "FileSystemTags": (BlockValueConverter(AWS_EFS_FileSystem_ElasticFileSystemTag), None),
-    "KmsKeyId": (StringValueConverter(), "kms_key_id"),
-    "LifecyclePolicies": (BlockValueConverter(AWS_EFS_FileSystem_LifecyclePolicy), None),
-    "PerformanceMode": (StringValueConverter(), "performance_mode"),
-    "ProvisionedThroughputInMibps": (BasicValueConverter(), "provisioned_throughput_in_mibps"),
-    "ThroughputMode": (StringValueConverter(), "throughput_mode"),
-    "FileSystemPolicy": (StringValueConverter(), "file_system_policy"),
-  }
 
 class AWS_EFS_AccessPoint(CloudFormationResource):
-  terraform_resource = "aws_efs_access_point"
+  cfn_type = "AWS::EFS::AccessPoint"
+  tf_type = "aws_efs_access_point"
+  ref = "arn"
 
-  resource_type = "AWS::EFS::AccessPoint"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ClientToken", "client_token", StringValueConverter())
+      self.repeated_block(w, "AccessPointTags", AWS_EFS_AccessPoint_AccessPointTag)
+      self.property(w, "FileSystemId", "file_system_id", StringValueConverter())
+      self.block(w, "PosixUser", AWS_EFS_AccessPoint_PosixUser)
+      self.block(w, "RootDirectory", AWS_EFS_AccessPoint_RootDirectory)
 
-  props = {
-    "ClientToken": (StringValueConverter(), "client_token"),
-    "AccessPointTags": (BlockValueConverter(AWS_EFS_AccessPoint_AccessPointTag), None),
-    "FileSystemId": (StringValueConverter(), "file_system_id"),
-    "PosixUser": (AWS_EFS_AccessPoint_PosixUser, "posix_user"),
-    "RootDirectory": (AWS_EFS_AccessPoint_RootDirectory, "root_directory"),
-  }
 

@@ -1,42 +1,37 @@
 from . import *
 
 class AWS_ResourceGroups_Group_TagFilter(CloudFormationProperty):
-  entity = "AWS::ResourceGroups::Group"
-  tf_block_type = "tag_filter"
+  def write(self, w):
+    with w.block("tag_filter"):
+      self.property(w, "Key", "key", StringValueConverter())
+      self.property(w, "Values", "values", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "Key": (StringValueConverter(), "key"),
-    "Values": (ListValueConverter(StringValueConverter()), "values"),
-  }
 
 class AWS_ResourceGroups_Group_Query(CloudFormationProperty):
-  entity = "AWS::ResourceGroups::Group"
-  tf_block_type = "query"
+  def write(self, w):
+    with w.block("query"):
+      self.property(w, "ResourceTypeFilters", "resource_type_filters", ListValueConverter(StringValueConverter()))
+      self.property(w, "StackIdentifier", "stack_identifier", StringValueConverter())
+      self.repeated_block(w, "TagFilters", AWS_ResourceGroups_Group_TagFilter)
 
-  props = {
-    "ResourceTypeFilters": (ListValueConverter(StringValueConverter()), "resource_type_filters"),
-    "StackIdentifier": (StringValueConverter(), "stack_identifier"),
-    "TagFilters": (BlockValueConverter(AWS_ResourceGroups_Group_TagFilter), None),
-  }
 
 class AWS_ResourceGroups_Group_ResourceQuery(CloudFormationProperty):
-  entity = "AWS::ResourceGroups::Group"
-  tf_block_type = "resource_query"
+  def write(self, w):
+    with w.block("resource_query"):
+      self.property(w, "Type", "type", StringValueConverter())
+      self.block(w, "Query", AWS_ResourceGroups_Group_Query)
 
-  props = {
-    "Type": (StringValueConverter(), "type"),
-    "Query": (AWS_ResourceGroups_Group_Query, "query"),
-  }
 
 class AWS_ResourceGroups_Group(CloudFormationResource):
-  terraform_resource = "aws_resource_groups_group"
+  cfn_type = "AWS::ResourceGroups::Group"
+  tf_type = "aws_resource_groups_group"
+  ref = "arn"
 
-  resource_type = "AWS::ResourceGroups::Group"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.block(w, "ResourceQuery", AWS_ResourceGroups_Group_ResourceQuery)
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-    "Description": (StringValueConverter(), "description"),
-    "ResourceQuery": (AWS_ResourceGroups_Group_ResourceQuery, "resource_query"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 

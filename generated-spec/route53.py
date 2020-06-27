@@ -1,197 +1,177 @@
 from . import *
 
 class AWS_Route53_HostedZone_HostedZoneTag(CloudFormationProperty):
-  entity = "AWS::Route53::HostedZone"
-  tf_block_type = "hosted_zone_tag"
+  def write(self, w):
+    with w.block("hosted_zone_tag"):
+      self.property(w, "Key", "key", StringValueConverter())
+      self.property(w, "Value", "value", StringValueConverter())
 
-  props = {
-    "Key": (StringValueConverter(), "key"),
-    "Value": (StringValueConverter(), "value"),
-  }
 
 class AWS_Route53_HostedZone_HostedZoneConfig(CloudFormationProperty):
-  entity = "AWS::Route53::HostedZone"
-  tf_block_type = "hosted_zone_config"
+  def write(self, w):
+    with w.block("hosted_zone_config"):
+      self.property(w, "Comment", "comment", StringValueConverter())
 
-  props = {
-    "Comment": (StringValueConverter(), "comment"),
-  }
 
 class AWS_Route53_HostedZone_QueryLoggingConfig(CloudFormationProperty):
-  entity = "AWS::Route53::HostedZone"
-  tf_block_type = "query_logging_config"
+  def write(self, w):
+    with w.block("query_logging_config"):
+      self.property(w, "CloudWatchLogsLogGroupArn", "cloud_watch_logs_log_group_arn", StringValueConverter())
 
-  props = {
-    "CloudWatchLogsLogGroupArn": (StringValueConverter(), "cloud_watch_logs_log_group_arn"),
-  }
 
 class AWS_Route53_RecordSetGroup_AliasTarget(CloudFormationProperty):
-  entity = "AWS::Route53::RecordSetGroup"
-  tf_block_type = "alias_target"
+  def write(self, w):
+    with w.block("alias_target"):
+      self.property(w, "DNSName", "dns_name", StringValueConverter())
+      self.property(w, "EvaluateTargetHealth", "evaluate_target_health", BasicValueConverter())
+      self.property(w, "HostedZoneId", "hosted_zone_id", StringValueConverter())
 
-  props = {
-    "DNSName": (StringValueConverter(), "dns_name"),
-    "EvaluateTargetHealth": (BasicValueConverter(), "evaluate_target_health"),
-    "HostedZoneId": (StringValueConverter(), "hosted_zone_id"),
-  }
 
 class AWS_Route53_HealthCheck_AlarmIdentifier(CloudFormationProperty):
-  entity = "AWS::Route53::HealthCheck"
-  tf_block_type = "alarm_identifier"
+  def write(self, w):
+    with w.block("alarm_identifier"):
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Region", "region", StringValueConverter())
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-    "Region": (StringValueConverter(), "region"),
-  }
 
 class AWS_Route53_RecordSet_GeoLocation(CloudFormationProperty):
-  entity = "AWS::Route53::RecordSet"
-  tf_block_type = "geo_location"
+  def write(self, w):
+    with w.block("geo_location"):
+      self.property(w, "ContinentCode", "continent_code", StringValueConverter())
+      self.property(w, "CountryCode", "country_code", StringValueConverter())
+      self.property(w, "SubdivisionCode", "subdivision_code", StringValueConverter())
 
-  props = {
-    "ContinentCode": (StringValueConverter(), "continent_code"),
-    "CountryCode": (StringValueConverter(), "country_code"),
-    "SubdivisionCode": (StringValueConverter(), "subdivision_code"),
-  }
 
 class AWS_Route53_RecordSet_AliasTarget(CloudFormationProperty):
-  entity = "AWS::Route53::RecordSet"
-  tf_block_type = "alias_target"
+  def write(self, w):
+    with w.block("alias_target"):
+      self.property(w, "DNSName", "dns_name", StringValueConverter())
+      self.property(w, "EvaluateTargetHealth", "evaluate_target_health", BasicValueConverter())
+      self.property(w, "HostedZoneId", "hosted_zone_id", StringValueConverter())
 
-  props = {
-    "DNSName": (StringValueConverter(), "dns_name"),
-    "EvaluateTargetHealth": (BasicValueConverter(), "evaluate_target_health"),
-    "HostedZoneId": (StringValueConverter(), "hosted_zone_id"),
-  }
 
 class AWS_Route53_RecordSetGroup_GeoLocation(CloudFormationProperty):
-  entity = "AWS::Route53::RecordSetGroup"
-  tf_block_type = "geo_location"
+  def write(self, w):
+    with w.block("geo_location"):
+      self.property(w, "ContinentCode", "continent_code", StringValueConverter())
+      self.property(w, "CountryCode", "country_code", StringValueConverter())
+      self.property(w, "SubdivisionCode", "subdivision_code", StringValueConverter())
 
-  props = {
-    "ContinentCode": (StringValueConverter(), "continent_code"),
-    "CountryCode": (StringValueConverter(), "country_code"),
-    "SubdivisionCode": (StringValueConverter(), "subdivision_code"),
-  }
 
 class AWS_Route53_HealthCheck_HealthCheckTag(CloudFormationProperty):
-  entity = "AWS::Route53::HealthCheck"
-  tf_block_type = "health_check_tag"
+  def write(self, w):
+    with w.block("health_check_tag"):
+      self.property(w, "Key", "key", StringValueConverter())
+      self.property(w, "Value", "value", StringValueConverter())
 
-  props = {
-    "Key": (StringValueConverter(), "key"),
-    "Value": (StringValueConverter(), "value"),
-  }
 
 class AWS_Route53_HostedZone_VPC(CloudFormationProperty):
-  entity = "AWS::Route53::HostedZone"
-  tf_block_type = "vpc"
+  def write(self, w):
+    with w.block("vpc"):
+      self.property(w, "VPCId", "vpc_id", StringValueConverter())
+      self.property(w, "VPCRegion", "vpc_region", StringValueConverter())
 
-  props = {
-    "VPCId": (StringValueConverter(), "vpc_id"),
-    "VPCRegion": (StringValueConverter(), "vpc_region"),
-  }
 
 class AWS_Route53_RecordSet(CloudFormationResource):
-  terraform_resource = "aws_route53_record_set"
+  cfn_type = "AWS::Route53::RecordSet"
+  tf_type = "aws_route53_record_set"
+  ref = "arn"
 
-  resource_type = "AWS::Route53::RecordSet"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "AliasTarget", AWS_Route53_RecordSet_AliasTarget)
+      self.property(w, "Comment", "comment", StringValueConverter())
+      self.property(w, "Failover", "failover", StringValueConverter())
+      self.block(w, "GeoLocation", AWS_Route53_RecordSet_GeoLocation)
+      self.property(w, "HealthCheckId", "health_check_id", StringValueConverter())
+      self.property(w, "HostedZoneId", "hosted_zone_id", StringValueConverter())
+      self.property(w, "HostedZoneName", "hosted_zone_name", StringValueConverter())
+      self.property(w, "MultiValueAnswer", "multi_value_answer", BasicValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Region", "region", StringValueConverter())
+      self.property(w, "ResourceRecords", "resource_records", ListValueConverter(StringValueConverter()))
+      self.property(w, "SetIdentifier", "set_identifier", StringValueConverter())
+      self.property(w, "TTL", "ttl", StringValueConverter())
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "Weight", "weight", BasicValueConverter())
 
-  props = {
-    "AliasTarget": (AWS_Route53_RecordSet_AliasTarget, "alias_target"),
-    "Comment": (StringValueConverter(), "comment"),
-    "Failover": (StringValueConverter(), "failover"),
-    "GeoLocation": (AWS_Route53_RecordSet_GeoLocation, "geo_location"),
-    "HealthCheckId": (StringValueConverter(), "health_check_id"),
-    "HostedZoneId": (StringValueConverter(), "hosted_zone_id"),
-    "HostedZoneName": (StringValueConverter(), "hosted_zone_name"),
-    "MultiValueAnswer": (BasicValueConverter(), "multi_value_answer"),
-    "Name": (StringValueConverter(), "name"),
-    "Region": (StringValueConverter(), "region"),
-    "ResourceRecords": (ListValueConverter(StringValueConverter()), "resource_records"),
-    "SetIdentifier": (StringValueConverter(), "set_identifier"),
-    "TTL": (StringValueConverter(), "ttl"),
-    "Type": (StringValueConverter(), "type"),
-    "Weight": (BasicValueConverter(), "weight"),
-  }
 
 class AWS_Route53_HostedZone(CloudFormationResource):
-  terraform_resource = "aws_route53_hosted_zone"
+  cfn_type = "AWS::Route53::HostedZone"
+  tf_type = "aws_route53_hosted_zone"
+  ref = "arn"
 
-  resource_type = "AWS::Route53::HostedZone"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "HostedZoneConfig", AWS_Route53_HostedZone_HostedZoneConfig)
+      self.repeated_block(w, "HostedZoneTags", AWS_Route53_HostedZone_HostedZoneTag)
+      self.property(w, "Name", "name", StringValueConverter())
+      self.block(w, "QueryLoggingConfig", AWS_Route53_HostedZone_QueryLoggingConfig)
+      self.repeated_block(w, "VPCs", AWS_Route53_HostedZone_VPC)
 
-  props = {
-    "HostedZoneConfig": (AWS_Route53_HostedZone_HostedZoneConfig, "hosted_zone_config"),
-    "HostedZoneTags": (BlockValueConverter(AWS_Route53_HostedZone_HostedZoneTag), None),
-    "Name": (StringValueConverter(), "name"),
-    "QueryLoggingConfig": (AWS_Route53_HostedZone_QueryLoggingConfig, "query_logging_config"),
-    "VPCs": (BlockValueConverter(AWS_Route53_HostedZone_VPC), None),
-  }
 
 class AWS_Route53_HealthCheck_HealthCheckConfig(CloudFormationProperty):
-  entity = "AWS::Route53::HealthCheck"
-  tf_block_type = "health_check_config"
+  def write(self, w):
+    with w.block("health_check_config"):
+      self.block(w, "AlarmIdentifier", AWS_Route53_HealthCheck_AlarmIdentifier)
+      self.property(w, "ChildHealthChecks", "child_health_checks", ListValueConverter(StringValueConverter()))
+      self.property(w, "EnableSNI", "enable_sni", BasicValueConverter())
+      self.property(w, "FailureThreshold", "failure_threshold", BasicValueConverter())
+      self.property(w, "FullyQualifiedDomainName", "fully_qualified_domain_name", StringValueConverter())
+      self.property(w, "HealthThreshold", "health_threshold", BasicValueConverter())
+      self.property(w, "IPAddress", "ip_address", StringValueConverter())
+      self.property(w, "InsufficientDataHealthStatus", "insufficient_data_health_status", StringValueConverter())
+      self.property(w, "Inverted", "inverted", BasicValueConverter())
+      self.property(w, "MeasureLatency", "measure_latency", BasicValueConverter())
+      self.property(w, "Port", "port", BasicValueConverter())
+      self.property(w, "Regions", "regions", ListValueConverter(StringValueConverter()))
+      self.property(w, "RequestInterval", "request_interval", BasicValueConverter())
+      self.property(w, "ResourcePath", "resource_path", StringValueConverter())
+      self.property(w, "SearchString", "search_string", StringValueConverter())
+      self.property(w, "Type", "type", StringValueConverter())
 
-  props = {
-    "AlarmIdentifier": (AWS_Route53_HealthCheck_AlarmIdentifier, "alarm_identifier"),
-    "ChildHealthChecks": (ListValueConverter(StringValueConverter()), "child_health_checks"),
-    "EnableSNI": (BasicValueConverter(), "enable_sni"),
-    "FailureThreshold": (BasicValueConverter(), "failure_threshold"),
-    "FullyQualifiedDomainName": (StringValueConverter(), "fully_qualified_domain_name"),
-    "HealthThreshold": (BasicValueConverter(), "health_threshold"),
-    "IPAddress": (StringValueConverter(), "ip_address"),
-    "InsufficientDataHealthStatus": (StringValueConverter(), "insufficient_data_health_status"),
-    "Inverted": (BasicValueConverter(), "inverted"),
-    "MeasureLatency": (BasicValueConverter(), "measure_latency"),
-    "Port": (BasicValueConverter(), "port"),
-    "Regions": (ListValueConverter(StringValueConverter()), "regions"),
-    "RequestInterval": (BasicValueConverter(), "request_interval"),
-    "ResourcePath": (StringValueConverter(), "resource_path"),
-    "SearchString": (StringValueConverter(), "search_string"),
-    "Type": (StringValueConverter(), "type"),
-  }
 
 class AWS_Route53_RecordSetGroup_RecordSet(CloudFormationProperty):
-  entity = "AWS::Route53::RecordSetGroup"
-  tf_block_type = "record_set"
+  def write(self, w):
+    with w.block("record_set"):
+      self.block(w, "AliasTarget", AWS_Route53_RecordSetGroup_AliasTarget)
+      self.property(w, "Comment", "comment", StringValueConverter())
+      self.property(w, "Failover", "failover", StringValueConverter())
+      self.block(w, "GeoLocation", AWS_Route53_RecordSetGroup_GeoLocation)
+      self.property(w, "HealthCheckId", "health_check_id", StringValueConverter())
+      self.property(w, "HostedZoneId", "hosted_zone_id", StringValueConverter())
+      self.property(w, "HostedZoneName", "hosted_zone_name", StringValueConverter())
+      self.property(w, "MultiValueAnswer", "multi_value_answer", BasicValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Region", "region", StringValueConverter())
+      self.property(w, "ResourceRecords", "resource_records", ListValueConverter(StringValueConverter()))
+      self.property(w, "SetIdentifier", "set_identifier", StringValueConverter())
+      self.property(w, "TTL", "ttl", StringValueConverter())
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "Weight", "weight", BasicValueConverter())
 
-  props = {
-    "AliasTarget": (AWS_Route53_RecordSetGroup_AliasTarget, "alias_target"),
-    "Comment": (StringValueConverter(), "comment"),
-    "Failover": (StringValueConverter(), "failover"),
-    "GeoLocation": (AWS_Route53_RecordSetGroup_GeoLocation, "geo_location"),
-    "HealthCheckId": (StringValueConverter(), "health_check_id"),
-    "HostedZoneId": (StringValueConverter(), "hosted_zone_id"),
-    "HostedZoneName": (StringValueConverter(), "hosted_zone_name"),
-    "MultiValueAnswer": (BasicValueConverter(), "multi_value_answer"),
-    "Name": (StringValueConverter(), "name"),
-    "Region": (StringValueConverter(), "region"),
-    "ResourceRecords": (ListValueConverter(StringValueConverter()), "resource_records"),
-    "SetIdentifier": (StringValueConverter(), "set_identifier"),
-    "TTL": (StringValueConverter(), "ttl"),
-    "Type": (StringValueConverter(), "type"),
-    "Weight": (BasicValueConverter(), "weight"),
-  }
 
 class AWS_Route53_HealthCheck(CloudFormationResource):
-  terraform_resource = "aws_route53_health_check"
+  cfn_type = "AWS::Route53::HealthCheck"
+  tf_type = "aws_route53_health_check"
+  ref = "arn"
 
-  resource_type = "AWS::Route53::HealthCheck"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "HealthCheckConfig", AWS_Route53_HealthCheck_HealthCheckConfig)
+      self.repeated_block(w, "HealthCheckTags", AWS_Route53_HealthCheck_HealthCheckTag)
 
-  props = {
-    "HealthCheckConfig": (AWS_Route53_HealthCheck_HealthCheckConfig, "health_check_config"),
-    "HealthCheckTags": (BlockValueConverter(AWS_Route53_HealthCheck_HealthCheckTag), None),
-  }
 
 class AWS_Route53_RecordSetGroup(CloudFormationResource):
-  terraform_resource = "aws_route53_record_set_group"
+  cfn_type = "AWS::Route53::RecordSetGroup"
+  tf_type = "aws_route53_record_set_group"
+  ref = "arn"
 
-  resource_type = "AWS::Route53::RecordSetGroup"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Comment", "comment", StringValueConverter())
+      self.property(w, "HostedZoneId", "hosted_zone_id", StringValueConverter())
+      self.property(w, "HostedZoneName", "hosted_zone_name", StringValueConverter())
+      self.repeated_block(w, "RecordSets", AWS_Route53_RecordSetGroup_RecordSet)
 
-  props = {
-    "Comment": (StringValueConverter(), "comment"),
-    "HostedZoneId": (StringValueConverter(), "hosted_zone_id"),
-    "HostedZoneName": (StringValueConverter(), "hosted_zone_name"),
-    "RecordSets": (BlockValueConverter(AWS_Route53_RecordSetGroup_RecordSet), None),
-  }
 

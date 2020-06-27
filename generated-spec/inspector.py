@@ -1,34 +1,37 @@
 from . import *
 
 class AWS_Inspector_ResourceGroup(CloudFormationResource):
-  terraform_resource = "aws_inspector_resource_group"
+  cfn_type = "AWS::Inspector::ResourceGroup"
+  tf_type = "aws_inspector_resource_group"
+  ref = "arn"
 
-  resource_type = "AWS::Inspector::ResourceGroup"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ResourceGroupTags", "resource_group_tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "ResourceGroupTags": (ListValueConverter(ResourceTag), "resource_group_tags"),
-  }
 
 class AWS_Inspector_AssessmentTemplate(CloudFormationResource):
-  terraform_resource = "aws_inspector_assessment_template"
+  cfn_type = "AWS::Inspector::AssessmentTemplate"
+  tf_type = "aws_inspector_assessment_template"
+  ref = "arn"
 
-  resource_type = "AWS::Inspector::AssessmentTemplate"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "AssessmentTargetArn", "assessment_target_arn", StringValueConverter())
+      self.property(w, "DurationInSeconds", "duration_in_seconds", BasicValueConverter())
+      self.property(w, "AssessmentTemplateName", "assessment_template_name", StringValueConverter())
+      self.property(w, "RulesPackageArns", "rules_package_arns", ListValueConverter(StringValueConverter()))
+      self.property(w, "UserAttributesForFindings", "user_attributes_for_findings", ListValueConverter(ResourceTag()))
 
-  props = {
-    "AssessmentTargetArn": (StringValueConverter(), "assessment_target_arn"),
-    "DurationInSeconds": (BasicValueConverter(), "duration_in_seconds"),
-    "AssessmentTemplateName": (StringValueConverter(), "assessment_template_name"),
-    "RulesPackageArns": (ListValueConverter(StringValueConverter()), "rules_package_arns"),
-    "UserAttributesForFindings": (ListValueConverter(ResourceTag), "user_attributes_for_findings"),
-  }
 
 class AWS_Inspector_AssessmentTarget(CloudFormationResource):
-  terraform_resource = "aws_inspector_assessment_target"
+  cfn_type = "AWS::Inspector::AssessmentTarget"
+  tf_type = "aws_inspector_assessment_target"
+  ref = "arn"
 
-  resource_type = "AWS::Inspector::AssessmentTarget"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "AssessmentTargetName", "assessment_target_name", StringValueConverter())
+      self.property(w, "ResourceGroupArn", "resource_group_arn", StringValueConverter())
 
-  props = {
-    "AssessmentTargetName": (StringValueConverter(), "assessment_target_name"),
-    "ResourceGroupArn": (StringValueConverter(), "resource_group_arn"),
-  }
 

@@ -1,129 +1,123 @@
 from . import *
 
 class AWS_RoboMaker_RobotApplication_RobotSoftwareSuite(CloudFormationProperty):
-  entity = "AWS::RoboMaker::RobotApplication"
-  tf_block_type = "robot_software_suite"
+  def write(self, w):
+    with w.block("robot_software_suite"):
+      self.property(w, "Version", "version", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Version": (StringValueConverter(), "version"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_RoboMaker_SimulationApplication_RenderingEngine(CloudFormationProperty):
-  entity = "AWS::RoboMaker::SimulationApplication"
-  tf_block_type = "rendering_engine"
+  def write(self, w):
+    with w.block("rendering_engine"):
+      self.property(w, "Version", "version", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Version": (StringValueConverter(), "version"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_RoboMaker_RobotApplication_SourceConfig(CloudFormationProperty):
-  entity = "AWS::RoboMaker::RobotApplication"
-  tf_block_type = "source_config"
+  def write(self, w):
+    with w.block("source_config"):
+      self.property(w, "S3Bucket", "s3_bucket", StringValueConverter())
+      self.property(w, "Architecture", "architecture", StringValueConverter())
+      self.property(w, "S3Key", "s3_key", StringValueConverter())
 
-  props = {
-    "S3Bucket": (StringValueConverter(), "s3_bucket"),
-    "Architecture": (StringValueConverter(), "architecture"),
-    "S3Key": (StringValueConverter(), "s3_key"),
-  }
 
 class AWS_RoboMaker_SimulationApplication_SimulationSoftwareSuite(CloudFormationProperty):
-  entity = "AWS::RoboMaker::SimulationApplication"
-  tf_block_type = "simulation_software_suite"
+  def write(self, w):
+    with w.block("simulation_software_suite"):
+      self.property(w, "Version", "version", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Version": (StringValueConverter(), "version"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_RoboMaker_SimulationApplication_RobotSoftwareSuite(CloudFormationProperty):
-  entity = "AWS::RoboMaker::SimulationApplication"
-  tf_block_type = "robot_software_suite"
+  def write(self, w):
+    with w.block("robot_software_suite"):
+      self.property(w, "Version", "version", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Version": (StringValueConverter(), "version"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_RoboMaker_SimulationApplication_SourceConfig(CloudFormationProperty):
-  entity = "AWS::RoboMaker::SimulationApplication"
-  tf_block_type = "source_config"
+  def write(self, w):
+    with w.block("source_config"):
+      self.property(w, "S3Bucket", "s3_bucket", StringValueConverter())
+      self.property(w, "Architecture", "architecture", StringValueConverter())
+      self.property(w, "S3Key", "s3_key", StringValueConverter())
 
-  props = {
-    "S3Bucket": (StringValueConverter(), "s3_bucket"),
-    "Architecture": (StringValueConverter(), "architecture"),
-    "S3Key": (StringValueConverter(), "s3_key"),
-  }
 
 class AWS_RoboMaker_SimulationApplication(CloudFormationResource):
-  terraform_resource = "aws_robo_maker_simulation_application"
+  cfn_type = "AWS::RoboMaker::SimulationApplication"
+  tf_type = "aws_robo_maker_simulation_application"
+  ref = "arn"
 
-  resource_type = "AWS::RoboMaker::SimulationApplication"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "RenderingEngine", AWS_RoboMaker_SimulationApplication_RenderingEngine)
+      self.block(w, "SimulationSoftwareSuite", AWS_RoboMaker_SimulationApplication_SimulationSoftwareSuite)
+      self.property(w, "CurrentRevisionId", "current_revision_id", StringValueConverter())
+      self.block(w, "RobotSoftwareSuite", AWS_RoboMaker_SimulationApplication_RobotSoftwareSuite)
+      self.repeated_block(w, "Sources", AWS_RoboMaker_SimulationApplication_SourceConfig)
+      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "RenderingEngine": (AWS_RoboMaker_SimulationApplication_RenderingEngine, "rendering_engine"),
-    "SimulationSoftwareSuite": (AWS_RoboMaker_SimulationApplication_SimulationSoftwareSuite, "simulation_software_suite"),
-    "CurrentRevisionId": (StringValueConverter(), "current_revision_id"),
-    "RobotSoftwareSuite": (AWS_RoboMaker_SimulationApplication_RobotSoftwareSuite, "robot_software_suite"),
-    "Sources": (BlockValueConverter(AWS_RoboMaker_SimulationApplication_SourceConfig), None),
-    "Tags": (StringValueConverter(), "tags"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_RoboMaker_SimulationApplicationVersion(CloudFormationResource):
-  terraform_resource = "aws_robo_maker_simulation_application_version"
+  cfn_type = "AWS::RoboMaker::SimulationApplicationVersion"
+  tf_type = "aws_robo_maker_simulation_application_version"
+  ref = "arn"
 
-  resource_type = "AWS::RoboMaker::SimulationApplicationVersion"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "CurrentRevisionId", "current_revision_id", StringValueConverter())
+      self.property(w, "Application", "application", StringValueConverter())
 
-  props = {
-    "CurrentRevisionId": (StringValueConverter(), "current_revision_id"),
-    "Application": (StringValueConverter(), "application"),
-  }
 
 class AWS_RoboMaker_RobotApplication(CloudFormationResource):
-  terraform_resource = "aws_robo_maker_robot_application"
+  cfn_type = "AWS::RoboMaker::RobotApplication"
+  tf_type = "aws_robo_maker_robot_application"
+  ref = "arn"
 
-  resource_type = "AWS::RoboMaker::RobotApplication"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "CurrentRevisionId", "current_revision_id", StringValueConverter())
+      self.block(w, "RobotSoftwareSuite", AWS_RoboMaker_RobotApplication_RobotSoftwareSuite)
+      self.repeated_block(w, "Sources", AWS_RoboMaker_RobotApplication_SourceConfig)
+      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "CurrentRevisionId": (StringValueConverter(), "current_revision_id"),
-    "RobotSoftwareSuite": (AWS_RoboMaker_RobotApplication_RobotSoftwareSuite, "robot_software_suite"),
-    "Sources": (BlockValueConverter(AWS_RoboMaker_RobotApplication_SourceConfig), None),
-    "Tags": (StringValueConverter(), "tags"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_RoboMaker_Fleet(CloudFormationResource):
-  terraform_resource = "aws_robo_maker_fleet"
+  cfn_type = "AWS::RoboMaker::Fleet"
+  tf_type = "aws_robo_maker_fleet"
+  ref = "arn"
 
-  resource_type = "AWS::RoboMaker::Fleet"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Tags": (StringValueConverter(), "tags"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_RoboMaker_RobotApplicationVersion(CloudFormationResource):
-  terraform_resource = "aws_robo_maker_robot_application_version"
+  cfn_type = "AWS::RoboMaker::RobotApplicationVersion"
+  tf_type = "aws_robo_maker_robot_application_version"
+  ref = "arn"
 
-  resource_type = "AWS::RoboMaker::RobotApplicationVersion"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "CurrentRevisionId", "current_revision_id", StringValueConverter())
+      self.property(w, "Application", "application", StringValueConverter())
 
-  props = {
-    "CurrentRevisionId": (StringValueConverter(), "current_revision_id"),
-    "Application": (StringValueConverter(), "application"),
-  }
 
 class AWS_RoboMaker_Robot(CloudFormationResource):
-  terraform_resource = "aws_robo_maker_robot"
+  cfn_type = "AWS::RoboMaker::Robot"
+  tf_type = "aws_robo_maker_robot"
+  ref = "arn"
 
-  resource_type = "AWS::RoboMaker::Robot"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Fleet", "fleet", StringValueConverter())
+      self.property(w, "Architecture", "architecture", StringValueConverter())
+      self.property(w, "GreengrassGroupId", "greengrass_group_id", StringValueConverter())
+      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Fleet": (StringValueConverter(), "fleet"),
-    "Architecture": (StringValueConverter(), "architecture"),
-    "GreengrassGroupId": (StringValueConverter(), "greengrass_group_id"),
-    "Tags": (StringValueConverter(), "tags"),
-    "Name": (StringValueConverter(), "name"),
-  }
 

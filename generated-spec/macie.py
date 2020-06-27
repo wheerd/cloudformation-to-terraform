@@ -1,51 +1,54 @@
 from . import *
 
 class AWS_Macie_FindingsFilter_Criterion(CloudFormationProperty):
-  entity = "AWS::Macie::FindingsFilter"
-  tf_block_type = "criterion"
+  def write(self, w):
+    with w.block("criterion"):
+      pass
+
 
 class AWS_Macie_FindingsFilter_FindingCriteria(CloudFormationProperty):
-  entity = "AWS::Macie::FindingsFilter"
-  tf_block_type = "finding_criteria"
+  def write(self, w):
+    with w.block("finding_criteria"):
+      self.block(w, "Criterion", AWS_Macie_FindingsFilter_Criterion)
 
-  props = {
-    "Criterion": (AWS_Macie_FindingsFilter_Criterion, "criterion"),
-  }
 
 class AWS_Macie_Session(CloudFormationResource):
-  terraform_resource = "aws_macie_session"
+  cfn_type = "AWS::Macie::Session"
+  tf_type = "aws_macie_session"
+  ref = "arn"
 
-  resource_type = "AWS::Macie::Session"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Status", "status", StringValueConverter())
+      self.property(w, "FindingPublishingFrequency", "finding_publishing_frequency", StringValueConverter())
 
-  props = {
-    "Status": (StringValueConverter(), "status"),
-    "FindingPublishingFrequency": (StringValueConverter(), "finding_publishing_frequency"),
-  }
 
 class AWS_Macie_FindingsFilter(CloudFormationResource):
-  terraform_resource = "aws_macie_findings_filter"
+  cfn_type = "AWS::Macie::FindingsFilter"
+  tf_type = "aws_macie_findings_filter"
+  ref = "arn"
 
-  resource_type = "AWS::Macie::FindingsFilter"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.block(w, "FindingCriteria", AWS_Macie_FindingsFilter_FindingCriteria)
+      self.property(w, "Action", "action", StringValueConverter())
+      self.property(w, "Position", "position", BasicValueConverter())
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-    "Description": (StringValueConverter(), "description"),
-    "FindingCriteria": (AWS_Macie_FindingsFilter_FindingCriteria, "finding_criteria"),
-    "Action": (StringValueConverter(), "action"),
-    "Position": (BasicValueConverter(), "position"),
-  }
 
 class AWS_Macie_CustomDataIdentifier(CloudFormationResource):
-  terraform_resource = "aws_macie_custom_data_identifier"
+  cfn_type = "AWS::Macie::CustomDataIdentifier"
+  tf_type = "aws_macie_custom_data_identifier"
+  ref = "arn"
 
-  resource_type = "AWS::Macie::CustomDataIdentifier"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "Regex", "regex", StringValueConverter())
+      self.property(w, "MaximumMatchDistance", "maximum_match_distance", BasicValueConverter())
+      self.property(w, "Keywords", "keywords", ListValueConverter(StringValueConverter()))
+      self.property(w, "IgnoreWords", "ignore_words", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-    "Description": (StringValueConverter(), "description"),
-    "Regex": (StringValueConverter(), "regex"),
-    "MaximumMatchDistance": (BasicValueConverter(), "maximum_match_distance"),
-    "Keywords": (ListValueConverter(StringValueConverter()), "keywords"),
-    "IgnoreWords": (ListValueConverter(StringValueConverter()), "ignore_words"),
-  }
 

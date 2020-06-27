@@ -1,21 +1,20 @@
 from . import *
 
 class AWS_IoTThingsGraph_FlowTemplate_DefinitionDocument(CloudFormationProperty):
-  entity = "AWS::IoTThingsGraph::FlowTemplate"
-  tf_block_type = "definition_document"
+  def write(self, w):
+    with w.block("definition_document"):
+      self.property(w, "Language", "language", StringValueConverter())
+      self.property(w, "Text", "text", StringValueConverter())
 
-  props = {
-    "Language": (StringValueConverter(), "language"),
-    "Text": (StringValueConverter(), "text"),
-  }
 
 class AWS_IoTThingsGraph_FlowTemplate(CloudFormationResource):
-  terraform_resource = "aws_io_t_things_graph_flow_template"
+  cfn_type = "AWS::IoTThingsGraph::FlowTemplate"
+  tf_type = "aws_io_t_things_graph_flow_template"
+  ref = "arn"
 
-  resource_type = "AWS::IoTThingsGraph::FlowTemplate"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "CompatibleNamespaceVersion", "compatible_namespace_version", BasicValueConverter())
+      self.block(w, "Definition", AWS_IoTThingsGraph_FlowTemplate_DefinitionDocument)
 
-  props = {
-    "CompatibleNamespaceVersion": (BasicValueConverter(), "compatible_namespace_version"),
-    "Definition": (AWS_IoTThingsGraph_FlowTemplate_DefinitionDocument, "definition"),
-  }
 

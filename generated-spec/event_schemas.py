@@ -1,76 +1,74 @@
 from . import *
 
 class AWS_EventSchemas_Schema_TagsEntry(CloudFormationProperty):
-  entity = "AWS::EventSchemas::Schema"
-  tf_block_type = "tags_entry"
+  def write(self, w):
+    with w.block("tags_entry"):
+      self.property(w, "Value", "value", StringValueConverter())
+      self.property(w, "Key", "key", StringValueConverter())
 
-  props = {
-    "Value": (StringValueConverter(), "value"),
-    "Key": (StringValueConverter(), "key"),
-  }
 
 class AWS_EventSchemas_Registry_TagsEntry(CloudFormationProperty):
-  entity = "AWS::EventSchemas::Registry"
-  tf_block_type = "tags_entry"
+  def write(self, w):
+    with w.block("tags_entry"):
+      self.property(w, "Value", "value", StringValueConverter())
+      self.property(w, "Key", "key", StringValueConverter())
 
-  props = {
-    "Value": (StringValueConverter(), "value"),
-    "Key": (StringValueConverter(), "key"),
-  }
 
 class AWS_EventSchemas_Discoverer_TagsEntry(CloudFormationProperty):
-  entity = "AWS::EventSchemas::Discoverer"
-  tf_block_type = "tags_entry"
+  def write(self, w):
+    with w.block("tags_entry"):
+      self.property(w, "Value", "value", StringValueConverter())
+      self.property(w, "Key", "key", StringValueConverter())
 
-  props = {
-    "Value": (StringValueConverter(), "value"),
-    "Key": (StringValueConverter(), "key"),
-  }
 
 class AWS_EventSchemas_Discoverer(CloudFormationResource):
-  terraform_resource = "aws_event_schemas_discoverer"
+  cfn_type = "AWS::EventSchemas::Discoverer"
+  tf_type = "aws_event_schemas_discoverer"
+  ref = "arn"
 
-  resource_type = "AWS::EventSchemas::Discoverer"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "SourceArn", "source_arn", StringValueConverter())
+      self.repeated_block(w, "Tags", AWS_EventSchemas_Discoverer_TagsEntry)
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "SourceArn": (StringValueConverter(), "source_arn"),
-    "Tags": (BlockValueConverter(AWS_EventSchemas_Discoverer_TagsEntry), None),
-  }
 
 class AWS_EventSchemas_RegistryPolicy(CloudFormationResource):
-  terraform_resource = "aws_event_schemas_registry_policy"
+  cfn_type = "AWS::EventSchemas::RegistryPolicy"
+  tf_type = "aws_event_schemas_registry_policy"
+  ref = "arn"
 
-  resource_type = "AWS::EventSchemas::RegistryPolicy"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Policy", "policy", StringValueConverter())
+      self.property(w, "RegistryName", "registry_name", StringValueConverter())
+      self.property(w, "RevisionId", "revision_id", StringValueConverter())
 
-  props = {
-    "Policy": (StringValueConverter(), "policy"),
-    "RegistryName": (StringValueConverter(), "registry_name"),
-    "RevisionId": (StringValueConverter(), "revision_id"),
-  }
 
 class AWS_EventSchemas_Schema(CloudFormationResource):
-  terraform_resource = "aws_event_schemas_schema"
+  cfn_type = "AWS::EventSchemas::Schema"
+  tf_type = "aws_event_schemas_schema"
+  ref = "arn"
 
-  resource_type = "AWS::EventSchemas::Schema"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "Content", "content", StringValueConverter())
+      self.property(w, "RegistryName", "registry_name", StringValueConverter())
+      self.property(w, "SchemaName", "schema_name", StringValueConverter())
+      self.repeated_block(w, "Tags", AWS_EventSchemas_Schema_TagsEntry)
 
-  props = {
-    "Type": (StringValueConverter(), "type"),
-    "Description": (StringValueConverter(), "description"),
-    "Content": (StringValueConverter(), "content"),
-    "RegistryName": (StringValueConverter(), "registry_name"),
-    "SchemaName": (StringValueConverter(), "schema_name"),
-    "Tags": (BlockValueConverter(AWS_EventSchemas_Schema_TagsEntry), None),
-  }
 
 class AWS_EventSchemas_Registry(CloudFormationResource):
-  terraform_resource = "aws_event_schemas_registry"
+  cfn_type = "AWS::EventSchemas::Registry"
+  tf_type = "aws_event_schemas_registry"
+  ref = "arn"
 
-  resource_type = "AWS::EventSchemas::Registry"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "RegistryName", "registry_name", StringValueConverter())
+      self.repeated_block(w, "Tags", AWS_EventSchemas_Registry_TagsEntry)
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "RegistryName": (StringValueConverter(), "registry_name"),
-    "Tags": (BlockValueConverter(AWS_EventSchemas_Registry_TagsEntry), None),
-  }
 

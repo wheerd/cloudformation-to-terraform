@@ -1,73 +1,62 @@
 from . import *
 
 class AWS_DataPipeline_Pipeline_ParameterAttribute(CloudFormationProperty):
-  entity = "AWS::DataPipeline::Pipeline"
-  tf_block_type = "parameter_attribute"
+  def write(self, w):
+    with w.block("parameter_attribute"):
+      self.property(w, "Key", "key", StringValueConverter())
+      self.property(w, "StringValue", "string_value", StringValueConverter())
 
-  props = {
-    "Key": (StringValueConverter(), "key"),
-    "StringValue": (StringValueConverter(), "string_value"),
-  }
 
 class AWS_DataPipeline_Pipeline_PipelineTag(CloudFormationProperty):
-  entity = "AWS::DataPipeline::Pipeline"
-  tf_block_type = "pipeline_tag"
+  def write(self, w):
+    with w.block("pipeline_tag"):
+      self.property(w, "Key", "key", StringValueConverter())
+      self.property(w, "Value", "value", StringValueConverter())
 
-  props = {
-    "Key": (StringValueConverter(), "key"),
-    "Value": (StringValueConverter(), "value"),
-  }
 
 class AWS_DataPipeline_Pipeline_ParameterObject(CloudFormationProperty):
-  entity = "AWS::DataPipeline::Pipeline"
-  tf_block_type = "parameter_object"
+  def write(self, w):
+    with w.block("parameter_object"):
+      self.repeated_block(w, "Attributes", AWS_DataPipeline_Pipeline_ParameterAttribute)
+      self.property(w, "Id", "id", StringValueConverter())
 
-  props = {
-    "Attributes": (BlockValueConverter(AWS_DataPipeline_Pipeline_ParameterAttribute), None),
-    "Id": (StringValueConverter(), "id"),
-  }
 
 class AWS_DataPipeline_Pipeline_ParameterValue(CloudFormationProperty):
-  entity = "AWS::DataPipeline::Pipeline"
-  tf_block_type = "parameter_value"
+  def write(self, w):
+    with w.block("parameter_value"):
+      self.property(w, "Id", "id", StringValueConverter())
+      self.property(w, "StringValue", "string_value", StringValueConverter())
 
-  props = {
-    "Id": (StringValueConverter(), "id"),
-    "StringValue": (StringValueConverter(), "string_value"),
-  }
 
 class AWS_DataPipeline_Pipeline_Field(CloudFormationProperty):
-  entity = "AWS::DataPipeline::Pipeline"
-  tf_block_type = "field"
+  def write(self, w):
+    with w.block("field"):
+      self.property(w, "Key", "key", StringValueConverter())
+      self.property(w, "RefValue", "ref_value", StringValueConverter())
+      self.property(w, "StringValue", "string_value", StringValueConverter())
 
-  props = {
-    "Key": (StringValueConverter(), "key"),
-    "RefValue": (StringValueConverter(), "ref_value"),
-    "StringValue": (StringValueConverter(), "string_value"),
-  }
 
 class AWS_DataPipeline_Pipeline_PipelineObject(CloudFormationProperty):
-  entity = "AWS::DataPipeline::Pipeline"
-  tf_block_type = "pipeline_object"
+  def write(self, w):
+    with w.block("pipeline_object"):
+      self.repeated_block(w, "Fields", AWS_DataPipeline_Pipeline_Field)
+      self.property(w, "Id", "id", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Fields": (BlockValueConverter(AWS_DataPipeline_Pipeline_Field), None),
-    "Id": (StringValueConverter(), "id"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_DataPipeline_Pipeline(CloudFormationResource):
-  terraform_resource = "aws_data_pipeline_pipeline"
+  cfn_type = "AWS::DataPipeline::Pipeline"
+  tf_type = "aws_data_pipeline_pipeline"
+  ref = "arn"
 
-  resource_type = "AWS::DataPipeline::Pipeline"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Activate", "activate", BasicValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
+      self.repeated_block(w, "ParameterObjects", AWS_DataPipeline_Pipeline_ParameterObject)
+      self.repeated_block(w, "ParameterValues", AWS_DataPipeline_Pipeline_ParameterValue)
+      self.repeated_block(w, "PipelineObjects", AWS_DataPipeline_Pipeline_PipelineObject)
+      self.repeated_block(w, "PipelineTags", AWS_DataPipeline_Pipeline_PipelineTag)
 
-  props = {
-    "Activate": (BasicValueConverter(), "activate"),
-    "Description": (StringValueConverter(), "description"),
-    "Name": (StringValueConverter(), "name"),
-    "ParameterObjects": (BlockValueConverter(AWS_DataPipeline_Pipeline_ParameterObject), None),
-    "ParameterValues": (BlockValueConverter(AWS_DataPipeline_Pipeline_ParameterValue), None),
-    "PipelineObjects": (BlockValueConverter(AWS_DataPipeline_Pipeline_PipelineObject), None),
-    "PipelineTags": (BlockValueConverter(AWS_DataPipeline_Pipeline_PipelineTag), None),
-  }
 

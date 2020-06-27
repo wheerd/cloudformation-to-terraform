@@ -1,323 +1,274 @@
 from . import *
 
 class AWS_CloudFront_Distribution_Cookies(CloudFormationProperty):
-  entity = "AWS::CloudFront::Distribution"
-  tf_block_type = "cookies"
+  def write(self, w):
+    with w.block("cookies"):
+      self.property(w, "WhitelistedNames", "whitelisted_names", ListValueConverter(StringValueConverter()))
+      self.property(w, "Forward", "forward", StringValueConverter())
 
-  props = {
-    "WhitelistedNames": (ListValueConverter(StringValueConverter()), "whitelisted_names"),
-    "Forward": (StringValueConverter(), "forward"),
-  }
 
 class AWS_CloudFront_Distribution_LambdaFunctionAssociation(CloudFormationProperty):
-  entity = "AWS::CloudFront::Distribution"
-  tf_block_type = "lambda_function_association"
+  def write(self, w):
+    with w.block("lambda_function_association"):
+      self.property(w, "IncludeBody", "include_body", BasicValueConverter())
+      self.property(w, "EventType", "event_type", StringValueConverter())
+      self.property(w, "LambdaFunctionARN", "lambda_function_arn", StringValueConverter())
 
-  props = {
-    "IncludeBody": (BasicValueConverter(), "include_body"),
-    "EventType": (StringValueConverter(), "event_type"),
-    "LambdaFunctionARN": (StringValueConverter(), "lambda_function_arn"),
-  }
 
 class AWS_CloudFront_Distribution_OriginGroupMember(CloudFormationProperty):
-  entity = "AWS::CloudFront::Distribution"
-  tf_block_type = "origin_group_member"
+  def write(self, w):
+    with w.block("origin_group_member"):
+      self.property(w, "OriginId", "origin_id", StringValueConverter())
 
-  props = {
-    "OriginId": (StringValueConverter(), "origin_id"),
-  }
 
 class AWS_CloudFront_StreamingDistribution_TrustedSigners(CloudFormationProperty):
-  entity = "AWS::CloudFront::StreamingDistribution"
-  tf_block_type = "trusted_signers"
+  def write(self, w):
+    with w.block("trusted_signers"):
+      self.property(w, "Enabled", "enabled", BasicValueConverter())
+      self.property(w, "AwsAccountNumbers", "aws_account_numbers", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "Enabled": (BasicValueConverter(), "enabled"),
-    "AwsAccountNumbers": (ListValueConverter(StringValueConverter()), "aws_account_numbers"),
-  }
 
 class AWS_CloudFront_StreamingDistribution_S3Origin(CloudFormationProperty):
-  entity = "AWS::CloudFront::StreamingDistribution"
-  tf_block_type = "s3_origin"
+  def write(self, w):
+    with w.block("s3_origin"):
+      self.property(w, "DomainName", "domain_name", StringValueConverter())
+      self.property(w, "OriginAccessIdentity", "origin_access_identity", StringValueConverter())
 
-  props = {
-    "DomainName": (StringValueConverter(), "domain_name"),
-    "OriginAccessIdentity": (StringValueConverter(), "origin_access_identity"),
-  }
 
 class AWS_CloudFront_Distribution_StatusCodes(CloudFormationProperty):
-  entity = "AWS::CloudFront::Distribution"
-  tf_block_type = "status_codes"
+  def write(self, w):
+    with w.block("status_codes"):
+      self.property(w, "Quantity", "quantity", BasicValueConverter())
+      self.property(w, "Items", "items", ListValueConverter(BasicValueConverter()))
 
-  props = {
-    "Quantity": (BasicValueConverter(), "quantity"),
-    "Items": (ListValueConverter(BasicValueConverter()), "items"),
-  }
 
 class AWS_CloudFront_Distribution_OriginCustomHeader(CloudFormationProperty):
-  entity = "AWS::CloudFront::Distribution"
-  tf_block_type = "origin_custom_header"
+  def write(self, w):
+    with w.block("origin_custom_header"):
+      self.property(w, "HeaderValue", "header_value", StringValueConverter())
+      self.property(w, "HeaderName", "header_name", StringValueConverter())
 
-  props = {
-    "HeaderValue": (StringValueConverter(), "header_value"),
-    "HeaderName": (StringValueConverter(), "header_name"),
-  }
 
 class AWS_CloudFront_Distribution_OriginGroupFailoverCriteria(CloudFormationProperty):
-  entity = "AWS::CloudFront::Distribution"
-  tf_block_type = "origin_group_failover_criteria"
+  def write(self, w):
+    with w.block("origin_group_failover_criteria"):
+      self.block(w, "StatusCodes", AWS_CloudFront_Distribution_StatusCodes)
 
-  props = {
-    "StatusCodes": (AWS_CloudFront_Distribution_StatusCodes, "status_codes"),
-  }
 
 class AWS_CloudFront_Distribution_CustomOriginConfig(CloudFormationProperty):
-  entity = "AWS::CloudFront::Distribution"
-  tf_block_type = "custom_origin_config"
+  def write(self, w):
+    with w.block("custom_origin_config"):
+      self.property(w, "OriginReadTimeout", "origin_read_timeout", BasicValueConverter())
+      self.property(w, "HTTPSPort", "https_port", BasicValueConverter())
+      self.property(w, "OriginKeepaliveTimeout", "origin_keepalive_timeout", BasicValueConverter())
+      self.property(w, "OriginSSLProtocols", "origin_ssl_protocols", ListValueConverter(StringValueConverter()))
+      self.property(w, "HTTPPort", "http_port", BasicValueConverter())
+      self.property(w, "OriginProtocolPolicy", "origin_protocol_policy", StringValueConverter())
 
-  props = {
-    "OriginReadTimeout": (BasicValueConverter(), "origin_read_timeout"),
-    "HTTPSPort": (BasicValueConverter(), "https_port"),
-    "OriginKeepaliveTimeout": (BasicValueConverter(), "origin_keepalive_timeout"),
-    "OriginSSLProtocols": (ListValueConverter(StringValueConverter()), "origin_ssl_protocols"),
-    "HTTPPort": (BasicValueConverter(), "http_port"),
-    "OriginProtocolPolicy": (StringValueConverter(), "origin_protocol_policy"),
-  }
 
 class AWS_CloudFront_CloudFrontOriginAccessIdentity_CloudFrontOriginAccessIdentityConfig(CloudFormationProperty):
-  entity = "AWS::CloudFront::CloudFrontOriginAccessIdentity"
-  tf_block_type = "cloud_front_origin_access_identity_config"
+  def write(self, w):
+    with w.block("cloud_front_origin_access_identity_config"):
+      self.property(w, "Comment", "comment", StringValueConverter())
 
-  props = {
-    "Comment": (StringValueConverter(), "comment"),
-  }
 
 class AWS_CloudFront_Distribution_OriginGroupMembers(CloudFormationProperty):
-  entity = "AWS::CloudFront::Distribution"
-  tf_block_type = "origin_group_members"
+  def write(self, w):
+    with w.block("origin_group_members"):
+      self.property(w, "Quantity", "quantity", BasicValueConverter())
+      self.repeated_block(w, "Items", AWS_CloudFront_Distribution_OriginGroupMember)
 
-  props = {
-    "Quantity": (BasicValueConverter(), "quantity"),
-    "Items": (BlockValueConverter(AWS_CloudFront_Distribution_OriginGroupMember), None),
-  }
 
 class AWS_CloudFront_Distribution_ForwardedValues(CloudFormationProperty):
-  entity = "AWS::CloudFront::Distribution"
-  tf_block_type = "forwarded_values"
+  def write(self, w):
+    with w.block("forwarded_values"):
+      self.block(w, "Cookies", AWS_CloudFront_Distribution_Cookies)
+      self.property(w, "Headers", "headers", ListValueConverter(StringValueConverter()))
+      self.property(w, "QueryString", "query_string", BasicValueConverter())
+      self.property(w, "QueryStringCacheKeys", "query_string_cache_keys", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "Cookies": (AWS_CloudFront_Distribution_Cookies, "cookies"),
-    "Headers": (ListValueConverter(StringValueConverter()), "headers"),
-    "QueryString": (BasicValueConverter(), "query_string"),
-    "QueryStringCacheKeys": (ListValueConverter(StringValueConverter()), "query_string_cache_keys"),
-  }
 
 class AWS_CloudFront_Distribution_GeoRestriction(CloudFormationProperty):
-  entity = "AWS::CloudFront::Distribution"
-  tf_block_type = "geo_restriction"
+  def write(self, w):
+    with w.block("geo_restriction"):
+      self.property(w, "Locations", "locations", ListValueConverter(StringValueConverter()))
+      self.property(w, "RestrictionType", "restriction_type", StringValueConverter())
 
-  props = {
-    "Locations": (ListValueConverter(StringValueConverter()), "locations"),
-    "RestrictionType": (StringValueConverter(), "restriction_type"),
-  }
 
 class AWS_CloudFront_Distribution_ViewerCertificate(CloudFormationProperty):
-  entity = "AWS::CloudFront::Distribution"
-  tf_block_type = "viewer_certificate"
+  def write(self, w):
+    with w.block("viewer_certificate"):
+      self.property(w, "IamCertificateId", "iam_certificate_id", StringValueConverter())
+      self.property(w, "SslSupportMethod", "ssl_support_method", StringValueConverter())
+      self.property(w, "MinimumProtocolVersion", "minimum_protocol_version", StringValueConverter())
+      self.property(w, "CloudFrontDefaultCertificate", "cloud_front_default_certificate", BasicValueConverter())
+      self.property(w, "AcmCertificateArn", "acm_certificate_arn", StringValueConverter())
 
-  props = {
-    "IamCertificateId": (StringValueConverter(), "iam_certificate_id"),
-    "SslSupportMethod": (StringValueConverter(), "ssl_support_method"),
-    "MinimumProtocolVersion": (StringValueConverter(), "minimum_protocol_version"),
-    "CloudFrontDefaultCertificate": (BasicValueConverter(), "cloud_front_default_certificate"),
-    "AcmCertificateArn": (StringValueConverter(), "acm_certificate_arn"),
-  }
 
 class AWS_CloudFront_Distribution_S3OriginConfig(CloudFormationProperty):
-  entity = "AWS::CloudFront::Distribution"
-  tf_block_type = "s3_origin_config"
+  def write(self, w):
+    with w.block("s3_origin_config"):
+      self.property(w, "OriginAccessIdentity", "origin_access_identity", StringValueConverter())
 
-  props = {
-    "OriginAccessIdentity": (StringValueConverter(), "origin_access_identity"),
-  }
 
 class AWS_CloudFront_Distribution_CustomErrorResponse(CloudFormationProperty):
-  entity = "AWS::CloudFront::Distribution"
-  tf_block_type = "custom_error_response"
+  def write(self, w):
+    with w.block("custom_error_response"):
+      self.property(w, "ResponseCode", "response_code", BasicValueConverter())
+      self.property(w, "ErrorCachingMinTTL", "error_caching_min_ttl", BasicValueConverter())
+      self.property(w, "ErrorCode", "error_code", BasicValueConverter())
+      self.property(w, "ResponsePagePath", "response_page_path", StringValueConverter())
 
-  props = {
-    "ResponseCode": (BasicValueConverter(), "response_code"),
-    "ErrorCachingMinTTL": (BasicValueConverter(), "error_caching_min_ttl"),
-    "ErrorCode": (BasicValueConverter(), "error_code"),
-    "ResponsePagePath": (StringValueConverter(), "response_page_path"),
-  }
 
 class AWS_CloudFront_StreamingDistribution_Logging(CloudFormationProperty):
-  entity = "AWS::CloudFront::StreamingDistribution"
-  tf_block_type = "logging"
+  def write(self, w):
+    with w.block("logging"):
+      self.property(w, "Bucket", "bucket", StringValueConverter())
+      self.property(w, "Enabled", "enabled", BasicValueConverter())
+      self.property(w, "Prefix", "prefix", StringValueConverter())
 
-  props = {
-    "Bucket": (StringValueConverter(), "bucket"),
-    "Enabled": (BasicValueConverter(), "enabled"),
-    "Prefix": (StringValueConverter(), "prefix"),
-  }
 
 class AWS_CloudFront_Distribution_Logging(CloudFormationProperty):
-  entity = "AWS::CloudFront::Distribution"
-  tf_block_type = "logging"
+  def write(self, w):
+    with w.block("logging"):
+      self.property(w, "IncludeCookies", "include_cookies", BasicValueConverter())
+      self.property(w, "Bucket", "bucket", StringValueConverter())
+      self.property(w, "Prefix", "prefix", StringValueConverter())
 
-  props = {
-    "IncludeCookies": (BasicValueConverter(), "include_cookies"),
-    "Bucket": (StringValueConverter(), "bucket"),
-    "Prefix": (StringValueConverter(), "prefix"),
-  }
 
 class AWS_CloudFront_StreamingDistribution_StreamingDistributionConfig(CloudFormationProperty):
-  entity = "AWS::CloudFront::StreamingDistribution"
-  tf_block_type = "streaming_distribution_config"
+  def write(self, w):
+    with w.block("streaming_distribution_config"):
+      self.block(w, "Logging", AWS_CloudFront_StreamingDistribution_Logging)
+      self.property(w, "Comment", "comment", StringValueConverter())
+      self.property(w, "PriceClass", "price_class", StringValueConverter())
+      self.block(w, "S3Origin", AWS_CloudFront_StreamingDistribution_S3Origin)
+      self.property(w, "Enabled", "enabled", BasicValueConverter())
+      self.property(w, "Aliases", "aliases", ListValueConverter(StringValueConverter()))
+      self.block(w, "TrustedSigners", AWS_CloudFront_StreamingDistribution_TrustedSigners)
 
-  props = {
-    "Logging": (AWS_CloudFront_StreamingDistribution_Logging, "logging"),
-    "Comment": (StringValueConverter(), "comment"),
-    "PriceClass": (StringValueConverter(), "price_class"),
-    "S3Origin": (AWS_CloudFront_StreamingDistribution_S3Origin, "s3_origin"),
-    "Enabled": (BasicValueConverter(), "enabled"),
-    "Aliases": (ListValueConverter(StringValueConverter()), "aliases"),
-    "TrustedSigners": (AWS_CloudFront_StreamingDistribution_TrustedSigners, "trusted_signers"),
-  }
 
 class AWS_CloudFront_StreamingDistribution(CloudFormationResource):
-  terraform_resource = "aws_cloud_front_streaming_distribution"
+  cfn_type = "AWS::CloudFront::StreamingDistribution"
+  tf_type = "aws_cloud_front_streaming_distribution"
+  ref = "arn"
 
-  resource_type = "AWS::CloudFront::StreamingDistribution"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "StreamingDistributionConfig", AWS_CloudFront_StreamingDistribution_StreamingDistributionConfig)
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "StreamingDistributionConfig": (AWS_CloudFront_StreamingDistribution_StreamingDistributionConfig, "streaming_distribution_config"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 
 class AWS_CloudFront_CloudFrontOriginAccessIdentity(CloudFormationResource):
-  terraform_resource = "aws_cloud_front_cloud_front_origin_access_identity"
+  cfn_type = "AWS::CloudFront::CloudFrontOriginAccessIdentity"
+  tf_type = "aws_cloud_front_cloud_front_origin_access_identity"
+  ref = "arn"
 
-  resource_type = "AWS::CloudFront::CloudFrontOriginAccessIdentity"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "CloudFrontOriginAccessIdentityConfig", AWS_CloudFront_CloudFrontOriginAccessIdentity_CloudFrontOriginAccessIdentityConfig)
 
-  props = {
-    "CloudFrontOriginAccessIdentityConfig": (AWS_CloudFront_CloudFrontOriginAccessIdentity_CloudFrontOriginAccessIdentityConfig, "cloud_front_origin_access_identity_config"),
-  }
 
 class AWS_CloudFront_Distribution_CacheBehavior(CloudFormationProperty):
-  entity = "AWS::CloudFront::Distribution"
-  tf_block_type = "cache_behavior"
+  def write(self, w):
+    with w.block("cache_behavior"):
+      self.property(w, "Compress", "compress", BasicValueConverter())
+      self.repeated_block(w, "LambdaFunctionAssociations", AWS_CloudFront_Distribution_LambdaFunctionAssociation)
+      self.property(w, "TargetOriginId", "target_origin_id", StringValueConverter())
+      self.property(w, "ViewerProtocolPolicy", "viewer_protocol_policy", StringValueConverter())
+      self.property(w, "TrustedSigners", "trusted_signers", ListValueConverter(StringValueConverter()))
+      self.property(w, "DefaultTTL", "default_ttl", BasicValueConverter())
+      self.property(w, "FieldLevelEncryptionId", "field_level_encryption_id", StringValueConverter())
+      self.property(w, "AllowedMethods", "allowed_methods", ListValueConverter(StringValueConverter()))
+      self.property(w, "PathPattern", "path_pattern", StringValueConverter())
+      self.property(w, "CachedMethods", "cached_methods", ListValueConverter(StringValueConverter()))
+      self.property(w, "SmoothStreaming", "smooth_streaming", BasicValueConverter())
+      self.block(w, "ForwardedValues", AWS_CloudFront_Distribution_ForwardedValues)
+      self.property(w, "MinTTL", "min_ttl", BasicValueConverter())
+      self.property(w, "MaxTTL", "max_ttl", BasicValueConverter())
 
-  props = {
-    "Compress": (BasicValueConverter(), "compress"),
-    "LambdaFunctionAssociations": (BlockValueConverter(AWS_CloudFront_Distribution_LambdaFunctionAssociation), None),
-    "TargetOriginId": (StringValueConverter(), "target_origin_id"),
-    "ViewerProtocolPolicy": (StringValueConverter(), "viewer_protocol_policy"),
-    "TrustedSigners": (ListValueConverter(StringValueConverter()), "trusted_signers"),
-    "DefaultTTL": (BasicValueConverter(), "default_ttl"),
-    "FieldLevelEncryptionId": (StringValueConverter(), "field_level_encryption_id"),
-    "AllowedMethods": (ListValueConverter(StringValueConverter()), "allowed_methods"),
-    "PathPattern": (StringValueConverter(), "path_pattern"),
-    "CachedMethods": (ListValueConverter(StringValueConverter()), "cached_methods"),
-    "SmoothStreaming": (BasicValueConverter(), "smooth_streaming"),
-    "ForwardedValues": (AWS_CloudFront_Distribution_ForwardedValues, "forwarded_values"),
-    "MinTTL": (BasicValueConverter(), "min_ttl"),
-    "MaxTTL": (BasicValueConverter(), "max_ttl"),
-  }
 
 class AWS_CloudFront_Distribution_DefaultCacheBehavior(CloudFormationProperty):
-  entity = "AWS::CloudFront::Distribution"
-  tf_block_type = "default_cache_behavior"
+  def write(self, w):
+    with w.block("default_cache_behavior"):
+      self.property(w, "Compress", "compress", BasicValueConverter())
+      self.repeated_block(w, "LambdaFunctionAssociations", AWS_CloudFront_Distribution_LambdaFunctionAssociation)
+      self.property(w, "TargetOriginId", "target_origin_id", StringValueConverter())
+      self.property(w, "ViewerProtocolPolicy", "viewer_protocol_policy", StringValueConverter())
+      self.property(w, "TrustedSigners", "trusted_signers", ListValueConverter(StringValueConverter()))
+      self.property(w, "DefaultTTL", "default_ttl", BasicValueConverter())
+      self.property(w, "FieldLevelEncryptionId", "field_level_encryption_id", StringValueConverter())
+      self.property(w, "AllowedMethods", "allowed_methods", ListValueConverter(StringValueConverter()))
+      self.property(w, "CachedMethods", "cached_methods", ListValueConverter(StringValueConverter()))
+      self.property(w, "SmoothStreaming", "smooth_streaming", BasicValueConverter())
+      self.block(w, "ForwardedValues", AWS_CloudFront_Distribution_ForwardedValues)
+      self.property(w, "MinTTL", "min_ttl", BasicValueConverter())
+      self.property(w, "MaxTTL", "max_ttl", BasicValueConverter())
 
-  props = {
-    "Compress": (BasicValueConverter(), "compress"),
-    "LambdaFunctionAssociations": (BlockValueConverter(AWS_CloudFront_Distribution_LambdaFunctionAssociation), None),
-    "TargetOriginId": (StringValueConverter(), "target_origin_id"),
-    "ViewerProtocolPolicy": (StringValueConverter(), "viewer_protocol_policy"),
-    "TrustedSigners": (ListValueConverter(StringValueConverter()), "trusted_signers"),
-    "DefaultTTL": (BasicValueConverter(), "default_ttl"),
-    "FieldLevelEncryptionId": (StringValueConverter(), "field_level_encryption_id"),
-    "AllowedMethods": (ListValueConverter(StringValueConverter()), "allowed_methods"),
-    "CachedMethods": (ListValueConverter(StringValueConverter()), "cached_methods"),
-    "SmoothStreaming": (BasicValueConverter(), "smooth_streaming"),
-    "ForwardedValues": (AWS_CloudFront_Distribution_ForwardedValues, "forwarded_values"),
-    "MinTTL": (BasicValueConverter(), "min_ttl"),
-    "MaxTTL": (BasicValueConverter(), "max_ttl"),
-  }
 
 class AWS_CloudFront_Distribution_Restrictions(CloudFormationProperty):
-  entity = "AWS::CloudFront::Distribution"
-  tf_block_type = "restrictions"
+  def write(self, w):
+    with w.block("restrictions"):
+      self.block(w, "GeoRestriction", AWS_CloudFront_Distribution_GeoRestriction)
 
-  props = {
-    "GeoRestriction": (AWS_CloudFront_Distribution_GeoRestriction, "geo_restriction"),
-  }
 
 class AWS_CloudFront_Distribution_Origin(CloudFormationProperty):
-  entity = "AWS::CloudFront::Distribution"
-  tf_block_type = "origin"
+  def write(self, w):
+    with w.block("origin"):
+      self.property(w, "ConnectionTimeout", "connection_timeout", BasicValueConverter())
+      self.repeated_block(w, "OriginCustomHeaders", AWS_CloudFront_Distribution_OriginCustomHeader)
+      self.property(w, "ConnectionAttempts", "connection_attempts", BasicValueConverter())
+      self.property(w, "DomainName", "domain_name", StringValueConverter())
+      self.block(w, "S3OriginConfig", AWS_CloudFront_Distribution_S3OriginConfig)
+      self.property(w, "OriginPath", "origin_path", StringValueConverter())
+      self.property(w, "Id", "id", StringValueConverter())
+      self.block(w, "CustomOriginConfig", AWS_CloudFront_Distribution_CustomOriginConfig)
 
-  props = {
-    "ConnectionTimeout": (BasicValueConverter(), "connection_timeout"),
-    "OriginCustomHeaders": (BlockValueConverter(AWS_CloudFront_Distribution_OriginCustomHeader), None),
-    "ConnectionAttempts": (BasicValueConverter(), "connection_attempts"),
-    "DomainName": (StringValueConverter(), "domain_name"),
-    "S3OriginConfig": (AWS_CloudFront_Distribution_S3OriginConfig, "s3_origin_config"),
-    "OriginPath": (StringValueConverter(), "origin_path"),
-    "Id": (StringValueConverter(), "id"),
-    "CustomOriginConfig": (AWS_CloudFront_Distribution_CustomOriginConfig, "custom_origin_config"),
-  }
 
 class AWS_CloudFront_Distribution_OriginGroup(CloudFormationProperty):
-  entity = "AWS::CloudFront::Distribution"
-  tf_block_type = "origin_group"
+  def write(self, w):
+    with w.block("origin_group"):
+      self.property(w, "Id", "id", StringValueConverter())
+      self.block(w, "FailoverCriteria", AWS_CloudFront_Distribution_OriginGroupFailoverCriteria)
+      self.block(w, "Members", AWS_CloudFront_Distribution_OriginGroupMembers)
 
-  props = {
-    "Id": (StringValueConverter(), "id"),
-    "FailoverCriteria": (AWS_CloudFront_Distribution_OriginGroupFailoverCriteria, "failover_criteria"),
-    "Members": (AWS_CloudFront_Distribution_OriginGroupMembers, "members"),
-  }
 
 class AWS_CloudFront_Distribution_OriginGroups(CloudFormationProperty):
-  entity = "AWS::CloudFront::Distribution"
-  tf_block_type = "origin_groups"
+  def write(self, w):
+    with w.block("origin_groups"):
+      self.property(w, "Quantity", "quantity", BasicValueConverter())
+      self.repeated_block(w, "Items", AWS_CloudFront_Distribution_OriginGroup)
 
-  props = {
-    "Quantity": (BasicValueConverter(), "quantity"),
-    "Items": (BlockValueConverter(AWS_CloudFront_Distribution_OriginGroup), None),
-  }
 
 class AWS_CloudFront_Distribution_DistributionConfig(CloudFormationProperty):
-  entity = "AWS::CloudFront::Distribution"
-  tf_block_type = "distribution_config"
+  def write(self, w):
+    with w.block("distribution_config"):
+      self.block(w, "Logging", AWS_CloudFront_Distribution_Logging)
+      self.property(w, "Comment", "comment", StringValueConverter())
+      self.property(w, "DefaultRootObject", "default_root_object", StringValueConverter())
+      self.repeated_block(w, "Origins", AWS_CloudFront_Distribution_Origin)
+      self.block(w, "ViewerCertificate", AWS_CloudFront_Distribution_ViewerCertificate)
+      self.property(w, "PriceClass", "price_class", StringValueConverter())
+      self.block(w, "DefaultCacheBehavior", AWS_CloudFront_Distribution_DefaultCacheBehavior)
+      self.repeated_block(w, "CustomErrorResponses", AWS_CloudFront_Distribution_CustomErrorResponse)
+      self.block(w, "OriginGroups", AWS_CloudFront_Distribution_OriginGroups)
+      self.property(w, "Enabled", "enabled", BasicValueConverter())
+      self.property(w, "Aliases", "aliases", ListValueConverter(StringValueConverter()))
+      self.property(w, "IPV6Enabled", "ipv6_enabled", BasicValueConverter())
+      self.property(w, "WebACLId", "web_acl_id", StringValueConverter())
+      self.property(w, "HttpVersion", "http_version", StringValueConverter())
+      self.block(w, "Restrictions", AWS_CloudFront_Distribution_Restrictions)
+      self.repeated_block(w, "CacheBehaviors", AWS_CloudFront_Distribution_CacheBehavior)
 
-  props = {
-    "Logging": (AWS_CloudFront_Distribution_Logging, "logging"),
-    "Comment": (StringValueConverter(), "comment"),
-    "DefaultRootObject": (StringValueConverter(), "default_root_object"),
-    "Origins": (BlockValueConverter(AWS_CloudFront_Distribution_Origin), None),
-    "ViewerCertificate": (AWS_CloudFront_Distribution_ViewerCertificate, "viewer_certificate"),
-    "PriceClass": (StringValueConverter(), "price_class"),
-    "DefaultCacheBehavior": (AWS_CloudFront_Distribution_DefaultCacheBehavior, "default_cache_behavior"),
-    "CustomErrorResponses": (BlockValueConverter(AWS_CloudFront_Distribution_CustomErrorResponse), None),
-    "OriginGroups": (AWS_CloudFront_Distribution_OriginGroups, "origin_groups"),
-    "Enabled": (BasicValueConverter(), "enabled"),
-    "Aliases": (ListValueConverter(StringValueConverter()), "aliases"),
-    "IPV6Enabled": (BasicValueConverter(), "ipv6_enabled"),
-    "WebACLId": (StringValueConverter(), "web_acl_id"),
-    "HttpVersion": (StringValueConverter(), "http_version"),
-    "Restrictions": (AWS_CloudFront_Distribution_Restrictions, "restrictions"),
-    "CacheBehaviors": (BlockValueConverter(AWS_CloudFront_Distribution_CacheBehavior), None),
-  }
 
 class AWS_CloudFront_Distribution(CloudFormationResource):
-  terraform_resource = "aws_cloud_front_distribution"
+  cfn_type = "AWS::CloudFront::Distribution"
+  tf_type = "aws_cloud_front_distribution"
+  ref = "arn"
 
-  resource_type = "AWS::CloudFront::Distribution"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "DistributionConfig", AWS_CloudFront_Distribution_DistributionConfig)
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "DistributionConfig": (AWS_CloudFront_Distribution_DistributionConfig, "distribution_config"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 

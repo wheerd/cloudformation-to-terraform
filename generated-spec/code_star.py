@@ -1,35 +1,32 @@
 from . import *
 
 class AWS_CodeStar_GitHubRepository_S3(CloudFormationProperty):
-  entity = "AWS::CodeStar::GitHubRepository"
-  tf_block_type = "s3"
+  def write(self, w):
+    with w.block("s3"):
+      self.property(w, "ObjectVersion", "object_version", StringValueConverter())
+      self.property(w, "Bucket", "bucket", StringValueConverter())
+      self.property(w, "Key", "key", StringValueConverter())
 
-  props = {
-    "ObjectVersion": (StringValueConverter(), "object_version"),
-    "Bucket": (StringValueConverter(), "bucket"),
-    "Key": (StringValueConverter(), "key"),
-  }
 
 class AWS_CodeStar_GitHubRepository_Code(CloudFormationProperty):
-  entity = "AWS::CodeStar::GitHubRepository"
-  tf_block_type = "code"
+  def write(self, w):
+    with w.block("code"):
+      self.block(w, "S3", AWS_CodeStar_GitHubRepository_S3)
 
-  props = {
-    "S3": (AWS_CodeStar_GitHubRepository_S3, "s3"),
-  }
 
 class AWS_CodeStar_GitHubRepository(CloudFormationResource):
-  terraform_resource = "aws_code_star_git_hub_repository"
+  cfn_type = "AWS::CodeStar::GitHubRepository"
+  tf_type = "aws_code_star_git_hub_repository"
+  ref = "arn"
 
-  resource_type = "AWS::CodeStar::GitHubRepository"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "EnableIssues", "enable_issues", BasicValueConverter())
+      self.property(w, "RepositoryName", "repository_name", StringValueConverter())
+      self.property(w, "RepositoryAccessToken", "repository_access_token", StringValueConverter())
+      self.property(w, "RepositoryOwner", "repository_owner", StringValueConverter())
+      self.property(w, "IsPrivate", "is_private", BasicValueConverter())
+      self.block(w, "Code", AWS_CodeStar_GitHubRepository_Code)
+      self.property(w, "RepositoryDescription", "repository_description", StringValueConverter())
 
-  props = {
-    "EnableIssues": (BasicValueConverter(), "enable_issues"),
-    "RepositoryName": (StringValueConverter(), "repository_name"),
-    "RepositoryAccessToken": (StringValueConverter(), "repository_access_token"),
-    "RepositoryOwner": (StringValueConverter(), "repository_owner"),
-    "IsPrivate": (BasicValueConverter(), "is_private"),
-    "Code": (AWS_CodeStar_GitHubRepository_Code, "code"),
-    "RepositoryDescription": (StringValueConverter(), "repository_description"),
-  }
 

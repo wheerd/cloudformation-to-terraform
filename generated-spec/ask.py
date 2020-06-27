@@ -1,43 +1,38 @@
 from . import *
 
 class Alexa_ASK_Skill_AuthenticationConfiguration(CloudFormationProperty):
-  entity = "Alexa::ASK::Skill"
-  tf_block_type = "authentication_configuration"
+  def write(self, w):
+    with w.block("authentication_configuration"):
+      self.property(w, "RefreshToken", "refresh_token", StringValueConverter())
+      self.property(w, "ClientSecret", "client_secret", StringValueConverter())
+      self.property(w, "ClientId", "client_id", StringValueConverter())
 
-  props = {
-    "RefreshToken": (StringValueConverter(), "refresh_token"),
-    "ClientSecret": (StringValueConverter(), "client_secret"),
-    "ClientId": (StringValueConverter(), "client_id"),
-  }
 
 class Alexa_ASK_Skill_Overrides(CloudFormationProperty):
-  entity = "Alexa::ASK::Skill"
-  tf_block_type = "overrides"
+  def write(self, w):
+    with w.block("overrides"):
+      self.property(w, "Manifest", "manifest", StringValueConverter())
 
-  props = {
-    "Manifest": (StringValueConverter(), "manifest"),
-  }
 
 class Alexa_ASK_Skill_SkillPackage(CloudFormationProperty):
-  entity = "Alexa::ASK::Skill"
-  tf_block_type = "skill_package"
+  def write(self, w):
+    with w.block("skill_package"):
+      self.property(w, "S3BucketRole", "s3_bucket_role", StringValueConverter())
+      self.property(w, "S3ObjectVersion", "s3_object_version", StringValueConverter())
+      self.property(w, "S3Bucket", "s3_bucket", StringValueConverter())
+      self.property(w, "S3Key", "s3_key", StringValueConverter())
+      self.block(w, "Overrides", Alexa_ASK_Skill_Overrides)
 
-  props = {
-    "S3BucketRole": (StringValueConverter(), "s3_bucket_role"),
-    "S3ObjectVersion": (StringValueConverter(), "s3_object_version"),
-    "S3Bucket": (StringValueConverter(), "s3_bucket"),
-    "S3Key": (StringValueConverter(), "s3_key"),
-    "Overrides": (Alexa_ASK_Skill_Overrides, "overrides"),
-  }
 
 class Alexa_ASK_Skill(CloudFormationResource):
-  terraform_resource = "alexa_ask_skill"
+  cfn_type = "Alexa::ASK::Skill"
+  tf_type = "alexa_ask_skill"
+  ref = "arn"
 
-  resource_type = "Alexa::ASK::Skill"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "AuthenticationConfiguration", Alexa_ASK_Skill_AuthenticationConfiguration)
+      self.property(w, "VendorId", "vendor_id", StringValueConverter())
+      self.block(w, "SkillPackage", Alexa_ASK_Skill_SkillPackage)
 
-  props = {
-    "AuthenticationConfiguration": (Alexa_ASK_Skill_AuthenticationConfiguration, "authentication_configuration"),
-    "VendorId": (StringValueConverter(), "vendor_id"),
-    "SkillPackage": (Alexa_ASK_Skill_SkillPackage, "skill_package"),
-  }
 

@@ -1,348 +1,318 @@
 from . import *
 
 class AWS_SSM_ResourceDataSync_S3Destination(CloudFormationProperty):
-  entity = "AWS::SSM::ResourceDataSync"
-  tf_block_type = "s3_destination"
+  def write(self, w):
+    with w.block("s3_destination"):
+      self.property(w, "KMSKeyArn", "kms_key_arn", StringValueConverter())
+      self.property(w, "BucketName", "bucket_name", StringValueConverter())
+      self.property(w, "BucketRegion", "bucket_region", StringValueConverter())
+      self.property(w, "SyncFormat", "sync_format", StringValueConverter())
+      self.property(w, "BucketPrefix", "bucket_prefix", StringValueConverter())
 
-  props = {
-    "KMSKeyArn": (StringValueConverter(), "kms_key_arn"),
-    "BucketName": (StringValueConverter(), "bucket_name"),
-    "BucketRegion": (StringValueConverter(), "bucket_region"),
-    "SyncFormat": (StringValueConverter(), "sync_format"),
-    "BucketPrefix": (StringValueConverter(), "bucket_prefix"),
-  }
 
 class AWS_SSM_PatchBaseline_PatchStringDate(CloudFormationProperty):
-  entity = "AWS::SSM::PatchBaseline"
-  tf_block_type = "patch_string_date"
+  def write(self, w):
+    with w.block("patch_string_date"):
+      pass
+
 
 class AWS_SSM_MaintenanceWindowTask_LoggingInfo(CloudFormationProperty):
-  entity = "AWS::SSM::MaintenanceWindowTask"
-  tf_block_type = "logging_info"
+  def write(self, w):
+    with w.block("logging_info"):
+      self.property(w, "S3Bucket", "s3_bucket", StringValueConverter())
+      self.property(w, "Region", "region", StringValueConverter())
+      self.property(w, "S3Prefix", "s3_prefix", StringValueConverter())
 
-  props = {
-    "S3Bucket": (StringValueConverter(), "s3_bucket"),
-    "Region": (StringValueConverter(), "region"),
-    "S3Prefix": (StringValueConverter(), "s3_prefix"),
-  }
 
 class AWS_SSM_MaintenanceWindowTask_Target(CloudFormationProperty):
-  entity = "AWS::SSM::MaintenanceWindowTask"
-  tf_block_type = "target"
+  def write(self, w):
+    with w.block("target"):
+      self.property(w, "Values", "values", ListValueConverter(StringValueConverter()))
+      self.property(w, "Key", "key", StringValueConverter())
 
-  props = {
-    "Values": (ListValueConverter(StringValueConverter()), "values"),
-    "Key": (StringValueConverter(), "key"),
-  }
 
 class AWS_SSM_Association_S3OutputLocation(CloudFormationProperty):
-  entity = "AWS::SSM::Association"
-  tf_block_type = "s3_output_location"
+  def write(self, w):
+    with w.block("s3_output_location"):
+      self.property(w, "OutputS3Region", "output_s3_region", StringValueConverter())
+      self.property(w, "OutputS3BucketName", "output_s3_bucket_name", StringValueConverter())
+      self.property(w, "OutputS3KeyPrefix", "output_s3_key_prefix", StringValueConverter())
 
-  props = {
-    "OutputS3Region": (StringValueConverter(), "output_s3_region"),
-    "OutputS3BucketName": (StringValueConverter(), "output_s3_bucket_name"),
-    "OutputS3KeyPrefix": (StringValueConverter(), "output_s3_key_prefix"),
-  }
 
 class AWS_SSM_Association_InstanceAssociationOutputLocation(CloudFormationProperty):
-  entity = "AWS::SSM::Association"
-  tf_block_type = "instance_association_output_location"
+  def write(self, w):
+    with w.block("instance_association_output_location"):
+      self.block(w, "S3Location", AWS_SSM_Association_S3OutputLocation)
 
-  props = {
-    "S3Location": (AWS_SSM_Association_S3OutputLocation, "s3_location"),
-  }
 
 class AWS_SSM_MaintenanceWindowTask_MaintenanceWindowLambdaParameters(CloudFormationProperty):
-  entity = "AWS::SSM::MaintenanceWindowTask"
-  tf_block_type = "maintenance_window_lambda_parameters"
+  def write(self, w):
+    with w.block("maintenance_window_lambda_parameters"):
+      self.property(w, "ClientContext", "client_context", StringValueConverter())
+      self.property(w, "Qualifier", "qualifier", StringValueConverter())
+      self.property(w, "Payload", "payload", StringValueConverter())
 
-  props = {
-    "ClientContext": (StringValueConverter(), "client_context"),
-    "Qualifier": (StringValueConverter(), "qualifier"),
-    "Payload": (StringValueConverter(), "payload"),
-  }
 
 class AWS_SSM_MaintenanceWindowTask_NotificationConfig(CloudFormationProperty):
-  entity = "AWS::SSM::MaintenanceWindowTask"
-  tf_block_type = "notification_config"
+  def write(self, w):
+    with w.block("notification_config"):
+      self.property(w, "NotificationArn", "notification_arn", StringValueConverter())
+      self.property(w, "NotificationType", "notification_type", StringValueConverter())
+      self.property(w, "NotificationEvents", "notification_events", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "NotificationArn": (StringValueConverter(), "notification_arn"),
-    "NotificationType": (StringValueConverter(), "notification_type"),
-    "NotificationEvents": (ListValueConverter(StringValueConverter()), "notification_events"),
-  }
 
 class AWS_SSM_ResourceDataSync_AwsOrganizationsSource(CloudFormationProperty):
-  entity = "AWS::SSM::ResourceDataSync"
-  tf_block_type = "aws_organizations_source"
+  def write(self, w):
+    with w.block("aws_organizations_source"):
+      self.property(w, "OrganizationSourceType", "organization_source_type", StringValueConverter())
+      self.property(w, "OrganizationalUnits", "organizational_units", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "OrganizationSourceType": (StringValueConverter(), "organization_source_type"),
-    "OrganizationalUnits": (ListValueConverter(StringValueConverter()), "organizational_units"),
-  }
 
 class AWS_SSM_Association_Target(CloudFormationProperty):
-  entity = "AWS::SSM::Association"
-  tf_block_type = "target"
+  def write(self, w):
+    with w.block("target"):
+      self.property(w, "Key", "key", StringValueConverter())
+      self.property(w, "Values", "values", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "Key": (StringValueConverter(), "key"),
-    "Values": (ListValueConverter(StringValueConverter()), "values"),
-  }
 
 class AWS_SSM_ResourceDataSync_SyncSource(CloudFormationProperty):
-  entity = "AWS::SSM::ResourceDataSync"
-  tf_block_type = "sync_source"
+  def write(self, w):
+    with w.block("sync_source"):
+      self.property(w, "SourceType", "source_type", StringValueConverter())
+      self.block(w, "AwsOrganizationsSource", AWS_SSM_ResourceDataSync_AwsOrganizationsSource)
+      self.property(w, "IncludeFutureRegions", "include_future_regions", BasicValueConverter())
+      self.property(w, "SourceRegions", "source_regions", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "SourceType": (StringValueConverter(), "source_type"),
-    "AwsOrganizationsSource": (AWS_SSM_ResourceDataSync_AwsOrganizationsSource, "aws_organizations_source"),
-    "IncludeFutureRegions": (BasicValueConverter(), "include_future_regions"),
-    "SourceRegions": (ListValueConverter(StringValueConverter()), "source_regions"),
-  }
 
 class AWS_SSM_MaintenanceWindowTask_MaintenanceWindowAutomationParameters(CloudFormationProperty):
-  entity = "AWS::SSM::MaintenanceWindowTask"
-  tf_block_type = "maintenance_window_automation_parameters"
+  def write(self, w):
+    with w.block("maintenance_window_automation_parameters"):
+      self.property(w, "Parameters", "parameters", StringValueConverter())
+      self.property(w, "DocumentVersion", "document_version", StringValueConverter())
 
-  props = {
-    "Parameters": (StringValueConverter(), "parameters"),
-    "DocumentVersion": (StringValueConverter(), "document_version"),
-  }
 
 class AWS_SSM_PatchBaseline_PatchFilter(CloudFormationProperty):
-  entity = "AWS::SSM::PatchBaseline"
-  tf_block_type = "patch_filter"
+  def write(self, w):
+    with w.block("patch_filter"):
+      self.property(w, "Values", "values", ListValueConverter(StringValueConverter()))
+      self.property(w, "Key", "key", StringValueConverter())
 
-  props = {
-    "Values": (ListValueConverter(StringValueConverter()), "values"),
-    "Key": (StringValueConverter(), "key"),
-  }
 
 class AWS_SSM_PatchBaseline_PatchFilterGroup(CloudFormationProperty):
-  entity = "AWS::SSM::PatchBaseline"
-  tf_block_type = "patch_filter_group"
+  def write(self, w):
+    with w.block("patch_filter_group"):
+      self.repeated_block(w, "PatchFilters", AWS_SSM_PatchBaseline_PatchFilter)
 
-  props = {
-    "PatchFilters": (BlockValueConverter(AWS_SSM_PatchBaseline_PatchFilter), None),
-  }
 
 class AWS_SSM_PatchBaseline_PatchSource(CloudFormationProperty):
-  entity = "AWS::SSM::PatchBaseline"
-  tf_block_type = "patch_source"
+  def write(self, w):
+    with w.block("patch_source"):
+      self.property(w, "Products", "products", ListValueConverter(StringValueConverter()))
+      self.property(w, "Configuration", "configuration", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Products": (ListValueConverter(StringValueConverter()), "products"),
-    "Configuration": (StringValueConverter(), "configuration"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_SSM_MaintenanceWindowTarget_Targets(CloudFormationProperty):
-  entity = "AWS::SSM::MaintenanceWindowTarget"
-  tf_block_type = "targets"
+  def write(self, w):
+    with w.block("targets"):
+      self.property(w, "Values", "values", ListValueConverter(StringValueConverter()))
+      self.property(w, "Key", "key", StringValueConverter())
 
-  props = {
-    "Values": (ListValueConverter(StringValueConverter()), "values"),
-    "Key": (StringValueConverter(), "key"),
-  }
 
 class AWS_SSM_MaintenanceWindowTask_MaintenanceWindowStepFunctionsParameters(CloudFormationProperty):
-  entity = "AWS::SSM::MaintenanceWindowTask"
-  tf_block_type = "maintenance_window_step_functions_parameters"
+  def write(self, w):
+    with w.block("maintenance_window_step_functions_parameters"):
+      self.property(w, "Input", "input", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Input": (StringValueConverter(), "input"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_SSM_MaintenanceWindowTarget(CloudFormationResource):
-  terraform_resource = "aws_ssm_maintenance_window_target"
+  cfn_type = "AWS::SSM::MaintenanceWindowTarget"
+  tf_type = "aws_ssm_maintenance_window_target"
+  ref = "arn"
 
-  resource_type = "AWS::SSM::MaintenanceWindowTarget"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "OwnerInformation", "owner_information", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "WindowId", "window_id", StringValueConverter())
+      self.property(w, "ResourceType", "resource_type", StringValueConverter())
+      self.repeated_block(w, "Targets", AWS_SSM_MaintenanceWindowTarget_Targets)
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "OwnerInformation": (StringValueConverter(), "owner_information"),
-    "Description": (StringValueConverter(), "description"),
-    "WindowId": (StringValueConverter(), "window_id"),
-    "ResourceType": (StringValueConverter(), "resource_type"),
-    "Targets": (BlockValueConverter(AWS_SSM_MaintenanceWindowTarget_Targets), None),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_SSM_Document(CloudFormationResource):
-  terraform_resource = "aws_ssm_document"
+  cfn_type = "AWS::SSM::Document"
+  tf_type = "aws_ssm_document"
+  ref = "arn"
 
-  resource_type = "AWS::SSM::Document"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Content", "content", StringValueConverter())
+      self.property(w, "DocumentType", "document_type", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "Content": (StringValueConverter(), "content"),
-    "DocumentType": (StringValueConverter(), "document_type"),
-    "Name": (StringValueConverter(), "name"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 
 class AWS_SSM_MaintenanceWindow(CloudFormationResource):
-  terraform_resource = "aws_ssm_maintenance_window"
+  cfn_type = "AWS::SSM::MaintenanceWindow"
+  tf_type = "aws_ssm_maintenance_window"
+  ref = "arn"
 
-  resource_type = "AWS::SSM::MaintenanceWindow"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "StartDate", "start_date", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "AllowUnassociatedTargets", "allow_unassociated_targets", BasicValueConverter())
+      self.property(w, "Cutoff", "cutoff", BasicValueConverter())
+      self.property(w, "Schedule", "schedule", StringValueConverter())
+      self.property(w, "Duration", "duration", BasicValueConverter())
+      self.property(w, "ScheduleOffset", "schedule_offset", BasicValueConverter())
+      self.property(w, "EndDate", "end_date", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "ScheduleTimezone", "schedule_timezone", StringValueConverter())
 
-  props = {
-    "StartDate": (StringValueConverter(), "start_date"),
-    "Description": (StringValueConverter(), "description"),
-    "AllowUnassociatedTargets": (BasicValueConverter(), "allow_unassociated_targets"),
-    "Cutoff": (BasicValueConverter(), "cutoff"),
-    "Schedule": (StringValueConverter(), "schedule"),
-    "Duration": (BasicValueConverter(), "duration"),
-    "ScheduleOffset": (BasicValueConverter(), "schedule_offset"),
-    "EndDate": (StringValueConverter(), "end_date"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "Name": (StringValueConverter(), "name"),
-    "ScheduleTimezone": (StringValueConverter(), "schedule_timezone"),
-  }
 
 class AWS_SSM_Parameter(CloudFormationResource):
-  terraform_resource = "aws_ssm_parameter"
+  cfn_type = "AWS::SSM::Parameter"
+  tf_type = "aws_ssm_parameter"
+  ref = "arn"
 
-  resource_type = "AWS::SSM::Parameter"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "Policies", "policies", StringValueConverter())
+      self.property(w, "AllowedPattern", "allowed_pattern", StringValueConverter())
+      self.property(w, "Tier", "tier", StringValueConverter())
+      self.property(w, "Value", "value", StringValueConverter())
+      self.property(w, "DataType", "data_type", StringValueConverter())
+      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Type": (StringValueConverter(), "type"),
-    "Description": (StringValueConverter(), "description"),
-    "Policies": (StringValueConverter(), "policies"),
-    "AllowedPattern": (StringValueConverter(), "allowed_pattern"),
-    "Tier": (StringValueConverter(), "tier"),
-    "Value": (StringValueConverter(), "value"),
-    "DataType": (StringValueConverter(), "data_type"),
-    "Tags": (StringValueConverter(), "tags"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_SSM_ResourceDataSync(CloudFormationResource):
-  terraform_resource = "aws_ssm_resource_data_sync"
+  cfn_type = "AWS::SSM::ResourceDataSync"
+  tf_type = "aws_ssm_resource_data_sync"
+  ref = "arn"
 
-  resource_type = "AWS::SSM::ResourceDataSync"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "S3Destination", AWS_SSM_ResourceDataSync_S3Destination)
+      self.property(w, "KMSKeyArn", "kms_key_arn", StringValueConverter())
+      self.block(w, "SyncSource", AWS_SSM_ResourceDataSync_SyncSource)
+      self.property(w, "BucketName", "bucket_name", StringValueConverter())
+      self.property(w, "BucketRegion", "bucket_region", StringValueConverter())
+      self.property(w, "SyncFormat", "sync_format", StringValueConverter())
+      self.property(w, "SyncName", "sync_name", StringValueConverter())
+      self.property(w, "SyncType", "sync_type", StringValueConverter())
+      self.property(w, "BucketPrefix", "bucket_prefix", StringValueConverter())
 
-  props = {
-    "S3Destination": (AWS_SSM_ResourceDataSync_S3Destination, "s3_destination"),
-    "KMSKeyArn": (StringValueConverter(), "kms_key_arn"),
-    "SyncSource": (AWS_SSM_ResourceDataSync_SyncSource, "sync_source"),
-    "BucketName": (StringValueConverter(), "bucket_name"),
-    "BucketRegion": (StringValueConverter(), "bucket_region"),
-    "SyncFormat": (StringValueConverter(), "sync_format"),
-    "SyncName": (StringValueConverter(), "sync_name"),
-    "SyncType": (StringValueConverter(), "sync_type"),
-    "BucketPrefix": (StringValueConverter(), "bucket_prefix"),
-  }
 
 class AWS_SSM_MaintenanceWindowTask_MaintenanceWindowRunCommandParameters(CloudFormationProperty):
-  entity = "AWS::SSM::MaintenanceWindowTask"
-  tf_block_type = "maintenance_window_run_command_parameters"
+  def write(self, w):
+    with w.block("maintenance_window_run_command_parameters"):
+      self.property(w, "TimeoutSeconds", "timeout_seconds", BasicValueConverter())
+      self.property(w, "Comment", "comment", StringValueConverter())
+      self.property(w, "OutputS3KeyPrefix", "output_s3_key_prefix", StringValueConverter())
+      self.property(w, "Parameters", "parameters", StringValueConverter())
+      self.property(w, "DocumentHashType", "document_hash_type", StringValueConverter())
+      self.property(w, "ServiceRoleArn", "service_role_arn", StringValueConverter())
+      self.block(w, "NotificationConfig", AWS_SSM_MaintenanceWindowTask_NotificationConfig)
+      self.property(w, "OutputS3BucketName", "output_s3_bucket_name", StringValueConverter())
+      self.property(w, "DocumentHash", "document_hash", StringValueConverter())
 
-  props = {
-    "TimeoutSeconds": (BasicValueConverter(), "timeout_seconds"),
-    "Comment": (StringValueConverter(), "comment"),
-    "OutputS3KeyPrefix": (StringValueConverter(), "output_s3_key_prefix"),
-    "Parameters": (StringValueConverter(), "parameters"),
-    "DocumentHashType": (StringValueConverter(), "document_hash_type"),
-    "ServiceRoleArn": (StringValueConverter(), "service_role_arn"),
-    "NotificationConfig": (AWS_SSM_MaintenanceWindowTask_NotificationConfig, "notification_config"),
-    "OutputS3BucketName": (StringValueConverter(), "output_s3_bucket_name"),
-    "DocumentHash": (StringValueConverter(), "document_hash"),
-  }
 
 class AWS_SSM_MaintenanceWindowTask_TaskInvocationParameters(CloudFormationProperty):
-  entity = "AWS::SSM::MaintenanceWindowTask"
-  tf_block_type = "task_invocation_parameters"
+  def write(self, w):
+    with w.block("task_invocation_parameters"):
+      self.block(w, "MaintenanceWindowRunCommandParameters", AWS_SSM_MaintenanceWindowTask_MaintenanceWindowRunCommandParameters)
+      self.block(w, "MaintenanceWindowAutomationParameters", AWS_SSM_MaintenanceWindowTask_MaintenanceWindowAutomationParameters)
+      self.block(w, "MaintenanceWindowStepFunctionsParameters", AWS_SSM_MaintenanceWindowTask_MaintenanceWindowStepFunctionsParameters)
+      self.block(w, "MaintenanceWindowLambdaParameters", AWS_SSM_MaintenanceWindowTask_MaintenanceWindowLambdaParameters)
 
-  props = {
-    "MaintenanceWindowRunCommandParameters": (AWS_SSM_MaintenanceWindowTask_MaintenanceWindowRunCommandParameters, "maintenance_window_run_command_parameters"),
-    "MaintenanceWindowAutomationParameters": (AWS_SSM_MaintenanceWindowTask_MaintenanceWindowAutomationParameters, "maintenance_window_automation_parameters"),
-    "MaintenanceWindowStepFunctionsParameters": (AWS_SSM_MaintenanceWindowTask_MaintenanceWindowStepFunctionsParameters, "maintenance_window_step_functions_parameters"),
-    "MaintenanceWindowLambdaParameters": (AWS_SSM_MaintenanceWindowTask_MaintenanceWindowLambdaParameters, "maintenance_window_lambda_parameters"),
-  }
 
 class AWS_SSM_PatchBaseline_Rule(CloudFormationProperty):
-  entity = "AWS::SSM::PatchBaseline"
-  tf_block_type = "rule"
+  def write(self, w):
+    with w.block("rule"):
+      self.block(w, "ApproveUntilDate", AWS_SSM_PatchBaseline_PatchStringDate)
+      self.property(w, "EnableNonSecurity", "enable_non_security", BasicValueConverter())
+      self.block(w, "PatchFilterGroup", AWS_SSM_PatchBaseline_PatchFilterGroup)
+      self.property(w, "ApproveAfterDays", "approve_after_days", BasicValueConverter())
+      self.property(w, "ComplianceLevel", "compliance_level", StringValueConverter())
 
-  props = {
-    "ApproveUntilDate": (AWS_SSM_PatchBaseline_PatchStringDate, "approve_until_date"),
-    "EnableNonSecurity": (BasicValueConverter(), "enable_non_security"),
-    "PatchFilterGroup": (AWS_SSM_PatchBaseline_PatchFilterGroup, "patch_filter_group"),
-    "ApproveAfterDays": (BasicValueConverter(), "approve_after_days"),
-    "ComplianceLevel": (StringValueConverter(), "compliance_level"),
-  }
 
 class AWS_SSM_MaintenanceWindowTask(CloudFormationResource):
-  terraform_resource = "aws_ssm_maintenance_window_task"
+  cfn_type = "AWS::SSM::MaintenanceWindowTask"
+  tf_type = "aws_ssm_maintenance_window_task"
+  ref = "arn"
 
-  resource_type = "AWS::SSM::MaintenanceWindowTask"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "MaxErrors", "max_errors", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "ServiceRoleArn", "service_role_arn", StringValueConverter())
+      self.property(w, "Priority", "priority", BasicValueConverter())
+      self.property(w, "MaxConcurrency", "max_concurrency", StringValueConverter())
+      self.repeated_block(w, "Targets", AWS_SSM_MaintenanceWindowTask_Target)
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "TaskArn", "task_arn", StringValueConverter())
+      self.block(w, "TaskInvocationParameters", AWS_SSM_MaintenanceWindowTask_TaskInvocationParameters)
+      self.property(w, "WindowId", "window_id", StringValueConverter())
+      self.property(w, "TaskParameters", "task_parameters", StringValueConverter())
+      self.property(w, "TaskType", "task_type", StringValueConverter())
+      self.block(w, "LoggingInfo", AWS_SSM_MaintenanceWindowTask_LoggingInfo)
 
-  props = {
-    "MaxErrors": (StringValueConverter(), "max_errors"),
-    "Description": (StringValueConverter(), "description"),
-    "ServiceRoleArn": (StringValueConverter(), "service_role_arn"),
-    "Priority": (BasicValueConverter(), "priority"),
-    "MaxConcurrency": (StringValueConverter(), "max_concurrency"),
-    "Targets": (BlockValueConverter(AWS_SSM_MaintenanceWindowTask_Target), None),
-    "Name": (StringValueConverter(), "name"),
-    "TaskArn": (StringValueConverter(), "task_arn"),
-    "TaskInvocationParameters": (AWS_SSM_MaintenanceWindowTask_TaskInvocationParameters, "task_invocation_parameters"),
-    "WindowId": (StringValueConverter(), "window_id"),
-    "TaskParameters": (StringValueConverter(), "task_parameters"),
-    "TaskType": (StringValueConverter(), "task_type"),
-    "LoggingInfo": (AWS_SSM_MaintenanceWindowTask_LoggingInfo, "logging_info"),
-  }
 
 class AWS_SSM_PatchBaseline_RuleGroup(CloudFormationProperty):
-  entity = "AWS::SSM::PatchBaseline"
-  tf_block_type = "rule_group"
+  def write(self, w):
+    with w.block("rule_group"):
+      self.repeated_block(w, "PatchRules", AWS_SSM_PatchBaseline_Rule)
 
-  props = {
-    "PatchRules": (BlockValueConverter(AWS_SSM_PatchBaseline_Rule), None),
-  }
 
 class AWS_SSM_PatchBaseline(CloudFormationResource):
-  terraform_resource = "aws_ssm_patch_baseline"
+  cfn_type = "AWS::SSM::PatchBaseline"
+  tf_type = "aws_ssm_patch_baseline"
+  ref = "arn"
 
-  resource_type = "AWS::SSM::PatchBaseline"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "OperatingSystem", "operating_system", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.block(w, "ApprovalRules", AWS_SSM_PatchBaseline_RuleGroup)
+      self.repeated_block(w, "Sources", AWS_SSM_PatchBaseline_PatchSource)
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "RejectedPatches", "rejected_patches", ListValueConverter(StringValueConverter()))
+      self.property(w, "ApprovedPatches", "approved_patches", ListValueConverter(StringValueConverter()))
+      self.property(w, "RejectedPatchesAction", "rejected_patches_action", StringValueConverter())
+      self.property(w, "PatchGroups", "patch_groups", ListValueConverter(StringValueConverter()))
+      self.property(w, "ApprovedPatchesComplianceLevel", "approved_patches_compliance_level", StringValueConverter())
+      self.property(w, "ApprovedPatchesEnableNonSecurity", "approved_patches_enable_non_security", BasicValueConverter())
+      self.block(w, "GlobalFilters", AWS_SSM_PatchBaseline_PatchFilterGroup)
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "OperatingSystem": (StringValueConverter(), "operating_system"),
-    "Description": (StringValueConverter(), "description"),
-    "ApprovalRules": (AWS_SSM_PatchBaseline_RuleGroup, "approval_rules"),
-    "Sources": (BlockValueConverter(AWS_SSM_PatchBaseline_PatchSource), None),
-    "Name": (StringValueConverter(), "name"),
-    "RejectedPatches": (ListValueConverter(StringValueConverter()), "rejected_patches"),
-    "ApprovedPatches": (ListValueConverter(StringValueConverter()), "approved_patches"),
-    "RejectedPatchesAction": (StringValueConverter(), "rejected_patches_action"),
-    "PatchGroups": (ListValueConverter(StringValueConverter()), "patch_groups"),
-    "ApprovedPatchesComplianceLevel": (StringValueConverter(), "approved_patches_compliance_level"),
-    "ApprovedPatchesEnableNonSecurity": (BasicValueConverter(), "approved_patches_enable_non_security"),
-    "GlobalFilters": (AWS_SSM_PatchBaseline_PatchFilterGroup, "global_filters"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 
 class AWS_SSM_Association(CloudFormationResource):
-  terraform_resource = "aws_ssm_association"
+  cfn_type = "AWS::SSM::Association"
+  tf_type = "aws_ssm_association"
+  ref = "arn"
 
-  resource_type = "AWS::SSM::Association"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "AssociationName", "association_name", StringValueConverter())
+      self.property(w, "DocumentVersion", "document_version", StringValueConverter())
+      self.property(w, "InstanceId", "instance_id", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Parameters", "parameters", MapValueConverter(ListValueConverter(StringValueConverter())))
+      self.property(w, "ScheduleExpression", "schedule_expression", StringValueConverter())
+      self.repeated_block(w, "Targets", AWS_SSM_Association_Target)
+      self.block(w, "OutputLocation", AWS_SSM_Association_InstanceAssociationOutputLocation)
+      self.property(w, "AutomationTargetParameterName", "automation_target_parameter_name", StringValueConverter())
+      self.property(w, "MaxErrors", "max_errors", StringValueConverter())
+      self.property(w, "MaxConcurrency", "max_concurrency", StringValueConverter())
+      self.property(w, "ComplianceSeverity", "compliance_severity", StringValueConverter())
+      self.property(w, "SyncCompliance", "sync_compliance", StringValueConverter())
+      self.property(w, "WaitForSuccessTimeoutSeconds", "wait_for_success_timeout_seconds", BasicValueConverter())
 
-  props = {
-    "AssociationName": (StringValueConverter(), "association_name"),
-    "DocumentVersion": (StringValueConverter(), "document_version"),
-    "InstanceId": (StringValueConverter(), "instance_id"),
-    "Name": (StringValueConverter(), "name"),
-    "Parameters": (MapValueConverter(ListValueConverter(StringValueConverter)), "parameters"),
-    "ScheduleExpression": (StringValueConverter(), "schedule_expression"),
-    "Targets": (BlockValueConverter(AWS_SSM_Association_Target), None),
-    "OutputLocation": (AWS_SSM_Association_InstanceAssociationOutputLocation, "output_location"),
-    "AutomationTargetParameterName": (StringValueConverter(), "automation_target_parameter_name"),
-    "MaxErrors": (StringValueConverter(), "max_errors"),
-    "MaxConcurrency": (StringValueConverter(), "max_concurrency"),
-    "ComplianceSeverity": (StringValueConverter(), "compliance_severity"),
-    "SyncCompliance": (StringValueConverter(), "sync_compliance"),
-    "WaitForSuccessTimeoutSeconds": (BasicValueConverter(), "wait_for_success_timeout_seconds"),
-  }
 

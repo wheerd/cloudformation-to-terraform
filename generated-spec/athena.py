@@ -1,91 +1,81 @@
 from . import *
 
 class AWS_Athena_WorkGroup_EncryptionConfiguration(CloudFormationProperty):
-  entity = "AWS::Athena::WorkGroup"
-  tf_block_type = "encryption_configuration"
+  def write(self, w):
+    with w.block("encryption_configuration"):
+      self.property(w, "EncryptionOption", "encryption_option", StringValueConverter())
+      self.property(w, "KmsKey", "kms_key", StringValueConverter())
 
-  props = {
-    "EncryptionOption": (StringValueConverter(), "encryption_option"),
-    "KmsKey": (StringValueConverter(), "kms_key"),
-  }
 
 class AWS_Athena_WorkGroup_ResultConfiguration(CloudFormationProperty):
-  entity = "AWS::Athena::WorkGroup"
-  tf_block_type = "result_configuration"
+  def write(self, w):
+    with w.block("result_configuration"):
+      self.block(w, "EncryptionConfiguration", AWS_Athena_WorkGroup_EncryptionConfiguration)
+      self.property(w, "OutputLocation", "output_location", StringValueConverter())
 
-  props = {
-    "EncryptionConfiguration": (AWS_Athena_WorkGroup_EncryptionConfiguration, "encryption_configuration"),
-    "OutputLocation": (StringValueConverter(), "output_location"),
-  }
 
 class AWS_Athena_WorkGroup_ResultConfigurationUpdates(CloudFormationProperty):
-  entity = "AWS::Athena::WorkGroup"
-  tf_block_type = "result_configuration_updates"
+  def write(self, w):
+    with w.block("result_configuration_updates"):
+      self.block(w, "EncryptionConfiguration", AWS_Athena_WorkGroup_EncryptionConfiguration)
+      self.property(w, "OutputLocation", "output_location", StringValueConverter())
+      self.property(w, "RemoveEncryptionConfiguration", "remove_encryption_configuration", BasicValueConverter())
+      self.property(w, "RemoveOutputLocation", "remove_output_location", BasicValueConverter())
 
-  props = {
-    "EncryptionConfiguration": (AWS_Athena_WorkGroup_EncryptionConfiguration, "encryption_configuration"),
-    "OutputLocation": (StringValueConverter(), "output_location"),
-    "RemoveEncryptionConfiguration": (BasicValueConverter(), "remove_encryption_configuration"),
-    "RemoveOutputLocation": (BasicValueConverter(), "remove_output_location"),
-  }
 
 class AWS_Athena_WorkGroup_Tags(CloudFormationProperty):
-  entity = "AWS::Athena::WorkGroup"
-  tf_block_type = "tags"
+  def write(self, w):
+    with w.block("tags"):
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 
 class AWS_Athena_NamedQuery(CloudFormationResource):
-  terraform_resource = "aws_athena_named_query"
+  cfn_type = "AWS::Athena::NamedQuery"
+  tf_type = "aws_athena_named_query"
+  ref = "arn"
 
-  resource_type = "AWS::Athena::NamedQuery"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Database", "database", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "QueryString", "query_string", StringValueConverter())
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-    "Database": (StringValueConverter(), "database"),
-    "Description": (StringValueConverter(), "description"),
-    "QueryString": (StringValueConverter(), "query_string"),
-  }
 
 class AWS_Athena_WorkGroup_WorkGroupConfigurationUpdates(CloudFormationProperty):
-  entity = "AWS::Athena::WorkGroup"
-  tf_block_type = "work_group_configuration_updates"
+  def write(self, w):
+    with w.block("work_group_configuration_updates"):
+      self.property(w, "BytesScannedCutoffPerQuery", "bytes_scanned_cutoff_per_query", BasicValueConverter())
+      self.property(w, "EnforceWorkGroupConfiguration", "enforce_work_group_configuration", BasicValueConverter())
+      self.property(w, "PublishCloudWatchMetricsEnabled", "publish_cloud_watch_metrics_enabled", BasicValueConverter())
+      self.property(w, "RequesterPaysEnabled", "requester_pays_enabled", BasicValueConverter())
+      self.block(w, "ResultConfigurationUpdates", AWS_Athena_WorkGroup_ResultConfigurationUpdates)
+      self.property(w, "RemoveBytesScannedCutoffPerQuery", "remove_bytes_scanned_cutoff_per_query", BasicValueConverter())
 
-  props = {
-    "BytesScannedCutoffPerQuery": (BasicValueConverter(), "bytes_scanned_cutoff_per_query"),
-    "EnforceWorkGroupConfiguration": (BasicValueConverter(), "enforce_work_group_configuration"),
-    "PublishCloudWatchMetricsEnabled": (BasicValueConverter(), "publish_cloud_watch_metrics_enabled"),
-    "RequesterPaysEnabled": (BasicValueConverter(), "requester_pays_enabled"),
-    "ResultConfigurationUpdates": (AWS_Athena_WorkGroup_ResultConfigurationUpdates, "result_configuration_updates"),
-    "RemoveBytesScannedCutoffPerQuery": (BasicValueConverter(), "remove_bytes_scanned_cutoff_per_query"),
-  }
 
 class AWS_Athena_WorkGroup_WorkGroupConfiguration(CloudFormationProperty):
-  entity = "AWS::Athena::WorkGroup"
-  tf_block_type = "work_group_configuration"
+  def write(self, w):
+    with w.block("work_group_configuration"):
+      self.property(w, "BytesScannedCutoffPerQuery", "bytes_scanned_cutoff_per_query", BasicValueConverter())
+      self.property(w, "EnforceWorkGroupConfiguration", "enforce_work_group_configuration", BasicValueConverter())
+      self.property(w, "PublishCloudWatchMetricsEnabled", "publish_cloud_watch_metrics_enabled", BasicValueConverter())
+      self.property(w, "RequesterPaysEnabled", "requester_pays_enabled", BasicValueConverter())
+      self.block(w, "ResultConfiguration", AWS_Athena_WorkGroup_ResultConfiguration)
 
-  props = {
-    "BytesScannedCutoffPerQuery": (BasicValueConverter(), "bytes_scanned_cutoff_per_query"),
-    "EnforceWorkGroupConfiguration": (BasicValueConverter(), "enforce_work_group_configuration"),
-    "PublishCloudWatchMetricsEnabled": (BasicValueConverter(), "publish_cloud_watch_metrics_enabled"),
-    "RequesterPaysEnabled": (BasicValueConverter(), "requester_pays_enabled"),
-    "ResultConfiguration": (AWS_Athena_WorkGroup_ResultConfiguration, "result_configuration"),
-  }
 
 class AWS_Athena_WorkGroup(CloudFormationResource):
-  terraform_resource = "aws_athena_work_group"
+  cfn_type = "AWS::Athena::WorkGroup"
+  tf_type = "aws_athena_work_group"
+  ref = "arn"
 
-  resource_type = "AWS::Athena::WorkGroup"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.block(w, "Tags", AWS_Athena_WorkGroup_Tags)
+      self.block(w, "WorkGroupConfiguration", AWS_Athena_WorkGroup_WorkGroupConfiguration)
+      self.block(w, "WorkGroupConfigurationUpdates", AWS_Athena_WorkGroup_WorkGroupConfigurationUpdates)
+      self.property(w, "State", "state", StringValueConverter())
+      self.property(w, "RecursiveDeleteOption", "recursive_delete_option", BasicValueConverter())
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-    "Description": (StringValueConverter(), "description"),
-    "Tags": (AWS_Athena_WorkGroup_Tags, "tags"),
-    "WorkGroupConfiguration": (AWS_Athena_WorkGroup_WorkGroupConfiguration, "work_group_configuration"),
-    "WorkGroupConfigurationUpdates": (AWS_Athena_WorkGroup_WorkGroupConfigurationUpdates, "work_group_configuration_updates"),
-    "State": (StringValueConverter(), "state"),
-    "RecursiveDeleteOption": (BasicValueConverter(), "recursive_delete_option"),
-  }
 

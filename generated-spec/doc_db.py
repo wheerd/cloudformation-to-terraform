@@ -1,68 +1,72 @@
 from . import *
 
 class AWS_DocDB_DBInstance(CloudFormationResource):
-  terraform_resource = "aws_doc_db_db_instance"
+  cfn_type = "AWS::DocDB::DBInstance"
+  tf_type = "aws_doc_db_db_instance"
+  ref = "arn"
 
-  resource_type = "AWS::DocDB::DBInstance"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "DBInstanceClass", "db_instance_class", StringValueConverter())
+      self.property(w, "DBClusterIdentifier", "db_cluster_identifier", StringValueConverter())
+      self.property(w, "AvailabilityZone", "availability_zone", StringValueConverter())
+      self.property(w, "PreferredMaintenanceWindow", "preferred_maintenance_window", StringValueConverter())
+      self.property(w, "AutoMinorVersionUpgrade", "auto_minor_version_upgrade", BasicValueConverter())
+      self.property(w, "DBInstanceIdentifier", "db_instance_identifier", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "DBInstanceClass": (StringValueConverter(), "db_instance_class"),
-    "DBClusterIdentifier": (StringValueConverter(), "db_cluster_identifier"),
-    "AvailabilityZone": (StringValueConverter(), "availability_zone"),
-    "PreferredMaintenanceWindow": (StringValueConverter(), "preferred_maintenance_window"),
-    "AutoMinorVersionUpgrade": (BasicValueConverter(), "auto_minor_version_upgrade"),
-    "DBInstanceIdentifier": (StringValueConverter(), "db_instance_identifier"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 
 class AWS_DocDB_DBCluster(CloudFormationResource):
-  terraform_resource = "aws_doc_db_db_cluster"
+  cfn_type = "AWS::DocDB::DBCluster"
+  tf_type = "aws_doc_db_db_cluster"
+  ref = "arn"
 
-  resource_type = "AWS::DocDB::DBCluster"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "StorageEncrypted", "storage_encrypted", BasicValueConverter())
+      self.property(w, "EngineVersion", "engine_version", StringValueConverter())
+      self.property(w, "KmsKeyId", "kms_key_id", StringValueConverter())
+      self.property(w, "AvailabilityZones", "availability_zones", ListValueConverter(StringValueConverter()))
+      self.property(w, "SnapshotIdentifier", "snapshot_identifier", StringValueConverter())
+      self.property(w, "Port", "port", BasicValueConverter())
+      self.property(w, "DBClusterIdentifier", "db_cluster_identifier", StringValueConverter())
+      self.property(w, "PreferredMaintenanceWindow", "preferred_maintenance_window", StringValueConverter())
+      self.property(w, "DBSubnetGroupName", "db_subnet_group_name", StringValueConverter())
+      self.property(w, "DeletionProtection", "deletion_protection", BasicValueConverter())
+      self.property(w, "PreferredBackupWindow", "preferred_backup_window", StringValueConverter())
+      self.property(w, "MasterUserPassword", "master_user_password", StringValueConverter())
+      self.property(w, "VpcSecurityGroupIds", "vpc_security_group_ids", ListValueConverter(StringValueConverter()))
+      self.property(w, "MasterUsername", "master_username", StringValueConverter())
+      self.property(w, "DBClusterParameterGroupName", "db_cluster_parameter_group_name", StringValueConverter())
+      self.property(w, "BackupRetentionPeriod", "backup_retention_period", BasicValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "EnableCloudwatchLogsExports", "enable_cloudwatch_logs_exports", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "StorageEncrypted": (BasicValueConverter(), "storage_encrypted"),
-    "EngineVersion": (StringValueConverter(), "engine_version"),
-    "KmsKeyId": (StringValueConverter(), "kms_key_id"),
-    "AvailabilityZones": (ListValueConverter(StringValueConverter()), "availability_zones"),
-    "SnapshotIdentifier": (StringValueConverter(), "snapshot_identifier"),
-    "Port": (BasicValueConverter(), "port"),
-    "DBClusterIdentifier": (StringValueConverter(), "db_cluster_identifier"),
-    "PreferredMaintenanceWindow": (StringValueConverter(), "preferred_maintenance_window"),
-    "DBSubnetGroupName": (StringValueConverter(), "db_subnet_group_name"),
-    "DeletionProtection": (BasicValueConverter(), "deletion_protection"),
-    "PreferredBackupWindow": (StringValueConverter(), "preferred_backup_window"),
-    "MasterUserPassword": (StringValueConverter(), "master_user_password"),
-    "VpcSecurityGroupIds": (ListValueConverter(StringValueConverter()), "vpc_security_group_ids"),
-    "MasterUsername": (StringValueConverter(), "master_username"),
-    "DBClusterParameterGroupName": (StringValueConverter(), "db_cluster_parameter_group_name"),
-    "BackupRetentionPeriod": (BasicValueConverter(), "backup_retention_period"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "EnableCloudwatchLogsExports": (ListValueConverter(StringValueConverter()), "enable_cloudwatch_logs_exports"),
-  }
 
 class AWS_DocDB_DBSubnetGroup(CloudFormationResource):
-  terraform_resource = "aws_doc_db_db_subnet_group"
+  cfn_type = "AWS::DocDB::DBSubnetGroup"
+  tf_type = "aws_doc_db_db_subnet_group"
+  ref = "arn"
 
-  resource_type = "AWS::DocDB::DBSubnetGroup"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "DBSubnetGroupName", "db_subnet_group_name", StringValueConverter())
+      self.property(w, "DBSubnetGroupDescription", "db_subnet_group_description", StringValueConverter())
+      self.property(w, "SubnetIds", "subnet_ids", ListValueConverter(StringValueConverter()))
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "DBSubnetGroupName": (StringValueConverter(), "db_subnet_group_name"),
-    "DBSubnetGroupDescription": (StringValueConverter(), "db_subnet_group_description"),
-    "SubnetIds": (ListValueConverter(StringValueConverter()), "subnet_ids"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 
 class AWS_DocDB_DBClusterParameterGroup(CloudFormationResource):
-  terraform_resource = "aws_doc_db_db_cluster_parameter_group"
+  cfn_type = "AWS::DocDB::DBClusterParameterGroup"
+  tf_type = "aws_doc_db_db_cluster_parameter_group"
+  ref = "arn"
 
-  resource_type = "AWS::DocDB::DBClusterParameterGroup"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "Parameters", "parameters", StringValueConverter())
+      self.property(w, "Family", "family", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "Parameters": (StringValueConverter(), "parameters"),
-    "Family": (StringValueConverter(), "family"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "Name": (StringValueConverter(), "name"),
-  }
 

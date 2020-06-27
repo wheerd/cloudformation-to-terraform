@@ -1,102 +1,87 @@
 from . import *
 
 class AWS_DLM_LifecyclePolicy_FastRestoreRule(CloudFormationProperty):
-  entity = "AWS::DLM::LifecyclePolicy"
-  tf_block_type = "fast_restore_rule"
+  def write(self, w):
+    with w.block("fast_restore_rule"):
+      self.property(w, "IntervalUnit", "interval_unit", StringValueConverter())
+      self.property(w, "AvailabilityZones", "availability_zones", ListValueConverter(StringValueConverter()))
+      self.property(w, "Count", "count", BasicValueConverter())
+      self.property(w, "Interval", "interval", BasicValueConverter())
 
-  props = {
-    "IntervalUnit": (StringValueConverter(), "interval_unit"),
-    "AvailabilityZones": (ListValueConverter(StringValueConverter()), "availability_zones"),
-    "Count": (BasicValueConverter(), "count"),
-    "Interval": (BasicValueConverter(), "interval"),
-  }
 
 class AWS_DLM_LifecyclePolicy_CrossRegionCopyRetainRule(CloudFormationProperty):
-  entity = "AWS::DLM::LifecyclePolicy"
-  tf_block_type = "cross_region_copy_retain_rule"
+  def write(self, w):
+    with w.block("cross_region_copy_retain_rule"):
+      self.property(w, "IntervalUnit", "interval_unit", StringValueConverter())
+      self.property(w, "Interval", "interval", BasicValueConverter())
 
-  props = {
-    "IntervalUnit": (StringValueConverter(), "interval_unit"),
-    "Interval": (BasicValueConverter(), "interval"),
-  }
 
 class AWS_DLM_LifecyclePolicy_CrossRegionCopyRule(CloudFormationProperty):
-  entity = "AWS::DLM::LifecyclePolicy"
-  tf_block_type = "cross_region_copy_rule"
+  def write(self, w):
+    with w.block("cross_region_copy_rule"):
+      self.property(w, "TargetRegion", "target_region", StringValueConverter())
+      self.property(w, "Encrypted", "encrypted", BasicValueConverter())
+      self.property(w, "CmkArn", "cmk_arn", StringValueConverter())
+      self.block(w, "RetainRule", AWS_DLM_LifecyclePolicy_CrossRegionCopyRetainRule)
+      self.property(w, "CopyTags", "copy_tags", BasicValueConverter())
 
-  props = {
-    "TargetRegion": (StringValueConverter(), "target_region"),
-    "Encrypted": (BasicValueConverter(), "encrypted"),
-    "CmkArn": (StringValueConverter(), "cmk_arn"),
-    "RetainRule": (AWS_DLM_LifecyclePolicy_CrossRegionCopyRetainRule, "retain_rule"),
-    "CopyTags": (BasicValueConverter(), "copy_tags"),
-  }
 
 class AWS_DLM_LifecyclePolicy_CreateRule(CloudFormationProperty):
-  entity = "AWS::DLM::LifecyclePolicy"
-  tf_block_type = "create_rule"
+  def write(self, w):
+    with w.block("create_rule"):
+      self.property(w, "IntervalUnit", "interval_unit", StringValueConverter())
+      self.property(w, "Times", "times", ListValueConverter(StringValueConverter()))
+      self.property(w, "CronExpression", "cron_expression", StringValueConverter())
+      self.property(w, "Interval", "interval", BasicValueConverter())
 
-  props = {
-    "IntervalUnit": (StringValueConverter(), "interval_unit"),
-    "Times": (ListValueConverter(StringValueConverter()), "times"),
-    "CronExpression": (StringValueConverter(), "cron_expression"),
-    "Interval": (BasicValueConverter(), "interval"),
-  }
 
 class AWS_DLM_LifecyclePolicy_RetainRule(CloudFormationProperty):
-  entity = "AWS::DLM::LifecyclePolicy"
-  tf_block_type = "retain_rule"
+  def write(self, w):
+    with w.block("retain_rule"):
+      self.property(w, "IntervalUnit", "interval_unit", StringValueConverter())
+      self.property(w, "Count", "count", BasicValueConverter())
+      self.property(w, "Interval", "interval", BasicValueConverter())
 
-  props = {
-    "IntervalUnit": (StringValueConverter(), "interval_unit"),
-    "Count": (BasicValueConverter(), "count"),
-    "Interval": (BasicValueConverter(), "interval"),
-  }
 
 class AWS_DLM_LifecyclePolicy_Parameters(CloudFormationProperty):
-  entity = "AWS::DLM::LifecyclePolicy"
-  tf_block_type = "parameters"
+  def write(self, w):
+    with w.block("parameters"):
+      self.property(w, "ExcludeBootVolume", "exclude_boot_volume", BasicValueConverter())
 
-  props = {
-    "ExcludeBootVolume": (BasicValueConverter(), "exclude_boot_volume"),
-  }
 
 class AWS_DLM_LifecyclePolicy_Schedule(CloudFormationProperty):
-  entity = "AWS::DLM::LifecyclePolicy"
-  tf_block_type = "schedule"
+  def write(self, w):
+    with w.block("schedule"):
+      self.property(w, "TagsToAdd", "tags_to_add", ListValueConverter(ResourceTag()))
+      self.block(w, "CreateRule", AWS_DLM_LifecyclePolicy_CreateRule)
+      self.property(w, "VariableTags", "variable_tags", ListValueConverter(ResourceTag()))
+      self.block(w, "FastRestoreRule", AWS_DLM_LifecyclePolicy_FastRestoreRule)
+      self.block(w, "RetainRule", AWS_DLM_LifecyclePolicy_RetainRule)
+      self.repeated_block(w, "CrossRegionCopyRules", AWS_DLM_LifecyclePolicy_CrossRegionCopyRule)
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "CopyTags", "copy_tags", BasicValueConverter())
 
-  props = {
-    "TagsToAdd": (ListValueConverter(ResourceTag), "tags_to_add"),
-    "CreateRule": (AWS_DLM_LifecyclePolicy_CreateRule, "create_rule"),
-    "VariableTags": (ListValueConverter(ResourceTag), "variable_tags"),
-    "FastRestoreRule": (AWS_DLM_LifecyclePolicy_FastRestoreRule, "fast_restore_rule"),
-    "RetainRule": (AWS_DLM_LifecyclePolicy_RetainRule, "retain_rule"),
-    "CrossRegionCopyRules": (BlockValueConverter(AWS_DLM_LifecyclePolicy_CrossRegionCopyRule), None),
-    "Name": (StringValueConverter(), "name"),
-    "CopyTags": (BasicValueConverter(), "copy_tags"),
-  }
 
 class AWS_DLM_LifecyclePolicy_PolicyDetails(CloudFormationProperty):
-  entity = "AWS::DLM::LifecyclePolicy"
-  tf_block_type = "policy_details"
+  def write(self, w):
+    with w.block("policy_details"):
+      self.property(w, "ResourceTypes", "resource_types", ListValueConverter(StringValueConverter()))
+      self.repeated_block(w, "Schedules", AWS_DLM_LifecyclePolicy_Schedule)
+      self.property(w, "PolicyType", "policy_type", StringValueConverter())
+      self.block(w, "Parameters", AWS_DLM_LifecyclePolicy_Parameters)
+      self.property(w, "TargetTags", "target_tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "ResourceTypes": (ListValueConverter(StringValueConverter()), "resource_types"),
-    "Schedules": (BlockValueConverter(AWS_DLM_LifecyclePolicy_Schedule), None),
-    "PolicyType": (StringValueConverter(), "policy_type"),
-    "Parameters": (AWS_DLM_LifecyclePolicy_Parameters, "parameters"),
-    "TargetTags": (ListValueConverter(ResourceTag), "target_tags"),
-  }
 
 class AWS_DLM_LifecyclePolicy(CloudFormationResource):
-  terraform_resource = "aws_dlm_lifecycle_policy"
+  cfn_type = "AWS::DLM::LifecyclePolicy"
+  tf_type = "aws_dlm_lifecycle_policy"
+  ref = "arn"
 
-  resource_type = "AWS::DLM::LifecyclePolicy"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ExecutionRoleArn", "execution_role_arn", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "State", "state", StringValueConverter())
+      self.block(w, "PolicyDetails", AWS_DLM_LifecyclePolicy_PolicyDetails)
 
-  props = {
-    "ExecutionRoleArn": (StringValueConverter(), "execution_role_arn"),
-    "Description": (StringValueConverter(), "description"),
-    "State": (StringValueConverter(), "state"),
-    "PolicyDetails": (AWS_DLM_LifecyclePolicy_PolicyDetails, "policy_details"),
-  }
 

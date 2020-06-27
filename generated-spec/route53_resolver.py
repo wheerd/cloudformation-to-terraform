@@ -1,58 +1,57 @@
 from . import *
 
 class AWS_Route53Resolver_ResolverEndpoint_IpAddressRequest(CloudFormationProperty):
-  entity = "AWS::Route53Resolver::ResolverEndpoint"
-  tf_block_type = "ip_address_request"
+  def write(self, w):
+    with w.block("ip_address_request"):
+      self.property(w, "Ip", "ip", StringValueConverter())
+      self.property(w, "SubnetId", "subnet_id", StringValueConverter())
 
-  props = {
-    "Ip": (StringValueConverter(), "ip"),
-    "SubnetId": (StringValueConverter(), "subnet_id"),
-  }
 
 class AWS_Route53Resolver_ResolverRule_TargetAddress(CloudFormationProperty):
-  entity = "AWS::Route53Resolver::ResolverRule"
-  tf_block_type = "target_address"
+  def write(self, w):
+    with w.block("target_address"):
+      self.property(w, "Ip", "ip", StringValueConverter())
+      self.property(w, "Port", "port", StringValueConverter())
 
-  props = {
-    "Ip": (StringValueConverter(), "ip"),
-    "Port": (StringValueConverter(), "port"),
-  }
 
 class AWS_Route53Resolver_ResolverRule(CloudFormationResource):
-  terraform_resource = "aws_route53_resolver_resolver_rule"
+  cfn_type = "AWS::Route53Resolver::ResolverRule"
+  tf_type = "aws_route53_resolver_resolver_rule"
+  ref = "arn"
 
-  resource_type = "AWS::Route53Resolver::ResolverRule"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ResolverEndpointId", "resolver_endpoint_id", StringValueConverter())
+      self.property(w, "DomainName", "domain_name", StringValueConverter())
+      self.property(w, "RuleType", "rule_type", StringValueConverter())
+      self.repeated_block(w, "TargetIps", AWS_Route53Resolver_ResolverRule_TargetAddress)
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "ResolverEndpointId": (StringValueConverter(), "resolver_endpoint_id"),
-    "DomainName": (StringValueConverter(), "domain_name"),
-    "RuleType": (StringValueConverter(), "rule_type"),
-    "TargetIps": (BlockValueConverter(AWS_Route53Resolver_ResolverRule_TargetAddress), None),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_Route53Resolver_ResolverRuleAssociation(CloudFormationResource):
-  terraform_resource = "aws_route53_resolver_resolver_rule_association"
+  cfn_type = "AWS::Route53Resolver::ResolverRuleAssociation"
+  tf_type = "aws_route53_resolver_resolver_rule_association"
+  ref = "arn"
 
-  resource_type = "AWS::Route53Resolver::ResolverRuleAssociation"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "VPCId", "vpc_id", StringValueConverter())
+      self.property(w, "ResolverRuleId", "resolver_rule_id", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "VPCId": (StringValueConverter(), "vpc_id"),
-    "ResolverRuleId": (StringValueConverter(), "resolver_rule_id"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_Route53Resolver_ResolverEndpoint(CloudFormationResource):
-  terraform_resource = "aws_route53_resolver_resolver_endpoint"
+  cfn_type = "AWS::Route53Resolver::ResolverEndpoint"
+  tf_type = "aws_route53_resolver_resolver_endpoint"
+  ref = "arn"
 
-  resource_type = "AWS::Route53Resolver::ResolverEndpoint"
+  def write(self, w):
+    with self.resource_block(w):
+      self.repeated_block(w, "IpAddresses", AWS_Route53Resolver_ResolverEndpoint_IpAddressRequest)
+      self.property(w, "Direction", "direction", StringValueConverter())
+      self.property(w, "SecurityGroupIds", "security_group_ids", ListValueConverter(StringValueConverter()))
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "IpAddresses": (BlockValueConverter(AWS_Route53Resolver_ResolverEndpoint_IpAddressRequest), None),
-    "Direction": (StringValueConverter(), "direction"),
-    "SecurityGroupIds": (ListValueConverter(StringValueConverter()), "security_group_ids"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "Name": (StringValueConverter(), "name"),
-  }
 

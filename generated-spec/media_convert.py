@@ -1,64 +1,63 @@
 from . import *
 
 class AWS_MediaConvert_JobTemplate_AccelerationSettings(CloudFormationProperty):
-  entity = "AWS::MediaConvert::JobTemplate"
-  tf_block_type = "acceleration_settings"
+  def write(self, w):
+    with w.block("acceleration_settings"):
+      self.property(w, "Mode", "mode", StringValueConverter())
 
-  props = {
-    "Mode": (StringValueConverter(), "mode"),
-  }
 
 class AWS_MediaConvert_JobTemplate_HopDestination(CloudFormationProperty):
-  entity = "AWS::MediaConvert::JobTemplate"
-  tf_block_type = "hop_destination"
+  def write(self, w):
+    with w.block("hop_destination"):
+      self.property(w, "WaitMinutes", "wait_minutes", BasicValueConverter())
+      self.property(w, "Priority", "priority", BasicValueConverter())
+      self.property(w, "Queue", "queue", StringValueConverter())
 
-  props = {
-    "WaitMinutes": (BasicValueConverter(), "wait_minutes"),
-    "Priority": (BasicValueConverter(), "priority"),
-    "Queue": (StringValueConverter(), "queue"),
-  }
 
 class AWS_MediaConvert_Queue(CloudFormationResource):
-  terraform_resource = "aws_media_convert_queue"
+  cfn_type = "AWS::MediaConvert::Queue"
+  tf_type = "aws_media_convert_queue"
+  ref = "arn"
 
-  resource_type = "AWS::MediaConvert::Queue"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Status", "status", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "PricingPlan", "pricing_plan", StringValueConverter())
+      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Status": (StringValueConverter(), "status"),
-    "Description": (StringValueConverter(), "description"),
-    "PricingPlan": (StringValueConverter(), "pricing_plan"),
-    "Tags": (StringValueConverter(), "tags"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_MediaConvert_JobTemplate(CloudFormationResource):
-  terraform_resource = "aws_media_convert_job_template"
+  cfn_type = "AWS::MediaConvert::JobTemplate"
+  tf_type = "aws_media_convert_job_template"
+  ref = "arn"
 
-  resource_type = "AWS::MediaConvert::JobTemplate"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Category", "category", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.block(w, "AccelerationSettings", AWS_MediaConvert_JobTemplate_AccelerationSettings)
+      self.property(w, "Priority", "priority", BasicValueConverter())
+      self.property(w, "StatusUpdateInterval", "status_update_interval", StringValueConverter())
+      self.property(w, "SettingsJson", "settings_json", StringValueConverter())
+      self.property(w, "Queue", "queue", StringValueConverter())
+      self.repeated_block(w, "HopDestinations", AWS_MediaConvert_JobTemplate_HopDestination)
+      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Category": (StringValueConverter(), "category"),
-    "Description": (StringValueConverter(), "description"),
-    "AccelerationSettings": (AWS_MediaConvert_JobTemplate_AccelerationSettings, "acceleration_settings"),
-    "Priority": (BasicValueConverter(), "priority"),
-    "StatusUpdateInterval": (StringValueConverter(), "status_update_interval"),
-    "SettingsJson": (StringValueConverter(), "settings_json"),
-    "Queue": (StringValueConverter(), "queue"),
-    "HopDestinations": (BlockValueConverter(AWS_MediaConvert_JobTemplate_HopDestination), None),
-    "Tags": (StringValueConverter(), "tags"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_MediaConvert_Preset(CloudFormationResource):
-  terraform_resource = "aws_media_convert_preset"
+  cfn_type = "AWS::MediaConvert::Preset"
+  tf_type = "aws_media_convert_preset"
+  ref = "arn"
 
-  resource_type = "AWS::MediaConvert::Preset"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Category", "category", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "SettingsJson", "settings_json", StringValueConverter())
+      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Category": (StringValueConverter(), "category"),
-    "Description": (StringValueConverter(), "description"),
-    "SettingsJson": (StringValueConverter(), "settings_json"),
-    "Tags": (StringValueConverter(), "tags"),
-    "Name": (StringValueConverter(), "name"),
-  }
 

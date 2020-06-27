@@ -20,25 +20,25 @@ class TypeDefinition(object):
     def get_type(self, spec):
         if 'PrimitiveType' in spec and spec["PrimitiveType"] is not None:
             if spec["PrimitiveType"] in primitive_type_converters:
-                return f'{primitive_type_converters[spec["PrimitiveType"]].__name__}()'
-            return f'None # Unsupported primitive type "{spec["PrimitiveType"]}"'
+                return f'{primitive_type_converters[spec["PrimitiveType"]].__name__}()', 'property'
+            return f'None # Unsupported primitive type "{spec["PrimitiveType"]}"', 'property'
         if 'Type' in spec and spec["Type"] is not None:
             if spec["Type"] == 'List':
-                item_type = self.get_type({'Type': spec.get('ItemType'), 'PrimitiveType': spec.get('PrimitiveItemType')})
+                item_type, _ = self.get_type({'Type': spec.get('ItemType'), 'PrimitiveType': spec.get('PrimitiveItemType')})
                 if item_type.startswith('AWS_'):
-                    return f'BlockValueConverter({item_type})'
-                return f'ListValueConverter({item_type})'
+                    return item_type, 'repeated_block'
+                return f'ListValueConverter({item_type})', 'property'
             if spec["Type"] == 'Map':
-                item_type = self.get_type({'Type': spec.get('ItemType'), 'PrimitiveType': spec.get('PrimitiveItemType')})
-                return f'MapValueConverter({item_type})'
+                item_type, _ = self.get_type({'Type': spec.get('ItemType'), 'PrimitiveType': spec.get('PrimitiveItemType')})
+                return f'MapValueConverter({item_type})', 'property'
             if spec["Type"] == 'Tag':
-                return 'ResourceTag'
+                return 'ResourceTag()', 'property'
             if spec["Type"] == 'Json':
-                return '"json"'
+                return '"json"', 'property'
             property_cls_name = f'{self.entity_cls_name}_{spec["Type"]}'
             if property_cls_name == 'AWS_SSM_Association_ParameterValues':
-                return 'ListValueConverter(StringValueConverter)'
-            return property_cls_name
+                return 'ListValueConverter(StringValueConverter())', 'property'
+            return property_cls_name, 'block'
         raise NotImplementedError('Unsupported type')
 
     def get_dependencies(self):
@@ -68,15 +68,23 @@ class ResourceTypeDefinition(TypeDefinition):
 
     def write(self, spec_file):
         spec_file.write(f'class {self.cls_name}(CloudFormationResource):\n')
-        spec_file.write(f'  terraform_resource = "{self.terraform_resource}"\n\n')
-        spec_file.write(f'  resource_type = "{self.name}"\n\n')
-        prop_prefix = f'{self.cls_name}.' if self.is_self_dependant else '  '
-        spec_file.write(f'{prop_prefix}props = {{\n')
-        for prop_name, prop_spec in self.spec['Properties'].items():
-            prop_type = self.get_type(prop_spec)
-            tf_prop_name = f'"{snake_case_with_abbreviation_fix(prop_name)}"' if not prop_type.startswith('BlockValueConverter') else 'None'
-            spec_file.write(f'    "{prop_name}": ({prop_type}, {tf_prop_name}),\n')
-        spec_file.write(f'  }}\n\n')
+        spec_file.write(f'  cfn_type = "{self.name}"\n')
+        spec_file.write(f'  tf_type = "{self.terraform_resource}"\n')
+        spec_file.write(f'  ref = "arn"\n')
+        spec_file.write(f'\n')
+        spec_file.write(f'  def write(self, w):\n')
+        spec_file.write(f'    with self.resource_block(w):\n')
+        properties = list(self.spec['Properties'].items())
+        for prop_name, prop_spec in properties:
+            prop_type, meta_type = self.get_type(prop_spec)
+            if meta_type != 'property':
+                spec_file.write(f'      self.{meta_type}(w, "{prop_name}", {prop_type})\n')
+            else:
+                tf_prop_name = snake_case_with_abbreviation_fix(prop_name)
+                spec_file.write(f'      self.{meta_type}(w, "{prop_name}", "{tf_prop_name}", {prop_type})\n')
+        if not properties:
+            spec_file.write(f'      pass\n')
+        spec_file.write(f'\n\n')
 
 class PropertyTypeDefinition(TypeDefinition):
     def __init__(self, name, spec):
@@ -90,16 +98,19 @@ class PropertyTypeDefinition(TypeDefinition):
 
     def write(self, spec_file):
         spec_file.write(f'class {self.cls_name}(CloudFormationProperty):\n')
-        spec_file.write(f'  entity = "{self.entity}"\n')
-        spec_file.write(f'  tf_block_type = "{self.tf_block_type}"\n\n')
-        if 'Properties' in self.spec:
-            prop_prefix = f'{self.cls_name}.' if self.is_self_dependant else '  '
-            spec_file.write(f'{prop_prefix}props = {{\n')
-            for prop_name, prop_spec in self.spec['Properties'].items():
-                prop_type = self.get_type(prop_spec)
-                tf_prop_name = f'"{snake_case_with_abbreviation_fix(prop_name)}"' if not prop_type.startswith('BlockValueConverter') else 'None'
-                spec_file.write(f'    "{prop_name}": ({prop_type}, {tf_prop_name}),\n')
-            spec_file.write(f'  }}\n\n')
+        spec_file.write(f'  def write(self, w):\n')
+        spec_file.write(f'    with w.block("{self.tf_block_type}"):\n')
+        properties = list(self.spec.get('Properties', {}).items())
+        for prop_name, prop_spec in properties:
+            prop_type, meta_type = self.get_type(prop_spec)
+            if meta_type != 'property':
+                spec_file.write(f'      self.{meta_type}(w, "{prop_name}", {prop_type})\n')
+            else:
+                tf_prop_name = snake_case_with_abbreviation_fix(prop_name)
+                spec_file.write(f'      self.{meta_type}(w, "{prop_name}", "{tf_prop_name}", {prop_type})\n')
+        if not properties:
+            spec_file.write(f'      pass\n')
+        spec_file.write(f'\n\n')
 
 
 def main():

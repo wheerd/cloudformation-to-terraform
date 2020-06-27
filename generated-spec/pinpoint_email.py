@@ -1,174 +1,150 @@
 from . import *
 
 class AWS_PinpointEmail_ConfigurationSetEventDestination_DimensionConfiguration(CloudFormationProperty):
-  entity = "AWS::PinpointEmail::ConfigurationSetEventDestination"
-  tf_block_type = "dimension_configuration"
+  def write(self, w):
+    with w.block("dimension_configuration"):
+      self.property(w, "DimensionValueSource", "dimension_value_source", StringValueConverter())
+      self.property(w, "DefaultDimensionValue", "default_dimension_value", StringValueConverter())
+      self.property(w, "DimensionName", "dimension_name", StringValueConverter())
 
-  props = {
-    "DimensionValueSource": (StringValueConverter(), "dimension_value_source"),
-    "DefaultDimensionValue": (StringValueConverter(), "default_dimension_value"),
-    "DimensionName": (StringValueConverter(), "dimension_name"),
-  }
 
 class AWS_PinpointEmail_ConfigurationSetEventDestination_SnsDestination(CloudFormationProperty):
-  entity = "AWS::PinpointEmail::ConfigurationSetEventDestination"
-  tf_block_type = "sns_destination"
+  def write(self, w):
+    with w.block("sns_destination"):
+      self.property(w, "TopicArn", "topic_arn", StringValueConverter())
 
-  props = {
-    "TopicArn": (StringValueConverter(), "topic_arn"),
-  }
 
 class AWS_PinpointEmail_ConfigurationSet_SendingOptions(CloudFormationProperty):
-  entity = "AWS::PinpointEmail::ConfigurationSet"
-  tf_block_type = "sending_options"
+  def write(self, w):
+    with w.block("sending_options"):
+      self.property(w, "SendingEnabled", "sending_enabled", BasicValueConverter())
 
-  props = {
-    "SendingEnabled": (BasicValueConverter(), "sending_enabled"),
-  }
 
 class AWS_PinpointEmail_ConfigurationSet_Tags(CloudFormationProperty):
-  entity = "AWS::PinpointEmail::ConfigurationSet"
-  tf_block_type = "tags"
+  def write(self, w):
+    with w.block("tags"):
+      self.property(w, "Value", "value", StringValueConverter())
+      self.property(w, "Key", "key", StringValueConverter())
 
-  props = {
-    "Value": (StringValueConverter(), "value"),
-    "Key": (StringValueConverter(), "key"),
-  }
 
 class AWS_PinpointEmail_ConfigurationSetEventDestination_PinpointDestination(CloudFormationProperty):
-  entity = "AWS::PinpointEmail::ConfigurationSetEventDestination"
-  tf_block_type = "pinpoint_destination"
+  def write(self, w):
+    with w.block("pinpoint_destination"):
+      self.property(w, "ApplicationArn", "application_arn", StringValueConverter())
 
-  props = {
-    "ApplicationArn": (StringValueConverter(), "application_arn"),
-  }
 
 class AWS_PinpointEmail_ConfigurationSet_ReputationOptions(CloudFormationProperty):
-  entity = "AWS::PinpointEmail::ConfigurationSet"
-  tf_block_type = "reputation_options"
+  def write(self, w):
+    with w.block("reputation_options"):
+      self.property(w, "ReputationMetricsEnabled", "reputation_metrics_enabled", BasicValueConverter())
 
-  props = {
-    "ReputationMetricsEnabled": (BasicValueConverter(), "reputation_metrics_enabled"),
-  }
 
 class AWS_PinpointEmail_ConfigurationSet_DeliveryOptions(CloudFormationProperty):
-  entity = "AWS::PinpointEmail::ConfigurationSet"
-  tf_block_type = "delivery_options"
+  def write(self, w):
+    with w.block("delivery_options"):
+      self.property(w, "SendingPoolName", "sending_pool_name", StringValueConverter())
 
-  props = {
-    "SendingPoolName": (StringValueConverter(), "sending_pool_name"),
-  }
 
 class AWS_PinpointEmail_ConfigurationSet_TrackingOptions(CloudFormationProperty):
-  entity = "AWS::PinpointEmail::ConfigurationSet"
-  tf_block_type = "tracking_options"
+  def write(self, w):
+    with w.block("tracking_options"):
+      self.property(w, "CustomRedirectDomain", "custom_redirect_domain", StringValueConverter())
 
-  props = {
-    "CustomRedirectDomain": (StringValueConverter(), "custom_redirect_domain"),
-  }
 
 class AWS_PinpointEmail_ConfigurationSetEventDestination_CloudWatchDestination(CloudFormationProperty):
-  entity = "AWS::PinpointEmail::ConfigurationSetEventDestination"
-  tf_block_type = "cloud_watch_destination"
+  def write(self, w):
+    with w.block("cloud_watch_destination"):
+      self.repeated_block(w, "DimensionConfigurations", AWS_PinpointEmail_ConfigurationSetEventDestination_DimensionConfiguration)
 
-  props = {
-    "DimensionConfigurations": (BlockValueConverter(AWS_PinpointEmail_ConfigurationSetEventDestination_DimensionConfiguration), None),
-  }
 
 class AWS_PinpointEmail_ConfigurationSetEventDestination_KinesisFirehoseDestination(CloudFormationProperty):
-  entity = "AWS::PinpointEmail::ConfigurationSetEventDestination"
-  tf_block_type = "kinesis_firehose_destination"
+  def write(self, w):
+    with w.block("kinesis_firehose_destination"):
+      self.property(w, "DeliveryStreamArn", "delivery_stream_arn", StringValueConverter())
+      self.property(w, "IamRoleArn", "iam_role_arn", StringValueConverter())
 
-  props = {
-    "DeliveryStreamArn": (StringValueConverter(), "delivery_stream_arn"),
-    "IamRoleArn": (StringValueConverter(), "iam_role_arn"),
-  }
 
 class AWS_PinpointEmail_Identity_Tags(CloudFormationProperty):
-  entity = "AWS::PinpointEmail::Identity"
-  tf_block_type = "tags"
+  def write(self, w):
+    with w.block("tags"):
+      self.property(w, "Value", "value", StringValueConverter())
+      self.property(w, "Key", "key", StringValueConverter())
 
-  props = {
-    "Value": (StringValueConverter(), "value"),
-    "Key": (StringValueConverter(), "key"),
-  }
 
 class AWS_PinpointEmail_ConfigurationSetEventDestination_EventDestination(CloudFormationProperty):
-  entity = "AWS::PinpointEmail::ConfigurationSetEventDestination"
-  tf_block_type = "event_destination"
+  def write(self, w):
+    with w.block("event_destination"):
+      self.block(w, "SnsDestination", AWS_PinpointEmail_ConfigurationSetEventDestination_SnsDestination)
+      self.block(w, "CloudWatchDestination", AWS_PinpointEmail_ConfigurationSetEventDestination_CloudWatchDestination)
+      self.property(w, "Enabled", "enabled", BasicValueConverter())
+      self.property(w, "MatchingEventTypes", "matching_event_types", ListValueConverter(StringValueConverter()))
+      self.block(w, "PinpointDestination", AWS_PinpointEmail_ConfigurationSetEventDestination_PinpointDestination)
+      self.block(w, "KinesisFirehoseDestination", AWS_PinpointEmail_ConfigurationSetEventDestination_KinesisFirehoseDestination)
 
-  props = {
-    "SnsDestination": (AWS_PinpointEmail_ConfigurationSetEventDestination_SnsDestination, "sns_destination"),
-    "CloudWatchDestination": (AWS_PinpointEmail_ConfigurationSetEventDestination_CloudWatchDestination, "cloud_watch_destination"),
-    "Enabled": (BasicValueConverter(), "enabled"),
-    "MatchingEventTypes": (ListValueConverter(StringValueConverter()), "matching_event_types"),
-    "PinpointDestination": (AWS_PinpointEmail_ConfigurationSetEventDestination_PinpointDestination, "pinpoint_destination"),
-    "KinesisFirehoseDestination": (AWS_PinpointEmail_ConfigurationSetEventDestination_KinesisFirehoseDestination, "kinesis_firehose_destination"),
-  }
 
 class AWS_PinpointEmail_Identity_MailFromAttributes(CloudFormationProperty):
-  entity = "AWS::PinpointEmail::Identity"
-  tf_block_type = "mail_from_attributes"
+  def write(self, w):
+    with w.block("mail_from_attributes"):
+      self.property(w, "MailFromDomain", "mail_from_domain", StringValueConverter())
+      self.property(w, "BehaviorOnMxFailure", "behavior_on_mx_failure", StringValueConverter())
 
-  props = {
-    "MailFromDomain": (StringValueConverter(), "mail_from_domain"),
-    "BehaviorOnMxFailure": (StringValueConverter(), "behavior_on_mx_failure"),
-  }
 
 class AWS_PinpointEmail_DedicatedIpPool_Tags(CloudFormationProperty):
-  entity = "AWS::PinpointEmail::DedicatedIpPool"
-  tf_block_type = "tags"
+  def write(self, w):
+    with w.block("tags"):
+      self.property(w, "Value", "value", StringValueConverter())
+      self.property(w, "Key", "key", StringValueConverter())
 
-  props = {
-    "Value": (StringValueConverter(), "value"),
-    "Key": (StringValueConverter(), "key"),
-  }
 
 class AWS_PinpointEmail_ConfigurationSetEventDestination(CloudFormationResource):
-  terraform_resource = "aws_pinpoint_email_configuration_set_event_destination"
+  cfn_type = "AWS::PinpointEmail::ConfigurationSetEventDestination"
+  tf_type = "aws_pinpoint_email_configuration_set_event_destination"
+  ref = "arn"
 
-  resource_type = "AWS::PinpointEmail::ConfigurationSetEventDestination"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "EventDestinationName", "event_destination_name", StringValueConverter())
+      self.property(w, "ConfigurationSetName", "configuration_set_name", StringValueConverter())
+      self.block(w, "EventDestination", AWS_PinpointEmail_ConfigurationSetEventDestination_EventDestination)
 
-  props = {
-    "EventDestinationName": (StringValueConverter(), "event_destination_name"),
-    "ConfigurationSetName": (StringValueConverter(), "configuration_set_name"),
-    "EventDestination": (AWS_PinpointEmail_ConfigurationSetEventDestination_EventDestination, "event_destination"),
-  }
 
 class AWS_PinpointEmail_DedicatedIpPool(CloudFormationResource):
-  terraform_resource = "aws_pinpoint_email_dedicated_ip_pool"
+  cfn_type = "AWS::PinpointEmail::DedicatedIpPool"
+  tf_type = "aws_pinpoint_email_dedicated_ip_pool"
+  ref = "arn"
 
-  resource_type = "AWS::PinpointEmail::DedicatedIpPool"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "PoolName", "pool_name", StringValueConverter())
+      self.repeated_block(w, "Tags", AWS_PinpointEmail_DedicatedIpPool_Tags)
 
-  props = {
-    "PoolName": (StringValueConverter(), "pool_name"),
-    "Tags": (BlockValueConverter(AWS_PinpointEmail_DedicatedIpPool_Tags), None),
-  }
 
 class AWS_PinpointEmail_Identity(CloudFormationResource):
-  terraform_resource = "aws_pinpoint_email_identity"
+  cfn_type = "AWS::PinpointEmail::Identity"
+  tf_type = "aws_pinpoint_email_identity"
+  ref = "arn"
 
-  resource_type = "AWS::PinpointEmail::Identity"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "FeedbackForwardingEnabled", "feedback_forwarding_enabled", BasicValueConverter())
+      self.property(w, "DkimSigningEnabled", "dkim_signing_enabled", BasicValueConverter())
+      self.repeated_block(w, "Tags", AWS_PinpointEmail_Identity_Tags)
+      self.property(w, "Name", "name", StringValueConverter())
+      self.block(w, "MailFromAttributes", AWS_PinpointEmail_Identity_MailFromAttributes)
 
-  props = {
-    "FeedbackForwardingEnabled": (BasicValueConverter(), "feedback_forwarding_enabled"),
-    "DkimSigningEnabled": (BasicValueConverter(), "dkim_signing_enabled"),
-    "Tags": (BlockValueConverter(AWS_PinpointEmail_Identity_Tags), None),
-    "Name": (StringValueConverter(), "name"),
-    "MailFromAttributes": (AWS_PinpointEmail_Identity_MailFromAttributes, "mail_from_attributes"),
-  }
 
 class AWS_PinpointEmail_ConfigurationSet(CloudFormationResource):
-  terraform_resource = "aws_pinpoint_email_configuration_set"
+  cfn_type = "AWS::PinpointEmail::ConfigurationSet"
+  tf_type = "aws_pinpoint_email_configuration_set"
+  ref = "arn"
 
-  resource_type = "AWS::PinpointEmail::ConfigurationSet"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "SendingOptions", AWS_PinpointEmail_ConfigurationSet_SendingOptions)
+      self.block(w, "TrackingOptions", AWS_PinpointEmail_ConfigurationSet_TrackingOptions)
+      self.block(w, "ReputationOptions", AWS_PinpointEmail_ConfigurationSet_ReputationOptions)
+      self.block(w, "DeliveryOptions", AWS_PinpointEmail_ConfigurationSet_DeliveryOptions)
+      self.repeated_block(w, "Tags", AWS_PinpointEmail_ConfigurationSet_Tags)
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "SendingOptions": (AWS_PinpointEmail_ConfigurationSet_SendingOptions, "sending_options"),
-    "TrackingOptions": (AWS_PinpointEmail_ConfigurationSet_TrackingOptions, "tracking_options"),
-    "ReputationOptions": (AWS_PinpointEmail_ConfigurationSet_ReputationOptions, "reputation_options"),
-    "DeliveryOptions": (AWS_PinpointEmail_ConfigurationSet_DeliveryOptions, "delivery_options"),
-    "Tags": (BlockValueConverter(AWS_PinpointEmail_ConfigurationSet_Tags), None),
-    "Name": (StringValueConverter(), "name"),
-  }
 

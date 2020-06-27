@@ -1,149 +1,141 @@
 from . import *
 
 class AWS_AppConfig_Deployment_Tags(CloudFormationProperty):
-  entity = "AWS::AppConfig::Deployment"
-  tf_block_type = "tags"
+  def write(self, w):
+    with w.block("tags"):
+      self.property(w, "Value", "value", StringValueConverter())
+      self.property(w, "Key", "key", StringValueConverter())
 
-  props = {
-    "Value": (StringValueConverter(), "value"),
-    "Key": (StringValueConverter(), "key"),
-  }
 
 class AWS_AppConfig_ConfigurationProfile_Validators(CloudFormationProperty):
-  entity = "AWS::AppConfig::ConfigurationProfile"
-  tf_block_type = "validators"
+  def write(self, w):
+    with w.block("validators"):
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "Content", "content", StringValueConverter())
 
-  props = {
-    "Type": (StringValueConverter(), "type"),
-    "Content": (StringValueConverter(), "content"),
-  }
 
 class AWS_AppConfig_DeploymentStrategy_Tags(CloudFormationProperty):
-  entity = "AWS::AppConfig::DeploymentStrategy"
-  tf_block_type = "tags"
+  def write(self, w):
+    with w.block("tags"):
+      self.property(w, "Value", "value", StringValueConverter())
+      self.property(w, "Key", "key", StringValueConverter())
 
-  props = {
-    "Value": (StringValueConverter(), "value"),
-    "Key": (StringValueConverter(), "key"),
-  }
 
 class AWS_AppConfig_Application_Tags(CloudFormationProperty):
-  entity = "AWS::AppConfig::Application"
-  tf_block_type = "tags"
+  def write(self, w):
+    with w.block("tags"):
+      self.property(w, "Value", "value", StringValueConverter())
+      self.property(w, "Key", "key", StringValueConverter())
 
-  props = {
-    "Value": (StringValueConverter(), "value"),
-    "Key": (StringValueConverter(), "key"),
-  }
 
 class AWS_AppConfig_Environment_Monitors(CloudFormationProperty):
-  entity = "AWS::AppConfig::Environment"
-  tf_block_type = "monitors"
+  def write(self, w):
+    with w.block("monitors"):
+      self.property(w, "AlarmArn", "alarm_arn", StringValueConverter())
+      self.property(w, "AlarmRoleArn", "alarm_role_arn", StringValueConverter())
 
-  props = {
-    "AlarmArn": (StringValueConverter(), "alarm_arn"),
-    "AlarmRoleArn": (StringValueConverter(), "alarm_role_arn"),
-  }
 
 class AWS_AppConfig_Environment_Tags(CloudFormationProperty):
-  entity = "AWS::AppConfig::Environment"
-  tf_block_type = "tags"
+  def write(self, w):
+    with w.block("tags"):
+      self.property(w, "Value", "value", StringValueConverter())
+      self.property(w, "Key", "key", StringValueConverter())
 
-  props = {
-    "Value": (StringValueConverter(), "value"),
-    "Key": (StringValueConverter(), "key"),
-  }
 
 class AWS_AppConfig_ConfigurationProfile_Tags(CloudFormationProperty):
-  entity = "AWS::AppConfig::ConfigurationProfile"
-  tf_block_type = "tags"
+  def write(self, w):
+    with w.block("tags"):
+      self.property(w, "Value", "value", StringValueConverter())
+      self.property(w, "Key", "key", StringValueConverter())
 
-  props = {
-    "Value": (StringValueConverter(), "value"),
-    "Key": (StringValueConverter(), "key"),
-  }
 
 class AWS_AppConfig_Deployment(CloudFormationResource):
-  terraform_resource = "aws_app_config_deployment"
+  cfn_type = "AWS::AppConfig::Deployment"
+  tf_type = "aws_app_config_deployment"
+  ref = "arn"
 
-  resource_type = "AWS::AppConfig::Deployment"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "DeploymentStrategyId", "deployment_strategy_id", StringValueConverter())
+      self.property(w, "ConfigurationProfileId", "configuration_profile_id", StringValueConverter())
+      self.property(w, "EnvironmentId", "environment_id", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "ConfigurationVersion", "configuration_version", StringValueConverter())
+      self.property(w, "ApplicationId", "application_id", StringValueConverter())
+      self.repeated_block(w, "Tags", AWS_AppConfig_Deployment_Tags)
 
-  props = {
-    "DeploymentStrategyId": (StringValueConverter(), "deployment_strategy_id"),
-    "ConfigurationProfileId": (StringValueConverter(), "configuration_profile_id"),
-    "EnvironmentId": (StringValueConverter(), "environment_id"),
-    "Description": (StringValueConverter(), "description"),
-    "ConfigurationVersion": (StringValueConverter(), "configuration_version"),
-    "ApplicationId": (StringValueConverter(), "application_id"),
-    "Tags": (BlockValueConverter(AWS_AppConfig_Deployment_Tags), None),
-  }
 
 class AWS_AppConfig_HostedConfigurationVersion(CloudFormationResource):
-  terraform_resource = "aws_app_config_hosted_configuration_version"
+  cfn_type = "AWS::AppConfig::HostedConfigurationVersion"
+  tf_type = "aws_app_config_hosted_configuration_version"
+  ref = "arn"
 
-  resource_type = "AWS::AppConfig::HostedConfigurationVersion"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ConfigurationProfileId", "configuration_profile_id", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "ContentType", "content_type", StringValueConverter())
+      self.property(w, "LatestVersionNumber", "latest_version_number", BasicValueConverter())
+      self.property(w, "Content", "content", StringValueConverter())
+      self.property(w, "ApplicationId", "application_id", StringValueConverter())
 
-  props = {
-    "ConfigurationProfileId": (StringValueConverter(), "configuration_profile_id"),
-    "Description": (StringValueConverter(), "description"),
-    "ContentType": (StringValueConverter(), "content_type"),
-    "LatestVersionNumber": (BasicValueConverter(), "latest_version_number"),
-    "Content": (StringValueConverter(), "content"),
-    "ApplicationId": (StringValueConverter(), "application_id"),
-  }
 
 class AWS_AppConfig_ConfigurationProfile(CloudFormationResource):
-  terraform_resource = "aws_app_config_configuration_profile"
+  cfn_type = "AWS::AppConfig::ConfigurationProfile"
+  tf_type = "aws_app_config_configuration_profile"
+  ref = "arn"
 
-  resource_type = "AWS::AppConfig::ConfigurationProfile"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "LocationUri", "location_uri", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.repeated_block(w, "Validators", AWS_AppConfig_ConfigurationProfile_Validators)
+      self.property(w, "RetrievalRoleArn", "retrieval_role_arn", StringValueConverter())
+      self.property(w, "ApplicationId", "application_id", StringValueConverter())
+      self.repeated_block(w, "Tags", AWS_AppConfig_ConfigurationProfile_Tags)
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "LocationUri": (StringValueConverter(), "location_uri"),
-    "Description": (StringValueConverter(), "description"),
-    "Validators": (BlockValueConverter(AWS_AppConfig_ConfigurationProfile_Validators), None),
-    "RetrievalRoleArn": (StringValueConverter(), "retrieval_role_arn"),
-    "ApplicationId": (StringValueConverter(), "application_id"),
-    "Tags": (BlockValueConverter(AWS_AppConfig_ConfigurationProfile_Tags), None),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_AppConfig_Environment(CloudFormationResource):
-  terraform_resource = "aws_app_config_environment"
+  cfn_type = "AWS::AppConfig::Environment"
+  tf_type = "aws_app_config_environment"
+  ref = "arn"
 
-  resource_type = "AWS::AppConfig::Environment"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.repeated_block(w, "Monitors", AWS_AppConfig_Environment_Monitors)
+      self.property(w, "ApplicationId", "application_id", StringValueConverter())
+      self.repeated_block(w, "Tags", AWS_AppConfig_Environment_Tags)
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "Monitors": (BlockValueConverter(AWS_AppConfig_Environment_Monitors), None),
-    "ApplicationId": (StringValueConverter(), "application_id"),
-    "Tags": (BlockValueConverter(AWS_AppConfig_Environment_Tags), None),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_AppConfig_DeploymentStrategy(CloudFormationResource):
-  terraform_resource = "aws_app_config_deployment_strategy"
+  cfn_type = "AWS::AppConfig::DeploymentStrategy"
+  tf_type = "aws_app_config_deployment_strategy"
+  ref = "arn"
 
-  resource_type = "AWS::AppConfig::DeploymentStrategy"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ReplicateTo", "replicate_to", StringValueConverter())
+      self.property(w, "GrowthType", "growth_type", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "DeploymentDurationInMinutes", "deployment_duration_in_minutes", BasicValueConverter())
+      self.property(w, "GrowthFactor", "growth_factor", BasicValueConverter())
+      self.property(w, "FinalBakeTimeInMinutes", "final_bake_time_in_minutes", BasicValueConverter())
+      self.repeated_block(w, "Tags", AWS_AppConfig_DeploymentStrategy_Tags)
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "ReplicateTo": (StringValueConverter(), "replicate_to"),
-    "GrowthType": (StringValueConverter(), "growth_type"),
-    "Description": (StringValueConverter(), "description"),
-    "DeploymentDurationInMinutes": (BasicValueConverter(), "deployment_duration_in_minutes"),
-    "GrowthFactor": (BasicValueConverter(), "growth_factor"),
-    "FinalBakeTimeInMinutes": (BasicValueConverter(), "final_bake_time_in_minutes"),
-    "Tags": (BlockValueConverter(AWS_AppConfig_DeploymentStrategy_Tags), None),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_AppConfig_Application(CloudFormationResource):
-  terraform_resource = "aws_app_config_application"
+  cfn_type = "AWS::AppConfig::Application"
+  tf_type = "aws_app_config_application"
+  ref = "arn"
 
-  resource_type = "AWS::AppConfig::Application"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.repeated_block(w, "Tags", AWS_AppConfig_Application_Tags)
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "Tags": (BlockValueConverter(AWS_AppConfig_Application_Tags), None),
-    "Name": (StringValueConverter(), "name"),
-  }
 

@@ -1,26 +1,25 @@
 from . import *
 
 class AWS_CodeStarNotifications_NotificationRule_Target(CloudFormationProperty):
-  entity = "AWS::CodeStarNotifications::NotificationRule"
-  tf_block_type = "target"
+  def write(self, w):
+    with w.block("target"):
+      self.property(w, "TargetType", "target_type", StringValueConverter())
+      self.property(w, "TargetAddress", "target_address", StringValueConverter())
 
-  props = {
-    "TargetType": (StringValueConverter(), "target_type"),
-    "TargetAddress": (StringValueConverter(), "target_address"),
-  }
 
 class AWS_CodeStarNotifications_NotificationRule(CloudFormationResource):
-  terraform_resource = "aws_code_star_notifications_notification_rule"
+  cfn_type = "AWS::CodeStarNotifications::NotificationRule"
+  tf_type = "aws_code_star_notifications_notification_rule"
+  ref = "arn"
 
-  resource_type = "AWS::CodeStarNotifications::NotificationRule"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "EventTypeIds", "event_type_ids", ListValueConverter(StringValueConverter()))
+      self.property(w, "Status", "status", StringValueConverter())
+      self.property(w, "DetailType", "detail_type", StringValueConverter())
+      self.property(w, "Resource", "resource", StringValueConverter())
+      self.repeated_block(w, "Targets", AWS_CodeStarNotifications_NotificationRule_Target)
+      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "EventTypeIds": (ListValueConverter(StringValueConverter()), "event_type_ids"),
-    "Status": (StringValueConverter(), "status"),
-    "DetailType": (StringValueConverter(), "detail_type"),
-    "Resource": (StringValueConverter(), "resource"),
-    "Targets": (BlockValueConverter(AWS_CodeStarNotifications_NotificationRule_Target), None),
-    "Tags": (StringValueConverter(), "tags"),
-    "Name": (StringValueConverter(), "name"),
-  }
 

@@ -1,13 +1,14 @@
 from . import *
 
 class AWS_CE_CostCategory(CloudFormationResource):
-  terraform_resource = "aws_ce_cost_category"
+  cfn_type = "AWS::CE::CostCategory"
+  tf_type = "aws_ce_cost_category"
+  ref = "arn"
 
-  resource_type = "AWS::CE::CostCategory"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "RuleVersion", "rule_version", StringValueConverter())
+      self.property(w, "Rules", "rules", StringValueConverter())
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-    "RuleVersion": (StringValueConverter(), "rule_version"),
-    "Rules": (StringValueConverter(), "rules"),
-  }
 

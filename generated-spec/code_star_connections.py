@@ -1,13 +1,14 @@
 from . import *
 
 class AWS_CodeStarConnections_Connection(CloudFormationResource):
-  terraform_resource = "aws_code_star_connections_connection"
+  cfn_type = "AWS::CodeStarConnections::Connection"
+  tf_type = "aws_code_star_connections_connection"
+  ref = "arn"
 
-  resource_type = "AWS::CodeStarConnections::Connection"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ConnectionName", "connection_name", StringValueConverter())
+      self.property(w, "ProviderType", "provider_type", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "ConnectionName": (StringValueConverter(), "connection_name"),
-    "ProviderType": (StringValueConverter(), "provider_type"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 

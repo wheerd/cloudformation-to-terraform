@@ -1,73 +1,73 @@
 from . import *
 
 class AWS_SecretsManager_RotationSchedule_RotationRules(CloudFormationProperty):
-  entity = "AWS::SecretsManager::RotationSchedule"
-  tf_block_type = "rotation_rules"
+  def write(self, w):
+    with w.block("rotation_rules"):
+      self.property(w, "AutomaticallyAfterDays", "automatically_after_days", BasicValueConverter())
 
-  props = {
-    "AutomaticallyAfterDays": (BasicValueConverter(), "automatically_after_days"),
-  }
 
 class AWS_SecretsManager_Secret_GenerateSecretString(CloudFormationProperty):
-  entity = "AWS::SecretsManager::Secret"
-  tf_block_type = "generate_secret_string"
+  def write(self, w):
+    with w.block("generate_secret_string"):
+      self.property(w, "ExcludeUppercase", "exclude_uppercase", BasicValueConverter())
+      self.property(w, "RequireEachIncludedType", "require_each_included_type", BasicValueConverter())
+      self.property(w, "IncludeSpace", "include_space", BasicValueConverter())
+      self.property(w, "ExcludeCharacters", "exclude_characters", StringValueConverter())
+      self.property(w, "GenerateStringKey", "generate_string_key", StringValueConverter())
+      self.property(w, "PasswordLength", "password_length", BasicValueConverter())
+      self.property(w, "ExcludePunctuation", "exclude_punctuation", BasicValueConverter())
+      self.property(w, "ExcludeLowercase", "exclude_lowercase", BasicValueConverter())
+      self.property(w, "SecretStringTemplate", "secret_string_template", StringValueConverter())
+      self.property(w, "ExcludeNumbers", "exclude_numbers", BasicValueConverter())
 
-  props = {
-    "ExcludeUppercase": (BasicValueConverter(), "exclude_uppercase"),
-    "RequireEachIncludedType": (BasicValueConverter(), "require_each_included_type"),
-    "IncludeSpace": (BasicValueConverter(), "include_space"),
-    "ExcludeCharacters": (StringValueConverter(), "exclude_characters"),
-    "GenerateStringKey": (StringValueConverter(), "generate_string_key"),
-    "PasswordLength": (BasicValueConverter(), "password_length"),
-    "ExcludePunctuation": (BasicValueConverter(), "exclude_punctuation"),
-    "ExcludeLowercase": (BasicValueConverter(), "exclude_lowercase"),
-    "SecretStringTemplate": (StringValueConverter(), "secret_string_template"),
-    "ExcludeNumbers": (BasicValueConverter(), "exclude_numbers"),
-  }
 
 class AWS_SecretsManager_RotationSchedule(CloudFormationResource):
-  terraform_resource = "aws_secrets_manager_rotation_schedule"
+  cfn_type = "AWS::SecretsManager::RotationSchedule"
+  tf_type = "aws_secrets_manager_rotation_schedule"
+  ref = "arn"
 
-  resource_type = "AWS::SecretsManager::RotationSchedule"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "SecretId", "secret_id", StringValueConverter())
+      self.property(w, "RotationLambdaARN", "rotation_lambda_arn", StringValueConverter())
+      self.block(w, "RotationRules", AWS_SecretsManager_RotationSchedule_RotationRules)
 
-  props = {
-    "SecretId": (StringValueConverter(), "secret_id"),
-    "RotationLambdaARN": (StringValueConverter(), "rotation_lambda_arn"),
-    "RotationRules": (AWS_SecretsManager_RotationSchedule_RotationRules, "rotation_rules"),
-  }
 
 class AWS_SecretsManager_ResourcePolicy(CloudFormationResource):
-  terraform_resource = "aws_secrets_manager_resource_policy"
+  cfn_type = "AWS::SecretsManager::ResourcePolicy"
+  tf_type = "aws_secrets_manager_resource_policy"
+  ref = "arn"
 
-  resource_type = "AWS::SecretsManager::ResourcePolicy"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "SecretId", "secret_id", StringValueConverter())
+      self.property(w, "ResourcePolicy", "resource_policy", StringValueConverter())
 
-  props = {
-    "SecretId": (StringValueConverter(), "secret_id"),
-    "ResourcePolicy": (StringValueConverter(), "resource_policy"),
-  }
 
 class AWS_SecretsManager_Secret(CloudFormationResource):
-  terraform_resource = "aws_secrets_manager_secret"
+  cfn_type = "AWS::SecretsManager::Secret"
+  tf_type = "aws_secrets_manager_secret"
+  ref = "arn"
 
-  resource_type = "AWS::SecretsManager::Secret"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "KmsKeyId", "kms_key_id", StringValueConverter())
+      self.property(w, "SecretString", "secret_string", StringValueConverter())
+      self.block(w, "GenerateSecretString", AWS_SecretsManager_Secret_GenerateSecretString)
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "KmsKeyId": (StringValueConverter(), "kms_key_id"),
-    "SecretString": (StringValueConverter(), "secret_string"),
-    "GenerateSecretString": (AWS_SecretsManager_Secret_GenerateSecretString, "generate_secret_string"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_SecretsManager_SecretTargetAttachment(CloudFormationResource):
-  terraform_resource = "aws_secrets_manager_secret_target_attachment"
+  cfn_type = "AWS::SecretsManager::SecretTargetAttachment"
+  tf_type = "aws_secrets_manager_secret_target_attachment"
+  ref = "arn"
 
-  resource_type = "AWS::SecretsManager::SecretTargetAttachment"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "SecretId", "secret_id", StringValueConverter())
+      self.property(w, "TargetType", "target_type", StringValueConverter())
+      self.property(w, "TargetId", "target_id", StringValueConverter())
 
-  props = {
-    "SecretId": (StringValueConverter(), "secret_id"),
-    "TargetType": (StringValueConverter(), "target_type"),
-    "TargetId": (StringValueConverter(), "target_id"),
-  }
 

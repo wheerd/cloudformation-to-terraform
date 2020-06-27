@@ -1,88 +1,93 @@
 from . import *
 
 class AWS_Neptune_DBClusterParameterGroup(CloudFormationResource):
-  terraform_resource = "aws_neptune_db_cluster_parameter_group"
+  cfn_type = "AWS::Neptune::DBClusterParameterGroup"
+  tf_type = "aws_neptune_db_cluster_parameter_group"
+  ref = "arn"
 
-  resource_type = "AWS::Neptune::DBClusterParameterGroup"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "Parameters", "parameters", StringValueConverter())
+      self.property(w, "Family", "family", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "Parameters": (StringValueConverter(), "parameters"),
-    "Family": (StringValueConverter(), "family"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_Neptune_DBSubnetGroup(CloudFormationResource):
-  terraform_resource = "aws_neptune_db_subnet_group"
+  cfn_type = "AWS::Neptune::DBSubnetGroup"
+  tf_type = "aws_neptune_db_subnet_group"
+  ref = "arn"
 
-  resource_type = "AWS::Neptune::DBSubnetGroup"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "DBSubnetGroupName", "db_subnet_group_name", StringValueConverter())
+      self.property(w, "DBSubnetGroupDescription", "db_subnet_group_description", StringValueConverter())
+      self.property(w, "SubnetIds", "subnet_ids", ListValueConverter(StringValueConverter()))
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "DBSubnetGroupName": (StringValueConverter(), "db_subnet_group_name"),
-    "DBSubnetGroupDescription": (StringValueConverter(), "db_subnet_group_description"),
-    "SubnetIds": (ListValueConverter(StringValueConverter()), "subnet_ids"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 
 class AWS_Neptune_DBInstance(CloudFormationResource):
-  terraform_resource = "aws_neptune_db_instance"
+  cfn_type = "AWS::Neptune::DBInstance"
+  tf_type = "aws_neptune_db_instance"
+  ref = "arn"
 
-  resource_type = "AWS::Neptune::DBInstance"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "DBParameterGroupName", "db_parameter_group_name", StringValueConverter())
+      self.property(w, "DBInstanceClass", "db_instance_class", StringValueConverter())
+      self.property(w, "AllowMajorVersionUpgrade", "allow_major_version_upgrade", BasicValueConverter())
+      self.property(w, "DBClusterIdentifier", "db_cluster_identifier", StringValueConverter())
+      self.property(w, "AvailabilityZone", "availability_zone", StringValueConverter())
+      self.property(w, "PreferredMaintenanceWindow", "preferred_maintenance_window", StringValueConverter())
+      self.property(w, "AutoMinorVersionUpgrade", "auto_minor_version_upgrade", BasicValueConverter())
+      self.property(w, "DBSubnetGroupName", "db_subnet_group_name", StringValueConverter())
+      self.property(w, "DBInstanceIdentifier", "db_instance_identifier", StringValueConverter())
+      self.property(w, "DBSnapshotIdentifier", "db_snapshot_identifier", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "DBParameterGroupName": (StringValueConverter(), "db_parameter_group_name"),
-    "DBInstanceClass": (StringValueConverter(), "db_instance_class"),
-    "AllowMajorVersionUpgrade": (BasicValueConverter(), "allow_major_version_upgrade"),
-    "DBClusterIdentifier": (StringValueConverter(), "db_cluster_identifier"),
-    "AvailabilityZone": (StringValueConverter(), "availability_zone"),
-    "PreferredMaintenanceWindow": (StringValueConverter(), "preferred_maintenance_window"),
-    "AutoMinorVersionUpgrade": (BasicValueConverter(), "auto_minor_version_upgrade"),
-    "DBSubnetGroupName": (StringValueConverter(), "db_subnet_group_name"),
-    "DBInstanceIdentifier": (StringValueConverter(), "db_instance_identifier"),
-    "DBSnapshotIdentifier": (StringValueConverter(), "db_snapshot_identifier"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 
 class AWS_Neptune_DBParameterGroup(CloudFormationResource):
-  terraform_resource = "aws_neptune_db_parameter_group"
+  cfn_type = "AWS::Neptune::DBParameterGroup"
+  tf_type = "aws_neptune_db_parameter_group"
+  ref = "arn"
 
-  resource_type = "AWS::Neptune::DBParameterGroup"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "Parameters", "parameters", StringValueConverter())
+      self.property(w, "Family", "family", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "Parameters": (StringValueConverter(), "parameters"),
-    "Family": (StringValueConverter(), "family"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_Neptune_DBCluster(CloudFormationResource):
-  terraform_resource = "aws_neptune_db_cluster"
+  cfn_type = "AWS::Neptune::DBCluster"
+  tf_type = "aws_neptune_db_cluster"
+  ref = "arn"
 
-  resource_type = "AWS::Neptune::DBCluster"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "StorageEncrypted", "storage_encrypted", BasicValueConverter())
+      self.property(w, "RestoreToTime", "restore_to_time", StringValueConverter())
+      self.property(w, "EngineVersion", "engine_version", StringValueConverter())
+      self.property(w, "KmsKeyId", "kms_key_id", StringValueConverter())
+      self.property(w, "AvailabilityZones", "availability_zones", ListValueConverter(StringValueConverter()))
+      self.property(w, "SnapshotIdentifier", "snapshot_identifier", StringValueConverter())
+      self.property(w, "Port", "port", BasicValueConverter())
+      self.property(w, "DBClusterIdentifier", "db_cluster_identifier", StringValueConverter())
+      self.property(w, "PreferredMaintenanceWindow", "preferred_maintenance_window", StringValueConverter())
+      self.property(w, "IamAuthEnabled", "iam_auth_enabled", BasicValueConverter())
+      self.property(w, "DBSubnetGroupName", "db_subnet_group_name", StringValueConverter())
+      self.property(w, "DeletionProtection", "deletion_protection", BasicValueConverter())
+      self.property(w, "PreferredBackupWindow", "preferred_backup_window", StringValueConverter())
+      self.property(w, "UseLatestRestorableTime", "use_latest_restorable_time", BasicValueConverter())
+      self.property(w, "VpcSecurityGroupIds", "vpc_security_group_ids", ListValueConverter(StringValueConverter()))
+      self.property(w, "SourceDBClusterIdentifier", "source_db_cluster_identifier", StringValueConverter())
+      self.property(w, "DBClusterParameterGroupName", "db_cluster_parameter_group_name", StringValueConverter())
+      self.property(w, "BackupRetentionPeriod", "backup_retention_period", BasicValueConverter())
+      self.property(w, "RestoreType", "restore_type", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "EnableCloudwatchLogsExports", "enable_cloudwatch_logs_exports", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "StorageEncrypted": (BasicValueConverter(), "storage_encrypted"),
-    "RestoreToTime": (StringValueConverter(), "restore_to_time"),
-    "EngineVersion": (StringValueConverter(), "engine_version"),
-    "KmsKeyId": (StringValueConverter(), "kms_key_id"),
-    "AvailabilityZones": (ListValueConverter(StringValueConverter()), "availability_zones"),
-    "SnapshotIdentifier": (StringValueConverter(), "snapshot_identifier"),
-    "Port": (BasicValueConverter(), "port"),
-    "DBClusterIdentifier": (StringValueConverter(), "db_cluster_identifier"),
-    "PreferredMaintenanceWindow": (StringValueConverter(), "preferred_maintenance_window"),
-    "IamAuthEnabled": (BasicValueConverter(), "iam_auth_enabled"),
-    "DBSubnetGroupName": (StringValueConverter(), "db_subnet_group_name"),
-    "DeletionProtection": (BasicValueConverter(), "deletion_protection"),
-    "PreferredBackupWindow": (StringValueConverter(), "preferred_backup_window"),
-    "UseLatestRestorableTime": (BasicValueConverter(), "use_latest_restorable_time"),
-    "VpcSecurityGroupIds": (ListValueConverter(StringValueConverter()), "vpc_security_group_ids"),
-    "SourceDBClusterIdentifier": (StringValueConverter(), "source_db_cluster_identifier"),
-    "DBClusterParameterGroupName": (StringValueConverter(), "db_cluster_parameter_group_name"),
-    "BackupRetentionPeriod": (BasicValueConverter(), "backup_retention_period"),
-    "RestoreType": (StringValueConverter(), "restore_type"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "EnableCloudwatchLogsExports": (ListValueConverter(StringValueConverter()), "enable_cloudwatch_logs_exports"),
-  }
 

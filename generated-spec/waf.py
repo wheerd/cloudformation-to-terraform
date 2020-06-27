@@ -1,189 +1,172 @@
 from . import *
 
 class AWS_WAF_WebACL_WafAction(CloudFormationProperty):
-  entity = "AWS::WAF::WebACL"
-  tf_block_type = "waf_action"
+  def write(self, w):
+    with w.block("waf_action"):
+      self.property(w, "Type", "type", StringValueConverter())
 
-  props = {
-    "Type": (StringValueConverter(), "type"),
-  }
 
 class AWS_WAF_IPSet_IPSetDescriptor(CloudFormationProperty):
-  entity = "AWS::WAF::IPSet"
-  tf_block_type = "ip_set_descriptor"
+  def write(self, w):
+    with w.block("ip_set_descriptor"):
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "Value", "value", StringValueConverter())
 
-  props = {
-    "Type": (StringValueConverter(), "type"),
-    "Value": (StringValueConverter(), "value"),
-  }
 
 class AWS_WAF_WebACL_ActivatedRule(CloudFormationProperty):
-  entity = "AWS::WAF::WebACL"
-  tf_block_type = "activated_rule"
+  def write(self, w):
+    with w.block("activated_rule"):
+      self.block(w, "Action", AWS_WAF_WebACL_WafAction)
+      self.property(w, "Priority", "priority", BasicValueConverter())
+      self.property(w, "RuleId", "rule_id", StringValueConverter())
 
-  props = {
-    "Action": (AWS_WAF_WebACL_WafAction, "action"),
-    "Priority": (BasicValueConverter(), "priority"),
-    "RuleId": (StringValueConverter(), "rule_id"),
-  }
 
 class AWS_WAF_ByteMatchSet_FieldToMatch(CloudFormationProperty):
-  entity = "AWS::WAF::ByteMatchSet"
-  tf_block_type = "field_to_match"
+  def write(self, w):
+    with w.block("field_to_match"):
+      self.property(w, "Data", "data", StringValueConverter())
+      self.property(w, "Type", "type", StringValueConverter())
 
-  props = {
-    "Data": (StringValueConverter(), "data"),
-    "Type": (StringValueConverter(), "type"),
-  }
 
 class AWS_WAF_Rule_Predicate(CloudFormationProperty):
-  entity = "AWS::WAF::Rule"
-  tf_block_type = "predicate"
+  def write(self, w):
+    with w.block("predicate"):
+      self.property(w, "DataId", "data_id", StringValueConverter())
+      self.property(w, "Negated", "negated", BasicValueConverter())
+      self.property(w, "Type", "type", StringValueConverter())
 
-  props = {
-    "DataId": (StringValueConverter(), "data_id"),
-    "Negated": (BasicValueConverter(), "negated"),
-    "Type": (StringValueConverter(), "type"),
-  }
 
 class AWS_WAF_SqlInjectionMatchSet_FieldToMatch(CloudFormationProperty):
-  entity = "AWS::WAF::SqlInjectionMatchSet"
-  tf_block_type = "field_to_match"
+  def write(self, w):
+    with w.block("field_to_match"):
+      self.property(w, "Data", "data", StringValueConverter())
+      self.property(w, "Type", "type", StringValueConverter())
 
-  props = {
-    "Data": (StringValueConverter(), "data"),
-    "Type": (StringValueConverter(), "type"),
-  }
 
 class AWS_WAF_XssMatchSet_FieldToMatch(CloudFormationProperty):
-  entity = "AWS::WAF::XssMatchSet"
-  tf_block_type = "field_to_match"
+  def write(self, w):
+    with w.block("field_to_match"):
+      self.property(w, "Data", "data", StringValueConverter())
+      self.property(w, "Type", "type", StringValueConverter())
 
-  props = {
-    "Data": (StringValueConverter(), "data"),
-    "Type": (StringValueConverter(), "type"),
-  }
 
 class AWS_WAF_ByteMatchSet_ByteMatchTuple(CloudFormationProperty):
-  entity = "AWS::WAF::ByteMatchSet"
-  tf_block_type = "byte_match_tuple"
+  def write(self, w):
+    with w.block("byte_match_tuple"):
+      self.block(w, "FieldToMatch", AWS_WAF_ByteMatchSet_FieldToMatch)
+      self.property(w, "PositionalConstraint", "positional_constraint", StringValueConverter())
+      self.property(w, "TargetString", "target_string", StringValueConverter())
+      self.property(w, "TargetStringBase64", "target_string_base64", StringValueConverter())
+      self.property(w, "TextTransformation", "text_transformation", StringValueConverter())
 
-  props = {
-    "FieldToMatch": (AWS_WAF_ByteMatchSet_FieldToMatch, "field_to_match"),
-    "PositionalConstraint": (StringValueConverter(), "positional_constraint"),
-    "TargetString": (StringValueConverter(), "target_string"),
-    "TargetStringBase64": (StringValueConverter(), "target_string_base64"),
-    "TextTransformation": (StringValueConverter(), "text_transformation"),
-  }
 
 class AWS_WAF_SizeConstraintSet_FieldToMatch(CloudFormationProperty):
-  entity = "AWS::WAF::SizeConstraintSet"
-  tf_block_type = "field_to_match"
+  def write(self, w):
+    with w.block("field_to_match"):
+      self.property(w, "Data", "data", StringValueConverter())
+      self.property(w, "Type", "type", StringValueConverter())
 
-  props = {
-    "Data": (StringValueConverter(), "data"),
-    "Type": (StringValueConverter(), "type"),
-  }
 
 class AWS_WAF_SizeConstraintSet_SizeConstraint(CloudFormationProperty):
-  entity = "AWS::WAF::SizeConstraintSet"
-  tf_block_type = "size_constraint"
+  def write(self, w):
+    with w.block("size_constraint"):
+      self.property(w, "ComparisonOperator", "comparison_operator", StringValueConverter())
+      self.block(w, "FieldToMatch", AWS_WAF_SizeConstraintSet_FieldToMatch)
+      self.property(w, "Size", "size", BasicValueConverter())
+      self.property(w, "TextTransformation", "text_transformation", StringValueConverter())
 
-  props = {
-    "ComparisonOperator": (StringValueConverter(), "comparison_operator"),
-    "FieldToMatch": (AWS_WAF_SizeConstraintSet_FieldToMatch, "field_to_match"),
-    "Size": (BasicValueConverter(), "size"),
-    "TextTransformation": (StringValueConverter(), "text_transformation"),
-  }
 
 class AWS_WAF_IPSet(CloudFormationResource):
-  terraform_resource = "aws_waf_ip_set"
+  cfn_type = "AWS::WAF::IPSet"
+  tf_type = "aws_waf_ip_set"
+  ref = "arn"
 
-  resource_type = "AWS::WAF::IPSet"
+  def write(self, w):
+    with self.resource_block(w):
+      self.repeated_block(w, "IPSetDescriptors", AWS_WAF_IPSet_IPSetDescriptor)
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "IPSetDescriptors": (BlockValueConverter(AWS_WAF_IPSet_IPSetDescriptor), None),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_WAF_SizeConstraintSet(CloudFormationResource):
-  terraform_resource = "aws_waf_size_constraint_set"
+  cfn_type = "AWS::WAF::SizeConstraintSet"
+  tf_type = "aws_waf_size_constraint_set"
+  ref = "arn"
 
-  resource_type = "AWS::WAF::SizeConstraintSet"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Name", "name", StringValueConverter())
+      self.repeated_block(w, "SizeConstraints", AWS_WAF_SizeConstraintSet_SizeConstraint)
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-    "SizeConstraints": (BlockValueConverter(AWS_WAF_SizeConstraintSet_SizeConstraint), None),
-  }
 
 class AWS_WAF_ByteMatchSet(CloudFormationResource):
-  terraform_resource = "aws_waf_byte_match_set"
+  cfn_type = "AWS::WAF::ByteMatchSet"
+  tf_type = "aws_waf_byte_match_set"
+  ref = "arn"
 
-  resource_type = "AWS::WAF::ByteMatchSet"
+  def write(self, w):
+    with self.resource_block(w):
+      self.repeated_block(w, "ByteMatchTuples", AWS_WAF_ByteMatchSet_ByteMatchTuple)
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "ByteMatchTuples": (BlockValueConverter(AWS_WAF_ByteMatchSet_ByteMatchTuple), None),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_WAF_Rule(CloudFormationResource):
-  terraform_resource = "aws_waf_rule"
+  cfn_type = "AWS::WAF::Rule"
+  tf_type = "aws_waf_rule"
+  ref = "arn"
 
-  resource_type = "AWS::WAF::Rule"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "MetricName", "metric_name", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
+      self.repeated_block(w, "Predicates", AWS_WAF_Rule_Predicate)
 
-  props = {
-    "MetricName": (StringValueConverter(), "metric_name"),
-    "Name": (StringValueConverter(), "name"),
-    "Predicates": (BlockValueConverter(AWS_WAF_Rule_Predicate), None),
-  }
 
 class AWS_WAF_WebACL(CloudFormationResource):
-  terraform_resource = "aws_waf_web_acl"
+  cfn_type = "AWS::WAF::WebACL"
+  tf_type = "aws_waf_web_acl"
+  ref = "arn"
 
-  resource_type = "AWS::WAF::WebACL"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "DefaultAction", AWS_WAF_WebACL_WafAction)
+      self.property(w, "MetricName", "metric_name", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
+      self.repeated_block(w, "Rules", AWS_WAF_WebACL_ActivatedRule)
 
-  props = {
-    "DefaultAction": (AWS_WAF_WebACL_WafAction, "default_action"),
-    "MetricName": (StringValueConverter(), "metric_name"),
-    "Name": (StringValueConverter(), "name"),
-    "Rules": (BlockValueConverter(AWS_WAF_WebACL_ActivatedRule), None),
-  }
 
 class AWS_WAF_SqlInjectionMatchSet_SqlInjectionMatchTuple(CloudFormationProperty):
-  entity = "AWS::WAF::SqlInjectionMatchSet"
-  tf_block_type = "sql_injection_match_tuple"
+  def write(self, w):
+    with w.block("sql_injection_match_tuple"):
+      self.block(w, "FieldToMatch", AWS_WAF_SqlInjectionMatchSet_FieldToMatch)
+      self.property(w, "TextTransformation", "text_transformation", StringValueConverter())
 
-  props = {
-    "FieldToMatch": (AWS_WAF_SqlInjectionMatchSet_FieldToMatch, "field_to_match"),
-    "TextTransformation": (StringValueConverter(), "text_transformation"),
-  }
 
 class AWS_WAF_XssMatchSet_XssMatchTuple(CloudFormationProperty):
-  entity = "AWS::WAF::XssMatchSet"
-  tf_block_type = "xss_match_tuple"
+  def write(self, w):
+    with w.block("xss_match_tuple"):
+      self.block(w, "FieldToMatch", AWS_WAF_XssMatchSet_FieldToMatch)
+      self.property(w, "TextTransformation", "text_transformation", StringValueConverter())
 
-  props = {
-    "FieldToMatch": (AWS_WAF_XssMatchSet_FieldToMatch, "field_to_match"),
-    "TextTransformation": (StringValueConverter(), "text_transformation"),
-  }
 
 class AWS_WAF_XssMatchSet(CloudFormationResource):
-  terraform_resource = "aws_waf_xss_match_set"
+  cfn_type = "AWS::WAF::XssMatchSet"
+  tf_type = "aws_waf_xss_match_set"
+  ref = "arn"
 
-  resource_type = "AWS::WAF::XssMatchSet"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Name", "name", StringValueConverter())
+      self.repeated_block(w, "XssMatchTuples", AWS_WAF_XssMatchSet_XssMatchTuple)
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-    "XssMatchTuples": (BlockValueConverter(AWS_WAF_XssMatchSet_XssMatchTuple), None),
-  }
 
 class AWS_WAF_SqlInjectionMatchSet(CloudFormationResource):
-  terraform_resource = "aws_waf_sql_injection_match_set"
+  cfn_type = "AWS::WAF::SqlInjectionMatchSet"
+  tf_type = "aws_waf_sql_injection_match_set"
+  ref = "arn"
 
-  resource_type = "AWS::WAF::SqlInjectionMatchSet"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Name", "name", StringValueConverter())
+      self.repeated_block(w, "SqlInjectionMatchTuples", AWS_WAF_SqlInjectionMatchSet_SqlInjectionMatchTuple)
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-    "SqlInjectionMatchTuples": (BlockValueConverter(AWS_WAF_SqlInjectionMatchSet_SqlInjectionMatchTuple), None),
-  }
 

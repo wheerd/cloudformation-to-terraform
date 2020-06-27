@@ -1,495 +1,476 @@
 from . import *
 
 class AWS_ApiGateway_Deployment_DeploymentCanarySettings(CloudFormationProperty):
-  entity = "AWS::ApiGateway::Deployment"
-  tf_block_type = "deployment_canary_settings"
+  def write(self, w):
+    with w.block("deployment_canary_settings"):
+      self.property(w, "PercentTraffic", "percent_traffic", BasicValueConverter())
+      self.property(w, "StageVariableOverrides", "stage_variable_overrides", MapValueConverter(StringValueConverter()))
+      self.property(w, "UseStageCache", "use_stage_cache", BasicValueConverter())
 
-  props = {
-    "PercentTraffic": (BasicValueConverter(), "percent_traffic"),
-    "StageVariableOverrides": (MapValueConverter(StringValueConverter()), "stage_variable_overrides"),
-    "UseStageCache": (BasicValueConverter(), "use_stage_cache"),
-  }
 
 class AWS_ApiGateway_Deployment_MethodSetting(CloudFormationProperty):
-  entity = "AWS::ApiGateway::Deployment"
-  tf_block_type = "method_setting"
+  def write(self, w):
+    with w.block("method_setting"):
+      self.property(w, "CacheDataEncrypted", "cache_data_encrypted", BasicValueConverter())
+      self.property(w, "CacheTtlInSeconds", "cache_ttl_in_seconds", BasicValueConverter())
+      self.property(w, "CachingEnabled", "caching_enabled", BasicValueConverter())
+      self.property(w, "DataTraceEnabled", "data_trace_enabled", BasicValueConverter())
+      self.property(w, "HttpMethod", "http_method", StringValueConverter())
+      self.property(w, "LoggingLevel", "logging_level", StringValueConverter())
+      self.property(w, "MetricsEnabled", "metrics_enabled", BasicValueConverter())
+      self.property(w, "ResourcePath", "resource_path", StringValueConverter())
+      self.property(w, "ThrottlingBurstLimit", "throttling_burst_limit", BasicValueConverter())
+      self.property(w, "ThrottlingRateLimit", "throttling_rate_limit", BasicValueConverter())
 
-  props = {
-    "CacheDataEncrypted": (BasicValueConverter(), "cache_data_encrypted"),
-    "CacheTtlInSeconds": (BasicValueConverter(), "cache_ttl_in_seconds"),
-    "CachingEnabled": (BasicValueConverter(), "caching_enabled"),
-    "DataTraceEnabled": (BasicValueConverter(), "data_trace_enabled"),
-    "HttpMethod": (StringValueConverter(), "http_method"),
-    "LoggingLevel": (StringValueConverter(), "logging_level"),
-    "MetricsEnabled": (BasicValueConverter(), "metrics_enabled"),
-    "ResourcePath": (StringValueConverter(), "resource_path"),
-    "ThrottlingBurstLimit": (BasicValueConverter(), "throttling_burst_limit"),
-    "ThrottlingRateLimit": (BasicValueConverter(), "throttling_rate_limit"),
-  }
 
 class AWS_ApiGateway_Stage_CanarySetting(CloudFormationProperty):
-  entity = "AWS::ApiGateway::Stage"
-  tf_block_type = "canary_setting"
+  def write(self, w):
+    with w.block("canary_setting"):
+      self.property(w, "DeploymentId", "deployment_id", StringValueConverter())
+      self.property(w, "PercentTraffic", "percent_traffic", BasicValueConverter())
+      self.property(w, "StageVariableOverrides", "stage_variable_overrides", MapValueConverter(StringValueConverter()))
+      self.property(w, "UseStageCache", "use_stage_cache", BasicValueConverter())
 
-  props = {
-    "DeploymentId": (StringValueConverter(), "deployment_id"),
-    "PercentTraffic": (BasicValueConverter(), "percent_traffic"),
-    "StageVariableOverrides": (MapValueConverter(StringValueConverter()), "stage_variable_overrides"),
-    "UseStageCache": (BasicValueConverter(), "use_stage_cache"),
-  }
 
 class AWS_ApiGateway_ApiKey_StageKey(CloudFormationProperty):
-  entity = "AWS::ApiGateway::ApiKey"
-  tf_block_type = "stage_key"
+  def write(self, w):
+    with w.block("stage_key"):
+      self.property(w, "RestApiId", "rest_api_id", StringValueConverter())
+      self.property(w, "StageName", "stage_name", StringValueConverter())
 
-  props = {
-    "RestApiId": (StringValueConverter(), "rest_api_id"),
-    "StageName": (StringValueConverter(), "stage_name"),
-  }
 
 class AWS_ApiGateway_Deployment_CanarySetting(CloudFormationProperty):
-  entity = "AWS::ApiGateway::Deployment"
-  tf_block_type = "canary_setting"
+  def write(self, w):
+    with w.block("canary_setting"):
+      self.property(w, "PercentTraffic", "percent_traffic", BasicValueConverter())
+      self.property(w, "StageVariableOverrides", "stage_variable_overrides", MapValueConverter(StringValueConverter()))
+      self.property(w, "UseStageCache", "use_stage_cache", BasicValueConverter())
 
-  props = {
-    "PercentTraffic": (BasicValueConverter(), "percent_traffic"),
-    "StageVariableOverrides": (MapValueConverter(StringValueConverter()), "stage_variable_overrides"),
-    "UseStageCache": (BasicValueConverter(), "use_stage_cache"),
-  }
 
 class AWS_ApiGateway_DocumentationPart_Location(CloudFormationProperty):
-  entity = "AWS::ApiGateway::DocumentationPart"
-  tf_block_type = "location"
+  def write(self, w):
+    with w.block("location"):
+      self.property(w, "Method", "method", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Path", "path", StringValueConverter())
+      self.property(w, "StatusCode", "status_code", StringValueConverter())
+      self.property(w, "Type", "type", StringValueConverter())
 
-  props = {
-    "Method": (StringValueConverter(), "method"),
-    "Name": (StringValueConverter(), "name"),
-    "Path": (StringValueConverter(), "path"),
-    "StatusCode": (StringValueConverter(), "status_code"),
-    "Type": (StringValueConverter(), "type"),
-  }
 
 class AWS_ApiGateway_Stage_AccessLogSetting(CloudFormationProperty):
-  entity = "AWS::ApiGateway::Stage"
-  tf_block_type = "access_log_setting"
+  def write(self, w):
+    with w.block("access_log_setting"):
+      self.property(w, "DestinationArn", "destination_arn", StringValueConverter())
+      self.property(w, "Format", "format", StringValueConverter())
 
-  props = {
-    "DestinationArn": (StringValueConverter(), "destination_arn"),
-    "Format": (StringValueConverter(), "format"),
-  }
 
 class AWS_ApiGateway_Deployment_AccessLogSetting(CloudFormationProperty):
-  entity = "AWS::ApiGateway::Deployment"
-  tf_block_type = "access_log_setting"
+  def write(self, w):
+    with w.block("access_log_setting"):
+      self.property(w, "DestinationArn", "destination_arn", StringValueConverter())
+      self.property(w, "Format", "format", StringValueConverter())
 
-  props = {
-    "DestinationArn": (StringValueConverter(), "destination_arn"),
-    "Format": (StringValueConverter(), "format"),
-  }
 
 class AWS_ApiGateway_Method_MethodResponse(CloudFormationProperty):
-  entity = "AWS::ApiGateway::Method"
-  tf_block_type = "method_response"
+  def write(self, w):
+    with w.block("method_response"):
+      self.property(w, "ResponseModels", "response_models", MapValueConverter(StringValueConverter()))
+      self.property(w, "ResponseParameters", "response_parameters", MapValueConverter(BasicValueConverter()))
+      self.property(w, "StatusCode", "status_code", StringValueConverter())
 
-  props = {
-    "ResponseModels": (MapValueConverter(StringValueConverter()), "response_models"),
-    "ResponseParameters": (MapValueConverter(BasicValueConverter()), "response_parameters"),
-    "StatusCode": (StringValueConverter(), "status_code"),
-  }
 
 class AWS_ApiGateway_Method_IntegrationResponse(CloudFormationProperty):
-  entity = "AWS::ApiGateway::Method"
-  tf_block_type = "integration_response"
+  def write(self, w):
+    with w.block("integration_response"):
+      self.property(w, "ContentHandling", "content_handling", StringValueConverter())
+      self.property(w, "ResponseParameters", "response_parameters", MapValueConverter(StringValueConverter()))
+      self.property(w, "ResponseTemplates", "response_templates", MapValueConverter(StringValueConverter()))
+      self.property(w, "SelectionPattern", "selection_pattern", StringValueConverter())
+      self.property(w, "StatusCode", "status_code", StringValueConverter())
 
-  props = {
-    "ContentHandling": (StringValueConverter(), "content_handling"),
-    "ResponseParameters": (MapValueConverter(StringValueConverter()), "response_parameters"),
-    "ResponseTemplates": (MapValueConverter(StringValueConverter()), "response_templates"),
-    "SelectionPattern": (StringValueConverter(), "selection_pattern"),
-    "StatusCode": (StringValueConverter(), "status_code"),
-  }
 
 class AWS_ApiGateway_Stage_MethodSetting(CloudFormationProperty):
-  entity = "AWS::ApiGateway::Stage"
-  tf_block_type = "method_setting"
+  def write(self, w):
+    with w.block("method_setting"):
+      self.property(w, "CacheDataEncrypted", "cache_data_encrypted", BasicValueConverter())
+      self.property(w, "CacheTtlInSeconds", "cache_ttl_in_seconds", BasicValueConverter())
+      self.property(w, "CachingEnabled", "caching_enabled", BasicValueConverter())
+      self.property(w, "DataTraceEnabled", "data_trace_enabled", BasicValueConverter())
+      self.property(w, "HttpMethod", "http_method", StringValueConverter())
+      self.property(w, "LoggingLevel", "logging_level", StringValueConverter())
+      self.property(w, "MetricsEnabled", "metrics_enabled", BasicValueConverter())
+      self.property(w, "ResourcePath", "resource_path", StringValueConverter())
+      self.property(w, "ThrottlingBurstLimit", "throttling_burst_limit", BasicValueConverter())
+      self.property(w, "ThrottlingRateLimit", "throttling_rate_limit", BasicValueConverter())
 
-  props = {
-    "CacheDataEncrypted": (BasicValueConverter(), "cache_data_encrypted"),
-    "CacheTtlInSeconds": (BasicValueConverter(), "cache_ttl_in_seconds"),
-    "CachingEnabled": (BasicValueConverter(), "caching_enabled"),
-    "DataTraceEnabled": (BasicValueConverter(), "data_trace_enabled"),
-    "HttpMethod": (StringValueConverter(), "http_method"),
-    "LoggingLevel": (StringValueConverter(), "logging_level"),
-    "MetricsEnabled": (BasicValueConverter(), "metrics_enabled"),
-    "ResourcePath": (StringValueConverter(), "resource_path"),
-    "ThrottlingBurstLimit": (BasicValueConverter(), "throttling_burst_limit"),
-    "ThrottlingRateLimit": (BasicValueConverter(), "throttling_rate_limit"),
-  }
 
 class AWS_ApiGateway_DomainName_EndpointConfiguration(CloudFormationProperty):
-  entity = "AWS::ApiGateway::DomainName"
-  tf_block_type = "endpoint_configuration"
+  def write(self, w):
+    with w.block("endpoint_configuration"):
+      self.property(w, "Types", "types", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "Types": (ListValueConverter(StringValueConverter()), "types"),
-  }
 
 class AWS_ApiGateway_UsagePlan_ThrottleSettings(CloudFormationProperty):
-  entity = "AWS::ApiGateway::UsagePlan"
-  tf_block_type = "throttle_settings"
+  def write(self, w):
+    with w.block("throttle_settings"):
+      self.property(w, "BurstLimit", "burst_limit", BasicValueConverter())
+      self.property(w, "RateLimit", "rate_limit", BasicValueConverter())
 
-  props = {
-    "BurstLimit": (BasicValueConverter(), "burst_limit"),
-    "RateLimit": (BasicValueConverter(), "rate_limit"),
-  }
 
 class AWS_ApiGateway_RestApi_S3Location(CloudFormationProperty):
-  entity = "AWS::ApiGateway::RestApi"
-  tf_block_type = "s3_location"
+  def write(self, w):
+    with w.block("s3_location"):
+      self.property(w, "Bucket", "bucket", StringValueConverter())
+      self.property(w, "ETag", "e_tag", StringValueConverter())
+      self.property(w, "Key", "key", StringValueConverter())
+      self.property(w, "Version", "version", StringValueConverter())
 
-  props = {
-    "Bucket": (StringValueConverter(), "bucket"),
-    "ETag": (StringValueConverter(), "e_tag"),
-    "Key": (StringValueConverter(), "key"),
-    "Version": (StringValueConverter(), "version"),
-  }
 
 class AWS_ApiGateway_RestApi_EndpointConfiguration(CloudFormationProperty):
-  entity = "AWS::ApiGateway::RestApi"
-  tf_block_type = "endpoint_configuration"
+  def write(self, w):
+    with w.block("endpoint_configuration"):
+      self.property(w, "Types", "types", ListValueConverter(StringValueConverter()))
+      self.property(w, "VpcEndpointIds", "vpc_endpoint_ids", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "Types": (ListValueConverter(StringValueConverter()), "types"),
-    "VpcEndpointIds": (ListValueConverter(StringValueConverter()), "vpc_endpoint_ids"),
-  }
 
 class AWS_ApiGateway_UsagePlan_QuotaSettings(CloudFormationProperty):
-  entity = "AWS::ApiGateway::UsagePlan"
-  tf_block_type = "quota_settings"
+  def write(self, w):
+    with w.block("quota_settings"):
+      self.property(w, "Limit", "limit", BasicValueConverter())
+      self.property(w, "Offset", "offset", BasicValueConverter())
+      self.property(w, "Period", "period", StringValueConverter())
 
-  props = {
-    "Limit": (BasicValueConverter(), "limit"),
-    "Offset": (BasicValueConverter(), "offset"),
-    "Period": (StringValueConverter(), "period"),
-  }
 
 class AWS_ApiGateway_Authorizer(CloudFormationResource):
-  terraform_resource = "aws_api_gateway_authorizer"
+  cfn_type = "AWS::ApiGateway::Authorizer"
+  tf_type = "aws_api_gateway_authorizer"
+  ref = "arn"
 
-  resource_type = "AWS::ApiGateway::Authorizer"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "AuthType", "auth_type", StringValueConverter())
+      self.property(w, "AuthorizerCredentials", "authorizer_credentials", StringValueConverter())
+      self.property(w, "AuthorizerResultTtlInSeconds", "authorizer_result_ttl_in_seconds", BasicValueConverter())
+      self.property(w, "AuthorizerUri", "authorizer_uri", StringValueConverter())
+      self.property(w, "IdentitySource", "identity_source", StringValueConverter())
+      self.property(w, "IdentityValidationExpression", "identity_validation_expression", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "ProviderARNs", "provider_ar_ns", ListValueConverter(StringValueConverter()))
+      self.property(w, "RestApiId", "rest_api_id", StringValueConverter())
+      self.property(w, "Type", "type", StringValueConverter())
 
-  props = {
-    "AuthType": (StringValueConverter(), "auth_type"),
-    "AuthorizerCredentials": (StringValueConverter(), "authorizer_credentials"),
-    "AuthorizerResultTtlInSeconds": (BasicValueConverter(), "authorizer_result_ttl_in_seconds"),
-    "AuthorizerUri": (StringValueConverter(), "authorizer_uri"),
-    "IdentitySource": (StringValueConverter(), "identity_source"),
-    "IdentityValidationExpression": (StringValueConverter(), "identity_validation_expression"),
-    "Name": (StringValueConverter(), "name"),
-    "ProviderARNs": (ListValueConverter(StringValueConverter()), "provider_ar_ns"),
-    "RestApiId": (StringValueConverter(), "rest_api_id"),
-    "Type": (StringValueConverter(), "type"),
-  }
 
 class AWS_ApiGateway_DomainName(CloudFormationResource):
-  terraform_resource = "aws_api_gateway_domain_name"
+  cfn_type = "AWS::ApiGateway::DomainName"
+  tf_type = "aws_api_gateway_domain_name"
+  ref = "arn"
 
-  resource_type = "AWS::ApiGateway::DomainName"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "CertificateArn", "certificate_arn", StringValueConverter())
+      self.property(w, "DomainName", "domain_name", StringValueConverter())
+      self.block(w, "EndpointConfiguration", AWS_ApiGateway_DomainName_EndpointConfiguration)
+      self.property(w, "RegionalCertificateArn", "regional_certificate_arn", StringValueConverter())
+      self.property(w, "SecurityPolicy", "security_policy", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "CertificateArn": (StringValueConverter(), "certificate_arn"),
-    "DomainName": (StringValueConverter(), "domain_name"),
-    "EndpointConfiguration": (AWS_ApiGateway_DomainName_EndpointConfiguration, "endpoint_configuration"),
-    "RegionalCertificateArn": (StringValueConverter(), "regional_certificate_arn"),
-    "SecurityPolicy": (StringValueConverter(), "security_policy"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 
 class AWS_ApiGateway_DocumentationPart(CloudFormationResource):
-  terraform_resource = "aws_api_gateway_documentation_part"
+  cfn_type = "AWS::ApiGateway::DocumentationPart"
+  tf_type = "aws_api_gateway_documentation_part"
+  ref = "arn"
 
-  resource_type = "AWS::ApiGateway::DocumentationPart"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "Location", AWS_ApiGateway_DocumentationPart_Location)
+      self.property(w, "Properties", "properties", StringValueConverter())
+      self.property(w, "RestApiId", "rest_api_id", StringValueConverter())
 
-  props = {
-    "Location": (AWS_ApiGateway_DocumentationPart_Location, "location"),
-    "Properties": (StringValueConverter(), "properties"),
-    "RestApiId": (StringValueConverter(), "rest_api_id"),
-  }
 
 class AWS_ApiGateway_Model(CloudFormationResource):
-  terraform_resource = "aws_api_gateway_model"
+  cfn_type = "AWS::ApiGateway::Model"
+  tf_type = "aws_api_gateway_model"
+  ref = "arn"
 
-  resource_type = "AWS::ApiGateway::Model"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ContentType", "content_type", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "RestApiId", "rest_api_id", StringValueConverter())
+      self.property(w, "Schema", "schema", StringValueConverter())
 
-  props = {
-    "ContentType": (StringValueConverter(), "content_type"),
-    "Description": (StringValueConverter(), "description"),
-    "Name": (StringValueConverter(), "name"),
-    "RestApiId": (StringValueConverter(), "rest_api_id"),
-    "Schema": (StringValueConverter(), "schema"),
-  }
 
 class AWS_ApiGateway_BasePathMapping(CloudFormationResource):
-  terraform_resource = "aws_api_gateway_base_path_mapping"
+  cfn_type = "AWS::ApiGateway::BasePathMapping"
+  tf_type = "aws_api_gateway_base_path_mapping"
+  ref = "arn"
 
-  resource_type = "AWS::ApiGateway::BasePathMapping"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "BasePath", "base_path", StringValueConverter())
+      self.property(w, "DomainName", "domain_name", StringValueConverter())
+      self.property(w, "RestApiId", "rest_api_id", StringValueConverter())
+      self.property(w, "Stage", "stage", StringValueConverter())
 
-  props = {
-    "BasePath": (StringValueConverter(), "base_path"),
-    "DomainName": (StringValueConverter(), "domain_name"),
-    "RestApiId": (StringValueConverter(), "rest_api_id"),
-    "Stage": (StringValueConverter(), "stage"),
-  }
 
 class AWS_ApiGateway_Stage(CloudFormationResource):
-  terraform_resource = "aws_api_gateway_stage"
+  cfn_type = "AWS::ApiGateway::Stage"
+  tf_type = "aws_api_gateway_stage"
+  ref = "arn"
 
-  resource_type = "AWS::ApiGateway::Stage"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "AccessLogSetting", AWS_ApiGateway_Stage_AccessLogSetting)
+      self.property(w, "CacheClusterEnabled", "cache_cluster_enabled", BasicValueConverter())
+      self.property(w, "CacheClusterSize", "cache_cluster_size", StringValueConverter())
+      self.block(w, "CanarySetting", AWS_ApiGateway_Stage_CanarySetting)
+      self.property(w, "ClientCertificateId", "client_certificate_id", StringValueConverter())
+      self.property(w, "DeploymentId", "deployment_id", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "DocumentationVersion", "documentation_version", StringValueConverter())
+      self.repeated_block(w, "MethodSettings", AWS_ApiGateway_Stage_MethodSetting)
+      self.property(w, "RestApiId", "rest_api_id", StringValueConverter())
+      self.property(w, "StageName", "stage_name", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "TracingEnabled", "tracing_enabled", BasicValueConverter())
+      self.property(w, "Variables", "variables", MapValueConverter(StringValueConverter()))
 
-  props = {
-    "AccessLogSetting": (AWS_ApiGateway_Stage_AccessLogSetting, "access_log_setting"),
-    "CacheClusterEnabled": (BasicValueConverter(), "cache_cluster_enabled"),
-    "CacheClusterSize": (StringValueConverter(), "cache_cluster_size"),
-    "CanarySetting": (AWS_ApiGateway_Stage_CanarySetting, "canary_setting"),
-    "ClientCertificateId": (StringValueConverter(), "client_certificate_id"),
-    "DeploymentId": (StringValueConverter(), "deployment_id"),
-    "Description": (StringValueConverter(), "description"),
-    "DocumentationVersion": (StringValueConverter(), "documentation_version"),
-    "MethodSettings": (BlockValueConverter(AWS_ApiGateway_Stage_MethodSetting), None),
-    "RestApiId": (StringValueConverter(), "rest_api_id"),
-    "StageName": (StringValueConverter(), "stage_name"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "TracingEnabled": (BasicValueConverter(), "tracing_enabled"),
-    "Variables": (MapValueConverter(StringValueConverter()), "variables"),
-  }
 
 class AWS_ApiGateway_GatewayResponse(CloudFormationResource):
-  terraform_resource = "aws_api_gateway_gateway_response"
+  cfn_type = "AWS::ApiGateway::GatewayResponse"
+  tf_type = "aws_api_gateway_gateway_response"
+  ref = "arn"
 
-  resource_type = "AWS::ApiGateway::GatewayResponse"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ResponseParameters", "response_parameters", MapValueConverter(StringValueConverter()))
+      self.property(w, "ResponseTemplates", "response_templates", MapValueConverter(StringValueConverter()))
+      self.property(w, "ResponseType", "response_type", StringValueConverter())
+      self.property(w, "RestApiId", "rest_api_id", StringValueConverter())
+      self.property(w, "StatusCode", "status_code", StringValueConverter())
 
-  props = {
-    "ResponseParameters": (MapValueConverter(StringValueConverter()), "response_parameters"),
-    "ResponseTemplates": (MapValueConverter(StringValueConverter()), "response_templates"),
-    "ResponseType": (StringValueConverter(), "response_type"),
-    "RestApiId": (StringValueConverter(), "rest_api_id"),
-    "StatusCode": (StringValueConverter(), "status_code"),
-  }
 
 class AWS_ApiGateway_ClientCertificate(CloudFormationResource):
-  terraform_resource = "aws_api_gateway_client_certificate"
+  cfn_type = "AWS::ApiGateway::ClientCertificate"
+  tf_type = "aws_api_gateway_client_certificate"
+  ref = "arn"
 
-  resource_type = "AWS::ApiGateway::ClientCertificate"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 
 class AWS_ApiGateway_DocumentationVersion(CloudFormationResource):
-  terraform_resource = "aws_api_gateway_documentation_version"
+  cfn_type = "AWS::ApiGateway::DocumentationVersion"
+  tf_type = "aws_api_gateway_documentation_version"
+  ref = "arn"
 
-  resource_type = "AWS::ApiGateway::DocumentationVersion"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "DocumentationVersion", "documentation_version", StringValueConverter())
+      self.property(w, "RestApiId", "rest_api_id", StringValueConverter())
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "DocumentationVersion": (StringValueConverter(), "documentation_version"),
-    "RestApiId": (StringValueConverter(), "rest_api_id"),
-  }
 
 class AWS_ApiGateway_UsagePlanKey(CloudFormationResource):
-  terraform_resource = "aws_api_gateway_usage_plan_key"
+  cfn_type = "AWS::ApiGateway::UsagePlanKey"
+  tf_type = "aws_api_gateway_usage_plan_key"
+  ref = "arn"
 
-  resource_type = "AWS::ApiGateway::UsagePlanKey"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "KeyId", "key_id", StringValueConverter())
+      self.property(w, "KeyType", "key_type", StringValueConverter())
+      self.property(w, "UsagePlanId", "usage_plan_id", StringValueConverter())
 
-  props = {
-    "KeyId": (StringValueConverter(), "key_id"),
-    "KeyType": (StringValueConverter(), "key_type"),
-    "UsagePlanId": (StringValueConverter(), "usage_plan_id"),
-  }
 
 class AWS_ApiGateway_RequestValidator(CloudFormationResource):
-  terraform_resource = "aws_api_gateway_request_validator"
+  cfn_type = "AWS::ApiGateway::RequestValidator"
+  tf_type = "aws_api_gateway_request_validator"
+  ref = "arn"
 
-  resource_type = "AWS::ApiGateway::RequestValidator"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "RestApiId", "rest_api_id", StringValueConverter())
+      self.property(w, "ValidateRequestBody", "validate_request_body", BasicValueConverter())
+      self.property(w, "ValidateRequestParameters", "validate_request_parameters", BasicValueConverter())
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-    "RestApiId": (StringValueConverter(), "rest_api_id"),
-    "ValidateRequestBody": (BasicValueConverter(), "validate_request_body"),
-    "ValidateRequestParameters": (BasicValueConverter(), "validate_request_parameters"),
-  }
 
 class AWS_ApiGateway_ApiKey(CloudFormationResource):
-  terraform_resource = "aws_api_gateway_api_key"
+  cfn_type = "AWS::ApiGateway::ApiKey"
+  tf_type = "aws_api_gateway_api_key"
+  ref = "arn"
 
-  resource_type = "AWS::ApiGateway::ApiKey"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "CustomerId", "customer_id", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "Enabled", "enabled", BasicValueConverter())
+      self.property(w, "GenerateDistinctId", "generate_distinct_id", BasicValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
+      self.repeated_block(w, "StageKeys", AWS_ApiGateway_ApiKey_StageKey)
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "Value", "value", StringValueConverter())
 
-  props = {
-    "CustomerId": (StringValueConverter(), "customer_id"),
-    "Description": (StringValueConverter(), "description"),
-    "Enabled": (BasicValueConverter(), "enabled"),
-    "GenerateDistinctId": (BasicValueConverter(), "generate_distinct_id"),
-    "Name": (StringValueConverter(), "name"),
-    "StageKeys": (BlockValueConverter(AWS_ApiGateway_ApiKey_StageKey), None),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "Value": (StringValueConverter(), "value"),
-  }
 
 class AWS_ApiGateway_Resource(CloudFormationResource):
-  terraform_resource = "aws_api_gateway_resource"
+  cfn_type = "AWS::ApiGateway::Resource"
+  tf_type = "aws_api_gateway_resource"
+  ref = "arn"
 
-  resource_type = "AWS::ApiGateway::Resource"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ParentId", "parent_id", StringValueConverter())
+      self.property(w, "PathPart", "path_part", StringValueConverter())
+      self.property(w, "RestApiId", "rest_api_id", StringValueConverter())
 
-  props = {
-    "ParentId": (StringValueConverter(), "parent_id"),
-    "PathPart": (StringValueConverter(), "path_part"),
-    "RestApiId": (StringValueConverter(), "rest_api_id"),
-  }
 
 class AWS_ApiGateway_Account(CloudFormationResource):
-  terraform_resource = "aws_api_gateway_account"
+  cfn_type = "AWS::ApiGateway::Account"
+  tf_type = "aws_api_gateway_account"
+  ref = "arn"
 
-  resource_type = "AWS::ApiGateway::Account"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "CloudWatchRoleArn", "cloud_watch_role_arn", StringValueConverter())
 
-  props = {
-    "CloudWatchRoleArn": (StringValueConverter(), "cloud_watch_role_arn"),
-  }
 
 class AWS_ApiGateway_RestApi(CloudFormationResource):
-  terraform_resource = "aws_api_gateway_rest_api"
+  cfn_type = "AWS::ApiGateway::RestApi"
+  tf_type = "aws_api_gateway_rest_api"
+  ref = "arn"
 
-  resource_type = "AWS::ApiGateway::RestApi"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ApiKeySourceType", "api_key_source_type", StringValueConverter())
+      self.property(w, "BinaryMediaTypes", "binary_media_types", ListValueConverter(StringValueConverter()))
+      self.property(w, "Body", "body", StringValueConverter())
+      self.block(w, "BodyS3Location", AWS_ApiGateway_RestApi_S3Location)
+      self.property(w, "CloneFrom", "clone_from", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.block(w, "EndpointConfiguration", AWS_ApiGateway_RestApi_EndpointConfiguration)
+      self.property(w, "FailOnWarnings", "fail_on_warnings", BasicValueConverter())
+      self.property(w, "MinimumCompressionSize", "minimum_compression_size", BasicValueConverter())
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Parameters", "parameters", MapValueConverter(StringValueConverter()))
+      self.property(w, "Policy", "policy", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "ApiKeySourceType": (StringValueConverter(), "api_key_source_type"),
-    "BinaryMediaTypes": (ListValueConverter(StringValueConverter()), "binary_media_types"),
-    "Body": (StringValueConverter(), "body"),
-    "BodyS3Location": (AWS_ApiGateway_RestApi_S3Location, "body_s3_location"),
-    "CloneFrom": (StringValueConverter(), "clone_from"),
-    "Description": (StringValueConverter(), "description"),
-    "EndpointConfiguration": (AWS_ApiGateway_RestApi_EndpointConfiguration, "endpoint_configuration"),
-    "FailOnWarnings": (BasicValueConverter(), "fail_on_warnings"),
-    "MinimumCompressionSize": (BasicValueConverter(), "minimum_compression_size"),
-    "Name": (StringValueConverter(), "name"),
-    "Parameters": (MapValueConverter(StringValueConverter()), "parameters"),
-    "Policy": (StringValueConverter(), "policy"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 
 class AWS_ApiGateway_VpcLink(CloudFormationResource):
-  terraform_resource = "aws_api_gateway_vpc_link"
+  cfn_type = "AWS::ApiGateway::VpcLink"
+  tf_type = "aws_api_gateway_vpc_link"
+  ref = "arn"
 
-  resource_type = "AWS::ApiGateway::VpcLink"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "TargetArns", "target_arns", ListValueConverter(StringValueConverter()))
+      self.property(w, "Name", "name", StringValueConverter())
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "TargetArns": (ListValueConverter(StringValueConverter()), "target_arns"),
-    "Name": (StringValueConverter(), "name"),
-  }
 
 class AWS_ApiGateway_UsagePlan_ApiStage(CloudFormationProperty):
-  entity = "AWS::ApiGateway::UsagePlan"
-  tf_block_type = "api_stage"
+  def write(self, w):
+    with w.block("api_stage"):
+      self.property(w, "ApiId", "api_id", StringValueConverter())
+      self.property(w, "Stage", "stage", StringValueConverter())
+      self.property(w, "Throttle", "throttle", MapValueConverter(AWS_ApiGateway_UsagePlan_ThrottleSettings))
 
-  props = {
-    "ApiId": (StringValueConverter(), "api_id"),
-    "Stage": (StringValueConverter(), "stage"),
-    "Throttle": (MapValueConverter(AWS_ApiGateway_UsagePlan_ThrottleSettings), "throttle"),
-  }
 
 class AWS_ApiGateway_Deployment_StageDescription(CloudFormationProperty):
-  entity = "AWS::ApiGateway::Deployment"
-  tf_block_type = "stage_description"
+  def write(self, w):
+    with w.block("stage_description"):
+      self.block(w, "AccessLogSetting", AWS_ApiGateway_Deployment_AccessLogSetting)
+      self.property(w, "CacheClusterEnabled", "cache_cluster_enabled", BasicValueConverter())
+      self.property(w, "CacheClusterSize", "cache_cluster_size", StringValueConverter())
+      self.property(w, "CacheDataEncrypted", "cache_data_encrypted", BasicValueConverter())
+      self.property(w, "CacheTtlInSeconds", "cache_ttl_in_seconds", BasicValueConverter())
+      self.property(w, "CachingEnabled", "caching_enabled", BasicValueConverter())
+      self.block(w, "CanarySetting", AWS_ApiGateway_Deployment_CanarySetting)
+      self.property(w, "ClientCertificateId", "client_certificate_id", StringValueConverter())
+      self.property(w, "DataTraceEnabled", "data_trace_enabled", BasicValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "DocumentationVersion", "documentation_version", StringValueConverter())
+      self.property(w, "LoggingLevel", "logging_level", StringValueConverter())
+      self.repeated_block(w, "MethodSettings", AWS_ApiGateway_Deployment_MethodSetting)
+      self.property(w, "MetricsEnabled", "metrics_enabled", BasicValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "ThrottlingBurstLimit", "throttling_burst_limit", BasicValueConverter())
+      self.property(w, "ThrottlingRateLimit", "throttling_rate_limit", BasicValueConverter())
+      self.property(w, "TracingEnabled", "tracing_enabled", BasicValueConverter())
+      self.property(w, "Variables", "variables", MapValueConverter(StringValueConverter()))
 
-  props = {
-    "AccessLogSetting": (AWS_ApiGateway_Deployment_AccessLogSetting, "access_log_setting"),
-    "CacheClusterEnabled": (BasicValueConverter(), "cache_cluster_enabled"),
-    "CacheClusterSize": (StringValueConverter(), "cache_cluster_size"),
-    "CacheDataEncrypted": (BasicValueConverter(), "cache_data_encrypted"),
-    "CacheTtlInSeconds": (BasicValueConverter(), "cache_ttl_in_seconds"),
-    "CachingEnabled": (BasicValueConverter(), "caching_enabled"),
-    "CanarySetting": (AWS_ApiGateway_Deployment_CanarySetting, "canary_setting"),
-    "ClientCertificateId": (StringValueConverter(), "client_certificate_id"),
-    "DataTraceEnabled": (BasicValueConverter(), "data_trace_enabled"),
-    "Description": (StringValueConverter(), "description"),
-    "DocumentationVersion": (StringValueConverter(), "documentation_version"),
-    "LoggingLevel": (StringValueConverter(), "logging_level"),
-    "MethodSettings": (BlockValueConverter(AWS_ApiGateway_Deployment_MethodSetting), None),
-    "MetricsEnabled": (BasicValueConverter(), "metrics_enabled"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "ThrottlingBurstLimit": (BasicValueConverter(), "throttling_burst_limit"),
-    "ThrottlingRateLimit": (BasicValueConverter(), "throttling_rate_limit"),
-    "TracingEnabled": (BasicValueConverter(), "tracing_enabled"),
-    "Variables": (MapValueConverter(StringValueConverter()), "variables"),
-  }
 
 class AWS_ApiGateway_Method_Integration(CloudFormationProperty):
-  entity = "AWS::ApiGateway::Method"
-  tf_block_type = "integration"
+  def write(self, w):
+    with w.block("integration"):
+      self.property(w, "CacheKeyParameters", "cache_key_parameters", ListValueConverter(StringValueConverter()))
+      self.property(w, "CacheNamespace", "cache_namespace", StringValueConverter())
+      self.property(w, "ConnectionId", "connection_id", StringValueConverter())
+      self.property(w, "ConnectionType", "connection_type", StringValueConverter())
+      self.property(w, "ContentHandling", "content_handling", StringValueConverter())
+      self.property(w, "Credentials", "credentials", StringValueConverter())
+      self.property(w, "IntegrationHttpMethod", "integration_http_method", StringValueConverter())
+      self.repeated_block(w, "IntegrationResponses", AWS_ApiGateway_Method_IntegrationResponse)
+      self.property(w, "PassthroughBehavior", "passthrough_behavior", StringValueConverter())
+      self.property(w, "RequestParameters", "request_parameters", MapValueConverter(StringValueConverter()))
+      self.property(w, "RequestTemplates", "request_templates", MapValueConverter(StringValueConverter()))
+      self.property(w, "TimeoutInMillis", "timeout_in_millis", BasicValueConverter())
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "Uri", "uri", StringValueConverter())
 
-  props = {
-    "CacheKeyParameters": (ListValueConverter(StringValueConverter()), "cache_key_parameters"),
-    "CacheNamespace": (StringValueConverter(), "cache_namespace"),
-    "ConnectionId": (StringValueConverter(), "connection_id"),
-    "ConnectionType": (StringValueConverter(), "connection_type"),
-    "ContentHandling": (StringValueConverter(), "content_handling"),
-    "Credentials": (StringValueConverter(), "credentials"),
-    "IntegrationHttpMethod": (StringValueConverter(), "integration_http_method"),
-    "IntegrationResponses": (BlockValueConverter(AWS_ApiGateway_Method_IntegrationResponse), None),
-    "PassthroughBehavior": (StringValueConverter(), "passthrough_behavior"),
-    "RequestParameters": (MapValueConverter(StringValueConverter()), "request_parameters"),
-    "RequestTemplates": (MapValueConverter(StringValueConverter()), "request_templates"),
-    "TimeoutInMillis": (BasicValueConverter(), "timeout_in_millis"),
-    "Type": (StringValueConverter(), "type"),
-    "Uri": (StringValueConverter(), "uri"),
-  }
 
 class AWS_ApiGateway_Deployment(CloudFormationResource):
-  terraform_resource = "aws_api_gateway_deployment"
+  cfn_type = "AWS::ApiGateway::Deployment"
+  tf_type = "aws_api_gateway_deployment"
+  ref = "arn"
 
-  resource_type = "AWS::ApiGateway::Deployment"
+  def write(self, w):
+    with self.resource_block(w):
+      self.block(w, "DeploymentCanarySettings", AWS_ApiGateway_Deployment_DeploymentCanarySettings)
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "RestApiId", "rest_api_id", StringValueConverter())
+      self.block(w, "StageDescription", AWS_ApiGateway_Deployment_StageDescription)
+      self.property(w, "StageName", "stage_name", StringValueConverter())
 
-  props = {
-    "DeploymentCanarySettings": (AWS_ApiGateway_Deployment_DeploymentCanarySettings, "deployment_canary_settings"),
-    "Description": (StringValueConverter(), "description"),
-    "RestApiId": (StringValueConverter(), "rest_api_id"),
-    "StageDescription": (AWS_ApiGateway_Deployment_StageDescription, "stage_description"),
-    "StageName": (StringValueConverter(), "stage_name"),
-  }
 
 class AWS_ApiGateway_UsagePlan(CloudFormationResource):
-  terraform_resource = "aws_api_gateway_usage_plan"
+  cfn_type = "AWS::ApiGateway::UsagePlan"
+  tf_type = "aws_api_gateway_usage_plan"
+  ref = "arn"
 
-  resource_type = "AWS::ApiGateway::UsagePlan"
+  def write(self, w):
+    with self.resource_block(w):
+      self.repeated_block(w, "ApiStages", AWS_ApiGateway_UsagePlan_ApiStage)
+      self.property(w, "Description", "description", StringValueConverter())
+      self.block(w, "Quota", AWS_ApiGateway_UsagePlan_QuotaSettings)
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.block(w, "Throttle", AWS_ApiGateway_UsagePlan_ThrottleSettings)
+      self.property(w, "UsagePlanName", "usage_plan_name", StringValueConverter())
 
-  props = {
-    "ApiStages": (BlockValueConverter(AWS_ApiGateway_UsagePlan_ApiStage), None),
-    "Description": (StringValueConverter(), "description"),
-    "Quota": (AWS_ApiGateway_UsagePlan_QuotaSettings, "quota"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "Throttle": (AWS_ApiGateway_UsagePlan_ThrottleSettings, "throttle"),
-    "UsagePlanName": (StringValueConverter(), "usage_plan_name"),
-  }
 
 class AWS_ApiGateway_Method(CloudFormationResource):
-  terraform_resource = "aws_api_gateway_method"
+  cfn_type = "AWS::ApiGateway::Method"
+  tf_type = "aws_api_gateway_method"
+  ref = "arn"
 
-  resource_type = "AWS::ApiGateway::Method"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "ApiKeyRequired", "api_key_required", BasicValueConverter())
+      self.property(w, "AuthorizationScopes", "authorization_scopes", ListValueConverter(StringValueConverter()))
+      self.property(w, "AuthorizationType", "authorization_type", StringValueConverter())
+      self.property(w, "AuthorizerId", "authorizer_id", StringValueConverter())
+      self.property(w, "HttpMethod", "http_method", StringValueConverter())
+      self.block(w, "Integration", AWS_ApiGateway_Method_Integration)
+      self.repeated_block(w, "MethodResponses", AWS_ApiGateway_Method_MethodResponse)
+      self.property(w, "OperationName", "operation_name", StringValueConverter())
+      self.property(w, "RequestModels", "request_models", MapValueConverter(StringValueConverter()))
+      self.property(w, "RequestParameters", "request_parameters", MapValueConverter(BasicValueConverter()))
+      self.property(w, "RequestValidatorId", "request_validator_id", StringValueConverter())
+      self.property(w, "ResourceId", "resource_id", StringValueConverter())
+      self.property(w, "RestApiId", "rest_api_id", StringValueConverter())
 
-  props = {
-    "ApiKeyRequired": (BasicValueConverter(), "api_key_required"),
-    "AuthorizationScopes": (ListValueConverter(StringValueConverter()), "authorization_scopes"),
-    "AuthorizationType": (StringValueConverter(), "authorization_type"),
-    "AuthorizerId": (StringValueConverter(), "authorizer_id"),
-    "HttpMethod": (StringValueConverter(), "http_method"),
-    "Integration": (AWS_ApiGateway_Method_Integration, "integration"),
-    "MethodResponses": (BlockValueConverter(AWS_ApiGateway_Method_MethodResponse), None),
-    "OperationName": (StringValueConverter(), "operation_name"),
-    "RequestModels": (MapValueConverter(StringValueConverter()), "request_models"),
-    "RequestParameters": (MapValueConverter(BasicValueConverter()), "request_parameters"),
-    "RequestValidatorId": (StringValueConverter(), "request_validator_id"),
-    "ResourceId": (StringValueConverter(), "resource_id"),
-    "RestApiId": (StringValueConverter(), "rest_api_id"),
-  }
 

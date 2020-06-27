@@ -1,275 +1,248 @@
 from . import *
 
 class AWS_AutoScaling_AutoScalingGroup_LaunchTemplateOverrides(CloudFormationProperty):
-  entity = "AWS::AutoScaling::AutoScalingGroup"
-  tf_block_type = "launch_template_overrides"
+  def write(self, w):
+    with w.block("launch_template_overrides"):
+      self.property(w, "InstanceType", "instance_type", StringValueConverter())
+      self.property(w, "WeightedCapacity", "weighted_capacity", StringValueConverter())
 
-  props = {
-    "InstanceType": (StringValueConverter(), "instance_type"),
-    "WeightedCapacity": (StringValueConverter(), "weighted_capacity"),
-  }
 
 class AWS_AutoScaling_AutoScalingGroup_LifecycleHookSpecification(CloudFormationProperty):
-  entity = "AWS::AutoScaling::AutoScalingGroup"
-  tf_block_type = "lifecycle_hook_specification"
+  def write(self, w):
+    with w.block("lifecycle_hook_specification"):
+      self.property(w, "DefaultResult", "default_result", StringValueConverter())
+      self.property(w, "HeartbeatTimeout", "heartbeat_timeout", BasicValueConverter())
+      self.property(w, "LifecycleHookName", "lifecycle_hook_name", StringValueConverter())
+      self.property(w, "LifecycleTransition", "lifecycle_transition", StringValueConverter())
+      self.property(w, "NotificationMetadata", "notification_metadata", StringValueConverter())
+      self.property(w, "NotificationTargetARN", "notification_target_arn", StringValueConverter())
+      self.property(w, "RoleARN", "role_arn", StringValueConverter())
 
-  props = {
-    "DefaultResult": (StringValueConverter(), "default_result"),
-    "HeartbeatTimeout": (BasicValueConverter(), "heartbeat_timeout"),
-    "LifecycleHookName": (StringValueConverter(), "lifecycle_hook_name"),
-    "LifecycleTransition": (StringValueConverter(), "lifecycle_transition"),
-    "NotificationMetadata": (StringValueConverter(), "notification_metadata"),
-    "NotificationTargetARN": (StringValueConverter(), "notification_target_arn"),
-    "RoleARN": (StringValueConverter(), "role_arn"),
-  }
 
 class AWS_AutoScaling_AutoScalingGroup_LaunchTemplateSpecification(CloudFormationProperty):
-  entity = "AWS::AutoScaling::AutoScalingGroup"
-  tf_block_type = "launch_template_specification"
+  def write(self, w):
+    with w.block("launch_template_specification"):
+      self.property(w, "LaunchTemplateId", "launch_template_id", StringValueConverter())
+      self.property(w, "LaunchTemplateName", "launch_template_name", StringValueConverter())
+      self.property(w, "Version", "version", StringValueConverter())
 
-  props = {
-    "LaunchTemplateId": (StringValueConverter(), "launch_template_id"),
-    "LaunchTemplateName": (StringValueConverter(), "launch_template_name"),
-    "Version": (StringValueConverter(), "version"),
-  }
 
 class AWS_AutoScaling_ScalingPolicy_StepAdjustment(CloudFormationProperty):
-  entity = "AWS::AutoScaling::ScalingPolicy"
-  tf_block_type = "step_adjustment"
+  def write(self, w):
+    with w.block("step_adjustment"):
+      self.property(w, "MetricIntervalLowerBound", "metric_interval_lower_bound", BasicValueConverter())
+      self.property(w, "MetricIntervalUpperBound", "metric_interval_upper_bound", BasicValueConverter())
+      self.property(w, "ScalingAdjustment", "scaling_adjustment", BasicValueConverter())
 
-  props = {
-    "MetricIntervalLowerBound": (BasicValueConverter(), "metric_interval_lower_bound"),
-    "MetricIntervalUpperBound": (BasicValueConverter(), "metric_interval_upper_bound"),
-    "ScalingAdjustment": (BasicValueConverter(), "scaling_adjustment"),
-  }
 
 class AWS_AutoScaling_ScalingPolicy_MetricDimension(CloudFormationProperty):
-  entity = "AWS::AutoScaling::ScalingPolicy"
-  tf_block_type = "metric_dimension"
+  def write(self, w):
+    with w.block("metric_dimension"):
+      self.property(w, "Name", "name", StringValueConverter())
+      self.property(w, "Value", "value", StringValueConverter())
 
-  props = {
-    "Name": (StringValueConverter(), "name"),
-    "Value": (StringValueConverter(), "value"),
-  }
 
 class AWS_AutoScaling_AutoScalingGroup_NotificationConfiguration(CloudFormationProperty):
-  entity = "AWS::AutoScaling::AutoScalingGroup"
-  tf_block_type = "notification_configuration"
+  def write(self, w):
+    with w.block("notification_configuration"):
+      self.property(w, "NotificationTypes", "notification_types", ListValueConverter(StringValueConverter()))
+      self.property(w, "TopicARN", "topic_arn", StringValueConverter())
 
-  props = {
-    "NotificationTypes": (ListValueConverter(StringValueConverter()), "notification_types"),
-    "TopicARN": (StringValueConverter(), "topic_arn"),
-  }
 
 class AWS_AutoScaling_ScalingPolicy_PredefinedMetricSpecification(CloudFormationProperty):
-  entity = "AWS::AutoScaling::ScalingPolicy"
-  tf_block_type = "predefined_metric_specification"
+  def write(self, w):
+    with w.block("predefined_metric_specification"):
+      self.property(w, "PredefinedMetricType", "predefined_metric_type", StringValueConverter())
+      self.property(w, "ResourceLabel", "resource_label", StringValueConverter())
 
-  props = {
-    "PredefinedMetricType": (StringValueConverter(), "predefined_metric_type"),
-    "ResourceLabel": (StringValueConverter(), "resource_label"),
-  }
 
 class AWS_AutoScaling_AutoScalingGroup_MetricsCollection(CloudFormationProperty):
-  entity = "AWS::AutoScaling::AutoScalingGroup"
-  tf_block_type = "metrics_collection"
+  def write(self, w):
+    with w.block("metrics_collection"):
+      self.property(w, "Granularity", "granularity", StringValueConverter())
+      self.property(w, "Metrics", "metrics", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "Granularity": (StringValueConverter(), "granularity"),
-    "Metrics": (ListValueConverter(StringValueConverter()), "metrics"),
-  }
 
 class AWS_AutoScaling_LaunchConfiguration_BlockDevice(CloudFormationProperty):
-  entity = "AWS::AutoScaling::LaunchConfiguration"
-  tf_block_type = "block_device"
+  def write(self, w):
+    with w.block("block_device"):
+      self.property(w, "DeleteOnTermination", "delete_on_termination", BasicValueConverter())
+      self.property(w, "Encrypted", "encrypted", BasicValueConverter())
+      self.property(w, "Iops", "iops", BasicValueConverter())
+      self.property(w, "SnapshotId", "snapshot_id", StringValueConverter())
+      self.property(w, "VolumeSize", "volume_size", BasicValueConverter())
+      self.property(w, "VolumeType", "volume_type", StringValueConverter())
 
-  props = {
-    "DeleteOnTermination": (BasicValueConverter(), "delete_on_termination"),
-    "Encrypted": (BasicValueConverter(), "encrypted"),
-    "Iops": (BasicValueConverter(), "iops"),
-    "SnapshotId": (StringValueConverter(), "snapshot_id"),
-    "VolumeSize": (BasicValueConverter(), "volume_size"),
-    "VolumeType": (StringValueConverter(), "volume_type"),
-  }
 
 class AWS_AutoScaling_AutoScalingGroup_InstancesDistribution(CloudFormationProperty):
-  entity = "AWS::AutoScaling::AutoScalingGroup"
-  tf_block_type = "instances_distribution"
+  def write(self, w):
+    with w.block("instances_distribution"):
+      self.property(w, "OnDemandAllocationStrategy", "on_demand_allocation_strategy", StringValueConverter())
+      self.property(w, "OnDemandBaseCapacity", "on_demand_base_capacity", BasicValueConverter())
+      self.property(w, "OnDemandPercentageAboveBaseCapacity", "on_demand_percentage_above_base_capacity", BasicValueConverter())
+      self.property(w, "SpotAllocationStrategy", "spot_allocation_strategy", StringValueConverter())
+      self.property(w, "SpotInstancePools", "spot_instance_pools", BasicValueConverter())
+      self.property(w, "SpotMaxPrice", "spot_max_price", StringValueConverter())
 
-  props = {
-    "OnDemandAllocationStrategy": (StringValueConverter(), "on_demand_allocation_strategy"),
-    "OnDemandBaseCapacity": (BasicValueConverter(), "on_demand_base_capacity"),
-    "OnDemandPercentageAboveBaseCapacity": (BasicValueConverter(), "on_demand_percentage_above_base_capacity"),
-    "SpotAllocationStrategy": (StringValueConverter(), "spot_allocation_strategy"),
-    "SpotInstancePools": (BasicValueConverter(), "spot_instance_pools"),
-    "SpotMaxPrice": (StringValueConverter(), "spot_max_price"),
-  }
 
 class AWS_AutoScaling_AutoScalingGroup_LaunchTemplate(CloudFormationProperty):
-  entity = "AWS::AutoScaling::AutoScalingGroup"
-  tf_block_type = "launch_template"
+  def write(self, w):
+    with w.block("launch_template"):
+      self.block(w, "LaunchTemplateSpecification", AWS_AutoScaling_AutoScalingGroup_LaunchTemplateSpecification)
+      self.repeated_block(w, "Overrides", AWS_AutoScaling_AutoScalingGroup_LaunchTemplateOverrides)
 
-  props = {
-    "LaunchTemplateSpecification": (AWS_AutoScaling_AutoScalingGroup_LaunchTemplateSpecification, "launch_template_specification"),
-    "Overrides": (BlockValueConverter(AWS_AutoScaling_AutoScalingGroup_LaunchTemplateOverrides), None),
-  }
 
 class AWS_AutoScaling_AutoScalingGroup_TagProperty(CloudFormationProperty):
-  entity = "AWS::AutoScaling::AutoScalingGroup"
-  tf_block_type = "tag_property"
+  def write(self, w):
+    with w.block("tag_property"):
+      self.property(w, "Key", "key", StringValueConverter())
+      self.property(w, "PropagateAtLaunch", "propagate_at_launch", BasicValueConverter())
+      self.property(w, "Value", "value", StringValueConverter())
 
-  props = {
-    "Key": (StringValueConverter(), "key"),
-    "PropagateAtLaunch": (BasicValueConverter(), "propagate_at_launch"),
-    "Value": (StringValueConverter(), "value"),
-  }
 
 class AWS_AutoScaling_LifecycleHook(CloudFormationResource):
-  terraform_resource = "aws_auto_scaling_lifecycle_hook"
+  cfn_type = "AWS::AutoScaling::LifecycleHook"
+  tf_type = "aws_auto_scaling_lifecycle_hook"
+  ref = "arn"
 
-  resource_type = "AWS::AutoScaling::LifecycleHook"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "AutoScalingGroupName", "auto_scaling_group_name", StringValueConverter())
+      self.property(w, "DefaultResult", "default_result", StringValueConverter())
+      self.property(w, "HeartbeatTimeout", "heartbeat_timeout", BasicValueConverter())
+      self.property(w, "LifecycleHookName", "lifecycle_hook_name", StringValueConverter())
+      self.property(w, "LifecycleTransition", "lifecycle_transition", StringValueConverter())
+      self.property(w, "NotificationMetadata", "notification_metadata", StringValueConverter())
+      self.property(w, "NotificationTargetARN", "notification_target_arn", StringValueConverter())
+      self.property(w, "RoleARN", "role_arn", StringValueConverter())
 
-  props = {
-    "AutoScalingGroupName": (StringValueConverter(), "auto_scaling_group_name"),
-    "DefaultResult": (StringValueConverter(), "default_result"),
-    "HeartbeatTimeout": (BasicValueConverter(), "heartbeat_timeout"),
-    "LifecycleHookName": (StringValueConverter(), "lifecycle_hook_name"),
-    "LifecycleTransition": (StringValueConverter(), "lifecycle_transition"),
-    "NotificationMetadata": (StringValueConverter(), "notification_metadata"),
-    "NotificationTargetARN": (StringValueConverter(), "notification_target_arn"),
-    "RoleARN": (StringValueConverter(), "role_arn"),
-  }
 
 class AWS_AutoScaling_ScheduledAction(CloudFormationResource):
-  terraform_resource = "aws_auto_scaling_scheduled_action"
+  cfn_type = "AWS::AutoScaling::ScheduledAction"
+  tf_type = "aws_auto_scaling_scheduled_action"
+  ref = "arn"
 
-  resource_type = "AWS::AutoScaling::ScheduledAction"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "AutoScalingGroupName", "auto_scaling_group_name", StringValueConverter())
+      self.property(w, "DesiredCapacity", "desired_capacity", BasicValueConverter())
+      self.property(w, "EndTime", "end_time", StringValueConverter())
+      self.property(w, "MaxSize", "max_size", BasicValueConverter())
+      self.property(w, "MinSize", "min_size", BasicValueConverter())
+      self.property(w, "Recurrence", "recurrence", StringValueConverter())
+      self.property(w, "StartTime", "start_time", StringValueConverter())
 
-  props = {
-    "AutoScalingGroupName": (StringValueConverter(), "auto_scaling_group_name"),
-    "DesiredCapacity": (BasicValueConverter(), "desired_capacity"),
-    "EndTime": (StringValueConverter(), "end_time"),
-    "MaxSize": (BasicValueConverter(), "max_size"),
-    "MinSize": (BasicValueConverter(), "min_size"),
-    "Recurrence": (StringValueConverter(), "recurrence"),
-    "StartTime": (StringValueConverter(), "start_time"),
-  }
 
 class AWS_AutoScaling_LaunchConfiguration_BlockDeviceMapping(CloudFormationProperty):
-  entity = "AWS::AutoScaling::LaunchConfiguration"
-  tf_block_type = "block_device_mapping"
+  def write(self, w):
+    with w.block("block_device_mapping"):
+      self.property(w, "DeviceName", "device_name", StringValueConverter())
+      self.block(w, "Ebs", AWS_AutoScaling_LaunchConfiguration_BlockDevice)
+      self.property(w, "NoDevice", "no_device", BasicValueConverter())
+      self.property(w, "VirtualName", "virtual_name", StringValueConverter())
 
-  props = {
-    "DeviceName": (StringValueConverter(), "device_name"),
-    "Ebs": (AWS_AutoScaling_LaunchConfiguration_BlockDevice, "ebs"),
-    "NoDevice": (BasicValueConverter(), "no_device"),
-    "VirtualName": (StringValueConverter(), "virtual_name"),
-  }
 
 class AWS_AutoScaling_ScalingPolicy_CustomizedMetricSpecification(CloudFormationProperty):
-  entity = "AWS::AutoScaling::ScalingPolicy"
-  tf_block_type = "customized_metric_specification"
+  def write(self, w):
+    with w.block("customized_metric_specification"):
+      self.repeated_block(w, "Dimensions", AWS_AutoScaling_ScalingPolicy_MetricDimension)
+      self.property(w, "MetricName", "metric_name", StringValueConverter())
+      self.property(w, "Namespace", "namespace", StringValueConverter())
+      self.property(w, "Statistic", "statistic", StringValueConverter())
+      self.property(w, "Unit", "unit", StringValueConverter())
 
-  props = {
-    "Dimensions": (BlockValueConverter(AWS_AutoScaling_ScalingPolicy_MetricDimension), None),
-    "MetricName": (StringValueConverter(), "metric_name"),
-    "Namespace": (StringValueConverter(), "namespace"),
-    "Statistic": (StringValueConverter(), "statistic"),
-    "Unit": (StringValueConverter(), "unit"),
-  }
 
 class AWS_AutoScaling_AutoScalingGroup_MixedInstancesPolicy(CloudFormationProperty):
-  entity = "AWS::AutoScaling::AutoScalingGroup"
-  tf_block_type = "mixed_instances_policy"
+  def write(self, w):
+    with w.block("mixed_instances_policy"):
+      self.block(w, "InstancesDistribution", AWS_AutoScaling_AutoScalingGroup_InstancesDistribution)
+      self.block(w, "LaunchTemplate", AWS_AutoScaling_AutoScalingGroup_LaunchTemplate)
 
-  props = {
-    "InstancesDistribution": (AWS_AutoScaling_AutoScalingGroup_InstancesDistribution, "instances_distribution"),
-    "LaunchTemplate": (AWS_AutoScaling_AutoScalingGroup_LaunchTemplate, "launch_template"),
-  }
 
 class AWS_AutoScaling_ScalingPolicy_TargetTrackingConfiguration(CloudFormationProperty):
-  entity = "AWS::AutoScaling::ScalingPolicy"
-  tf_block_type = "target_tracking_configuration"
+  def write(self, w):
+    with w.block("target_tracking_configuration"):
+      self.block(w, "CustomizedMetricSpecification", AWS_AutoScaling_ScalingPolicy_CustomizedMetricSpecification)
+      self.property(w, "DisableScaleIn", "disable_scale_in", BasicValueConverter())
+      self.block(w, "PredefinedMetricSpecification", AWS_AutoScaling_ScalingPolicy_PredefinedMetricSpecification)
+      self.property(w, "TargetValue", "target_value", BasicValueConverter())
 
-  props = {
-    "CustomizedMetricSpecification": (AWS_AutoScaling_ScalingPolicy_CustomizedMetricSpecification, "customized_metric_specification"),
-    "DisableScaleIn": (BasicValueConverter(), "disable_scale_in"),
-    "PredefinedMetricSpecification": (AWS_AutoScaling_ScalingPolicy_PredefinedMetricSpecification, "predefined_metric_specification"),
-    "TargetValue": (BasicValueConverter(), "target_value"),
-  }
 
 class AWS_AutoScaling_LaunchConfiguration(CloudFormationResource):
-  terraform_resource = "aws_auto_scaling_launch_configuration"
+  cfn_type = "AWS::AutoScaling::LaunchConfiguration"
+  tf_type = "aws_auto_scaling_launch_configuration"
+  ref = "arn"
 
-  resource_type = "AWS::AutoScaling::LaunchConfiguration"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "AssociatePublicIpAddress", "associate_public_ip_address", BasicValueConverter())
+      self.repeated_block(w, "BlockDeviceMappings", AWS_AutoScaling_LaunchConfiguration_BlockDeviceMapping)
+      self.property(w, "ClassicLinkVPCId", "classic_link_vpc_id", StringValueConverter())
+      self.property(w, "ClassicLinkVPCSecurityGroups", "classic_link_vpc_security_groups", ListValueConverter(StringValueConverter()))
+      self.property(w, "EbsOptimized", "ebs_optimized", BasicValueConverter())
+      self.property(w, "IamInstanceProfile", "iam_instance_profile", StringValueConverter())
+      self.property(w, "ImageId", "image_id", StringValueConverter())
+      self.property(w, "InstanceId", "instance_id", StringValueConverter())
+      self.property(w, "InstanceMonitoring", "instance_monitoring", BasicValueConverter())
+      self.property(w, "InstanceType", "instance_type", StringValueConverter())
+      self.property(w, "KernelId", "kernel_id", StringValueConverter())
+      self.property(w, "KeyName", "key_name", StringValueConverter())
+      self.property(w, "LaunchConfigurationName", "launch_configuration_name", StringValueConverter())
+      self.property(w, "PlacementTenancy", "placement_tenancy", StringValueConverter())
+      self.property(w, "RamDiskId", "ram_disk_id", StringValueConverter())
+      self.property(w, "SecurityGroups", "security_groups", ListValueConverter(StringValueConverter()))
+      self.property(w, "SpotPrice", "spot_price", StringValueConverter())
+      self.property(w, "UserData", "user_data", StringValueConverter())
 
-  props = {
-    "AssociatePublicIpAddress": (BasicValueConverter(), "associate_public_ip_address"),
-    "BlockDeviceMappings": (BlockValueConverter(AWS_AutoScaling_LaunchConfiguration_BlockDeviceMapping), None),
-    "ClassicLinkVPCId": (StringValueConverter(), "classic_link_vpc_id"),
-    "ClassicLinkVPCSecurityGroups": (ListValueConverter(StringValueConverter()), "classic_link_vpc_security_groups"),
-    "EbsOptimized": (BasicValueConverter(), "ebs_optimized"),
-    "IamInstanceProfile": (StringValueConverter(), "iam_instance_profile"),
-    "ImageId": (StringValueConverter(), "image_id"),
-    "InstanceId": (StringValueConverter(), "instance_id"),
-    "InstanceMonitoring": (BasicValueConverter(), "instance_monitoring"),
-    "InstanceType": (StringValueConverter(), "instance_type"),
-    "KernelId": (StringValueConverter(), "kernel_id"),
-    "KeyName": (StringValueConverter(), "key_name"),
-    "LaunchConfigurationName": (StringValueConverter(), "launch_configuration_name"),
-    "PlacementTenancy": (StringValueConverter(), "placement_tenancy"),
-    "RamDiskId": (StringValueConverter(), "ram_disk_id"),
-    "SecurityGroups": (ListValueConverter(StringValueConverter()), "security_groups"),
-    "SpotPrice": (StringValueConverter(), "spot_price"),
-    "UserData": (StringValueConverter(), "user_data"),
-  }
 
 class AWS_AutoScaling_ScalingPolicy(CloudFormationResource):
-  terraform_resource = "aws_auto_scaling_scaling_policy"
+  cfn_type = "AWS::AutoScaling::ScalingPolicy"
+  tf_type = "aws_auto_scaling_scaling_policy"
+  ref = "arn"
 
-  resource_type = "AWS::AutoScaling::ScalingPolicy"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "AdjustmentType", "adjustment_type", StringValueConverter())
+      self.property(w, "AutoScalingGroupName", "auto_scaling_group_name", StringValueConverter())
+      self.property(w, "Cooldown", "cooldown", StringValueConverter())
+      self.property(w, "EstimatedInstanceWarmup", "estimated_instance_warmup", BasicValueConverter())
+      self.property(w, "MetricAggregationType", "metric_aggregation_type", StringValueConverter())
+      self.property(w, "MinAdjustmentMagnitude", "min_adjustment_magnitude", BasicValueConverter())
+      self.property(w, "PolicyType", "policy_type", StringValueConverter())
+      self.property(w, "ScalingAdjustment", "scaling_adjustment", BasicValueConverter())
+      self.repeated_block(w, "StepAdjustments", AWS_AutoScaling_ScalingPolicy_StepAdjustment)
+      self.block(w, "TargetTrackingConfiguration", AWS_AutoScaling_ScalingPolicy_TargetTrackingConfiguration)
 
-  props = {
-    "AdjustmentType": (StringValueConverter(), "adjustment_type"),
-    "AutoScalingGroupName": (StringValueConverter(), "auto_scaling_group_name"),
-    "Cooldown": (StringValueConverter(), "cooldown"),
-    "EstimatedInstanceWarmup": (BasicValueConverter(), "estimated_instance_warmup"),
-    "MetricAggregationType": (StringValueConverter(), "metric_aggregation_type"),
-    "MinAdjustmentMagnitude": (BasicValueConverter(), "min_adjustment_magnitude"),
-    "PolicyType": (StringValueConverter(), "policy_type"),
-    "ScalingAdjustment": (BasicValueConverter(), "scaling_adjustment"),
-    "StepAdjustments": (BlockValueConverter(AWS_AutoScaling_ScalingPolicy_StepAdjustment), None),
-    "TargetTrackingConfiguration": (AWS_AutoScaling_ScalingPolicy_TargetTrackingConfiguration, "target_tracking_configuration"),
-  }
 
 class AWS_AutoScaling_AutoScalingGroup(CloudFormationResource):
-  terraform_resource = "aws_auto_scaling_auto_scaling_group"
+  cfn_type = "AWS::AutoScaling::AutoScalingGroup"
+  tf_type = "aws_auto_scaling_auto_scaling_group"
+  ref = "arn"
 
-  resource_type = "AWS::AutoScaling::AutoScalingGroup"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "AutoScalingGroupName", "auto_scaling_group_name", StringValueConverter())
+      self.property(w, "AvailabilityZones", "availability_zones", ListValueConverter(StringValueConverter()))
+      self.property(w, "Cooldown", "cooldown", StringValueConverter())
+      self.property(w, "DesiredCapacity", "desired_capacity", StringValueConverter())
+      self.property(w, "HealthCheckGracePeriod", "health_check_grace_period", BasicValueConverter())
+      self.property(w, "HealthCheckType", "health_check_type", StringValueConverter())
+      self.property(w, "InstanceId", "instance_id", StringValueConverter())
+      self.property(w, "LaunchConfigurationName", "launch_configuration_name", StringValueConverter())
+      self.block(w, "LaunchTemplate", AWS_AutoScaling_AutoScalingGroup_LaunchTemplateSpecification)
+      self.repeated_block(w, "LifecycleHookSpecificationList", AWS_AutoScaling_AutoScalingGroup_LifecycleHookSpecification)
+      self.property(w, "LoadBalancerNames", "load_balancer_names", ListValueConverter(StringValueConverter()))
+      self.property(w, "MaxInstanceLifetime", "max_instance_lifetime", BasicValueConverter())
+      self.property(w, "MaxSize", "max_size", StringValueConverter())
+      self.repeated_block(w, "MetricsCollection", AWS_AutoScaling_AutoScalingGroup_MetricsCollection)
+      self.property(w, "MinSize", "min_size", StringValueConverter())
+      self.block(w, "MixedInstancesPolicy", AWS_AutoScaling_AutoScalingGroup_MixedInstancesPolicy)
+      self.repeated_block(w, "NotificationConfigurations", AWS_AutoScaling_AutoScalingGroup_NotificationConfiguration)
+      self.property(w, "PlacementGroup", "placement_group", StringValueConverter())
+      self.property(w, "ServiceLinkedRoleARN", "service_linked_role_arn", StringValueConverter())
+      self.repeated_block(w, "Tags", AWS_AutoScaling_AutoScalingGroup_TagProperty)
+      self.property(w, "TargetGroupARNs", "target_group_ar_ns", ListValueConverter(StringValueConverter()))
+      self.property(w, "TerminationPolicies", "termination_policies", ListValueConverter(StringValueConverter()))
+      self.property(w, "VPCZoneIdentifier", "vpc_zone_identifier", ListValueConverter(StringValueConverter()))
 
-  props = {
-    "AutoScalingGroupName": (StringValueConverter(), "auto_scaling_group_name"),
-    "AvailabilityZones": (ListValueConverter(StringValueConverter()), "availability_zones"),
-    "Cooldown": (StringValueConverter(), "cooldown"),
-    "DesiredCapacity": (StringValueConverter(), "desired_capacity"),
-    "HealthCheckGracePeriod": (BasicValueConverter(), "health_check_grace_period"),
-    "HealthCheckType": (StringValueConverter(), "health_check_type"),
-    "InstanceId": (StringValueConverter(), "instance_id"),
-    "LaunchConfigurationName": (StringValueConverter(), "launch_configuration_name"),
-    "LaunchTemplate": (AWS_AutoScaling_AutoScalingGroup_LaunchTemplateSpecification, "launch_template"),
-    "LifecycleHookSpecificationList": (BlockValueConverter(AWS_AutoScaling_AutoScalingGroup_LifecycleHookSpecification), None),
-    "LoadBalancerNames": (ListValueConverter(StringValueConverter()), "load_balancer_names"),
-    "MaxInstanceLifetime": (BasicValueConverter(), "max_instance_lifetime"),
-    "MaxSize": (StringValueConverter(), "max_size"),
-    "MetricsCollection": (BlockValueConverter(AWS_AutoScaling_AutoScalingGroup_MetricsCollection), None),
-    "MinSize": (StringValueConverter(), "min_size"),
-    "MixedInstancesPolicy": (AWS_AutoScaling_AutoScalingGroup_MixedInstancesPolicy, "mixed_instances_policy"),
-    "NotificationConfigurations": (BlockValueConverter(AWS_AutoScaling_AutoScalingGroup_NotificationConfiguration), None),
-    "PlacementGroup": (StringValueConverter(), "placement_group"),
-    "ServiceLinkedRoleARN": (StringValueConverter(), "service_linked_role_arn"),
-    "Tags": (BlockValueConverter(AWS_AutoScaling_AutoScalingGroup_TagProperty), None),
-    "TargetGroupARNs": (ListValueConverter(StringValueConverter()), "target_group_ar_ns"),
-    "TerminationPolicies": (ListValueConverter(StringValueConverter()), "termination_policies"),
-    "VPCZoneIdentifier": (ListValueConverter(StringValueConverter()), "vpc_zone_identifier"),
-  }
 

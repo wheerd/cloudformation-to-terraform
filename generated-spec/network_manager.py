@@ -1,118 +1,119 @@
 from . import *
 
 class AWS_NetworkManager_Device_Location(CloudFormationProperty):
-  entity = "AWS::NetworkManager::Device"
-  tf_block_type = "location"
+  def write(self, w):
+    with w.block("location"):
+      self.property(w, "Address", "address", StringValueConverter())
+      self.property(w, "Latitude", "latitude", StringValueConverter())
+      self.property(w, "Longitude", "longitude", StringValueConverter())
 
-  props = {
-    "Address": (StringValueConverter(), "address"),
-    "Latitude": (StringValueConverter(), "latitude"),
-    "Longitude": (StringValueConverter(), "longitude"),
-  }
 
 class AWS_NetworkManager_Link_Bandwidth(CloudFormationProperty):
-  entity = "AWS::NetworkManager::Link"
-  tf_block_type = "bandwidth"
+  def write(self, w):
+    with w.block("bandwidth"):
+      self.property(w, "DownloadSpeed", "download_speed", BasicValueConverter())
+      self.property(w, "UploadSpeed", "upload_speed", BasicValueConverter())
 
-  props = {
-    "DownloadSpeed": (BasicValueConverter(), "download_speed"),
-    "UploadSpeed": (BasicValueConverter(), "upload_speed"),
-  }
 
 class AWS_NetworkManager_Site_Location(CloudFormationProperty):
-  entity = "AWS::NetworkManager::Site"
-  tf_block_type = "location"
+  def write(self, w):
+    with w.block("location"):
+      self.property(w, "Address", "address", StringValueConverter())
+      self.property(w, "Latitude", "latitude", StringValueConverter())
+      self.property(w, "Longitude", "longitude", StringValueConverter())
 
-  props = {
-    "Address": (StringValueConverter(), "address"),
-    "Latitude": (StringValueConverter(), "latitude"),
-    "Longitude": (StringValueConverter(), "longitude"),
-  }
 
 class AWS_NetworkManager_Link(CloudFormationResource):
-  terraform_resource = "aws_network_manager_link"
+  cfn_type = "AWS::NetworkManager::Link"
+  tf_type = "aws_network_manager_link"
+  ref = "arn"
 
-  resource_type = "AWS::NetworkManager::Link"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "GlobalNetworkId", "global_network_id", StringValueConverter())
+      self.property(w, "SiteId", "site_id", StringValueConverter())
+      self.block(w, "Bandwidth", AWS_NetworkManager_Link_Bandwidth)
+      self.property(w, "Provider", "provider", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "Type", "type", StringValueConverter())
 
-  props = {
-    "GlobalNetworkId": (StringValueConverter(), "global_network_id"),
-    "SiteId": (StringValueConverter(), "site_id"),
-    "Bandwidth": (AWS_NetworkManager_Link_Bandwidth, "bandwidth"),
-    "Provider": (StringValueConverter(), "provider"),
-    "Description": (StringValueConverter(), "description"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "Type": (StringValueConverter(), "type"),
-  }
 
 class AWS_NetworkManager_CustomerGatewayAssociation(CloudFormationResource):
-  terraform_resource = "aws_network_manager_customer_gateway_association"
+  cfn_type = "AWS::NetworkManager::CustomerGatewayAssociation"
+  tf_type = "aws_network_manager_customer_gateway_association"
+  ref = "arn"
 
-  resource_type = "AWS::NetworkManager::CustomerGatewayAssociation"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "GlobalNetworkId", "global_network_id", StringValueConverter())
+      self.property(w, "CustomerGatewayArn", "customer_gateway_arn", StringValueConverter())
+      self.property(w, "DeviceId", "device_id", StringValueConverter())
+      self.property(w, "LinkId", "link_id", StringValueConverter())
 
-  props = {
-    "GlobalNetworkId": (StringValueConverter(), "global_network_id"),
-    "CustomerGatewayArn": (StringValueConverter(), "customer_gateway_arn"),
-    "DeviceId": (StringValueConverter(), "device_id"),
-    "LinkId": (StringValueConverter(), "link_id"),
-  }
 
 class AWS_NetworkManager_Device(CloudFormationResource):
-  terraform_resource = "aws_network_manager_device"
+  cfn_type = "AWS::NetworkManager::Device"
+  tf_type = "aws_network_manager_device"
+  ref = "arn"
 
-  resource_type = "AWS::NetworkManager::Device"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "GlobalNetworkId", "global_network_id", StringValueConverter())
+      self.block(w, "Location", AWS_NetworkManager_Device_Location)
+      self.property(w, "Model", "model", StringValueConverter())
+      self.property(w, "SerialNumber", "serial_number", StringValueConverter())
+      self.property(w, "SiteId", "site_id", StringValueConverter())
+      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "Vendor", "vendor", StringValueConverter())
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "GlobalNetworkId": (StringValueConverter(), "global_network_id"),
-    "Location": (AWS_NetworkManager_Device_Location, "location"),
-    "Model": (StringValueConverter(), "model"),
-    "SerialNumber": (StringValueConverter(), "serial_number"),
-    "SiteId": (StringValueConverter(), "site_id"),
-    "Type": (StringValueConverter(), "type"),
-    "Vendor": (StringValueConverter(), "vendor"),
-  }
 
 class AWS_NetworkManager_LinkAssociation(CloudFormationResource):
-  terraform_resource = "aws_network_manager_link_association"
+  cfn_type = "AWS::NetworkManager::LinkAssociation"
+  tf_type = "aws_network_manager_link_association"
+  ref = "arn"
 
-  resource_type = "AWS::NetworkManager::LinkAssociation"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "GlobalNetworkId", "global_network_id", StringValueConverter())
+      self.property(w, "DeviceId", "device_id", StringValueConverter())
+      self.property(w, "LinkId", "link_id", StringValueConverter())
 
-  props = {
-    "GlobalNetworkId": (StringValueConverter(), "global_network_id"),
-    "DeviceId": (StringValueConverter(), "device_id"),
-    "LinkId": (StringValueConverter(), "link_id"),
-  }
 
 class AWS_NetworkManager_GlobalNetwork(CloudFormationResource):
-  terraform_resource = "aws_network_manager_global_network"
+  cfn_type = "AWS::NetworkManager::GlobalNetwork"
+  tf_type = "aws_network_manager_global_network"
+  ref = "arn"
 
-  resource_type = "AWS::NetworkManager::GlobalNetwork"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-  }
 
 class AWS_NetworkManager_TransitGatewayRegistration(CloudFormationResource):
-  terraform_resource = "aws_network_manager_transit_gateway_registration"
+  cfn_type = "AWS::NetworkManager::TransitGatewayRegistration"
+  tf_type = "aws_network_manager_transit_gateway_registration"
+  ref = "arn"
 
-  resource_type = "AWS::NetworkManager::TransitGatewayRegistration"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "GlobalNetworkId", "global_network_id", StringValueConverter())
+      self.property(w, "TransitGatewayArn", "transit_gateway_arn", StringValueConverter())
 
-  props = {
-    "GlobalNetworkId": (StringValueConverter(), "global_network_id"),
-    "TransitGatewayArn": (StringValueConverter(), "transit_gateway_arn"),
-  }
 
 class AWS_NetworkManager_Site(CloudFormationResource):
-  terraform_resource = "aws_network_manager_site"
+  cfn_type = "AWS::NetworkManager::Site"
+  tf_type = "aws_network_manager_site"
+  ref = "arn"
 
-  resource_type = "AWS::NetworkManager::Site"
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "Description", "description", StringValueConverter())
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
+      self.property(w, "GlobalNetworkId", "global_network_id", StringValueConverter())
+      self.block(w, "Location", AWS_NetworkManager_Site_Location)
 
-  props = {
-    "Description": (StringValueConverter(), "description"),
-    "Tags": (ListValueConverter(ResourceTag), "tags"),
-    "GlobalNetworkId": (StringValueConverter(), "global_network_id"),
-    "Location": (AWS_NetworkManager_Site_Location, "location"),
-  }
 
