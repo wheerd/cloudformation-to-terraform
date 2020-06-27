@@ -47,7 +47,7 @@ class AWS_FMS_Policy(CloudFormationResource):
       self.repeated_block(w, "ResourceTags", AWS_FMS_Policy_ResourceTag)
       self.property(w, "ResourceType", "resource_type", StringValueConverter())
       self.property(w, "ResourceTypeList", "resource_type_list", ListValueConverter(StringValueConverter()))
-      self.property(w, "SecurityServicePolicyData", "security_service_policy_data", StringValueConverter())
+      self.property(w, "SecurityServicePolicyData", "security_service_policy_data", JsonValueConverter())
       self.property(w, "DeleteAllPolicyResources", "delete_all_policy_resources", BasicValueConverter())
       self.repeated_block(w, "Tags", AWS_FMS_Policy_PolicyTag)
 

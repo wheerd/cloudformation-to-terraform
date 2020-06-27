@@ -180,7 +180,7 @@ class AWS_RDS_DBClusterParameterGroup(CloudFormationResource):
     with self.resource_block(w):
       self.property(w, "Description", "description", StringValueConverter())
       self.property(w, "Family", "family", StringValueConverter())
-      self.property(w, "Parameters", "parameters", StringValueConverter())
+      self.property(w, "Parameters", "parameters", JsonValueConverter())
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
 

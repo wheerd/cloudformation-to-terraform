@@ -40,7 +40,7 @@ class AWS_EventSchemas_RegistryPolicy(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "Policy", "policy", StringValueConverter())
+      self.property(w, "Policy", "policy", JsonValueConverter())
       self.property(w, "RegistryName", "registry_name", StringValueConverter())
       self.property(w, "RevisionId", "revision_id", StringValueConverter())
 

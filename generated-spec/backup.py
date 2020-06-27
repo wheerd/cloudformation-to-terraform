@@ -29,11 +29,11 @@ class AWS_Backup_BackupVault(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "BackupVaultTags", "backup_vault_tags", StringValueConverter())
+      self.property(w, "BackupVaultTags", "backup_vault_tags", JsonValueConverter())
       self.property(w, "BackupVaultName", "backup_vault_name", StringValueConverter())
       self.property(w, "EncryptionKeyArn", "encryption_key_arn", StringValueConverter())
       self.block(w, "Notifications", AWS_Backup_BackupVault_NotificationObjectType)
-      self.property(w, "AccessPolicy", "access_policy", StringValueConverter())
+      self.property(w, "AccessPolicy", "access_policy", JsonValueConverter())
 
 
 class AWS_Backup_BackupPlan_CopyActionResourceType(CloudFormationProperty):
@@ -57,7 +57,7 @@ class AWS_Backup_BackupPlan_BackupRuleResourceType(CloudFormationProperty):
     with w.block("backup_rule_resource_type"):
       self.property(w, "CompletionWindowMinutes", "completion_window_minutes", BasicValueConverter())
       self.property(w, "ScheduleExpression", "schedule_expression", StringValueConverter())
-      self.property(w, "RecoveryPointTags", "recovery_point_tags", StringValueConverter())
+      self.property(w, "RecoveryPointTags", "recovery_point_tags", JsonValueConverter())
       self.repeated_block(w, "CopyActions", AWS_Backup_BackupPlan_CopyActionResourceType)
       self.block(w, "Lifecycle", AWS_Backup_BackupPlan_LifecycleResourceType)
       self.property(w, "TargetBackupVault", "target_backup_vault", StringValueConverter())
@@ -80,7 +80,7 @@ class AWS_Backup_BackupPlan(CloudFormationResource):
   def write(self, w):
     with self.resource_block(w):
       self.block(w, "BackupPlan", AWS_Backup_BackupPlan_BackupPlanResourceType)
-      self.property(w, "BackupPlanTags", "backup_plan_tags", StringValueConverter())
+      self.property(w, "BackupPlanTags", "backup_plan_tags", JsonValueConverter())
 
 
 class AWS_Backup_BackupSelection(CloudFormationResource):

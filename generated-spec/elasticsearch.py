@@ -76,7 +76,7 @@ class AWS_Elasticsearch_Domain(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "AccessPolicies", "access_policies", StringValueConverter())
+      self.property(w, "AccessPolicies", "access_policies", JsonValueConverter())
       self.property(w, "AdvancedOptions", "advanced_options", MapValueConverter(StringValueConverter()))
       self.block(w, "CognitoOptions", AWS_Elasticsearch_Domain_CognitoOptions)
       self.property(w, "DomainName", "domain_name", StringValueConverter())

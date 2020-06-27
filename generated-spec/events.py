@@ -145,7 +145,7 @@ class AWS_Events_Rule(CloudFormationResource):
     with self.resource_block(w):
       self.property(w, "Description", "description", StringValueConverter())
       self.property(w, "EventBusName", "event_bus_name", StringValueConverter())
-      self.property(w, "EventPattern", "event_pattern", StringValueConverter())
+      self.property(w, "EventPattern", "event_pattern", JsonValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
       self.property(w, "RoleArn", "role_arn", StringValueConverter())
       self.property(w, "ScheduleExpression", "schedule_expression", StringValueConverter())

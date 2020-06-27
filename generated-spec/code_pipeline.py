@@ -137,7 +137,7 @@ class AWS_CodePipeline_Pipeline_ActionDeclaration(CloudFormationProperty):
   def write(self, w):
     with w.block("action_declaration"):
       self.block(w, "ActionTypeId", AWS_CodePipeline_Pipeline_ActionTypeId)
-      self.property(w, "Configuration", "configuration", StringValueConverter())
+      self.property(w, "Configuration", "configuration", JsonValueConverter())
       self.repeated_block(w, "InputArtifacts", AWS_CodePipeline_Pipeline_InputArtifact)
       self.property(w, "Name", "name", StringValueConverter())
       self.property(w, "Namespace", "namespace", StringValueConverter())

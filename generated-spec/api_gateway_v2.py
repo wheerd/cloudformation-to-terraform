@@ -80,7 +80,7 @@ class AWS_ApiGatewayV2_Route(CloudFormationResource):
       self.property(w, "Target", "target", StringValueConverter())
       self.property(w, "RouteResponseSelectionExpression", "route_response_selection_expression", StringValueConverter())
       self.property(w, "AuthorizerId", "authorizer_id", StringValueConverter())
-      self.property(w, "RequestModels", "request_models", StringValueConverter())
+      self.property(w, "RequestModels", "request_models", JsonValueConverter())
       self.property(w, "OperationName", "operation_name", StringValueConverter())
       self.property(w, "AuthorizationScopes", "authorization_scopes", ListValueConverter(StringValueConverter()))
       self.property(w, "ApiKeyRequired", "api_key_required", BasicValueConverter())
@@ -88,7 +88,7 @@ class AWS_ApiGatewayV2_Route(CloudFormationResource):
       self.property(w, "AuthorizationType", "authorization_type", StringValueConverter())
       self.property(w, "ModelSelectionExpression", "model_selection_expression", StringValueConverter())
       self.property(w, "ApiId", "api_id", StringValueConverter())
-      self.property(w, "RequestParameters", "request_parameters", StringValueConverter())
+      self.property(w, "RequestParameters", "request_parameters", JsonValueConverter())
 
 
 class AWS_ApiGatewayV2_Stage(CloudFormationResource):
@@ -103,12 +103,12 @@ class AWS_ApiGatewayV2_Stage(CloudFormationResource):
       self.property(w, "Description", "description", StringValueConverter())
       self.block(w, "AccessLogSettings", AWS_ApiGatewayV2_Stage_AccessLogSettings)
       self.property(w, "AutoDeploy", "auto_deploy", BasicValueConverter())
-      self.property(w, "RouteSettings", "route_settings", StringValueConverter())
+      self.property(w, "RouteSettings", "route_settings", JsonValueConverter())
       self.property(w, "StageName", "stage_name", StringValueConverter())
-      self.property(w, "StageVariables", "stage_variables", StringValueConverter())
+      self.property(w, "StageVariables", "stage_variables", JsonValueConverter())
       self.property(w, "ApiId", "api_id", StringValueConverter())
       self.block(w, "DefaultRouteSettings", AWS_ApiGatewayV2_Stage_RouteSettings)
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
 
 
 class AWS_ApiGatewayV2_Api(CloudFormationResource):
@@ -131,8 +131,8 @@ class AWS_ApiGatewayV2_Api(CloudFormationResource):
       self.property(w, "Version", "version", StringValueConverter())
       self.property(w, "ProtocolType", "protocol_type", StringValueConverter())
       self.property(w, "RouteKey", "route_key", StringValueConverter())
-      self.property(w, "Body", "body", StringValueConverter())
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Body", "body", JsonValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
       self.property(w, "ApiKeySelectionExpression", "api_key_selection_expression", StringValueConverter())
 
 
@@ -144,11 +144,11 @@ class AWS_ApiGatewayV2_RouteResponse(CloudFormationResource):
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "RouteResponseKey", "route_response_key", StringValueConverter())
-      self.property(w, "ResponseParameters", "response_parameters", StringValueConverter())
+      self.property(w, "ResponseParameters", "response_parameters", JsonValueConverter())
       self.property(w, "RouteId", "route_id", StringValueConverter())
       self.property(w, "ModelSelectionExpression", "model_selection_expression", StringValueConverter())
       self.property(w, "ApiId", "api_id", StringValueConverter())
-      self.property(w, "ResponseModels", "response_models", StringValueConverter())
+      self.property(w, "ResponseModels", "response_models", JsonValueConverter())
 
 
 class AWS_ApiGatewayV2_DomainName(CloudFormationResource):
@@ -160,7 +160,7 @@ class AWS_ApiGatewayV2_DomainName(CloudFormationResource):
     with self.resource_block(w):
       self.property(w, "DomainName", "domain_name", StringValueConverter())
       self.repeated_block(w, "DomainNameConfigurations", AWS_ApiGatewayV2_DomainName_DomainNameConfiguration)
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
 
 
 class AWS_ApiGatewayV2_Integration(CloudFormationResource):
@@ -175,12 +175,12 @@ class AWS_ApiGatewayV2_Integration(CloudFormationResource):
       self.property(w, "ConnectionType", "connection_type", StringValueConverter())
       self.property(w, "IntegrationMethod", "integration_method", StringValueConverter())
       self.property(w, "PassthroughBehavior", "passthrough_behavior", StringValueConverter())
-      self.property(w, "RequestParameters", "request_parameters", StringValueConverter())
+      self.property(w, "RequestParameters", "request_parameters", JsonValueConverter())
       self.property(w, "ConnectionId", "connection_id", StringValueConverter())
       self.property(w, "IntegrationUri", "integration_uri", StringValueConverter())
       self.property(w, "PayloadFormatVersion", "payload_format_version", StringValueConverter())
       self.property(w, "CredentialsArn", "credentials_arn", StringValueConverter())
-      self.property(w, "RequestTemplates", "request_templates", StringValueConverter())
+      self.property(w, "RequestTemplates", "request_templates", JsonValueConverter())
       self.property(w, "TimeoutInMillis", "timeout_in_millis", BasicValueConverter())
       self.block(w, "TlsConfig", AWS_ApiGatewayV2_Integration_TlsConfig)
       self.property(w, "ContentHandlingStrategy", "content_handling_strategy", StringValueConverter())
@@ -209,7 +209,7 @@ class AWS_ApiGatewayV2_Model(CloudFormationResource):
     with self.resource_block(w):
       self.property(w, "Description", "description", StringValueConverter())
       self.property(w, "ContentType", "content_type", StringValueConverter())
-      self.property(w, "Schema", "schema", StringValueConverter())
+      self.property(w, "Schema", "schema", JsonValueConverter())
       self.property(w, "ApiId", "api_id", StringValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
 
@@ -239,9 +239,9 @@ class AWS_ApiGatewayV2_IntegrationResponse(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "ResponseTemplates", "response_templates", StringValueConverter())
+      self.property(w, "ResponseTemplates", "response_templates", JsonValueConverter())
       self.property(w, "TemplateSelectionExpression", "template_selection_expression", StringValueConverter())
-      self.property(w, "ResponseParameters", "response_parameters", StringValueConverter())
+      self.property(w, "ResponseParameters", "response_parameters", JsonValueConverter())
       self.property(w, "ContentHandlingStrategy", "content_handling_strategy", StringValueConverter())
       self.property(w, "IntegrationId", "integration_id", StringValueConverter())
       self.property(w, "IntegrationResponseKey", "integration_response_key", StringValueConverter())

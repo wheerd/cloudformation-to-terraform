@@ -194,7 +194,7 @@ class AWS_IoT_TopicRule_CloudwatchMetricAction(CloudFormationProperty):
 
 class AWS_IoT_ProvisioningTemplate(CloudFormationResource):
   cfn_type = "AWS::IoT::ProvisioningTemplate"
-  tf_type = "aws_io_t_provisioning_template"
+  tf_type = "aws_iot_provisioning_template"
   ref = "arn"
 
   def write(self, w):
@@ -210,7 +210,7 @@ class AWS_IoT_ProvisioningTemplate(CloudFormationResource):
 
 class AWS_IoT_Thing(CloudFormationResource):
   cfn_type = "AWS::IoT::Thing"
-  tf_type = "aws_io_t_thing"
+  tf_type = "aws_iot_thing"
   ref = "arn"
 
   def write(self, w):
@@ -221,18 +221,18 @@ class AWS_IoT_Thing(CloudFormationResource):
 
 class AWS_IoT_Policy(CloudFormationResource):
   cfn_type = "AWS::IoT::Policy"
-  tf_type = "aws_io_t_policy"
+  tf_type = "aws_iot_policy"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "PolicyDocument", "policy_document", StringValueConverter())
+      self.property(w, "PolicyDocument", "policy_document", JsonValueConverter())
       self.property(w, "PolicyName", "policy_name", StringValueConverter())
 
 
 class AWS_IoT_PolicyPrincipalAttachment(CloudFormationResource):
   cfn_type = "AWS::IoT::PolicyPrincipalAttachment"
-  tf_type = "aws_io_t_policy_principal_attachment"
+  tf_type = "aws_iot_policy_principal_attachment"
   ref = "arn"
 
   def write(self, w):
@@ -243,7 +243,7 @@ class AWS_IoT_PolicyPrincipalAttachment(CloudFormationResource):
 
 class AWS_IoT_ThingPrincipalAttachment(CloudFormationResource):
   cfn_type = "AWS::IoT::ThingPrincipalAttachment"
-  tf_type = "aws_io_t_thing_principal_attachment"
+  tf_type = "aws_iot_thing_principal_attachment"
   ref = "arn"
 
   def write(self, w):
@@ -254,7 +254,7 @@ class AWS_IoT_ThingPrincipalAttachment(CloudFormationResource):
 
 class AWS_IoT_Certificate(CloudFormationResource):
   cfn_type = "AWS::IoT::Certificate"
-  tf_type = "aws_io_t_certificate"
+  tf_type = "aws_iot_certificate"
   ref = "arn"
 
   def write(self, w):
@@ -324,7 +324,7 @@ class AWS_IoT_TopicRule_TopicRulePayload(CloudFormationProperty):
 
 class AWS_IoT_TopicRule(CloudFormationResource):
   cfn_type = "AWS::IoT::TopicRule"
-  tf_type = "aws_io_t_topic_rule"
+  tf_type = "aws_iot_topic_rule"
   ref = "arn"
 
   def write(self, w):

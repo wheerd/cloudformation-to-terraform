@@ -1,5 +1,7 @@
 from uuid import uuid4
 import inspect
+import json
+import functools
 
 
 class CloudFormationTemplate(object):
@@ -113,19 +115,37 @@ class ResourceTag(CloudFormationProperty):
     def __init__(self):
         pass
 
+class CloudFormationExpression(object):
+    def __init__(self, expr):
+        self.expr = expr
+
+    def __str__(self):
+        return self.expr
+
 class ValueConverter(object):
     def convert(self, template, value):
         if value is None:
             return None
-        if isinstance(value, dict):
-            if 'Ref' in value:
-                entity = template.references.get(value["Ref"])
-                if entity is None:
-                    raise AttributeError(f'Cannot find the reference "{value["Ref"]}"')
-                return entity.reference
-            else:
-                return f'"" // TODO: Not supported yet {", ".join(value.keys())}'
+        value = self.evaluate(template, value)
         return self.do_convert(template, value)
+
+    def evaluate(self, template, value):
+        if isinstance(value, dict):
+            if len(value) == 1:
+                func, args = list(value.items())[0]
+                if func == 'Ref':
+                    entity = template.references.get(args)
+                    if entity is None:
+                        raise AttributeError(f'Cannot find the reference "{args}"')
+                    return CloudFormationExpression(entity.reference)
+                elif '::' in func:
+                    return CloudFormationExpression(f'"TODO: Not supported yet: {func}"')
+            value = { k: self.evaluate(template, v) for k, v in value.items() }
+            return value
+        elif isinstance(value, list):
+            value = [self.evaluate(template, v) for v in value]
+            return value
+        return value
     
     def do_convert(self, template, value):
         raise NotImplementedError()
@@ -146,7 +166,23 @@ def escape_tf_string(value):
 
 class StringValueConverter(ValueConverter):
     def do_convert(self, template, value):
+        return escape_tf_string(value) if not isinstance(value, CloudFormationExpression) else value.expr
+
+class CloudFormationJsonEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, CloudFormationExpression):
+            return obj.expr
+        return super().default(obj)
+
+class JsonValueConverter(ValueConverter):
+
+    def convert(self, template, value):
+        if value is None:
+            return None
+        value = self.evaluate(template, value)
+        value = json.dumps(value, indent=2, cls=CloudFormationJsonEncoder)
         return escape_tf_string(value)
+
 
 class BasicValueConverter(ValueConverter):
     def do_convert(self, template, value):
@@ -158,19 +194,14 @@ class ListValueConverter(ValueConverter):
         self.item_type = item_type
 
     def do_convert(self, template, value):
+        if not isinstance(value, list):
+            value = [value]
+
         if inspect.isclass(self.item_type):
             converted_values = [self.item_type().convert(template, x) for x in value]
             return f"[{', '.join(converted_values)}]"
 
         return f"[{', '.join(self.item_type.convert(template, x) for x in value)}]"
-
-class BlockValueConverter(ValueConverter):
-    def __init__(self, block_type):
-        self.block_type = block_type() if inspect.isclass(block_type) else block_type
-
-    def do_convert(self, template, value):
-        converted_values = [self.block_type.convert(template, x) for x in value]
-        return '\n\n'.join(converted_values)
 
 class MapValueConverter(ValueConverter):
     def __init__(self, item_type):
@@ -182,7 +213,7 @@ class MapValueConverter(ValueConverter):
 
 primitive_type_converters = {
     'String': StringValueConverter,
-    'Json': StringValueConverter,
+    'Json': JsonValueConverter,
     'Long': BasicValueConverter,
     'Integer': BasicValueConverter,
     'Double': BasicValueConverter,

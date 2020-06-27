@@ -63,7 +63,7 @@ class AWS_SageMaker_Model_ContainerDefinition(CloudFormationProperty):
     with w.block("container_definition"):
       self.property(w, "ContainerHostname", "container_hostname", StringValueConverter())
       self.property(w, "Mode", "mode", StringValueConverter())
-      self.property(w, "Environment", "environment", StringValueConverter())
+      self.property(w, "Environment", "environment", JsonValueConverter())
       self.property(w, "ModelDataUrl", "model_data_url", StringValueConverter())
       self.property(w, "Image", "image", StringValueConverter())
 

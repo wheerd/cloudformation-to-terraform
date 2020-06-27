@@ -198,7 +198,7 @@ class AWS_ApiGateway_Model(CloudFormationResource):
       self.property(w, "Description", "description", StringValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
       self.property(w, "RestApiId", "rest_api_id", StringValueConverter())
-      self.property(w, "Schema", "schema", StringValueConverter())
+      self.property(w, "Schema", "schema", JsonValueConverter())
 
 
 class AWS_ApiGateway_BasePathMapping(CloudFormationResource):
@@ -347,7 +347,7 @@ class AWS_ApiGateway_RestApi(CloudFormationResource):
     with self.resource_block(w):
       self.property(w, "ApiKeySourceType", "api_key_source_type", StringValueConverter())
       self.property(w, "BinaryMediaTypes", "binary_media_types", ListValueConverter(StringValueConverter()))
-      self.property(w, "Body", "body", StringValueConverter())
+      self.property(w, "Body", "body", JsonValueConverter())
       self.block(w, "BodyS3Location", AWS_ApiGateway_RestApi_S3Location)
       self.property(w, "CloneFrom", "clone_from", StringValueConverter())
       self.property(w, "Description", "description", StringValueConverter())
@@ -356,7 +356,7 @@ class AWS_ApiGateway_RestApi(CloudFormationResource):
       self.property(w, "MinimumCompressionSize", "minimum_compression_size", BasicValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
       self.property(w, "Parameters", "parameters", MapValueConverter(StringValueConverter()))
-      self.property(w, "Policy", "policy", StringValueConverter())
+      self.property(w, "Policy", "policy", JsonValueConverter())
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
 

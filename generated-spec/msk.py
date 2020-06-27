@@ -138,7 +138,7 @@ class AWS_MSK_Cluster(CloudFormationResource):
       self.property(w, "ClusterName", "cluster_name", StringValueConverter())
       self.block(w, "ClientAuthentication", AWS_MSK_Cluster_ClientAuthentication)
       self.block(w, "LoggingInfo", AWS_MSK_Cluster_LoggingInfo)
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
       self.block(w, "ConfigurationInfo", AWS_MSK_Cluster_ConfigurationInfo)
 
 

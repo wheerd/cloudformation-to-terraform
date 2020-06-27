@@ -53,7 +53,7 @@ class AWS_ElasticLoadBalancing_LoadBalancer_ConnectionDrainingPolicy(CloudFormat
 class AWS_ElasticLoadBalancing_LoadBalancer_Policies(CloudFormationProperty):
   def write(self, w):
     with w.block("policies"):
-      self.property(w, "Attributes", "attributes", ListValueConverter(StringValueConverter()))
+      self.property(w, "Attributes", "attributes", ListValueConverter(JsonValueConverter()))
       self.property(w, "InstancePorts", "instance_ports", ListValueConverter(StringValueConverter()))
       self.property(w, "LoadBalancerPorts", "load_balancer_ports", ListValueConverter(StringValueConverter()))
       self.property(w, "PolicyName", "policy_name", StringValueConverter())

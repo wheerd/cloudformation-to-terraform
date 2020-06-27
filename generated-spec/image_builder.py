@@ -11,7 +11,7 @@ class AWS_ImageBuilder_DistributionConfiguration_Distribution(CloudFormationProp
   def write(self, w):
     with w.block("distribution"):
       self.property(w, "Region", "region", StringValueConverter())
-      self.property(w, "AmiDistributionConfiguration", "ami_distribution_configuration", StringValueConverter())
+      self.property(w, "AmiDistributionConfiguration", "ami_distribution_configuration", JsonValueConverter())
       self.property(w, "LicenseConfigurationArns", "license_configuration_arns", ListValueConverter(StringValueConverter()))
 
 
@@ -89,7 +89,7 @@ class AWS_ImageBuilder_InfrastructureConfiguration(CloudFormationResource):
       self.property(w, "Description", "description", StringValueConverter())
       self.property(w, "InstanceTypes", "instance_types", ListValueConverter(StringValueConverter()))
       self.property(w, "SecurityGroupIds", "security_group_ids", ListValueConverter(StringValueConverter()))
-      self.property(w, "Logging", "logging", StringValueConverter())
+      self.property(w, "Logging", "logging", JsonValueConverter())
       self.property(w, "SubnetId", "subnet_id", StringValueConverter())
       self.property(w, "KeyPair", "key_pair", StringValueConverter())
       self.property(w, "TerminateInstanceOnFailure", "terminate_instance_on_failure", BasicValueConverter())

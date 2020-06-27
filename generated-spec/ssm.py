@@ -87,7 +87,7 @@ class AWS_SSM_ResourceDataSync_SyncSource(CloudFormationProperty):
 class AWS_SSM_MaintenanceWindowTask_MaintenanceWindowAutomationParameters(CloudFormationProperty):
   def write(self, w):
     with w.block("maintenance_window_automation_parameters"):
-      self.property(w, "Parameters", "parameters", StringValueConverter())
+      self.property(w, "Parameters", "parameters", JsonValueConverter())
       self.property(w, "DocumentVersion", "document_version", StringValueConverter())
 
 
@@ -148,7 +148,7 @@ class AWS_SSM_Document(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "Content", "content", StringValueConverter())
+      self.property(w, "Content", "content", JsonValueConverter())
       self.property(w, "DocumentType", "document_type", StringValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
@@ -188,7 +188,7 @@ class AWS_SSM_Parameter(CloudFormationResource):
       self.property(w, "Tier", "tier", StringValueConverter())
       self.property(w, "Value", "value", StringValueConverter())
       self.property(w, "DataType", "data_type", StringValueConverter())
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
 
 
@@ -216,7 +216,7 @@ class AWS_SSM_MaintenanceWindowTask_MaintenanceWindowRunCommandParameters(CloudF
       self.property(w, "TimeoutSeconds", "timeout_seconds", BasicValueConverter())
       self.property(w, "Comment", "comment", StringValueConverter())
       self.property(w, "OutputS3KeyPrefix", "output_s3_key_prefix", StringValueConverter())
-      self.property(w, "Parameters", "parameters", StringValueConverter())
+      self.property(w, "Parameters", "parameters", JsonValueConverter())
       self.property(w, "DocumentHashType", "document_hash_type", StringValueConverter())
       self.property(w, "ServiceRoleArn", "service_role_arn", StringValueConverter())
       self.block(w, "NotificationConfig", AWS_SSM_MaintenanceWindowTask_NotificationConfig)
@@ -260,7 +260,7 @@ class AWS_SSM_MaintenanceWindowTask(CloudFormationResource):
       self.property(w, "TaskArn", "task_arn", StringValueConverter())
       self.block(w, "TaskInvocationParameters", AWS_SSM_MaintenanceWindowTask_TaskInvocationParameters)
       self.property(w, "WindowId", "window_id", StringValueConverter())
-      self.property(w, "TaskParameters", "task_parameters", StringValueConverter())
+      self.property(w, "TaskParameters", "task_parameters", JsonValueConverter())
       self.property(w, "TaskType", "task_type", StringValueConverter())
       self.block(w, "LoggingInfo", AWS_SSM_MaintenanceWindowTask_LoggingInfo)
 

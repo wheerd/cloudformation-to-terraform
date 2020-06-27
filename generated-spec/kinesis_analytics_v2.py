@@ -37,7 +37,7 @@ class AWS_KinesisAnalyticsV2_ApplicationCloudWatchLoggingOption_CloudWatchLoggin
 class AWS_KinesisAnalyticsV2_Application_PropertyGroup(CloudFormationProperty):
   def write(self, w):
     with w.block("property_group"):
-      self.property(w, "PropertyMap", "property_map", StringValueConverter())
+      self.property(w, "PropertyMap", "property_map", JsonValueConverter())
       self.property(w, "PropertyGroupId", "property_group_id", StringValueConverter())
 
 

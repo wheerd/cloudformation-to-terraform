@@ -16,7 +16,7 @@ class AWS_SQS_Queue(CloudFormationResource):
       self.property(w, "MessageRetentionPeriod", "message_retention_period", BasicValueConverter())
       self.property(w, "QueueName", "queue_name", StringValueConverter())
       self.property(w, "ReceiveMessageWaitTimeSeconds", "receive_message_wait_time_seconds", BasicValueConverter())
-      self.property(w, "RedrivePolicy", "redrive_policy", StringValueConverter())
+      self.property(w, "RedrivePolicy", "redrive_policy", JsonValueConverter())
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
       self.property(w, "VisibilityTimeout", "visibility_timeout", BasicValueConverter())
 
@@ -28,7 +28,7 @@ class AWS_SQS_QueuePolicy(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "PolicyDocument", "policy_document", StringValueConverter())
+      self.property(w, "PolicyDocument", "policy_document", JsonValueConverter())
       self.property(w, "Queues", "queues", ListValueConverter(StringValueConverter()))
 
 

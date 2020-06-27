@@ -129,7 +129,7 @@ class AWS_Config_RemediationConfiguration(CloudFormationResource):
     with self.resource_block(w):
       self.property(w, "TargetVersion", "target_version", StringValueConverter())
       self.block(w, "ExecutionControls", AWS_Config_RemediationConfiguration_ExecutionControls)
-      self.property(w, "Parameters", "parameters", StringValueConverter())
+      self.property(w, "Parameters", "parameters", JsonValueConverter())
       self.property(w, "TargetType", "target_type", StringValueConverter())
       self.property(w, "ConfigRuleName", "config_rule_name", StringValueConverter())
       self.property(w, "ResourceType", "resource_type", StringValueConverter())
@@ -251,7 +251,7 @@ class AWS_Config_ConfigRule(CloudFormationResource):
     with self.resource_block(w):
       self.property(w, "ConfigRuleName", "config_rule_name", StringValueConverter())
       self.property(w, "Description", "description", StringValueConverter())
-      self.property(w, "InputParameters", "input_parameters", StringValueConverter())
+      self.property(w, "InputParameters", "input_parameters", JsonValueConverter())
       self.property(w, "MaximumExecutionFrequency", "maximum_execution_frequency", StringValueConverter())
       self.block(w, "Scope", AWS_Config_ConfigRule_Scope)
       self.block(w, "Source", AWS_Config_ConfigRule_Source)

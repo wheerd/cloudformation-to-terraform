@@ -204,7 +204,7 @@ class AWS_EMR_SecurityConfiguration(CloudFormationResource):
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "Name", "name", StringValueConverter())
-      self.property(w, "SecurityConfiguration", "security_configuration", StringValueConverter())
+      self.property(w, "SecurityConfiguration", "security_configuration", JsonValueConverter())
 
 
 class AWS_EMR_Step_HadoopJarStepConfig(CloudFormationProperty):
@@ -459,7 +459,7 @@ class AWS_EMR_Cluster(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "AdditionalInfo", "additional_info", StringValueConverter())
+      self.property(w, "AdditionalInfo", "additional_info", JsonValueConverter())
       self.repeated_block(w, "Applications", AWS_EMR_Cluster_Application)
       self.property(w, "AutoScalingRole", "auto_scaling_role", StringValueConverter())
       self.repeated_block(w, "BootstrapActions", AWS_EMR_Cluster_BootstrapActionConfig)

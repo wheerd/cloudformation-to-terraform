@@ -16,7 +16,7 @@ class AWS_ECR_Repository(CloudFormationResource):
     with self.resource_block(w):
       self.block(w, "LifecyclePolicy", AWS_ECR_Repository_LifecyclePolicy)
       self.property(w, "RepositoryName", "repository_name", StringValueConverter())
-      self.property(w, "RepositoryPolicyText", "repository_policy_text", StringValueConverter())
+      self.property(w, "RepositoryPolicyText", "repository_policy_text", JsonValueConverter())
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
 

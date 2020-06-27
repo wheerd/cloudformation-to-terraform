@@ -14,12 +14,12 @@ class AWS_SNS_Subscription(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "DeliveryPolicy", "delivery_policy", StringValueConverter())
+      self.property(w, "DeliveryPolicy", "delivery_policy", JsonValueConverter())
       self.property(w, "Endpoint", "endpoint", StringValueConverter())
-      self.property(w, "FilterPolicy", "filter_policy", StringValueConverter())
+      self.property(w, "FilterPolicy", "filter_policy", JsonValueConverter())
       self.property(w, "Protocol", "protocol", StringValueConverter())
       self.property(w, "RawMessageDelivery", "raw_message_delivery", BasicValueConverter())
-      self.property(w, "RedrivePolicy", "redrive_policy", StringValueConverter())
+      self.property(w, "RedrivePolicy", "redrive_policy", JsonValueConverter())
       self.property(w, "Region", "region", StringValueConverter())
       self.property(w, "TopicArn", "topic_arn", StringValueConverter())
 
@@ -47,7 +47,7 @@ class AWS_SNS_TopicPolicy(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "PolicyDocument", "policy_document", StringValueConverter())
+      self.property(w, "PolicyDocument", "policy_document", JsonValueConverter())
       self.property(w, "Topics", "topics", ListValueConverter(StringValueConverter()))
 
 

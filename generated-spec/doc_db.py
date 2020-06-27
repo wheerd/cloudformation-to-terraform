@@ -64,7 +64,7 @@ class AWS_DocDB_DBClusterParameterGroup(CloudFormationResource):
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "Description", "description", StringValueConverter())
-      self.property(w, "Parameters", "parameters", StringValueConverter())
+      self.property(w, "Parameters", "parameters", JsonValueConverter())
       self.property(w, "Family", "family", StringValueConverter())
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
       self.property(w, "Name", "name", StringValueConverter())

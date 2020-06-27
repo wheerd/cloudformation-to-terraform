@@ -8,6 +8,6 @@ class AWS_CodeGuruProfiler_ProfilingGroup(CloudFormationResource):
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "ProfilingGroupName", "profiling_group_name", StringValueConverter())
-      self.property(w, "AgentPermissions", "agent_permissions", StringValueConverter())
+      self.property(w, "AgentPermissions", "agent_permissions", JsonValueConverter())
 
 

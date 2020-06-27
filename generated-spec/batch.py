@@ -25,7 +25,7 @@ class AWS_Batch_ComputeEnvironment_ComputeResources(CloudFormationProperty):
       self.property(w, "InstanceTypes", "instance_types", ListValueConverter(StringValueConverter()))
       self.property(w, "Ec2KeyPair", "ec2_key_pair", StringValueConverter())
       self.property(w, "PlacementGroup", "placement_group", StringValueConverter())
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
       self.property(w, "DesiredvCpus", "desiredv_cpus", BasicValueConverter())
 
 
@@ -175,7 +175,7 @@ class AWS_Batch_JobDefinition(CloudFormationResource):
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "Type", "type", StringValueConverter())
-      self.property(w, "Parameters", "parameters", StringValueConverter())
+      self.property(w, "Parameters", "parameters", JsonValueConverter())
       self.block(w, "NodeProperties", AWS_Batch_JobDefinition_NodeProperties)
       self.block(w, "Timeout", AWS_Batch_JobDefinition_Timeout)
       self.block(w, "ContainerProperties", AWS_Batch_JobDefinition_ContainerProperties)

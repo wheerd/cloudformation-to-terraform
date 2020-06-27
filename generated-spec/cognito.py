@@ -229,8 +229,8 @@ class AWS_Cognito_UserPoolIdentityProvider(CloudFormationResource):
     with self.resource_block(w):
       self.property(w, "ProviderName", "provider_name", StringValueConverter())
       self.property(w, "UserPoolId", "user_pool_id", StringValueConverter())
-      self.property(w, "AttributeMapping", "attribute_mapping", StringValueConverter())
-      self.property(w, "ProviderDetails", "provider_details", StringValueConverter())
+      self.property(w, "AttributeMapping", "attribute_mapping", JsonValueConverter())
+      self.property(w, "ProviderDetails", "provider_details", JsonValueConverter())
       self.property(w, "ProviderType", "provider_type", StringValueConverter())
       self.property(w, "IdpIdentifiers", "idp_identifiers", ListValueConverter(StringValueConverter()))
 
@@ -258,12 +258,12 @@ class AWS_Cognito_IdentityPool(CloudFormationResource):
     with self.resource_block(w):
       self.block(w, "PushSync", AWS_Cognito_IdentityPool_PushSync)
       self.repeated_block(w, "CognitoIdentityProviders", AWS_Cognito_IdentityPool_CognitoIdentityProvider)
-      self.property(w, "CognitoEvents", "cognito_events", StringValueConverter())
+      self.property(w, "CognitoEvents", "cognito_events", JsonValueConverter())
       self.property(w, "DeveloperProviderName", "developer_provider_name", StringValueConverter())
       self.block(w, "CognitoStreams", AWS_Cognito_IdentityPool_CognitoStreams)
       self.property(w, "IdentityPoolName", "identity_pool_name", StringValueConverter())
       self.property(w, "AllowUnauthenticatedIdentities", "allow_unauthenticated_identities", BasicValueConverter())
-      self.property(w, "SupportedLoginProviders", "supported_login_providers", StringValueConverter())
+      self.property(w, "SupportedLoginProviders", "supported_login_providers", JsonValueConverter())
       self.property(w, "SamlProviderARNs", "saml_provider_ar_ns", ListValueConverter(StringValueConverter()))
       self.property(w, "OpenIdConnectProviderARNs", "open_id_connect_provider_ar_ns", ListValueConverter(StringValueConverter()))
       self.property(w, "AllowClassicFlow", "allow_classic_flow", BasicValueConverter())
@@ -326,9 +326,9 @@ class AWS_Cognito_IdentityPoolRoleAttachment(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "RoleMappings", "role_mappings", StringValueConverter())
+      self.property(w, "RoleMappings", "role_mappings", JsonValueConverter())
       self.property(w, "IdentityPoolId", "identity_pool_id", StringValueConverter())
-      self.property(w, "Roles", "roles", StringValueConverter())
+      self.property(w, "Roles", "roles", JsonValueConverter())
 
 
 class AWS_Cognito_UserPoolUser(CloudFormationResource):
@@ -342,7 +342,7 @@ class AWS_Cognito_UserPoolUser(CloudFormationResource):
       self.property(w, "UserPoolId", "user_pool_id", StringValueConverter())
       self.property(w, "Username", "username", StringValueConverter())
       self.property(w, "MessageAction", "message_action", StringValueConverter())
-      self.property(w, "ClientMetadata", "client_metadata", StringValueConverter())
+      self.property(w, "ClientMetadata", "client_metadata", JsonValueConverter())
       self.property(w, "DesiredDeliveryMediums", "desired_delivery_mediums", ListValueConverter(StringValueConverter()))
       self.property(w, "ForceAliasCreation", "force_alias_creation", BasicValueConverter())
       self.repeated_block(w, "UserAttributes", AWS_Cognito_UserPoolUser_AttributeType)
@@ -444,7 +444,7 @@ class AWS_Cognito_UserPool(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "UserPoolTags", "user_pool_tags", StringValueConverter())
+      self.property(w, "UserPoolTags", "user_pool_tags", JsonValueConverter())
       self.block(w, "Policies", AWS_Cognito_UserPool_Policies)
       self.block(w, "VerificationMessageTemplate", AWS_Cognito_UserPool_VerificationMessageTemplate)
       self.property(w, "MfaConfiguration", "mfa_configuration", StringValueConverter())

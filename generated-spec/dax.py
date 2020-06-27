@@ -13,7 +13,7 @@ class AWS_DAX_ParameterGroup(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "ParameterNameValues", "parameter_name_values", StringValueConverter())
+      self.property(w, "ParameterNameValues", "parameter_name_values", JsonValueConverter())
       self.property(w, "Description", "description", StringValueConverter())
       self.property(w, "ParameterGroupName", "parameter_group_name", StringValueConverter())
 
@@ -37,7 +37,7 @@ class AWS_DAX_Cluster(CloudFormationResource):
       self.property(w, "SecurityGroupIds", "security_group_ids", ListValueConverter(StringValueConverter()))
       self.property(w, "NodeType", "node_type", StringValueConverter())
       self.property(w, "ClusterName", "cluster_name", StringValueConverter())
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
 
 
 class AWS_DAX_SubnetGroup(CloudFormationResource):

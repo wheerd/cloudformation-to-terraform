@@ -79,7 +79,7 @@ class AWS_GuardDuty_IPSet(CloudFormationResource):
 class AWS_GuardDuty_Filter_FindingCriteria(CloudFormationProperty):
   def write(self, w):
     with w.block("finding_criteria"):
-      self.property(w, "Criterion", "criterion", StringValueConverter())
+      self.property(w, "Criterion", "criterion", JsonValueConverter())
       self.block(w, "ItemType", AWS_GuardDuty_Filter_Condition)
 
 

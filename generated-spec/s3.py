@@ -228,8 +228,8 @@ class AWS_S3_AccessPoint(CloudFormationResource):
       self.property(w, "Bucket", "bucket", StringValueConverter())
       self.block(w, "VpcConfiguration", AWS_S3_AccessPoint_VpcConfiguration)
       self.block(w, "PublicAccessBlockConfiguration", AWS_S3_AccessPoint_PublicAccessBlockConfiguration)
-      self.property(w, "Policy", "policy", StringValueConverter())
-      self.property(w, "PolicyStatus", "policy_status", StringValueConverter())
+      self.property(w, "Policy", "policy", JsonValueConverter())
+      self.property(w, "PolicyStatus", "policy_status", JsonValueConverter())
       self.property(w, "NetworkOrigin", "network_origin", StringValueConverter())
       self.property(w, "CreationDate", "creation_date", StringValueConverter())
 
@@ -242,7 +242,7 @@ class AWS_S3_BucketPolicy(CloudFormationResource):
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "Bucket", "bucket", StringValueConverter())
-      self.property(w, "PolicyDocument", "policy_document", StringValueConverter())
+      self.property(w, "PolicyDocument", "policy_document", JsonValueConverter())
 
 
 class AWS_S3_Bucket_BucketEncryption(CloudFormationProperty):

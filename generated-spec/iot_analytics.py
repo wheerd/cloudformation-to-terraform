@@ -155,7 +155,7 @@ class AWS_IoTAnalytics_Pipeline_AddAttributes(CloudFormationProperty):
   def write(self, w):
     with w.block("add_attributes"):
       self.property(w, "Next", "next", StringValueConverter())
-      self.property(w, "Attributes", "attributes", StringValueConverter())
+      self.property(w, "Attributes", "attributes", JsonValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
 
 
@@ -279,7 +279,7 @@ class AWS_IoTAnalytics_Dataset_DatasetContentDeliveryRuleDestination(CloudFormat
 
 class AWS_IoTAnalytics_Channel(CloudFormationResource):
   cfn_type = "AWS::IoTAnalytics::Channel"
-  tf_type = "aws_io_t_analytics_channel"
+  tf_type = "aws_iot_analytics_channel"
   ref = "arn"
 
   def write(self, w):
@@ -292,7 +292,7 @@ class AWS_IoTAnalytics_Channel(CloudFormationResource):
 
 class AWS_IoTAnalytics_Datastore(CloudFormationResource):
   cfn_type = "AWS::IoTAnalytics::Datastore"
-  tf_type = "aws_io_t_analytics_datastore"
+  tf_type = "aws_iot_analytics_datastore"
   ref = "arn"
 
   def write(self, w):
@@ -305,7 +305,7 @@ class AWS_IoTAnalytics_Datastore(CloudFormationResource):
 
 class AWS_IoTAnalytics_Pipeline(CloudFormationResource):
   cfn_type = "AWS::IoTAnalytics::Pipeline"
-  tf_type = "aws_io_t_analytics_pipeline"
+  tf_type = "aws_iot_analytics_pipeline"
   ref = "arn"
 
   def write(self, w):
@@ -332,7 +332,7 @@ class AWS_IoTAnalytics_Dataset_Action(CloudFormationProperty):
 
 class AWS_IoTAnalytics_Dataset(CloudFormationResource):
   cfn_type = "AWS::IoTAnalytics::Dataset"
-  tf_type = "aws_io_t_analytics_dataset"
+  tf_type = "aws_iot_analytics_dataset"
   ref = "arn"
 
   def write(self, w):

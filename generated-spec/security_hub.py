@@ -7,6 +7,6 @@ class AWS_SecurityHub_Hub(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
 
 

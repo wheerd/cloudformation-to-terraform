@@ -19,7 +19,7 @@ class AWS_CodeStarNotifications_NotificationRule(CloudFormationResource):
       self.property(w, "DetailType", "detail_type", StringValueConverter())
       self.property(w, "Resource", "resource", StringValueConverter())
       self.repeated_block(w, "Targets", AWS_CodeStarNotifications_NotificationRule_Target)
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
 
 

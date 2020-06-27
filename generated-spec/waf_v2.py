@@ -3,9 +3,9 @@ from . import *
 class AWS_WAFv2_WebACL_RuleAction(CloudFormationProperty):
   def write(self, w):
     with w.block("rule_action"):
-      self.property(w, "Allow", "allow", StringValueConverter())
-      self.property(w, "Block", "block", StringValueConverter())
-      self.property(w, "Count", "count", StringValueConverter())
+      self.property(w, "Allow", "allow", JsonValueConverter())
+      self.property(w, "Block", "block", JsonValueConverter())
+      self.property(w, "Count", "count", JsonValueConverter())
 
 
 class AWS_WAFv2_WebACL_TextTransformation(CloudFormationProperty):
@@ -18,8 +18,8 @@ class AWS_WAFv2_WebACL_TextTransformation(CloudFormationProperty):
 class AWS_WAFv2_WebACL_DefaultAction(CloudFormationProperty):
   def write(self, w):
     with w.block("default_action"):
-      self.property(w, "Allow", "allow", StringValueConverter())
-      self.property(w, "Block", "block", StringValueConverter())
+      self.property(w, "Allow", "allow", JsonValueConverter())
+      self.property(w, "Block", "block", JsonValueConverter())
 
 
 class AWS_WAFv2_RuleGroup_TextTransformation(CloudFormationProperty):
@@ -32,28 +32,28 @@ class AWS_WAFv2_RuleGroup_TextTransformation(CloudFormationProperty):
 class AWS_WAFv2_WebACL_OverrideAction(CloudFormationProperty):
   def write(self, w):
     with w.block("override_action"):
-      self.property(w, "Count", "count", StringValueConverter())
-      self.property(w, "None", "none", StringValueConverter())
+      self.property(w, "Count", "count", JsonValueConverter())
+      self.property(w, "None", "none", JsonValueConverter())
 
 
 class AWS_WAFv2_RuleGroup_RuleAction(CloudFormationProperty):
   def write(self, w):
     with w.block("rule_action"):
-      self.property(w, "Allow", "allow", StringValueConverter())
-      self.property(w, "Block", "block", StringValueConverter())
-      self.property(w, "Count", "count", StringValueConverter())
+      self.property(w, "Allow", "allow", JsonValueConverter())
+      self.property(w, "Block", "block", JsonValueConverter())
+      self.property(w, "Count", "count", JsonValueConverter())
 
 
 class AWS_WAFv2_RuleGroup_FieldToMatch(CloudFormationProperty):
   def write(self, w):
     with w.block("field_to_match"):
-      self.property(w, "SingleHeader", "single_header", StringValueConverter())
-      self.property(w, "SingleQueryArgument", "single_query_argument", StringValueConverter())
-      self.property(w, "AllQueryArguments", "all_query_arguments", StringValueConverter())
-      self.property(w, "UriPath", "uri_path", StringValueConverter())
-      self.property(w, "QueryString", "query_string", StringValueConverter())
-      self.property(w, "Body", "body", StringValueConverter())
-      self.property(w, "Method", "method", StringValueConverter())
+      self.property(w, "SingleHeader", "single_header", JsonValueConverter())
+      self.property(w, "SingleQueryArgument", "single_query_argument", JsonValueConverter())
+      self.property(w, "AllQueryArguments", "all_query_arguments", JsonValueConverter())
+      self.property(w, "UriPath", "uri_path", JsonValueConverter())
+      self.property(w, "QueryString", "query_string", JsonValueConverter())
+      self.property(w, "Body", "body", JsonValueConverter())
+      self.property(w, "Method", "method", JsonValueConverter())
 
 
 class AWS_WAFv2_RuleGroup_IPSetReferenceStatement(CloudFormationProperty):
@@ -79,13 +79,13 @@ class AWS_WAFv2_WebACL_VisibilityConfig(CloudFormationProperty):
 class AWS_WAFv2_WebACL_FieldToMatch(CloudFormationProperty):
   def write(self, w):
     with w.block("field_to_match"):
-      self.property(w, "SingleHeader", "single_header", StringValueConverter())
-      self.property(w, "SingleQueryArgument", "single_query_argument", StringValueConverter())
-      self.property(w, "AllQueryArguments", "all_query_arguments", StringValueConverter())
-      self.property(w, "UriPath", "uri_path", StringValueConverter())
-      self.property(w, "QueryString", "query_string", StringValueConverter())
-      self.property(w, "Body", "body", StringValueConverter())
-      self.property(w, "Method", "method", StringValueConverter())
+      self.property(w, "SingleHeader", "single_header", JsonValueConverter())
+      self.property(w, "SingleQueryArgument", "single_query_argument", JsonValueConverter())
+      self.property(w, "AllQueryArguments", "all_query_arguments", JsonValueConverter())
+      self.property(w, "UriPath", "uri_path", JsonValueConverter())
+      self.property(w, "QueryString", "query_string", JsonValueConverter())
+      self.property(w, "Body", "body", JsonValueConverter())
+      self.property(w, "Method", "method", JsonValueConverter())
 
 
 class AWS_WAFv2_WebACL_SqliMatchStatement(CloudFormationProperty):
@@ -139,7 +139,7 @@ class AWS_WAFv2_RuleGroup_SizeConstraintStatement(CloudFormationProperty):
 
 class AWS_WAFv2_RegexPatternSet(CloudFormationResource):
   cfn_type = "AWS::WAFv2::RegexPatternSet"
-  tf_type = "aws_wa_fv2_regex_pattern_set"
+  tf_type = "aws_waf_v2_regex_pattern_set"
   ref = "arn"
 
   def write(self, w):
@@ -153,7 +153,7 @@ class AWS_WAFv2_RegexPatternSet(CloudFormationResource):
 
 class AWS_WAFv2_IPSet(CloudFormationResource):
   cfn_type = "AWS::WAFv2::IPSet"
-  tf_type = "aws_wa_fv2_ip_set"
+  tf_type = "aws_waf_v2_ip_set"
   ref = "arn"
 
   def write(self, w):
@@ -168,7 +168,7 @@ class AWS_WAFv2_IPSet(CloudFormationResource):
 
 class AWS_WAFv2_WebACLAssociation(CloudFormationResource):
   cfn_type = "AWS::WAFv2::WebACLAssociation"
-  tf_type = "aws_wa_fv2_web_acl_association"
+  tf_type = "aws_waf_v2_web_acl_association"
   ref = "arn"
 
   def write(self, w):
@@ -462,7 +462,7 @@ class AWS_WAFv2_WebACL_Rule(CloudFormationProperty):
 
 class AWS_WAFv2_WebACL(CloudFormationResource):
   cfn_type = "AWS::WAFv2::WebACL"
-  tf_type = "aws_wa_fv2_web_acl"
+  tf_type = "aws_waf_v2_web_acl"
   ref = "arn"
 
   def write(self, w):
@@ -488,7 +488,7 @@ class AWS_WAFv2_RuleGroup_Rule(CloudFormationProperty):
 
 class AWS_WAFv2_RuleGroup(CloudFormationResource):
   cfn_type = "AWS::WAFv2::RuleGroup"
-  tf_type = "aws_wa_fv2_rule_group"
+  tf_type = "aws_waf_v2_rule_group"
   ref = "arn"
 
   def write(self, w):

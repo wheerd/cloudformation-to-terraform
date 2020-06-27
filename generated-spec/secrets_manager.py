@@ -41,7 +41,7 @@ class AWS_SecretsManager_ResourcePolicy(CloudFormationResource):
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "SecretId", "secret_id", StringValueConverter())
-      self.property(w, "ResourcePolicy", "resource_policy", StringValueConverter())
+      self.property(w, "ResourcePolicy", "resource_policy", JsonValueConverter())
 
 
 class AWS_SecretsManager_Secret(CloudFormationResource):

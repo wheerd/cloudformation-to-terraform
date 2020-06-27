@@ -3,14 +3,14 @@ from . import *
 class AWS_IAM_Role_Policy(CloudFormationProperty):
   def write(self, w):
     with w.block("policy"):
-      self.property(w, "PolicyDocument", "policy_document", StringValueConverter())
+      self.property(w, "PolicyDocument", "policy_document", JsonValueConverter())
       self.property(w, "PolicyName", "policy_name", StringValueConverter())
 
 
 class AWS_IAM_Group_Policy(CloudFormationProperty):
   def write(self, w):
     with w.block("policy"):
-      self.property(w, "PolicyDocument", "policy_document", StringValueConverter())
+      self.property(w, "PolicyDocument", "policy_document", JsonValueConverter())
       self.property(w, "PolicyName", "policy_name", StringValueConverter())
 
 
@@ -24,7 +24,7 @@ class AWS_IAM_User_LoginProfile(CloudFormationProperty):
 class AWS_IAM_User_Policy(CloudFormationProperty):
   def write(self, w):
     with w.block("policy"):
-      self.property(w, "PolicyDocument", "policy_document", StringValueConverter())
+      self.property(w, "PolicyDocument", "policy_document", JsonValueConverter())
       self.property(w, "PolicyName", "policy_name", StringValueConverter())
 
 
@@ -49,7 +49,7 @@ class AWS_IAM_Policy(CloudFormationResource):
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "Groups", "groups", ListValueConverter(StringValueConverter()))
-      self.property(w, "PolicyDocument", "policy_document", StringValueConverter())
+      self.property(w, "PolicyDocument", "policy_document", JsonValueConverter())
       self.property(w, "PolicyName", "policy_name", StringValueConverter())
       self.property(w, "Roles", "roles", ListValueConverter(StringValueConverter()))
       self.property(w, "Users", "users", ListValueConverter(StringValueConverter()))
@@ -103,7 +103,7 @@ class AWS_IAM_Role(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "AssumeRolePolicyDocument", "assume_role_policy_document", StringValueConverter())
+      self.property(w, "AssumeRolePolicyDocument", "assume_role_policy_document", JsonValueConverter())
       self.property(w, "Description", "description", StringValueConverter())
       self.property(w, "ManagedPolicyArns", "managed_policy_arns", ListValueConverter(StringValueConverter()))
       self.property(w, "MaxSessionDuration", "max_session_duration", BasicValueConverter())
@@ -148,7 +148,7 @@ class AWS_IAM_ManagedPolicy(CloudFormationResource):
       self.property(w, "Groups", "groups", ListValueConverter(StringValueConverter()))
       self.property(w, "ManagedPolicyName", "managed_policy_name", StringValueConverter())
       self.property(w, "Path", "path", StringValueConverter())
-      self.property(w, "PolicyDocument", "policy_document", StringValueConverter())
+      self.property(w, "PolicyDocument", "policy_document", JsonValueConverter())
       self.property(w, "Roles", "roles", ListValueConverter(StringValueConverter()))
       self.property(w, "Users", "users", ListValueConverter(StringValueConverter()))
 

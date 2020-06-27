@@ -24,7 +24,7 @@ class AWS_MediaConvert_Queue(CloudFormationResource):
       self.property(w, "Status", "status", StringValueConverter())
       self.property(w, "Description", "description", StringValueConverter())
       self.property(w, "PricingPlan", "pricing_plan", StringValueConverter())
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
 
 
@@ -40,10 +40,10 @@ class AWS_MediaConvert_JobTemplate(CloudFormationResource):
       self.block(w, "AccelerationSettings", AWS_MediaConvert_JobTemplate_AccelerationSettings)
       self.property(w, "Priority", "priority", BasicValueConverter())
       self.property(w, "StatusUpdateInterval", "status_update_interval", StringValueConverter())
-      self.property(w, "SettingsJson", "settings_json", StringValueConverter())
+      self.property(w, "SettingsJson", "settings_json", JsonValueConverter())
       self.property(w, "Queue", "queue", StringValueConverter())
       self.repeated_block(w, "HopDestinations", AWS_MediaConvert_JobTemplate_HopDestination)
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
 
 
@@ -56,8 +56,8 @@ class AWS_MediaConvert_Preset(CloudFormationResource):
     with self.resource_block(w):
       self.property(w, "Category", "category", StringValueConverter())
       self.property(w, "Description", "description", StringValueConverter())
-      self.property(w, "SettingsJson", "settings_json", StringValueConverter())
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "SettingsJson", "settings_json", JsonValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
 
 

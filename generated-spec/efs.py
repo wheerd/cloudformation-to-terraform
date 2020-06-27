@@ -70,7 +70,7 @@ class AWS_EFS_FileSystem(CloudFormationResource):
       self.property(w, "PerformanceMode", "performance_mode", StringValueConverter())
       self.property(w, "ProvisionedThroughputInMibps", "provisioned_throughput_in_mibps", BasicValueConverter())
       self.property(w, "ThroughputMode", "throughput_mode", StringValueConverter())
-      self.property(w, "FileSystemPolicy", "file_system_policy", StringValueConverter())
+      self.property(w, "FileSystemPolicy", "file_system_policy", JsonValueConverter())
 
 
 class AWS_EFS_AccessPoint(CloudFormationResource):

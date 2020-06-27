@@ -12,7 +12,7 @@ class AWS_Glue_MLTransform_FindMatchesParameters(CloudFormationProperty):
 class AWS_Glue_Partition_SerdeInfo(CloudFormationProperty):
   def write(self, w):
     with w.block("serde_info"):
-      self.property(w, "Parameters", "parameters", StringValueConverter())
+      self.property(w, "Parameters", "parameters", JsonValueConverter())
       self.property(w, "SerializationLibrary", "serialization_library", StringValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
 
@@ -22,7 +22,7 @@ class AWS_Glue_Database_DatabaseInput(CloudFormationProperty):
     with w.block("database_input"):
       self.property(w, "LocationUri", "location_uri", StringValueConverter())
       self.property(w, "Description", "description", StringValueConverter())
-      self.property(w, "Parameters", "parameters", StringValueConverter())
+      self.property(w, "Parameters", "parameters", JsonValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
 
 
@@ -167,7 +167,7 @@ class AWS_Glue_Table_SkewedInfo(CloudFormationProperty):
     with w.block("skewed_info"):
       self.property(w, "SkewedColumnNames", "skewed_column_names", ListValueConverter(StringValueConverter()))
       self.property(w, "SkewedColumnValues", "skewed_column_values", ListValueConverter(StringValueConverter()))
-      self.property(w, "SkewedColumnValueLocationMaps", "skewed_column_value_location_maps", StringValueConverter())
+      self.property(w, "SkewedColumnValueLocationMaps", "skewed_column_value_location_maps", JsonValueConverter())
 
 
 class AWS_Glue_Trigger_NotificationProperty(CloudFormationProperty):
@@ -210,7 +210,7 @@ class AWS_Glue_SecurityConfiguration_JobBookmarksEncryption(CloudFormationProper
 class AWS_Glue_Table_SerdeInfo(CloudFormationProperty):
   def write(self, w):
     with w.block("serde_info"):
-      self.property(w, "Parameters", "parameters", StringValueConverter())
+      self.property(w, "Parameters", "parameters", JsonValueConverter())
       self.property(w, "SerializationLibrary", "serialization_library", StringValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
 
@@ -220,7 +220,7 @@ class AWS_Glue_Partition_SkewedInfo(CloudFormationProperty):
     with w.block("skewed_info"):
       self.property(w, "SkewedColumnNames", "skewed_column_names", ListValueConverter(StringValueConverter()))
       self.property(w, "SkewedColumnValues", "skewed_column_values", ListValueConverter(StringValueConverter()))
-      self.property(w, "SkewedColumnValueLocationMaps", "skewed_column_value_location_maps", StringValueConverter())
+      self.property(w, "SkewedColumnValueLocationMaps", "skewed_column_value_location_maps", JsonValueConverter())
 
 
 class AWS_Glue_Crawler_S3Target(CloudFormationProperty):
@@ -279,8 +279,8 @@ class AWS_Glue_Workflow(CloudFormationResource):
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "Description", "description", StringValueConverter())
-      self.property(w, "DefaultRunProperties", "default_run_properties", StringValueConverter())
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "DefaultRunProperties", "default_run_properties", JsonValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
 
 
@@ -298,7 +298,7 @@ class AWS_Glue_Job(CloudFormationResource):
       self.property(w, "AllocatedCapacity", "allocated_capacity", BasicValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
       self.property(w, "Role", "role", StringValueConverter())
-      self.property(w, "DefaultArguments", "default_arguments", StringValueConverter())
+      self.property(w, "DefaultArguments", "default_arguments", JsonValueConverter())
       self.block(w, "NotificationProperty", AWS_Glue_Job_NotificationProperty)
       self.property(w, "WorkerType", "worker_type", StringValueConverter())
       self.property(w, "LogUri", "log_uri", StringValueConverter())
@@ -307,7 +307,7 @@ class AWS_Glue_Job(CloudFormationResource):
       self.block(w, "ExecutionProperty", AWS_Glue_Job_ExecutionProperty)
       self.property(w, "SecurityConfiguration", "security_configuration", StringValueConverter())
       self.property(w, "NumberOfWorkers", "number_of_workers", BasicValueConverter())
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
       self.property(w, "MaxCapacity", "max_capacity", BasicValueConverter())
 
 
@@ -332,7 +332,7 @@ class AWS_Glue_DevEndpoint(CloudFormationResource):
       self.property(w, "ExtraJarsS3Path", "extra_jars_s3_path", StringValueConverter())
       self.property(w, "PublicKey", "public_key", StringValueConverter())
       self.property(w, "NumberOfNodes", "number_of_nodes", BasicValueConverter())
-      self.property(w, "Arguments", "arguments", StringValueConverter())
+      self.property(w, "Arguments", "arguments", JsonValueConverter())
       self.property(w, "SubnetId", "subnet_id", StringValueConverter())
       self.property(w, "PublicKeys", "public_keys", ListValueConverter(StringValueConverter()))
       self.property(w, "SecurityGroupIds", "security_group_ids", ListValueConverter(StringValueConverter()))
@@ -343,7 +343,7 @@ class AWS_Glue_DevEndpoint(CloudFormationResource):
       self.property(w, "ExtraPythonLibsS3Path", "extra_python_libs_s3_path", StringValueConverter())
       self.property(w, "SecurityConfiguration", "security_configuration", StringValueConverter())
       self.property(w, "NumberOfWorkers", "number_of_workers", BasicValueConverter())
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
 
 
 class AWS_Glue_Classifier(CloudFormationResource):
@@ -375,7 +375,7 @@ class AWS_Glue_Connection_ConnectionInput(CloudFormationProperty):
       self.property(w, "ConnectionType", "connection_type", StringValueConverter())
       self.property(w, "MatchCriteria", "match_criteria", ListValueConverter(StringValueConverter()))
       self.block(w, "PhysicalConnectionRequirements", AWS_Glue_Connection_PhysicalConnectionRequirements)
-      self.property(w, "ConnectionProperties", "connection_properties", StringValueConverter())
+      self.property(w, "ConnectionProperties", "connection_properties", JsonValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
 
 
@@ -390,7 +390,7 @@ class AWS_Glue_Partition_StorageDescriptor(CloudFormationProperty):
   def write(self, w):
     with w.block("storage_descriptor"):
       self.property(w, "StoredAsSubDirectories", "stored_as_sub_directories", BasicValueConverter())
-      self.property(w, "Parameters", "parameters", StringValueConverter())
+      self.property(w, "Parameters", "parameters", JsonValueConverter())
       self.property(w, "BucketColumns", "bucket_columns", ListValueConverter(StringValueConverter()))
       self.block(w, "SkewedInfo", AWS_Glue_Partition_SkewedInfo)
       self.property(w, "InputFormat", "input_format", StringValueConverter())
@@ -410,7 +410,7 @@ class AWS_Glue_Trigger_Action(CloudFormationProperty):
       self.property(w, "CrawlerName", "crawler_name", StringValueConverter())
       self.property(w, "Timeout", "timeout", BasicValueConverter())
       self.property(w, "JobName", "job_name", StringValueConverter())
-      self.property(w, "Arguments", "arguments", StringValueConverter())
+      self.property(w, "Arguments", "arguments", JsonValueConverter())
       self.property(w, "SecurityConfiguration", "security_configuration", StringValueConverter())
 
 
@@ -418,7 +418,7 @@ class AWS_Glue_Table_StorageDescriptor(CloudFormationProperty):
   def write(self, w):
     with w.block("storage_descriptor"):
       self.property(w, "StoredAsSubDirectories", "stored_as_sub_directories", BasicValueConverter())
-      self.property(w, "Parameters", "parameters", StringValueConverter())
+      self.property(w, "Parameters", "parameters", JsonValueConverter())
       self.property(w, "BucketColumns", "bucket_columns", ListValueConverter(StringValueConverter()))
       self.block(w, "SkewedInfo", AWS_Glue_Table_SkewedInfo)
       self.property(w, "InputFormat", "input_format", StringValueConverter())
@@ -446,7 +446,7 @@ class AWS_Glue_Table_TableInput(CloudFormationProperty):
       self.property(w, "ViewOriginalText", "view_original_text", StringValueConverter())
       self.property(w, "Description", "description", StringValueConverter())
       self.property(w, "TableType", "table_type", StringValueConverter())
-      self.property(w, "Parameters", "parameters", StringValueConverter())
+      self.property(w, "Parameters", "parameters", JsonValueConverter())
       self.property(w, "ViewExpandedText", "view_expanded_text", StringValueConverter())
       self.block(w, "StorageDescriptor", AWS_Glue_Table_StorageDescriptor)
       self.repeated_block(w, "PartitionKeys", AWS_Glue_Table_Column)
@@ -488,7 +488,7 @@ class AWS_Glue_Crawler(CloudFormationResource):
       self.block(w, "Targets", AWS_Glue_Crawler_Targets)
       self.property(w, "CrawlerSecurityConfiguration", "crawler_security_configuration", StringValueConverter())
       self.property(w, "TablePrefix", "table_prefix", StringValueConverter())
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
 
 
@@ -508,7 +508,7 @@ class AWS_Glue_MLTransform(CloudFormationResource):
       self.block(w, "TransformParameters", AWS_Glue_MLTransform_TransformParameters)
       self.block(w, "InputRecordTables", AWS_Glue_MLTransform_InputRecordTables)
       self.property(w, "NumberOfWorkers", "number_of_workers", BasicValueConverter())
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
       self.property(w, "MaxCapacity", "max_capacity", BasicValueConverter())
 
@@ -549,7 +549,7 @@ class AWS_Glue_Trigger(CloudFormationResource):
       self.repeated_block(w, "Actions", AWS_Glue_Trigger_Action)
       self.property(w, "WorkflowName", "workflow_name", StringValueConverter())
       self.property(w, "Schedule", "schedule", StringValueConverter())
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
       self.block(w, "Predicate", AWS_Glue_Trigger_Predicate)
 
@@ -568,7 +568,7 @@ class AWS_Glue_SecurityConfiguration(CloudFormationResource):
 class AWS_Glue_Partition_PartitionInput(CloudFormationProperty):
   def write(self, w):
     with w.block("partition_input"):
-      self.property(w, "Parameters", "parameters", StringValueConverter())
+      self.property(w, "Parameters", "parameters", JsonValueConverter())
       self.block(w, "StorageDescriptor", AWS_Glue_Partition_StorageDescriptor)
       self.property(w, "Values", "values", ListValueConverter(StringValueConverter()))
 

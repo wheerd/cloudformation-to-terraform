@@ -28,7 +28,7 @@ class AWS_ServiceDiscovery_Instance(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "InstanceAttributes", "instance_attributes", StringValueConverter())
+      self.property(w, "InstanceAttributes", "instance_attributes", JsonValueConverter())
       self.property(w, "InstanceId", "instance_id", StringValueConverter())
       self.property(w, "ServiceId", "service_id", StringValueConverter())
 

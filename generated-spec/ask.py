@@ -11,7 +11,7 @@ class Alexa_ASK_Skill_AuthenticationConfiguration(CloudFormationProperty):
 class Alexa_ASK_Skill_Overrides(CloudFormationProperty):
   def write(self, w):
     with w.block("overrides"):
-      self.property(w, "Manifest", "manifest", StringValueConverter())
+      self.property(w, "Manifest", "manifest", JsonValueConverter())
 
 
 class Alexa_ASK_Skill_SkillPackage(CloudFormationProperty):

@@ -12,7 +12,7 @@ class AWS_ServiceCatalog_CloudFormationProduct_ProvisioningArtifactProperties(Cl
     with w.block("provisioning_artifact_properties"):
       self.property(w, "Description", "description", StringValueConverter())
       self.property(w, "DisableTemplateValidation", "disable_template_validation", BasicValueConverter())
-      self.property(w, "Info", "info", StringValueConverter())
+      self.property(w, "Info", "info", JsonValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
 
 

@@ -1240,7 +1240,7 @@ class AWS_EC2_VPCEndpoint(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "PolicyDocument", "policy_document", StringValueConverter())
+      self.property(w, "PolicyDocument", "policy_document", JsonValueConverter())
       self.property(w, "PrivateDnsEnabled", "private_dns_enabled", BasicValueConverter())
       self.property(w, "RouteTableIds", "route_table_ids", ListValueConverter(StringValueConverter()))
       self.property(w, "SecurityGroupIds", "security_group_ids", ListValueConverter(StringValueConverter()))

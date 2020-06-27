@@ -172,7 +172,7 @@ class AWS_Greengrass_ConnectorDefinition_Connector(CloudFormationProperty):
   def write(self, w):
     with w.block("connector"):
       self.property(w, "ConnectorArn", "connector_arn", StringValueConverter())
-      self.property(w, "Parameters", "parameters", StringValueConverter())
+      self.property(w, "Parameters", "parameters", JsonValueConverter())
       self.property(w, "Id", "id", StringValueConverter())
 
 
@@ -209,7 +209,7 @@ class AWS_Greengrass_ConnectorDefinitionVersion_Connector(CloudFormationProperty
   def write(self, w):
     with w.block("connector"):
       self.property(w, "ConnectorArn", "connector_arn", StringValueConverter())
-      self.property(w, "Parameters", "parameters", StringValueConverter())
+      self.property(w, "Parameters", "parameters", JsonValueConverter())
       self.property(w, "Id", "id", StringValueConverter())
 
 
@@ -232,7 +232,7 @@ class AWS_Greengrass_DeviceDefinition(CloudFormationResource):
   def write(self, w):
     with self.resource_block(w):
       self.block(w, "InitialVersion", AWS_Greengrass_DeviceDefinition_DeviceDefinitionVersion)
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
 
 
@@ -256,7 +256,7 @@ class AWS_Greengrass_Group(CloudFormationResource):
     with self.resource_block(w):
       self.block(w, "InitialVersion", AWS_Greengrass_Group_GroupVersion)
       self.property(w, "RoleArn", "role_arn", StringValueConverter())
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
 
 
@@ -290,7 +290,7 @@ class AWS_Greengrass_LoggerDefinition(CloudFormationResource):
   def write(self, w):
     with self.resource_block(w):
       self.block(w, "InitialVersion", AWS_Greengrass_LoggerDefinition_LoggerDefinitionVersion)
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
 
 
@@ -302,7 +302,7 @@ class AWS_Greengrass_CoreDefinition(CloudFormationResource):
   def write(self, w):
     with self.resource_block(w):
       self.block(w, "InitialVersion", AWS_Greengrass_CoreDefinition_CoreDefinitionVersion)
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
 
 
@@ -375,7 +375,7 @@ class AWS_Greengrass_ResourceDefinitionVersion_SageMakerMachineLearningModelReso
 class AWS_Greengrass_FunctionDefinition_Environment(CloudFormationProperty):
   def write(self, w):
     with w.block("environment"):
-      self.property(w, "Variables", "variables", StringValueConverter())
+      self.property(w, "Variables", "variables", JsonValueConverter())
       self.block(w, "Execution", AWS_Greengrass_FunctionDefinition_Execution)
       self.repeated_block(w, "ResourceAccessPolicies", AWS_Greengrass_FunctionDefinition_ResourceAccessPolicy)
       self.property(w, "AccessSysfs", "access_sysfs", BasicValueConverter())
@@ -397,7 +397,7 @@ class AWS_Greengrass_ResourceDefinitionVersion_LocalDeviceResourceData(CloudForm
 class AWS_Greengrass_FunctionDefinitionVersion_Environment(CloudFormationProperty):
   def write(self, w):
     with w.block("environment"):
-      self.property(w, "Variables", "variables", StringValueConverter())
+      self.property(w, "Variables", "variables", JsonValueConverter())
       self.block(w, "Execution", AWS_Greengrass_FunctionDefinitionVersion_Execution)
       self.repeated_block(w, "ResourceAccessPolicies", AWS_Greengrass_FunctionDefinitionVersion_ResourceAccessPolicy)
       self.property(w, "AccessSysfs", "access_sysfs", BasicValueConverter())
@@ -457,7 +457,7 @@ class AWS_Greengrass_ConnectorDefinition(CloudFormationResource):
   def write(self, w):
     with self.resource_block(w):
       self.block(w, "InitialVersion", AWS_Greengrass_ConnectorDefinition_ConnectorDefinitionVersion)
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
 
 
@@ -469,7 +469,7 @@ class AWS_Greengrass_SubscriptionDefinition(CloudFormationResource):
   def write(self, w):
     with self.resource_block(w):
       self.block(w, "InitialVersion", AWS_Greengrass_SubscriptionDefinition_SubscriptionDefinitionVersion)
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
 
 
@@ -573,7 +573,7 @@ class AWS_Greengrass_ResourceDefinition(CloudFormationResource):
   def write(self, w):
     with self.resource_block(w):
       self.block(w, "InitialVersion", AWS_Greengrass_ResourceDefinition_ResourceDefinitionVersion)
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
 
 
@@ -585,7 +585,7 @@ class AWS_Greengrass_FunctionDefinition(CloudFormationResource):
   def write(self, w):
     with self.resource_block(w):
       self.block(w, "InitialVersion", AWS_Greengrass_FunctionDefinition_FunctionDefinitionVersion)
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
 
 

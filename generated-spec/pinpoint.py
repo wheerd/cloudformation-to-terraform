@@ -37,9 +37,9 @@ class AWS_Pinpoint_PushTemplate_AndroidPushNotificationTemplate(CloudFormationPr
 class AWS_Pinpoint_Campaign_EventDimensions(CloudFormationProperty):
   def write(self, w):
     with w.block("event_dimensions"):
-      self.property(w, "Metrics", "metrics", StringValueConverter())
+      self.property(w, "Metrics", "metrics", JsonValueConverter())
       self.block(w, "EventType", AWS_Pinpoint_Campaign_SetDimension)
-      self.property(w, "Attributes", "attributes", StringValueConverter())
+      self.property(w, "Attributes", "attributes", JsonValueConverter())
 
 
 class AWS_Pinpoint_Segment_SourceSegments(CloudFormationProperty):
@@ -256,7 +256,7 @@ class AWS_Pinpoint_EmailTemplate(CloudFormationResource):
       self.property(w, "TemplateDescription", "template_description", StringValueConverter())
       self.property(w, "DefaultSubstitutions", "default_substitutions", StringValueConverter())
       self.property(w, "Subject", "subject", StringValueConverter())
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
 
 
 class AWS_Pinpoint_BaiduChannel(CloudFormationResource):
@@ -313,7 +313,7 @@ class AWS_Pinpoint_SmsTemplate(CloudFormationResource):
       self.property(w, "TemplateDescription", "template_description", StringValueConverter())
       self.property(w, "DefaultSubstitutions", "default_substitutions", StringValueConverter())
       self.property(w, "Body", "body", StringValueConverter())
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
 
 
 class AWS_Pinpoint_APNSSandboxChannel(CloudFormationResource):
@@ -376,7 +376,7 @@ class AWS_Pinpoint_PushTemplate(CloudFormationResource):
       self.property(w, "TemplateDescription", "template_description", StringValueConverter())
       self.property(w, "DefaultSubstitutions", "default_substitutions", StringValueConverter())
       self.block(w, "Default", AWS_Pinpoint_PushTemplate_DefaultPushNotificationTemplate)
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
 
 
 class AWS_Pinpoint_APNSVoipSandboxChannel(CloudFormationResource):
@@ -437,7 +437,7 @@ class AWS_Pinpoint_App(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
 
 
@@ -506,7 +506,7 @@ class AWS_Pinpoint_Campaign(CloudFormationResource):
       self.block(w, "Schedule", AWS_Pinpoint_Campaign_Schedule)
       self.property(w, "ApplicationId", "application_id", StringValueConverter())
       self.block(w, "CampaignHook", AWS_Pinpoint_Campaign_CampaignHook)
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
       self.property(w, "TreatmentName", "treatment_name", StringValueConverter())
 
 
@@ -514,10 +514,10 @@ class AWS_Pinpoint_Segment_SegmentDimensions(CloudFormationProperty):
   def write(self, w):
     with w.block("segment_dimensions"):
       self.block(w, "Demographic", AWS_Pinpoint_Segment_Demographic)
-      self.property(w, "Metrics", "metrics", StringValueConverter())
-      self.property(w, "Attributes", "attributes", StringValueConverter())
+      self.property(w, "Metrics", "metrics", JsonValueConverter())
+      self.property(w, "Attributes", "attributes", JsonValueConverter())
       self.block(w, "Behavior", AWS_Pinpoint_Segment_Behavior)
-      self.property(w, "UserAttributes", "user_attributes", StringValueConverter())
+      self.property(w, "UserAttributes", "user_attributes", JsonValueConverter())
       self.block(w, "Location", AWS_Pinpoint_Segment_Location)
 
 
@@ -547,7 +547,7 @@ class AWS_Pinpoint_Segment(CloudFormationResource):
       self.block(w, "SegmentGroups", AWS_Pinpoint_Segment_SegmentGroups)
       self.block(w, "Dimensions", AWS_Pinpoint_Segment_SegmentDimensions)
       self.property(w, "ApplicationId", "application_id", StringValueConverter())
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
 
 

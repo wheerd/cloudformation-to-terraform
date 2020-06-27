@@ -56,7 +56,7 @@ class AWS_RoboMaker_SimulationApplication(CloudFormationResource):
       self.property(w, "CurrentRevisionId", "current_revision_id", StringValueConverter())
       self.block(w, "RobotSoftwareSuite", AWS_RoboMaker_SimulationApplication_RobotSoftwareSuite)
       self.repeated_block(w, "Sources", AWS_RoboMaker_SimulationApplication_SourceConfig)
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
 
 
@@ -81,7 +81,7 @@ class AWS_RoboMaker_RobotApplication(CloudFormationResource):
       self.property(w, "CurrentRevisionId", "current_revision_id", StringValueConverter())
       self.block(w, "RobotSoftwareSuite", AWS_RoboMaker_RobotApplication_RobotSoftwareSuite)
       self.repeated_block(w, "Sources", AWS_RoboMaker_RobotApplication_SourceConfig)
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
 
 
@@ -92,7 +92,7 @@ class AWS_RoboMaker_Fleet(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
 
 
@@ -117,7 +117,7 @@ class AWS_RoboMaker_Robot(CloudFormationResource):
       self.property(w, "Fleet", "fleet", StringValueConverter())
       self.property(w, "Architecture", "architecture", StringValueConverter())
       self.property(w, "GreengrassGroupId", "greengrass_group_id", StringValueConverter())
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
 
 

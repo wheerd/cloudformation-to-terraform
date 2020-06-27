@@ -10,7 +10,7 @@ class AWS_KMS_Key(CloudFormationResource):
       self.property(w, "Description", "description", StringValueConverter())
       self.property(w, "EnableKeyRotation", "enable_key_rotation", BasicValueConverter())
       self.property(w, "Enabled", "enabled", BasicValueConverter())
-      self.property(w, "KeyPolicy", "key_policy", StringValueConverter())
+      self.property(w, "KeyPolicy", "key_policy", JsonValueConverter())
       self.property(w, "KeyUsage", "key_usage", StringValueConverter())
       self.property(w, "PendingWindowInDays", "pending_window_in_days", BasicValueConverter())
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))

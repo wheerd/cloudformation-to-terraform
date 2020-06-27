@@ -189,7 +189,7 @@ class AWS_MediaLive_Input(CloudFormationResource):
       self.property(w, "InputSecurityGroups", "input_security_groups", ListValueConverter(StringValueConverter()))
       self.repeated_block(w, "Sources", AWS_MediaLive_Input_InputSourceRequest)
       self.property(w, "RoleArn", "role_arn", StringValueConverter())
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
 
 
@@ -201,7 +201,7 @@ class AWS_MediaLive_InputSecurityGroup(CloudFormationResource):
   def write(self, w):
     with self.resource_block(w):
       self.repeated_block(w, "WhitelistRules", AWS_MediaLive_InputSecurityGroup_InputWhitelistRuleCidr)
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
 
 
 class AWS_MediaLive_Channel_AudioSelector(CloudFormationProperty):
@@ -262,11 +262,11 @@ class AWS_MediaLive_Channel(CloudFormationResource):
       self.repeated_block(w, "InputAttachments", AWS_MediaLive_Channel_InputAttachment)
       self.block(w, "InputSpecification", AWS_MediaLive_Channel_InputSpecification)
       self.property(w, "ChannelClass", "channel_class", StringValueConverter())
-      self.property(w, "EncoderSettings", "encoder_settings", StringValueConverter())
+      self.property(w, "EncoderSettings", "encoder_settings", JsonValueConverter())
       self.repeated_block(w, "Destinations", AWS_MediaLive_Channel_OutputDestination)
       self.property(w, "LogLevel", "log_level", StringValueConverter())
       self.property(w, "RoleArn", "role_arn", StringValueConverter())
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
 
 

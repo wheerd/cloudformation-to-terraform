@@ -43,7 +43,7 @@ class AWS_EKS_Nodegroup(CloudFormationResource):
   def write(self, w):
     with self.resource_block(w):
       self.block(w, "ScalingConfig", AWS_EKS_Nodegroup_ScalingConfig)
-      self.property(w, "Labels", "labels", StringValueConverter())
+      self.property(w, "Labels", "labels", JsonValueConverter())
       self.property(w, "ReleaseVersion", "release_version", StringValueConverter())
       self.property(w, "NodegroupName", "nodegroup_name", StringValueConverter())
       self.property(w, "Subnets", "subnets", ListValueConverter(StringValueConverter()))
@@ -55,7 +55,7 @@ class AWS_EKS_Nodegroup(CloudFormationResource):
       self.property(w, "DiskSize", "disk_size", BasicValueConverter())
       self.property(w, "ClusterName", "cluster_name", StringValueConverter())
       self.property(w, "InstanceTypes", "instance_types", ListValueConverter(StringValueConverter()))
-      self.property(w, "Tags", "tags", StringValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter())
 
 
 class AWS_EKS_Cluster(CloudFormationResource):

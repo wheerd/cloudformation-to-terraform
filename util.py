@@ -16,7 +16,8 @@ cnf_abbreviation_fixes = {
     'r_d_s': 'rds',
     'e_c_s': 'e_c_s',
     's_s_m': 'ssm',
-    's_s_m': 'ssm'
+    'io_t': 'iot',
+    'wa_fv2': 'waf_v2'
 }
 
 def snake_case_with_abbreviation_fix(name):
