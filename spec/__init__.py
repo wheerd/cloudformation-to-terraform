@@ -4,9 +4,32 @@ import json
 import functools
 
 
+class GlobalRef(object):
+    def __init__(self, ref):
+        self.ref = ref
+
+class NoValue(object):
+    def __init__(self):
+        self.ref = None
+
+global_references = {
+    'AWS::AccountId': GlobalRef('data.aws_caller_identity.current.account_id'),
+    'AWS::Region': GlobalRef('data.aws_region.current.name'),
+    'AWS::URLSuffix': GlobalRef('data.aws_partition.current.dns_suffix'),
+    'AWS::Partition': GlobalRef('data.aws_partition.current.partition'),
+    'AWS:NoValue': NoValue()
+}
+
+global_template = """
+data "aws_caller_identity" "current" {}
+data "aws_region" "current" {}
+data "aws_partition" "current" {}
+"""
+
+
 class CloudFormationTemplate(object):
     def __init__(self):
-        self.references = {}
+        self.references = global_references.copy()
         self.variables = {}
         self.resources = {}
         self.outputs = {}
@@ -21,6 +44,7 @@ class CloudFormationTemplate(object):
         entity.template = self
 
     def write(self, writer):
+        writer.write_raw(global_template)
         for variable in self.variables.values():
             variable.write(writer)
         for resource in self.resources.values():
@@ -279,6 +303,9 @@ class OutputWriter(object):
 
     def write_line(self, line):
         self.outfile.write(self.indent + line + '\n')
+
+    def write_raw(self, raw):
+        self.outfile.write(raw)
 
     @property
     def indent(self):
