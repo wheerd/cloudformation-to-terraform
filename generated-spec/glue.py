@@ -280,7 +280,7 @@ class AWS_Glue_Workflow(CloudFormationResource):
     with self.resource_block(w):
       self.property(w, "Description", "description", StringValueConverter())
       self.property(w, "DefaultRunProperties", "default_run_properties", JsonValueConverter())
-      self.property(w, "Tags", "tags", JsonValueConverter())
+      self.property(w, "Tags", "tags", JsonValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "Name", "name", StringValueConverter())
 
 
@@ -297,11 +297,11 @@ class AWS_Glue_Job(CloudFormationResource):
       self.property(w, "Timeout", "timeout", BasicValueConverter())
       self.property(w, "AllocatedCapacity", "allocated_capacity", BasicValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
-      self.property(w, "Role", "role", StringValueConverter())
+      self.property(w, "Role", "role_arn", StringValueConverter())
       self.property(w, "DefaultArguments", "default_arguments", JsonValueConverter())
       self.block(w, "NotificationProperty", AWS_Glue_Job_NotificationProperty)
       self.property(w, "WorkerType", "worker_type", StringValueConverter())
-      self.property(w, "LogUri", "log_uri", StringValueConverter())
+      self.property(w, "LogUri", "log_uri", StringValueConverter()) # TODO: Probably not the correct mapping
       self.block(w, "Command", AWS_Glue_Job_JobCommand)
       self.property(w, "GlueVersion", "glue_version", StringValueConverter())
       self.block(w, "ExecutionProperty", AWS_Glue_Job_ExecutionProperty)
@@ -313,7 +313,7 @@ class AWS_Glue_Job(CloudFormationResource):
 
 class AWS_Glue_Database(CloudFormationResource):
   cfn_type = "AWS::Glue::Database"
-  tf_type = "aws_glue_database"
+  tf_type = "aws_glue_database" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -324,7 +324,7 @@ class AWS_Glue_Database(CloudFormationResource):
 
 class AWS_Glue_DevEndpoint(CloudFormationResource):
   cfn_type = "AWS::Glue::DevEndpoint"
-  tf_type = "aws_glue_dev_endpoint"
+  tf_type = "aws_glue_dev_endpoint" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -462,7 +462,7 @@ class AWS_Glue_MLTransform_InputRecordTables(CloudFormationProperty):
 
 class AWS_Glue_DataCatalogEncryptionSettings(CloudFormationResource):
   cfn_type = "AWS::Glue::DataCatalogEncryptionSettings"
-  tf_type = "aws_glue_data_catalog_encryption_settings"
+  tf_type = "aws_glue_data_catalog_encryption_settings" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -482,11 +482,11 @@ class AWS_Glue_Crawler(CloudFormationResource):
       self.property(w, "Classifiers", "classifiers", ListValueConverter(StringValueConverter()))
       self.property(w, "Description", "description", StringValueConverter())
       self.block(w, "SchemaChangePolicy", AWS_Glue_Crawler_SchemaChangePolicy)
-      self.property(w, "Configuration", "configuration", StringValueConverter())
+      self.property(w, "Configuration", "security_configuration", StringValueConverter())
       self.block(w, "Schedule", AWS_Glue_Crawler_Schedule)
       self.property(w, "DatabaseName", "database_name", StringValueConverter())
-      self.block(w, "Targets", AWS_Glue_Crawler_Targets)
-      self.property(w, "CrawlerSecurityConfiguration", "crawler_security_configuration", StringValueConverter())
+      self.block(w, "Targets", AWS_Glue_Crawler_Targets) # TODO: Probably not the correct mapping
+      self.property(w, "CrawlerSecurityConfiguration", "configuration", StringValueConverter())
       self.property(w, "TablePrefix", "table_prefix", StringValueConverter())
       self.property(w, "Tags", "tags", JsonValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
@@ -494,7 +494,7 @@ class AWS_Glue_Crawler(CloudFormationResource):
 
 class AWS_Glue_MLTransform(CloudFormationResource):
   cfn_type = "AWS::Glue::MLTransform"
-  tf_type = "aws_glue_ml_transform"
+  tf_type = "aws_glue_ml_transform" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -515,7 +515,7 @@ class AWS_Glue_MLTransform(CloudFormationResource):
 
 class AWS_Glue_Table(CloudFormationResource):
   cfn_type = "AWS::Glue::Table"
-  tf_type = "aws_glue_table"
+  tf_type = "aws_glue_table" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -532,7 +532,7 @@ class AWS_Glue_Connection(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.block(w, "ConnectionInput", AWS_Glue_Connection_ConnectionInput)
+      self.block(w, "ConnectionInput", AWS_Glue_Connection_ConnectionInput) # TODO: Probably not the correct mapping
       self.property(w, "CatalogId", "catalog_id", StringValueConverter())
 
 
@@ -544,7 +544,7 @@ class AWS_Glue_Trigger(CloudFormationResource):
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "Type", "type", StringValueConverter())
-      self.property(w, "StartOnCreation", "start_on_creation", BasicValueConverter())
+      self.property(w, "StartOnCreation", "start_on_creation", BasicValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "Description", "description", StringValueConverter())
       self.repeated_block(w, "Actions", AWS_Glue_Trigger_Action)
       self.property(w, "WorkflowName", "workflow_name", StringValueConverter())
@@ -575,7 +575,7 @@ class AWS_Glue_Partition_PartitionInput(CloudFormationProperty):
 
 class AWS_Glue_Partition(CloudFormationResource):
   cfn_type = "AWS::Glue::Partition"
-  tf_type = "aws_glue_partition"
+  tf_type = "aws_glue_partition" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):

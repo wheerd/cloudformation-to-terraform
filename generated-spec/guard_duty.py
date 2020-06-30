@@ -12,7 +12,7 @@ class AWS_GuardDuty_Filter_Condition(CloudFormationProperty):
 
 class AWS_GuardDuty_ThreatIntelSet(CloudFormationResource):
   cfn_type = "AWS::GuardDuty::ThreatIntelSet"
-  tf_type = "aws_guard_duty_threat_intel_set"
+  tf_type = "aws_guardduty_threatintelset"
   ref = "arn"
 
   def write(self, w):
@@ -26,22 +26,22 @@ class AWS_GuardDuty_ThreatIntelSet(CloudFormationResource):
 
 class AWS_GuardDuty_Member(CloudFormationResource):
   cfn_type = "AWS::GuardDuty::Member"
-  tf_type = "aws_guard_duty_member"
+  tf_type = "aws_guardduty_member"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "Status", "status", StringValueConverter())
-      self.property(w, "MemberId", "member_id", StringValueConverter())
+      self.property(w, "Status", "relationship_status", StringValueConverter())
+      self.property(w, "MemberId", "id", StringValueConverter())
       self.property(w, "Email", "email", StringValueConverter())
-      self.property(w, "Message", "message", StringValueConverter())
+      self.property(w, "Message", "invitation_message", StringValueConverter())
       self.property(w, "DisableEmailNotification", "disable_email_notification", BasicValueConverter())
       self.property(w, "DetectorId", "detector_id", StringValueConverter())
 
 
 class AWS_GuardDuty_Detector(CloudFormationResource):
   cfn_type = "AWS::GuardDuty::Detector"
-  tf_type = "aws_guard_duty_detector"
+  tf_type = "aws_guardduty_detector"
   ref = "arn"
 
   def write(self, w):
@@ -52,7 +52,7 @@ class AWS_GuardDuty_Detector(CloudFormationResource):
 
 class AWS_GuardDuty_Master(CloudFormationResource):
   cfn_type = "AWS::GuardDuty::Master"
-  tf_type = "aws_guard_duty_master"
+  tf_type = "aws_guard_duty_master" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -64,7 +64,7 @@ class AWS_GuardDuty_Master(CloudFormationResource):
 
 class AWS_GuardDuty_IPSet(CloudFormationResource):
   cfn_type = "AWS::GuardDuty::IPSet"
-  tf_type = "aws_guard_duty_ip_set"
+  tf_type = "aws_guardduty_ipset"
   ref = "arn"
 
   def write(self, w):
@@ -85,7 +85,7 @@ class AWS_GuardDuty_Filter_FindingCriteria(CloudFormationProperty):
 
 class AWS_GuardDuty_Filter(CloudFormationResource):
   cfn_type = "AWS::GuardDuty::Filter"
-  tf_type = "aws_guard_duty_filter"
+  tf_type = "aws_guard_duty_filter" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):

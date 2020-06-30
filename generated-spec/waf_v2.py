@@ -139,21 +139,21 @@ class AWS_WAFv2_RuleGroup_SizeConstraintStatement(CloudFormationProperty):
 
 class AWS_WAFv2_RegexPatternSet(CloudFormationResource):
   cfn_type = "AWS::WAFv2::RegexPatternSet"
-  tf_type = "aws_waf_v2_regex_pattern_set"
+  tf_type = "aws_wafv2_regex_pattern_set"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "Description", "description", StringValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
-      self.property(w, "RegularExpressionList", "regular_expression_list", ListValueConverter(StringValueConverter()))
+      self.property(w, "RegularExpressionList", "regular_expression_list", ListValueConverter(StringValueConverter())) # TODO: Probably not the correct mapping
       self.property(w, "Scope", "scope", StringValueConverter())
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
 
 class AWS_WAFv2_IPSet(CloudFormationResource):
   cfn_type = "AWS::WAFv2::IPSet"
-  tf_type = "aws_waf_v2_ip_set"
+  tf_type = "aws_wafv2_ip_set"
   ref = "arn"
 
   def write(self, w):
@@ -168,7 +168,7 @@ class AWS_WAFv2_IPSet(CloudFormationResource):
 
 class AWS_WAFv2_WebACLAssociation(CloudFormationResource):
   cfn_type = "AWS::WAFv2::WebACLAssociation"
-  tf_type = "aws_waf_v2_web_acl_association"
+  tf_type = "aws_wafv2_web_acl_association"
   ref = "arn"
 
   def write(self, w):
@@ -462,7 +462,7 @@ class AWS_WAFv2_WebACL_Rule(CloudFormationProperty):
 
 class AWS_WAFv2_WebACL(CloudFormationResource):
   cfn_type = "AWS::WAFv2::WebACL"
-  tf_type = "aws_waf_v2_web_acl"
+  tf_type = "aws_wafv2_web_acl"
   ref = "arn"
 
   def write(self, w):
@@ -471,7 +471,7 @@ class AWS_WAFv2_WebACL(CloudFormationResource):
       self.property(w, "Description", "description", StringValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
       self.property(w, "Scope", "scope", StringValueConverter())
-      self.repeated_block(w, "Rules", AWS_WAFv2_WebACL_Rule)
+      self.repeated_block(w, "Rules", AWS_WAFv2_WebACL_Rule) # TODO: Probably not the correct mapping
       self.block(w, "VisibilityConfig", AWS_WAFv2_WebACL_VisibilityConfig)
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
@@ -488,7 +488,7 @@ class AWS_WAFv2_RuleGroup_Rule(CloudFormationProperty):
 
 class AWS_WAFv2_RuleGroup(CloudFormationResource):
   cfn_type = "AWS::WAFv2::RuleGroup"
-  tf_type = "aws_waf_v2_rule_group"
+  tf_type = "aws_wafv2_rule_group"
   ref = "arn"
 
   def write(self, w):
@@ -497,7 +497,7 @@ class AWS_WAFv2_RuleGroup(CloudFormationResource):
       self.property(w, "Description", "description", StringValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
       self.property(w, "Scope", "scope", StringValueConverter())
-      self.repeated_block(w, "Rules", AWS_WAFv2_RuleGroup_Rule)
+      self.repeated_block(w, "Rules", AWS_WAFv2_RuleGroup_Rule) # TODO: Probably not the correct mapping
       self.block(w, "VisibilityConfig", AWS_WAFv2_RuleGroup_VisibilityConfig)
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 

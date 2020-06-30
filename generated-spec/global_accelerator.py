@@ -17,21 +17,21 @@ class AWS_GlobalAccelerator_Listener_PortRange(CloudFormationProperty):
 
 class AWS_GlobalAccelerator_Accelerator(CloudFormationResource):
   cfn_type = "AWS::GlobalAccelerator::Accelerator"
-  tf_type = "aws_global_accelerator_accelerator"
+  tf_type = "aws_globalaccelerator_accelerator"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "Name", "name", StringValueConverter())
       self.property(w, "IpAddressType", "ip_address_type", StringValueConverter())
-      self.property(w, "IpAddresses", "ip_addresses", ListValueConverter(StringValueConverter()))
+      self.property(w, "IpAddresses", "ip_addresses", ListValueConverter(StringValueConverter())) # TODO: Probably not the correct mapping
       self.property(w, "Enabled", "enabled", BasicValueConverter())
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
 
 class AWS_GlobalAccelerator_Listener(CloudFormationResource):
   cfn_type = "AWS::GlobalAccelerator::Listener"
-  tf_type = "aws_global_accelerator_listener"
+  tf_type = "aws_globalaccelerator_listener"
   ref = "arn"
 
   def write(self, w):
@@ -44,7 +44,7 @@ class AWS_GlobalAccelerator_Listener(CloudFormationResource):
 
 class AWS_GlobalAccelerator_EndpointGroup(CloudFormationResource):
   cfn_type = "AWS::GlobalAccelerator::EndpointGroup"
-  tf_type = "aws_global_accelerator_endpoint_group"
+  tf_type = "aws_globalaccelerator_endpoint_group"
   ref = "arn"
 
   def write(self, w):

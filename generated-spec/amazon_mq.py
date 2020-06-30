@@ -61,7 +61,7 @@ class AWS_AmazonMQ_ConfigurationAssociation_ConfigurationId(CloudFormationProper
 
 class AWS_AmazonMQ_ConfigurationAssociation(CloudFormationResource):
   cfn_type = "AWS::AmazonMQ::ConfigurationAssociation"
-  tf_type = "aws_amazon_mq_configuration_association"
+  tf_type = "aws_amazon_mq_configuration_association" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -72,7 +72,7 @@ class AWS_AmazonMQ_ConfigurationAssociation(CloudFormationResource):
 
 class AWS_AmazonMQ_Configuration(CloudFormationResource):
   cfn_type = "AWS::AmazonMQ::Configuration"
-  tf_type = "aws_amazon_mq_configuration"
+  tf_type = "aws_mq_configuration"
   ref = "arn"
 
   def write(self, w):
@@ -87,7 +87,7 @@ class AWS_AmazonMQ_Configuration(CloudFormationResource):
 
 class AWS_AmazonMQ_Broker(CloudFormationResource):
   cfn_type = "AWS::AmazonMQ::Broker"
-  tf_type = "aws_amazon_mq_broker"
+  tf_type = "aws_amazon_mq_broker" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):

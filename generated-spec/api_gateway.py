@@ -148,14 +148,14 @@ class AWS_ApiGateway_Authorizer(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "AuthType", "auth_type", StringValueConverter())
+      self.property(w, "AuthType", "auth_type", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "AuthorizerCredentials", "authorizer_credentials", StringValueConverter())
       self.property(w, "AuthorizerResultTtlInSeconds", "authorizer_result_ttl_in_seconds", BasicValueConverter())
       self.property(w, "AuthorizerUri", "authorizer_uri", StringValueConverter())
       self.property(w, "IdentitySource", "identity_source", StringValueConverter())
       self.property(w, "IdentityValidationExpression", "identity_validation_expression", StringValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
-      self.property(w, "ProviderARNs", "provider_ar_ns", ListValueConverter(StringValueConverter()))
+      self.property(w, "ProviderARNs", "provider_arns", ListValueConverter(StringValueConverter()))
       self.property(w, "RestApiId", "rest_api_id", StringValueConverter())
       self.property(w, "Type", "type", StringValueConverter())
 
@@ -210,8 +210,8 @@ class AWS_ApiGateway_BasePathMapping(CloudFormationResource):
     with self.resource_block(w):
       self.property(w, "BasePath", "base_path", StringValueConverter())
       self.property(w, "DomainName", "domain_name", StringValueConverter())
-      self.property(w, "RestApiId", "rest_api_id", StringValueConverter())
-      self.property(w, "Stage", "stage", StringValueConverter())
+      self.property(w, "RestApiId", "api_id", StringValueConverter())
+      self.property(w, "Stage", "stage_name", StringValueConverter())
 
 
 class AWS_ApiGateway_Stage(CloudFormationResource):
@@ -224,16 +224,16 @@ class AWS_ApiGateway_Stage(CloudFormationResource):
       self.block(w, "AccessLogSetting", AWS_ApiGateway_Stage_AccessLogSetting)
       self.property(w, "CacheClusterEnabled", "cache_cluster_enabled", BasicValueConverter())
       self.property(w, "CacheClusterSize", "cache_cluster_size", StringValueConverter())
-      self.block(w, "CanarySetting", AWS_ApiGateway_Stage_CanarySetting)
+      self.block(w, "CanarySetting", AWS_ApiGateway_Stage_CanarySetting) # TODO: Probably not the correct mapping
       self.property(w, "ClientCertificateId", "client_certificate_id", StringValueConverter())
       self.property(w, "DeploymentId", "deployment_id", StringValueConverter())
       self.property(w, "Description", "description", StringValueConverter())
       self.property(w, "DocumentationVersion", "documentation_version", StringValueConverter())
-      self.repeated_block(w, "MethodSettings", AWS_ApiGateway_Stage_MethodSetting)
+      self.repeated_block(w, "MethodSettings", AWS_ApiGateway_Stage_MethodSetting) # TODO: Probably not the correct mapping
       self.property(w, "RestApiId", "rest_api_id", StringValueConverter())
       self.property(w, "StageName", "stage_name", StringValueConverter())
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
-      self.property(w, "TracingEnabled", "tracing_enabled", BasicValueConverter())
+      self.property(w, "TracingEnabled", "tracing_enabled", BasicValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "Variables", "variables", MapValueConverter(StringValueConverter()))
 
 
@@ -270,7 +270,7 @@ class AWS_ApiGateway_DocumentationVersion(CloudFormationResource):
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "Description", "description", StringValueConverter())
-      self.property(w, "DocumentationVersion", "documentation_version", StringValueConverter())
+      self.property(w, "DocumentationVersion", "version", StringValueConverter())
       self.property(w, "RestApiId", "rest_api_id", StringValueConverter())
 
 
@@ -306,10 +306,10 @@ class AWS_ApiGateway_ApiKey(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "CustomerId", "customer_id", StringValueConverter())
+      self.property(w, "CustomerId", "id", StringValueConverter())
       self.property(w, "Description", "description", StringValueConverter())
       self.property(w, "Enabled", "enabled", BasicValueConverter())
-      self.property(w, "GenerateDistinctId", "generate_distinct_id", BasicValueConverter())
+      self.property(w, "GenerateDistinctId", "generate_distinct_id", BasicValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "Name", "name", StringValueConverter())
       self.repeated_block(w, "StageKeys", AWS_ApiGateway_ApiKey_StageKey)
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
@@ -335,7 +335,7 @@ class AWS_ApiGateway_Account(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "CloudWatchRoleArn", "cloud_watch_role_arn", StringValueConverter())
+      self.property(w, "CloudWatchRoleArn", "cloudwatch_role_arn", StringValueConverter())
 
 
 class AWS_ApiGateway_RestApi(CloudFormationResource):
@@ -345,17 +345,17 @@ class AWS_ApiGateway_RestApi(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "ApiKeySourceType", "api_key_source_type", StringValueConverter())
+      self.property(w, "ApiKeySourceType", "api_key_source_type", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "BinaryMediaTypes", "binary_media_types", ListValueConverter(StringValueConverter()))
       self.property(w, "Body", "body", JsonValueConverter())
-      self.block(w, "BodyS3Location", AWS_ApiGateway_RestApi_S3Location)
-      self.property(w, "CloneFrom", "clone_from", StringValueConverter())
+      self.block(w, "BodyS3Location", AWS_ApiGateway_RestApi_S3Location) # TODO: Probably not the correct mapping
+      self.property(w, "CloneFrom", "clone_from", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "Description", "description", StringValueConverter())
       self.block(w, "EndpointConfiguration", AWS_ApiGateway_RestApi_EndpointConfiguration)
-      self.property(w, "FailOnWarnings", "fail_on_warnings", BasicValueConverter())
+      self.property(w, "FailOnWarnings", "arn", BasicValueConverter())
       self.property(w, "MinimumCompressionSize", "minimum_compression_size", BasicValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
-      self.property(w, "Parameters", "parameters", MapValueConverter(StringValueConverter()))
+      self.property(w, "Parameters", "parameters", MapValueConverter(StringValueConverter())) # TODO: Probably not the correct mapping
       self.property(w, "Policy", "policy", JsonValueConverter())
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
@@ -430,7 +430,7 @@ class AWS_ApiGateway_Deployment(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.block(w, "DeploymentCanarySettings", AWS_ApiGateway_Deployment_DeploymentCanarySettings)
+      self.block(w, "DeploymentCanarySettings", AWS_ApiGateway_Deployment_DeploymentCanarySettings) # TODO: Probably not the correct mapping
       self.property(w, "Description", "description", StringValueConverter())
       self.property(w, "RestApiId", "rest_api_id", StringValueConverter())
       self.block(w, "StageDescription", AWS_ApiGateway_Deployment_StageDescription)
@@ -449,7 +449,7 @@ class AWS_ApiGateway_UsagePlan(CloudFormationResource):
       self.block(w, "Quota", AWS_ApiGateway_UsagePlan_QuotaSettings)
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
       self.block(w, "Throttle", AWS_ApiGateway_UsagePlan_ThrottleSettings)
-      self.property(w, "UsagePlanName", "usage_plan_name", StringValueConverter())
+      self.property(w, "UsagePlanName", "name", StringValueConverter())
 
 
 class AWS_ApiGateway_Method(CloudFormationResource):
@@ -461,12 +461,12 @@ class AWS_ApiGateway_Method(CloudFormationResource):
     with self.resource_block(w):
       self.property(w, "ApiKeyRequired", "api_key_required", BasicValueConverter())
       self.property(w, "AuthorizationScopes", "authorization_scopes", ListValueConverter(StringValueConverter()))
-      self.property(w, "AuthorizationType", "authorization_type", StringValueConverter())
+      self.property(w, "AuthorizationType", "authorization_type", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "AuthorizerId", "authorizer_id", StringValueConverter())
       self.property(w, "HttpMethod", "http_method", StringValueConverter())
-      self.block(w, "Integration", AWS_ApiGateway_Method_Integration)
-      self.repeated_block(w, "MethodResponses", AWS_ApiGateway_Method_MethodResponse)
-      self.property(w, "OperationName", "operation_name", StringValueConverter())
+      self.block(w, "Integration", AWS_ApiGateway_Method_Integration) # TODO: Probably not the correct mapping
+      self.repeated_block(w, "MethodResponses", AWS_ApiGateway_Method_MethodResponse) # TODO: Probably not the correct mapping
+      self.property(w, "OperationName", "operation_name", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "RequestModels", "request_models", MapValueConverter(StringValueConverter()))
       self.property(w, "RequestParameters", "request_parameters", MapValueConverter(BasicValueConverter()))
       self.property(w, "RequestValidatorId", "request_validator_id", StringValueConverter())

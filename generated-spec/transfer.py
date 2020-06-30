@@ -43,13 +43,13 @@ class AWS_Transfer_Server(CloudFormationResource):
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "LoggingRole", "logging_role", StringValueConverter())
-      self.repeated_block(w, "Protocols", AWS_Transfer_Server_Protocol)
-      self.block(w, "IdentityProviderDetails", AWS_Transfer_Server_IdentityProviderDetails)
+      self.repeated_block(w, "Protocols", AWS_Transfer_Server_Protocol) # TODO: Probably not the correct mapping
+      self.block(w, "IdentityProviderDetails", AWS_Transfer_Server_IdentityProviderDetails) # TODO: Probably not the correct mapping
       self.property(w, "EndpointType", "endpoint_type", StringValueConverter())
       self.block(w, "EndpointDetails", AWS_Transfer_Server_EndpointDetails)
       self.property(w, "IdentityProviderType", "identity_provider_type", StringValueConverter())
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
-      self.property(w, "Certificate", "certificate", StringValueConverter())
+      self.property(w, "Certificate", "certificate", StringValueConverter()) # TODO: Probably not the correct mapping
 
 
 class AWS_Transfer_User(CloudFormationResource):
@@ -62,11 +62,11 @@ class AWS_Transfer_User(CloudFormationResource):
       self.property(w, "Policy", "policy", StringValueConverter())
       self.property(w, "Role", "role", StringValueConverter())
       self.property(w, "HomeDirectory", "home_directory", StringValueConverter())
-      self.property(w, "HomeDirectoryType", "home_directory_type", StringValueConverter())
+      self.property(w, "HomeDirectoryType", "home_directory_type", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "ServerId", "server_id", StringValueConverter())
       self.property(w, "UserName", "user_name", StringValueConverter())
-      self.repeated_block(w, "HomeDirectoryMappings", AWS_Transfer_User_HomeDirectoryMapEntry)
-      self.repeated_block(w, "SshPublicKeys", AWS_Transfer_User_SshPublicKey)
+      self.repeated_block(w, "HomeDirectoryMappings", AWS_Transfer_User_HomeDirectoryMapEntry) # TODO: Probably not the correct mapping
+      self.repeated_block(w, "SshPublicKeys", AWS_Transfer_User_SshPublicKey) # TODO: Probably not the correct mapping
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
 

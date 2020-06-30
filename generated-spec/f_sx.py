@@ -38,7 +38,7 @@ class AWS_FSx_FileSystem_WindowsConfiguration(CloudFormationProperty):
 
 class AWS_FSx_FileSystem(CloudFormationResource):
   cfn_type = "AWS::FSx::FileSystem"
-  tf_type = "aws_f_sx_file_system"
+  tf_type = "aws_f_sx_file_system" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):

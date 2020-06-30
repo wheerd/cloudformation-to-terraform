@@ -99,7 +99,7 @@ class AWS_SES_Template(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.block(w, "Template", AWS_SES_Template_Template)
+      self.block(w, "Template", AWS_SES_Template_Template) # TODO: Probably not the correct mapping
 
 
 class AWS_SES_ConfigurationSet(CloudFormationResource):
@@ -169,12 +169,12 @@ class AWS_SES_ReceiptFilter(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.block(w, "Filter", AWS_SES_ReceiptFilter_Filter)
+      self.block(w, "Filter", AWS_SES_ReceiptFilter_Filter) # TODO: Probably not the correct mapping
 
 
 class AWS_SES_ConfigurationSetEventDestination(CloudFormationResource):
   cfn_type = "AWS::SES::ConfigurationSetEventDestination"
-  tf_type = "aws_ses_configuration_set_event_destination"
+  tf_type = "aws_ses_configuration_set_event_destination" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -192,6 +192,6 @@ class AWS_SES_ReceiptRule(CloudFormationResource):
     with self.resource_block(w):
       self.property(w, "After", "after", StringValueConverter())
       self.block(w, "Rule", AWS_SES_ReceiptRule_Rule)
-      self.property(w, "RuleSetName", "rule_set_name", StringValueConverter())
+      self.property(w, "RuleSetName", "name", StringValueConverter())
 
 

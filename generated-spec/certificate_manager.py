@@ -10,7 +10,7 @@ class AWS_CertificateManager_Certificate_DomainValidationOption(CloudFormationPr
 
 class AWS_CertificateManager_Certificate(CloudFormationResource):
   cfn_type = "AWS::CertificateManager::Certificate"
-  tf_type = "aws_certificate_manager_certificate"
+  tf_type = "aws_certificate_manager_certificate" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):

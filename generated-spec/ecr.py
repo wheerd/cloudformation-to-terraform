@@ -14,9 +14,9 @@ class AWS_ECR_Repository(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.block(w, "LifecyclePolicy", AWS_ECR_Repository_LifecyclePolicy)
-      self.property(w, "RepositoryName", "repository_name", StringValueConverter())
-      self.property(w, "RepositoryPolicyText", "repository_policy_text", JsonValueConverter())
+      self.block(w, "LifecyclePolicy", AWS_ECR_Repository_LifecyclePolicy) # TODO: Probably not the correct mapping
+      self.property(w, "RepositoryName", "name", StringValueConverter())
+      self.property(w, "RepositoryPolicyText", "repository_policy_text", JsonValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
 

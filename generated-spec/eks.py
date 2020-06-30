@@ -37,7 +37,7 @@ class AWS_EKS_Cluster_ResourcesVpcConfig(CloudFormationProperty):
 
 class AWS_EKS_Nodegroup(CloudFormationResource):
   cfn_type = "AWS::EKS::Nodegroup"
-  tf_type = "aws_eks_nodegroup"
+  tf_type = "aws_eks_node_group"
   ref = "arn"
 
   def write(self, w):
@@ -45,11 +45,11 @@ class AWS_EKS_Nodegroup(CloudFormationResource):
       self.block(w, "ScalingConfig", AWS_EKS_Nodegroup_ScalingConfig)
       self.property(w, "Labels", "labels", JsonValueConverter())
       self.property(w, "ReleaseVersion", "release_version", StringValueConverter())
-      self.property(w, "NodegroupName", "nodegroup_name", StringValueConverter())
-      self.property(w, "Subnets", "subnets", ListValueConverter(StringValueConverter()))
-      self.property(w, "NodeRole", "node_role", StringValueConverter())
+      self.property(w, "NodegroupName", "node_group_name", StringValueConverter())
+      self.property(w, "Subnets", "subnets", ListValueConverter(StringValueConverter())) # TODO: Probably not the correct mapping
+      self.property(w, "NodeRole", "node_role", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "AmiType", "ami_type", StringValueConverter())
-      self.property(w, "ForceUpdateEnabled", "force_update_enabled", BasicValueConverter())
+      self.property(w, "ForceUpdateEnabled", "force_update_enabled", BasicValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "Version", "version", StringValueConverter())
       self.block(w, "RemoteAccess", AWS_EKS_Nodegroup_RemoteAccess)
       self.property(w, "DiskSize", "disk_size", BasicValueConverter())

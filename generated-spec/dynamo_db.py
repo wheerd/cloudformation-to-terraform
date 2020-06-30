@@ -74,7 +74,7 @@ class AWS_DynamoDB_Table_GlobalSecondaryIndex(CloudFormationProperty):
 
 class AWS_DynamoDB_Table(CloudFormationResource):
   cfn_type = "AWS::DynamoDB::Table"
-  tf_type = "aws_dynamo_db_table"
+  tf_type = "aws_dynamodb_table"
   ref = "arn"
 
   def write(self, w):
@@ -82,14 +82,14 @@ class AWS_DynamoDB_Table(CloudFormationResource):
       self.repeated_block(w, "AttributeDefinitions", AWS_DynamoDB_Table_AttributeDefinition)
       self.property(w, "BillingMode", "billing_mode", StringValueConverter())
       self.repeated_block(w, "GlobalSecondaryIndexes", AWS_DynamoDB_Table_GlobalSecondaryIndex)
-      self.repeated_block(w, "KeySchema", AWS_DynamoDB_Table_KeySchema)
+      self.repeated_block(w, "KeySchema", AWS_DynamoDB_Table_KeySchema) # TODO: Probably not the correct mapping
       self.repeated_block(w, "LocalSecondaryIndexes", AWS_DynamoDB_Table_LocalSecondaryIndex)
       self.block(w, "PointInTimeRecoverySpecification", AWS_DynamoDB_Table_PointInTimeRecoverySpecification)
-      self.block(w, "ProvisionedThroughput", AWS_DynamoDB_Table_ProvisionedThroughput)
-      self.block(w, "SSESpecification", AWS_DynamoDB_Table_SSESpecification)
-      self.block(w, "StreamSpecification", AWS_DynamoDB_Table_StreamSpecification)
-      self.property(w, "TableName", "table_name", StringValueConverter())
+      self.block(w, "ProvisionedThroughput", AWS_DynamoDB_Table_ProvisionedThroughput) # TODO: Probably not the correct mapping
+      self.block(w, "SSESpecification", AWS_DynamoDB_Table_SSESpecification) # TODO: Probably not the correct mapping
+      self.block(w, "StreamSpecification", AWS_DynamoDB_Table_StreamSpecification) # TODO: Probably not the correct mapping
+      self.property(w, "TableName", "name", StringValueConverter())
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
-      self.block(w, "TimeToLiveSpecification", AWS_DynamoDB_Table_TimeToLiveSpecification)
+      self.block(w, "TimeToLiveSpecification", AWS_DynamoDB_Table_TimeToLiveSpecification) # TODO: Probably not the correct mapping
 
 

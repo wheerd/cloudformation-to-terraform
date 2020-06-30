@@ -17,7 +17,8 @@ cnf_abbreviation_fixes = {
     'e_c_s': 'e_c_s',
     's_s_m': 'ssm',
     'io_t': 'iot',
-    'wa_fv2': 'waf_v2'
+    'wa_fv2': 'waf_v2',
+    'elastic_load_balancing': 'elb'
 }
 
 def snake_case_with_abbreviation_fix(name):

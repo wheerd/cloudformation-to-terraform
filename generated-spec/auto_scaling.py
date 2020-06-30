@@ -102,15 +102,15 @@ class AWS_AutoScaling_AutoScalingGroup_TagProperty(CloudFormationProperty):
 
 class AWS_AutoScaling_LifecycleHook(CloudFormationResource):
   cfn_type = "AWS::AutoScaling::LifecycleHook"
-  tf_type = "aws_auto_scaling_lifecycle_hook"
+  tf_type = "aws_autoscaling_lifecycle_hook"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "AutoScalingGroupName", "auto_scaling_group_name", StringValueConverter())
+      self.property(w, "AutoScalingGroupName", "autoscaling_group_name", StringValueConverter())
       self.property(w, "DefaultResult", "default_result", StringValueConverter())
       self.property(w, "HeartbeatTimeout", "heartbeat_timeout", BasicValueConverter())
-      self.property(w, "LifecycleHookName", "lifecycle_hook_name", StringValueConverter())
+      self.property(w, "LifecycleHookName", "name", StringValueConverter())
       self.property(w, "LifecycleTransition", "lifecycle_transition", StringValueConverter())
       self.property(w, "NotificationMetadata", "notification_metadata", StringValueConverter())
       self.property(w, "NotificationTargetARN", "notification_target_arn", StringValueConverter())
@@ -119,17 +119,17 @@ class AWS_AutoScaling_LifecycleHook(CloudFormationResource):
 
 class AWS_AutoScaling_ScheduledAction(CloudFormationResource):
   cfn_type = "AWS::AutoScaling::ScheduledAction"
-  tf_type = "aws_auto_scaling_scheduled_action"
+  tf_type = "aws_appautoscaling_scheduled_action"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "AutoScalingGroupName", "auto_scaling_group_name", StringValueConverter())
-      self.property(w, "DesiredCapacity", "desired_capacity", BasicValueConverter())
+      self.property(w, "AutoScalingGroupName", "name", StringValueConverter())
+      self.property(w, "DesiredCapacity", "desired_capacity", BasicValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "EndTime", "end_time", StringValueConverter())
-      self.property(w, "MaxSize", "max_size", BasicValueConverter())
-      self.property(w, "MinSize", "min_size", BasicValueConverter())
-      self.property(w, "Recurrence", "recurrence", StringValueConverter())
+      self.property(w, "MaxSize", "max_size", BasicValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "MinSize", "min_size", BasicValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "Recurrence", "recurrence", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "StartTime", "start_time", StringValueConverter())
 
 
@@ -170,7 +170,7 @@ class AWS_AutoScaling_ScalingPolicy_TargetTrackingConfiguration(CloudFormationPr
 
 class AWS_AutoScaling_LaunchConfiguration(CloudFormationResource):
   cfn_type = "AWS::AutoScaling::LaunchConfiguration"
-  tf_type = "aws_auto_scaling_launch_configuration"
+  tf_type = "aws_auto_scaling_launch_configuration" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -197,7 +197,7 @@ class AWS_AutoScaling_LaunchConfiguration(CloudFormationResource):
 
 class AWS_AutoScaling_ScalingPolicy(CloudFormationResource):
   cfn_type = "AWS::AutoScaling::ScalingPolicy"
-  tf_type = "aws_auto_scaling_scaling_policy"
+  tf_type = "aws_auto_scaling_scaling_policy" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -216,7 +216,7 @@ class AWS_AutoScaling_ScalingPolicy(CloudFormationResource):
 
 class AWS_AutoScaling_AutoScalingGroup(CloudFormationResource):
   cfn_type = "AWS::AutoScaling::AutoScalingGroup"
-  tf_type = "aws_auto_scaling_auto_scaling_group"
+  tf_type = "aws_auto_scaling_auto_scaling_group" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):

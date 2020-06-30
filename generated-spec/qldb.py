@@ -7,7 +7,7 @@ class AWS_QLDB_Ledger(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "PermissionsMode", "permissions_mode", StringValueConverter())
+      self.property(w, "PermissionsMode", "permissions_mode", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "DeletionProtection", "deletion_protection", BasicValueConverter())
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
       self.property(w, "Name", "name", StringValueConverter())

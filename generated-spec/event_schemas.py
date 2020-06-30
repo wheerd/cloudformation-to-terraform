@@ -23,7 +23,7 @@ class AWS_EventSchemas_Discoverer_TagsEntry(CloudFormationProperty):
 
 class AWS_EventSchemas_Discoverer(CloudFormationResource):
   cfn_type = "AWS::EventSchemas::Discoverer"
-  tf_type = "aws_event_schemas_discoverer"
+  tf_type = "aws_event_schemas_discoverer" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -35,7 +35,7 @@ class AWS_EventSchemas_Discoverer(CloudFormationResource):
 
 class AWS_EventSchemas_RegistryPolicy(CloudFormationResource):
   cfn_type = "AWS::EventSchemas::RegistryPolicy"
-  tf_type = "aws_event_schemas_registry_policy"
+  tf_type = "aws_event_schemas_registry_policy" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -47,7 +47,7 @@ class AWS_EventSchemas_RegistryPolicy(CloudFormationResource):
 
 class AWS_EventSchemas_Schema(CloudFormationResource):
   cfn_type = "AWS::EventSchemas::Schema"
-  tf_type = "aws_event_schemas_schema"
+  tf_type = "aws_event_schemas_schema" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -62,7 +62,7 @@ class AWS_EventSchemas_Schema(CloudFormationResource):
 
 class AWS_EventSchemas_Registry(CloudFormationResource):
   cfn_type = "AWS::EventSchemas::Registry"
-  tf_type = "aws_event_schemas_registry"
+  tf_type = "aws_event_schemas_registry" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):

@@ -7,7 +7,7 @@ class AWS_Inspector_ResourceGroup(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "ResourceGroupTags", "resource_group_tags", ListValueConverter(ResourceTag()))
+      self.property(w, "ResourceGroupTags", "tags", ListValueConverter(ResourceTag()))
 
 
 class AWS_Inspector_AssessmentTemplate(CloudFormationResource):
@@ -17,11 +17,11 @@ class AWS_Inspector_AssessmentTemplate(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "AssessmentTargetArn", "assessment_target_arn", StringValueConverter())
-      self.property(w, "DurationInSeconds", "duration_in_seconds", BasicValueConverter())
-      self.property(w, "AssessmentTemplateName", "assessment_template_name", StringValueConverter())
+      self.property(w, "AssessmentTargetArn", "arn", StringValueConverter())
+      self.property(w, "DurationInSeconds", "duration", BasicValueConverter())
+      self.property(w, "AssessmentTemplateName", "name", StringValueConverter())
       self.property(w, "RulesPackageArns", "rules_package_arns", ListValueConverter(StringValueConverter()))
-      self.property(w, "UserAttributesForFindings", "user_attributes_for_findings", ListValueConverter(ResourceTag()))
+      self.property(w, "UserAttributesForFindings", "user_attributes_for_findings", ListValueConverter(ResourceTag())) # TODO: Probably not the correct mapping
 
 
 class AWS_Inspector_AssessmentTarget(CloudFormationResource):
@@ -31,7 +31,7 @@ class AWS_Inspector_AssessmentTarget(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "AssessmentTargetName", "assessment_target_name", StringValueConverter())
+      self.property(w, "AssessmentTargetName", "name", StringValueConverter())
       self.property(w, "ResourceGroupArn", "resource_group_arn", StringValueConverter())
 
 

@@ -23,7 +23,7 @@ class AWS_Cassandra_Table_ProvisionedThroughput(CloudFormationProperty):
 
 class AWS_Cassandra_Keyspace(CloudFormationResource):
   cfn_type = "AWS::Cassandra::Keyspace"
-  tf_type = "aws_cassandra_keyspace"
+  tf_type = "aws_cassandra_keyspace" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -40,7 +40,7 @@ class AWS_Cassandra_Table_BillingMode(CloudFormationProperty):
 
 class AWS_Cassandra_Table(CloudFormationResource):
   cfn_type = "AWS::Cassandra::Table"
-  tf_type = "aws_cassandra_table"
+  tf_type = "aws_cassandra_table" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):

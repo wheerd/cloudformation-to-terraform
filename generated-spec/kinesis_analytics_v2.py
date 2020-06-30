@@ -189,7 +189,7 @@ class AWS_KinesisAnalyticsV2_ApplicationReferenceDataSource_CSVMappingParameters
 
 class AWS_KinesisAnalyticsV2_ApplicationCloudWatchLoggingOption(CloudFormationResource):
   cfn_type = "AWS::KinesisAnalyticsV2::ApplicationCloudWatchLoggingOption"
-  tf_type = "aws_kinesis_analytics_v2_application_cloud_watch_logging_option"
+  tf_type = "aws_kinesis_analytics_v2_application_cloud_watch_logging_option" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -200,7 +200,7 @@ class AWS_KinesisAnalyticsV2_ApplicationCloudWatchLoggingOption(CloudFormationRe
 
 class AWS_KinesisAnalyticsV2_ApplicationOutput(CloudFormationResource):
   cfn_type = "AWS::KinesisAnalyticsV2::ApplicationOutput"
-  tf_type = "aws_kinesis_analytics_v2_application_output"
+  tf_type = "aws_kinesis_analytics_v2_application_output" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -298,7 +298,7 @@ class AWS_KinesisAnalyticsV2_Application_ApplicationConfiguration(CloudFormation
 
 class AWS_KinesisAnalyticsV2_Application(CloudFormationResource):
   cfn_type = "AWS::KinesisAnalyticsV2::Application"
-  tf_type = "aws_kinesis_analytics_v2_application"
+  tf_type = "aws_kinesis_analytics_v2_application" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -313,7 +313,7 @@ class AWS_KinesisAnalyticsV2_Application(CloudFormationResource):
 
 class AWS_KinesisAnalyticsV2_ApplicationReferenceDataSource(CloudFormationResource):
   cfn_type = "AWS::KinesisAnalyticsV2::ApplicationReferenceDataSource"
-  tf_type = "aws_kinesis_analytics_v2_application_reference_data_source"
+  tf_type = "aws_kinesis_analytics_v2_application_reference_data_source" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):

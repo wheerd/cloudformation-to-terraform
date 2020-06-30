@@ -78,7 +78,7 @@ class AWS_WAF_SizeConstraintSet_SizeConstraint(CloudFormationProperty):
 
 class AWS_WAF_IPSet(CloudFormationResource):
   cfn_type = "AWS::WAF::IPSet"
-  tf_type = "aws_waf_ip_set"
+  tf_type = "aws_waf_ipset"
   ref = "arn"
 
   def write(self, w):

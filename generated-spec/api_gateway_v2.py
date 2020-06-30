@@ -72,7 +72,7 @@ class AWS_ApiGatewayV2_Stage_RouteSettings(CloudFormationProperty):
 
 class AWS_ApiGatewayV2_Route(CloudFormationResource):
   cfn_type = "AWS::ApiGatewayV2::Route"
-  tf_type = "aws_api_gateway_v2_route"
+  tf_type = "aws_apigatewayv2_route"
   ref = "arn"
 
   def write(self, w):
@@ -88,12 +88,12 @@ class AWS_ApiGatewayV2_Route(CloudFormationResource):
       self.property(w, "AuthorizationType", "authorization_type", StringValueConverter())
       self.property(w, "ModelSelectionExpression", "model_selection_expression", StringValueConverter())
       self.property(w, "ApiId", "api_id", StringValueConverter())
-      self.property(w, "RequestParameters", "request_parameters", JsonValueConverter())
+      self.property(w, "RequestParameters", "request_parameters", JsonValueConverter()) # TODO: Probably not the correct mapping
 
 
 class AWS_ApiGatewayV2_Stage(CloudFormationResource):
   cfn_type = "AWS::ApiGatewayV2::Stage"
-  tf_type = "aws_api_gateway_v2_stage"
+  tf_type = "aws_apigatewayv2_stage"
   ref = "arn"
 
   def write(self, w):
@@ -104,7 +104,7 @@ class AWS_ApiGatewayV2_Stage(CloudFormationResource):
       self.block(w, "AccessLogSettings", AWS_ApiGatewayV2_Stage_AccessLogSettings)
       self.property(w, "AutoDeploy", "auto_deploy", BasicValueConverter())
       self.property(w, "RouteSettings", "route_settings", JsonValueConverter())
-      self.property(w, "StageName", "stage_name", StringValueConverter())
+      self.property(w, "StageName", "name", StringValueConverter())
       self.property(w, "StageVariables", "stage_variables", JsonValueConverter())
       self.property(w, "ApiId", "api_id", StringValueConverter())
       self.block(w, "DefaultRouteSettings", AWS_ApiGatewayV2_Stage_RouteSettings)
@@ -113,17 +113,17 @@ class AWS_ApiGatewayV2_Stage(CloudFormationResource):
 
 class AWS_ApiGatewayV2_Api(CloudFormationResource):
   cfn_type = "AWS::ApiGatewayV2::Api"
-  tf_type = "aws_api_gateway_v2_api"
+  tf_type = "aws_apigatewayv2_api"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "RouteSelectionExpression", "route_selection_expression", StringValueConverter())
-      self.block(w, "BodyS3Location", AWS_ApiGatewayV2_Api_BodyS3Location)
+      self.block(w, "BodyS3Location", AWS_ApiGatewayV2_Api_BodyS3Location) # TODO: Probably not the correct mapping
       self.property(w, "Description", "description", StringValueConverter())
-      self.property(w, "BasePath", "base_path", StringValueConverter())
-      self.property(w, "FailOnWarnings", "fail_on_warnings", BasicValueConverter())
-      self.property(w, "DisableSchemaValidation", "disable_schema_validation", BasicValueConverter())
+      self.property(w, "BasePath", "base_path", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "FailOnWarnings", "arn", BasicValueConverter())
+      self.property(w, "DisableSchemaValidation", "disable_schema_validation", BasicValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "Name", "name", StringValueConverter())
       self.property(w, "Target", "target", StringValueConverter())
       self.property(w, "CredentialsArn", "credentials_arn", StringValueConverter())
@@ -131,20 +131,20 @@ class AWS_ApiGatewayV2_Api(CloudFormationResource):
       self.property(w, "Version", "version", StringValueConverter())
       self.property(w, "ProtocolType", "protocol_type", StringValueConverter())
       self.property(w, "RouteKey", "route_key", StringValueConverter())
-      self.property(w, "Body", "body", JsonValueConverter())
+      self.property(w, "Body", "body", JsonValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "Tags", "tags", JsonValueConverter())
       self.property(w, "ApiKeySelectionExpression", "api_key_selection_expression", StringValueConverter())
 
 
 class AWS_ApiGatewayV2_RouteResponse(CloudFormationResource):
   cfn_type = "AWS::ApiGatewayV2::RouteResponse"
-  tf_type = "aws_api_gateway_v2_route_response"
+  tf_type = "aws_apigatewayv2_route_response"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "RouteResponseKey", "route_response_key", StringValueConverter())
-      self.property(w, "ResponseParameters", "response_parameters", JsonValueConverter())
+      self.property(w, "ResponseParameters", "response_parameters", JsonValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "RouteId", "route_id", StringValueConverter())
       self.property(w, "ModelSelectionExpression", "model_selection_expression", StringValueConverter())
       self.property(w, "ApiId", "api_id", StringValueConverter())
@@ -153,7 +153,7 @@ class AWS_ApiGatewayV2_RouteResponse(CloudFormationResource):
 
 class AWS_ApiGatewayV2_DomainName(CloudFormationResource):
   cfn_type = "AWS::ApiGatewayV2::DomainName"
-  tf_type = "aws_api_gateway_v2_domain_name"
+  tf_type = "aws_apigatewayv2_domain_name"
   ref = "arn"
 
   def write(self, w):
@@ -165,7 +165,7 @@ class AWS_ApiGatewayV2_DomainName(CloudFormationResource):
 
 class AWS_ApiGatewayV2_Integration(CloudFormationResource):
   cfn_type = "AWS::ApiGatewayV2::Integration"
-  tf_type = "aws_api_gateway_v2_integration"
+  tf_type = "aws_apigatewayv2_integration"
   ref = "arn"
 
   def write(self, w):
@@ -175,14 +175,14 @@ class AWS_ApiGatewayV2_Integration(CloudFormationResource):
       self.property(w, "ConnectionType", "connection_type", StringValueConverter())
       self.property(w, "IntegrationMethod", "integration_method", StringValueConverter())
       self.property(w, "PassthroughBehavior", "passthrough_behavior", StringValueConverter())
-      self.property(w, "RequestParameters", "request_parameters", JsonValueConverter())
+      self.property(w, "RequestParameters", "request_parameters", JsonValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "ConnectionId", "connection_id", StringValueConverter())
       self.property(w, "IntegrationUri", "integration_uri", StringValueConverter())
       self.property(w, "PayloadFormatVersion", "payload_format_version", StringValueConverter())
       self.property(w, "CredentialsArn", "credentials_arn", StringValueConverter())
       self.property(w, "RequestTemplates", "request_templates", JsonValueConverter())
-      self.property(w, "TimeoutInMillis", "timeout_in_millis", BasicValueConverter())
-      self.block(w, "TlsConfig", AWS_ApiGatewayV2_Integration_TlsConfig)
+      self.property(w, "TimeoutInMillis", "timeout_in_millis", BasicValueConverter()) # TODO: Probably not the correct mapping
+      self.block(w, "TlsConfig", AWS_ApiGatewayV2_Integration_TlsConfig) # TODO: Probably not the correct mapping
       self.property(w, "ContentHandlingStrategy", "content_handling_strategy", StringValueConverter())
       self.property(w, "ApiId", "api_id", StringValueConverter())
       self.property(w, "IntegrationType", "integration_type", StringValueConverter())
@@ -190,19 +190,19 @@ class AWS_ApiGatewayV2_Integration(CloudFormationResource):
 
 class AWS_ApiGatewayV2_Deployment(CloudFormationResource):
   cfn_type = "AWS::ApiGatewayV2::Deployment"
-  tf_type = "aws_api_gateway_v2_deployment"
+  tf_type = "aws_apigatewayv2_deployment"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "Description", "description", StringValueConverter())
-      self.property(w, "StageName", "stage_name", StringValueConverter())
+      self.property(w, "StageName", "stage_name", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "ApiId", "api_id", StringValueConverter())
 
 
 class AWS_ApiGatewayV2_Model(CloudFormationResource):
   cfn_type = "AWS::ApiGatewayV2::Model"
-  tf_type = "aws_api_gateway_v2_model"
+  tf_type = "aws_apigatewayv2_model"
   ref = "arn"
 
   def write(self, w):
@@ -216,32 +216,32 @@ class AWS_ApiGatewayV2_Model(CloudFormationResource):
 
 class AWS_ApiGatewayV2_Authorizer(CloudFormationResource):
   cfn_type = "AWS::ApiGatewayV2::Authorizer"
-  tf_type = "aws_api_gateway_v2_authorizer"
+  tf_type = "aws_apigatewayv2_authorizer"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "IdentityValidationExpression", "identity_validation_expression", StringValueConverter())
+      self.property(w, "IdentityValidationExpression", "identity_validation_expression", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "AuthorizerUri", "authorizer_uri", StringValueConverter())
       self.property(w, "AuthorizerCredentialsArn", "authorizer_credentials_arn", StringValueConverter())
       self.property(w, "AuthorizerType", "authorizer_type", StringValueConverter())
       self.block(w, "JwtConfiguration", AWS_ApiGatewayV2_Authorizer_JWTConfiguration)
-      self.property(w, "AuthorizerResultTtlInSeconds", "authorizer_result_ttl_in_seconds", BasicValueConverter())
-      self.property(w, "IdentitySource", "identity_source", ListValueConverter(StringValueConverter()))
+      self.property(w, "AuthorizerResultTtlInSeconds", "authorizer_result_ttl_in_seconds", BasicValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "IdentitySource", "identity_sources", ListValueConverter(StringValueConverter()))
       self.property(w, "ApiId", "api_id", StringValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
 
 
 class AWS_ApiGatewayV2_IntegrationResponse(CloudFormationResource):
   cfn_type = "AWS::ApiGatewayV2::IntegrationResponse"
-  tf_type = "aws_api_gateway_v2_integration_response"
+  tf_type = "aws_apigatewayv2_integration_response"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "ResponseTemplates", "response_templates", JsonValueConverter())
       self.property(w, "TemplateSelectionExpression", "template_selection_expression", StringValueConverter())
-      self.property(w, "ResponseParameters", "response_parameters", JsonValueConverter())
+      self.property(w, "ResponseParameters", "response_parameters", JsonValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "ContentHandlingStrategy", "content_handling_strategy", StringValueConverter())
       self.property(w, "IntegrationId", "integration_id", StringValueConverter())
       self.property(w, "IntegrationResponseKey", "integration_response_key", StringValueConverter())
@@ -250,7 +250,7 @@ class AWS_ApiGatewayV2_IntegrationResponse(CloudFormationResource):
 
 class AWS_ApiGatewayV2_ApiMapping(CloudFormationResource):
   cfn_type = "AWS::ApiGatewayV2::ApiMapping"
-  tf_type = "aws_api_gateway_v2_api_mapping"
+  tf_type = "aws_apigatewayv2_api_mapping"
   ref = "arn"
 
   def write(self, w):

@@ -63,13 +63,13 @@ class AWS_ElasticBeanstalk_ConfigurationTemplate(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "ApplicationName", "application_name", StringValueConverter())
+      self.property(w, "ApplicationName", "name", StringValueConverter())
       self.property(w, "Description", "description", StringValueConverter())
       self.property(w, "EnvironmentId", "environment_id", StringValueConverter())
       self.repeated_block(w, "OptionSettings", AWS_ElasticBeanstalk_ConfigurationTemplate_ConfigurationOptionSetting)
-      self.property(w, "PlatformArn", "platform_arn", StringValueConverter())
+      self.property(w, "PlatformArn", "platform_arn", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "SolutionStackName", "solution_stack_name", StringValueConverter())
-      self.block(w, "SourceConfiguration", AWS_ElasticBeanstalk_ConfigurationTemplate_SourceConfiguration)
+      self.block(w, "SourceConfiguration", AWS_ElasticBeanstalk_ConfigurationTemplate_SourceConfiguration) # TODO: Probably not the correct mapping
 
 
 class AWS_ElasticBeanstalk_Environment(CloudFormationResource):
@@ -79,10 +79,10 @@ class AWS_ElasticBeanstalk_Environment(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "ApplicationName", "application_name", StringValueConverter())
+      self.property(w, "ApplicationName", "name", StringValueConverter())
       self.property(w, "CNAMEPrefix", "cname_prefix", StringValueConverter())
       self.property(w, "Description", "description", StringValueConverter())
-      self.property(w, "EnvironmentName", "environment_name", StringValueConverter())
+      self.property(w, "EnvironmentName", "environment_name", StringValueConverter()) # TODO: Probably not the correct mapping
       self.repeated_block(w, "OptionSettings", AWS_ElasticBeanstalk_Environment_OptionSetting)
       self.property(w, "PlatformArn", "platform_arn", StringValueConverter())
       self.property(w, "SolutionStackName", "solution_stack_name", StringValueConverter())
@@ -99,9 +99,9 @@ class AWS_ElasticBeanstalk_ApplicationVersion(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "ApplicationName", "application_name", StringValueConverter())
+      self.property(w, "ApplicationName", "name", StringValueConverter())
       self.property(w, "Description", "description", StringValueConverter())
-      self.block(w, "SourceBundle", AWS_ElasticBeanstalk_ApplicationVersion_SourceBundle)
+      self.block(w, "SourceBundle", AWS_ElasticBeanstalk_ApplicationVersion_SourceBundle) # TODO: Probably not the correct mapping
 
 
 class AWS_ElasticBeanstalk_Application_ApplicationVersionLifecycleConfig(CloudFormationProperty):
@@ -125,8 +125,8 @@ class AWS_ElasticBeanstalk_Application(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "ApplicationName", "application_name", StringValueConverter())
+      self.property(w, "ApplicationName", "name", StringValueConverter())
       self.property(w, "Description", "description", StringValueConverter())
-      self.block(w, "ResourceLifecycleConfig", AWS_ElasticBeanstalk_Application_ApplicationResourceLifecycleConfig)
+      self.block(w, "ResourceLifecycleConfig", AWS_ElasticBeanstalk_Application_ApplicationResourceLifecycleConfig) # TODO: Probably not the correct mapping
 
 

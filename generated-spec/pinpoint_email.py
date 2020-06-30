@@ -98,7 +98,7 @@ class AWS_PinpointEmail_DedicatedIpPool_Tags(CloudFormationProperty):
 
 class AWS_PinpointEmail_ConfigurationSetEventDestination(CloudFormationResource):
   cfn_type = "AWS::PinpointEmail::ConfigurationSetEventDestination"
-  tf_type = "aws_pinpoint_email_configuration_set_event_destination"
+  tf_type = "aws_pinpoint_email_configuration_set_event_destination" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -110,7 +110,7 @@ class AWS_PinpointEmail_ConfigurationSetEventDestination(CloudFormationResource)
 
 class AWS_PinpointEmail_DedicatedIpPool(CloudFormationResource):
   cfn_type = "AWS::PinpointEmail::DedicatedIpPool"
-  tf_type = "aws_pinpoint_email_dedicated_ip_pool"
+  tf_type = "aws_pinpoint_email_dedicated_ip_pool" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -121,7 +121,7 @@ class AWS_PinpointEmail_DedicatedIpPool(CloudFormationResource):
 
 class AWS_PinpointEmail_Identity(CloudFormationResource):
   cfn_type = "AWS::PinpointEmail::Identity"
-  tf_type = "aws_pinpoint_email_identity"
+  tf_type = "aws_pinpoint_email_identity" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -135,7 +135,7 @@ class AWS_PinpointEmail_Identity(CloudFormationResource):
 
 class AWS_PinpointEmail_ConfigurationSet(CloudFormationResource):
   cfn_type = "AWS::PinpointEmail::ConfigurationSet"
-  tf_type = "aws_pinpoint_email_configuration_set"
+  tf_type = "aws_pinpoint_email_configuration_set" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):

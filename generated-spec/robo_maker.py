@@ -46,7 +46,7 @@ class AWS_RoboMaker_SimulationApplication_SourceConfig(CloudFormationProperty):
 
 class AWS_RoboMaker_SimulationApplication(CloudFormationResource):
   cfn_type = "AWS::RoboMaker::SimulationApplication"
-  tf_type = "aws_robo_maker_simulation_application"
+  tf_type = "aws_robo_maker_simulation_application" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -62,7 +62,7 @@ class AWS_RoboMaker_SimulationApplication(CloudFormationResource):
 
 class AWS_RoboMaker_SimulationApplicationVersion(CloudFormationResource):
   cfn_type = "AWS::RoboMaker::SimulationApplicationVersion"
-  tf_type = "aws_robo_maker_simulation_application_version"
+  tf_type = "aws_robo_maker_simulation_application_version" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -73,7 +73,7 @@ class AWS_RoboMaker_SimulationApplicationVersion(CloudFormationResource):
 
 class AWS_RoboMaker_RobotApplication(CloudFormationResource):
   cfn_type = "AWS::RoboMaker::RobotApplication"
-  tf_type = "aws_robo_maker_robot_application"
+  tf_type = "aws_robo_maker_robot_application" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -87,7 +87,7 @@ class AWS_RoboMaker_RobotApplication(CloudFormationResource):
 
 class AWS_RoboMaker_Fleet(CloudFormationResource):
   cfn_type = "AWS::RoboMaker::Fleet"
-  tf_type = "aws_robo_maker_fleet"
+  tf_type = "aws_robo_maker_fleet" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -98,7 +98,7 @@ class AWS_RoboMaker_Fleet(CloudFormationResource):
 
 class AWS_RoboMaker_RobotApplicationVersion(CloudFormationResource):
   cfn_type = "AWS::RoboMaker::RobotApplicationVersion"
-  tf_type = "aws_robo_maker_robot_application_version"
+  tf_type = "aws_robo_maker_robot_application_version" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -109,7 +109,7 @@ class AWS_RoboMaker_RobotApplicationVersion(CloudFormationResource):
 
 class AWS_RoboMaker_Robot(CloudFormationResource):
   cfn_type = "AWS::RoboMaker::Robot"
-  tf_type = "aws_robo_maker_robot"
+  tf_type = "aws_robo_maker_robot" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):

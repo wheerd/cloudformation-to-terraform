@@ -24,7 +24,7 @@ class AWS_ResourceGroups_Group_ResourceQuery(CloudFormationProperty):
 
 class AWS_ResourceGroups_Group(CloudFormationResource):
   cfn_type = "AWS::ResourceGroups::Group"
-  tf_type = "aws_resource_groups_group"
+  tf_type = "aws_resourcegroups_group"
   ref = "arn"
 
   def write(self, w):

@@ -36,7 +36,7 @@ class AWS_ManagedBlockchain_Member_MemberFabricConfiguration(CloudFormationPrope
 
 class AWS_ManagedBlockchain_Node(CloudFormationResource):
   cfn_type = "AWS::ManagedBlockchain::Node"
-  tf_type = "aws_managed_blockchain_node"
+  tf_type = "aws_managed_blockchain_node" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -79,7 +79,7 @@ class AWS_ManagedBlockchain_Member_MemberConfiguration(CloudFormationProperty):
 
 class AWS_ManagedBlockchain_Member(CloudFormationResource):
   cfn_type = "AWS::ManagedBlockchain::Member"
-  tf_type = "aws_managed_blockchain_member"
+  tf_type = "aws_managed_blockchain_member" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):

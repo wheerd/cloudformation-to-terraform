@@ -2,7 +2,7 @@ from . import *
 
 class AWS_Detective_MemberInvitation(CloudFormationResource):
   cfn_type = "AWS::Detective::MemberInvitation"
-  tf_type = "aws_detective_member_invitation"
+  tf_type = "aws_detective_member_invitation" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -15,7 +15,7 @@ class AWS_Detective_MemberInvitation(CloudFormationResource):
 
 class AWS_Detective_Graph(CloudFormationResource):
   cfn_type = "AWS::Detective::Graph"
-  tf_type = "aws_detective_graph"
+  tf_type = "aws_detective_graph" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):

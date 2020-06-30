@@ -30,7 +30,7 @@ class AWS_ServiceCatalog_CloudFormationProvisionedProduct_ProvisioningPreference
 
 class AWS_ServiceCatalog_PortfolioShare(CloudFormationResource):
   cfn_type = "AWS::ServiceCatalog::PortfolioShare"
-  tf_type = "aws_service_catalog_portfolio_share"
+  tf_type = "aws_service_catalog_portfolio_share" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -42,7 +42,7 @@ class AWS_ServiceCatalog_PortfolioShare(CloudFormationResource):
 
 class AWS_ServiceCatalog_ResourceUpdateConstraint(CloudFormationResource):
   cfn_type = "AWS::ServiceCatalog::ResourceUpdateConstraint"
-  tf_type = "aws_service_catalog_resource_update_constraint"
+  tf_type = "aws_service_catalog_resource_update_constraint" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -56,7 +56,7 @@ class AWS_ServiceCatalog_ResourceUpdateConstraint(CloudFormationResource):
 
 class AWS_ServiceCatalog_TagOption(CloudFormationResource):
   cfn_type = "AWS::ServiceCatalog::TagOption"
-  tf_type = "aws_service_catalog_tag_option"
+  tf_type = "aws_service_catalog_tag_option" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -68,7 +68,7 @@ class AWS_ServiceCatalog_TagOption(CloudFormationResource):
 
 class AWS_ServiceCatalog_CloudFormationProduct(CloudFormationResource):
   cfn_type = "AWS::ServiceCatalog::CloudFormationProduct"
-  tf_type = "aws_service_catalog_cloud_formation_product"
+  tf_type = "aws_service_catalog_cloud_formation_product" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -88,7 +88,7 @@ class AWS_ServiceCatalog_CloudFormationProduct(CloudFormationResource):
 
 class AWS_ServiceCatalog_PortfolioProductAssociation(CloudFormationResource):
   cfn_type = "AWS::ServiceCatalog::PortfolioProductAssociation"
-  tf_type = "aws_service_catalog_portfolio_product_association"
+  tf_type = "aws_service_catalog_portfolio_product_association" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -101,7 +101,7 @@ class AWS_ServiceCatalog_PortfolioProductAssociation(CloudFormationResource):
 
 class AWS_ServiceCatalog_AcceptedPortfolioShare(CloudFormationResource):
   cfn_type = "AWS::ServiceCatalog::AcceptedPortfolioShare"
-  tf_type = "aws_service_catalog_accepted_portfolio_share"
+  tf_type = "aws_service_catalog_accepted_portfolio_share" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -112,7 +112,7 @@ class AWS_ServiceCatalog_AcceptedPortfolioShare(CloudFormationResource):
 
 class AWS_ServiceCatalog_StackSetConstraint(CloudFormationResource):
   cfn_type = "AWS::ServiceCatalog::StackSetConstraint"
-  tf_type = "aws_service_catalog_stack_set_constraint"
+  tf_type = "aws_service_catalog_stack_set_constraint" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -130,7 +130,7 @@ class AWS_ServiceCatalog_StackSetConstraint(CloudFormationResource):
 
 class AWS_ServiceCatalog_TagOptionAssociation(CloudFormationResource):
   cfn_type = "AWS::ServiceCatalog::TagOptionAssociation"
-  tf_type = "aws_service_catalog_tag_option_association"
+  tf_type = "aws_service_catalog_tag_option_association" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -141,7 +141,7 @@ class AWS_ServiceCatalog_TagOptionAssociation(CloudFormationResource):
 
 class AWS_ServiceCatalog_LaunchTemplateConstraint(CloudFormationResource):
   cfn_type = "AWS::ServiceCatalog::LaunchTemplateConstraint"
-  tf_type = "aws_service_catalog_launch_template_constraint"
+  tf_type = "aws_service_catalog_launch_template_constraint" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -155,7 +155,7 @@ class AWS_ServiceCatalog_LaunchTemplateConstraint(CloudFormationResource):
 
 class AWS_ServiceCatalog_PortfolioPrincipalAssociation(CloudFormationResource):
   cfn_type = "AWS::ServiceCatalog::PortfolioPrincipalAssociation"
-  tf_type = "aws_service_catalog_portfolio_principal_association"
+  tf_type = "aws_service_catalog_portfolio_principal_association" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -168,7 +168,7 @@ class AWS_ServiceCatalog_PortfolioPrincipalAssociation(CloudFormationResource):
 
 class AWS_ServiceCatalog_CloudFormationProvisionedProduct(CloudFormationResource):
   cfn_type = "AWS::ServiceCatalog::CloudFormationProvisionedProduct"
-  tf_type = "aws_service_catalog_cloud_formation_provisioned_product"
+  tf_type = "aws_service_catalog_cloud_formation_provisioned_product" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -188,7 +188,7 @@ class AWS_ServiceCatalog_CloudFormationProvisionedProduct(CloudFormationResource
 
 class AWS_ServiceCatalog_LaunchRoleConstraint(CloudFormationResource):
   cfn_type = "AWS::ServiceCatalog::LaunchRoleConstraint"
-  tf_type = "aws_service_catalog_launch_role_constraint"
+  tf_type = "aws_service_catalog_launch_role_constraint" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -203,21 +203,21 @@ class AWS_ServiceCatalog_LaunchRoleConstraint(CloudFormationResource):
 
 class AWS_ServiceCatalog_Portfolio(CloudFormationResource):
   cfn_type = "AWS::ServiceCatalog::Portfolio"
-  tf_type = "aws_service_catalog_portfolio"
+  tf_type = "aws_servicecatalog_portfolio"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "ProviderName", "provider_name", StringValueConverter())
       self.property(w, "Description", "description", StringValueConverter())
-      self.property(w, "DisplayName", "display_name", StringValueConverter())
-      self.property(w, "AcceptLanguage", "accept_language", StringValueConverter())
+      self.property(w, "DisplayName", "name", StringValueConverter())
+      self.property(w, "AcceptLanguage", "accept_language", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
 
 class AWS_ServiceCatalog_LaunchNotificationConstraint(CloudFormationResource):
   cfn_type = "AWS::ServiceCatalog::LaunchNotificationConstraint"
-  tf_type = "aws_service_catalog_launch_notification_constraint"
+  tf_type = "aws_service_catalog_launch_notification_constraint" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):

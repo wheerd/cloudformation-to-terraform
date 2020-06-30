@@ -25,7 +25,7 @@ class AWS_NetworkManager_Site_Location(CloudFormationProperty):
 
 class AWS_NetworkManager_Link(CloudFormationResource):
   cfn_type = "AWS::NetworkManager::Link"
-  tf_type = "aws_network_manager_link"
+  tf_type = "aws_network_manager_link" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -41,7 +41,7 @@ class AWS_NetworkManager_Link(CloudFormationResource):
 
 class AWS_NetworkManager_CustomerGatewayAssociation(CloudFormationResource):
   cfn_type = "AWS::NetworkManager::CustomerGatewayAssociation"
-  tf_type = "aws_network_manager_customer_gateway_association"
+  tf_type = "aws_network_manager_customer_gateway_association" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -54,7 +54,7 @@ class AWS_NetworkManager_CustomerGatewayAssociation(CloudFormationResource):
 
 class AWS_NetworkManager_Device(CloudFormationResource):
   cfn_type = "AWS::NetworkManager::Device"
-  tf_type = "aws_network_manager_device"
+  tf_type = "aws_network_manager_device" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -72,7 +72,7 @@ class AWS_NetworkManager_Device(CloudFormationResource):
 
 class AWS_NetworkManager_LinkAssociation(CloudFormationResource):
   cfn_type = "AWS::NetworkManager::LinkAssociation"
-  tf_type = "aws_network_manager_link_association"
+  tf_type = "aws_network_manager_link_association" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -84,7 +84,7 @@ class AWS_NetworkManager_LinkAssociation(CloudFormationResource):
 
 class AWS_NetworkManager_GlobalNetwork(CloudFormationResource):
   cfn_type = "AWS::NetworkManager::GlobalNetwork"
-  tf_type = "aws_network_manager_global_network"
+  tf_type = "aws_network_manager_global_network" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -95,7 +95,7 @@ class AWS_NetworkManager_GlobalNetwork(CloudFormationResource):
 
 class AWS_NetworkManager_TransitGatewayRegistration(CloudFormationResource):
   cfn_type = "AWS::NetworkManager::TransitGatewayRegistration"
-  tf_type = "aws_network_manager_transit_gateway_registration"
+  tf_type = "aws_network_manager_transit_gateway_registration" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -106,7 +106,7 @@ class AWS_NetworkManager_TransitGatewayRegistration(CloudFormationResource):
 
 class AWS_NetworkManager_Site(CloudFormationResource):
   cfn_type = "AWS::NetworkManager::Site"
-  tf_type = "aws_network_manager_site"
+  tf_type = "aws_network_manager_site" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):

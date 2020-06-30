@@ -51,7 +51,7 @@ class AWS_AppConfig_ConfigurationProfile_Tags(CloudFormationProperty):
 
 class AWS_AppConfig_Deployment(CloudFormationResource):
   cfn_type = "AWS::AppConfig::Deployment"
-  tf_type = "aws_app_config_deployment"
+  tf_type = "aws_app_config_deployment" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -67,7 +67,7 @@ class AWS_AppConfig_Deployment(CloudFormationResource):
 
 class AWS_AppConfig_HostedConfigurationVersion(CloudFormationResource):
   cfn_type = "AWS::AppConfig::HostedConfigurationVersion"
-  tf_type = "aws_app_config_hosted_configuration_version"
+  tf_type = "aws_app_config_hosted_configuration_version" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -82,7 +82,7 @@ class AWS_AppConfig_HostedConfigurationVersion(CloudFormationResource):
 
 class AWS_AppConfig_ConfigurationProfile(CloudFormationResource):
   cfn_type = "AWS::AppConfig::ConfigurationProfile"
-  tf_type = "aws_app_config_configuration_profile"
+  tf_type = "aws_app_config_configuration_profile" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -98,7 +98,7 @@ class AWS_AppConfig_ConfigurationProfile(CloudFormationResource):
 
 class AWS_AppConfig_Environment(CloudFormationResource):
   cfn_type = "AWS::AppConfig::Environment"
-  tf_type = "aws_app_config_environment"
+  tf_type = "aws_app_config_environment" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -112,7 +112,7 @@ class AWS_AppConfig_Environment(CloudFormationResource):
 
 class AWS_AppConfig_DeploymentStrategy(CloudFormationResource):
   cfn_type = "AWS::AppConfig::DeploymentStrategy"
-  tf_type = "aws_app_config_deployment_strategy"
+  tf_type = "aws_app_config_deployment_strategy" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -129,7 +129,7 @@ class AWS_AppConfig_DeploymentStrategy(CloudFormationResource):
 
 class AWS_AppConfig_Application(CloudFormationResource):
   cfn_type = "AWS::AppConfig::Application"
-  tf_type = "aws_app_config_application"
+  tf_type = "aws_app_config_application" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):

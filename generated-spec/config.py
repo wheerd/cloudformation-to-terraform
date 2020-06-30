@@ -122,7 +122,7 @@ class AWS_Config_OrganizationConfigRule_OrganizationCustomRuleMetadata(CloudForm
 
 class AWS_Config_RemediationConfiguration(CloudFormationResource):
   cfn_type = "AWS::Config::RemediationConfiguration"
-  tf_type = "aws_config_remediation_configuration"
+  tf_type = "aws_config_remediation_configuration" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -147,20 +147,20 @@ class AWS_Config_ConfigurationAggregator(CloudFormationResource):
   def write(self, w):
     with self.resource_block(w):
       self.repeated_block(w, "AccountAggregationSources", AWS_Config_ConfigurationAggregator_AccountAggregationSource)
-      self.property(w, "ConfigurationAggregatorName", "configuration_aggregator_name", StringValueConverter())
+      self.property(w, "ConfigurationAggregatorName", "name", StringValueConverter())
       self.block(w, "OrganizationAggregationSource", AWS_Config_ConfigurationAggregator_OrganizationAggregationSource)
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
 
 class AWS_Config_AggregationAuthorization(CloudFormationResource):
   cfn_type = "AWS::Config::AggregationAuthorization"
-  tf_type = "aws_config_aggregation_authorization"
+  tf_type = "aws_config_aggregate_authorization"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "AuthorizedAccountId", "authorized_account_id", StringValueConverter())
-      self.property(w, "AuthorizedAwsRegion", "authorized_aws_region", StringValueConverter())
+      self.property(w, "AuthorizedAccountId", "account_id", StringValueConverter())
+      self.property(w, "AuthorizedAwsRegion", "region", StringValueConverter())
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
 
@@ -183,7 +183,7 @@ class AWS_Config_DeliveryChannel(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.block(w, "ConfigSnapshotDeliveryProperties", AWS_Config_DeliveryChannel_ConfigSnapshotDeliveryProperties)
+      self.block(w, "ConfigSnapshotDeliveryProperties", AWS_Config_DeliveryChannel_ConfigSnapshotDeliveryProperties) # TODO: Probably not the correct mapping
       self.property(w, "Name", "name", StringValueConverter())
       self.property(w, "S3BucketName", "s3_bucket_name", StringValueConverter())
       self.property(w, "S3KeyPrefix", "s3_key_prefix", StringValueConverter())
@@ -192,20 +192,20 @@ class AWS_Config_DeliveryChannel(CloudFormationResource):
 
 class AWS_Config_OrganizationConfigRule(CloudFormationResource):
   cfn_type = "AWS::Config::OrganizationConfigRule"
-  tf_type = "aws_config_organization_config_rule"
+  tf_type = "aws_config_organization_custom_rule"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.block(w, "OrganizationManagedRuleMetadata", AWS_Config_OrganizationConfigRule_OrganizationManagedRuleMetadata)
-      self.property(w, "OrganizationConfigRuleName", "organization_config_rule_name", StringValueConverter())
-      self.block(w, "OrganizationCustomRuleMetadata", AWS_Config_OrganizationConfigRule_OrganizationCustomRuleMetadata)
+      self.block(w, "OrganizationManagedRuleMetadata", AWS_Config_OrganizationConfigRule_OrganizationManagedRuleMetadata) # TODO: Probably not the correct mapping
+      self.property(w, "OrganizationConfigRuleName", "name", StringValueConverter())
+      self.block(w, "OrganizationCustomRuleMetadata", AWS_Config_OrganizationConfigRule_OrganizationCustomRuleMetadata) # TODO: Probably not the correct mapping
       self.property(w, "ExcludedAccounts", "excluded_accounts", ListValueConverter(StringValueConverter()))
 
 
 class AWS_Config_OrganizationConformancePack(CloudFormationResource):
   cfn_type = "AWS::Config::OrganizationConformancePack"
-  tf_type = "aws_config_organization_conformance_pack"
+  tf_type = "aws_config_organization_conformance_pack" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -221,7 +221,7 @@ class AWS_Config_OrganizationConformancePack(CloudFormationResource):
 
 class AWS_Config_ConformancePack(CloudFormationResource):
   cfn_type = "AWS::Config::ConformancePack"
-  tf_type = "aws_config_conformance_pack"
+  tf_type = "aws_config_conformance_pack" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -249,7 +249,7 @@ class AWS_Config_ConfigRule(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "ConfigRuleName", "config_rule_name", StringValueConverter())
+      self.property(w, "ConfigRuleName", "name", StringValueConverter())
       self.property(w, "Description", "description", StringValueConverter())
       self.property(w, "InputParameters", "input_parameters", JsonValueConverter())
       self.property(w, "MaximumExecutionFrequency", "maximum_execution_frequency", StringValueConverter())

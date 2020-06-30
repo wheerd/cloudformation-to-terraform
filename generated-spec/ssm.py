@@ -167,7 +167,7 @@ class AWS_SSM_MaintenanceWindow(CloudFormationResource):
       self.property(w, "Cutoff", "cutoff", BasicValueConverter())
       self.property(w, "Schedule", "schedule", StringValueConverter())
       self.property(w, "Duration", "duration", BasicValueConverter())
-      self.property(w, "ScheduleOffset", "schedule_offset", BasicValueConverter())
+      self.property(w, "ScheduleOffset", "schedule_offset", BasicValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "EndDate", "end_date", StringValueConverter())
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
       self.property(w, "Name", "name", StringValueConverter())
@@ -183,11 +183,11 @@ class AWS_SSM_Parameter(CloudFormationResource):
     with self.resource_block(w):
       self.property(w, "Type", "type", StringValueConverter())
       self.property(w, "Description", "description", StringValueConverter())
-      self.property(w, "Policies", "policies", StringValueConverter())
+      self.property(w, "Policies", "policies", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "AllowedPattern", "allowed_pattern", StringValueConverter())
       self.property(w, "Tier", "tier", StringValueConverter())
       self.property(w, "Value", "value", StringValueConverter())
-      self.property(w, "DataType", "data_type", StringValueConverter())
+      self.property(w, "DataType", "data_type", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "Tags", "tags", JsonValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
 
@@ -200,14 +200,14 @@ class AWS_SSM_ResourceDataSync(CloudFormationResource):
   def write(self, w):
     with self.resource_block(w):
       self.block(w, "S3Destination", AWS_SSM_ResourceDataSync_S3Destination)
-      self.property(w, "KMSKeyArn", "kms_key_arn", StringValueConverter())
-      self.block(w, "SyncSource", AWS_SSM_ResourceDataSync_SyncSource)
-      self.property(w, "BucketName", "bucket_name", StringValueConverter())
-      self.property(w, "BucketRegion", "bucket_region", StringValueConverter())
-      self.property(w, "SyncFormat", "sync_format", StringValueConverter())
-      self.property(w, "SyncName", "sync_name", StringValueConverter())
-      self.property(w, "SyncType", "sync_type", StringValueConverter())
-      self.property(w, "BucketPrefix", "bucket_prefix", StringValueConverter())
+      self.property(w, "KMSKeyArn", "kms_key_arn", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.block(w, "SyncSource", AWS_SSM_ResourceDataSync_SyncSource) # TODO: Probably not the correct mapping
+      self.property(w, "BucketName", "bucket_name", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "BucketRegion", "bucket_region", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "SyncFormat", "sync_format", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "SyncName", "name", StringValueConverter())
+      self.property(w, "SyncType", "sync_type", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "BucketPrefix", "bucket_prefix", StringValueConverter()) # TODO: Probably not the correct mapping
 
 
 class AWS_SSM_MaintenanceWindowTask_MaintenanceWindowRunCommandParameters(CloudFormationProperty):
@@ -281,14 +281,14 @@ class AWS_SSM_PatchBaseline(CloudFormationResource):
       self.property(w, "OperatingSystem", "operating_system", StringValueConverter())
       self.property(w, "Description", "description", StringValueConverter())
       self.block(w, "ApprovalRules", AWS_SSM_PatchBaseline_RuleGroup)
-      self.repeated_block(w, "Sources", AWS_SSM_PatchBaseline_PatchSource)
+      self.repeated_block(w, "Sources", AWS_SSM_PatchBaseline_PatchSource) # TODO: Probably not the correct mapping
       self.property(w, "Name", "name", StringValueConverter())
       self.property(w, "RejectedPatches", "rejected_patches", ListValueConverter(StringValueConverter()))
       self.property(w, "ApprovedPatches", "approved_patches", ListValueConverter(StringValueConverter()))
-      self.property(w, "RejectedPatchesAction", "rejected_patches_action", StringValueConverter())
-      self.property(w, "PatchGroups", "patch_groups", ListValueConverter(StringValueConverter()))
+      self.property(w, "RejectedPatchesAction", "rejected_patches_action", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "PatchGroups", "patch_groups", ListValueConverter(StringValueConverter())) # TODO: Probably not the correct mapping
       self.property(w, "ApprovedPatchesComplianceLevel", "approved_patches_compliance_level", StringValueConverter())
-      self.property(w, "ApprovedPatchesEnableNonSecurity", "approved_patches_enable_non_security", BasicValueConverter())
+      self.property(w, "ApprovedPatchesEnableNonSecurity", "approved_patches_enable_non_security", BasicValueConverter()) # TODO: Probably not the correct mapping
       self.block(w, "GlobalFilters", AWS_SSM_PatchBaseline_PatchFilterGroup)
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
@@ -312,7 +312,7 @@ class AWS_SSM_Association(CloudFormationResource):
       self.property(w, "MaxErrors", "max_errors", StringValueConverter())
       self.property(w, "MaxConcurrency", "max_concurrency", StringValueConverter())
       self.property(w, "ComplianceSeverity", "compliance_severity", StringValueConverter())
-      self.property(w, "SyncCompliance", "sync_compliance", StringValueConverter())
-      self.property(w, "WaitForSuccessTimeoutSeconds", "wait_for_success_timeout_seconds", BasicValueConverter())
+      self.property(w, "SyncCompliance", "sync_compliance", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "WaitForSuccessTimeoutSeconds", "wait_for_success_timeout_seconds", BasicValueConverter()) # TODO: Probably not the correct mapping
 
 

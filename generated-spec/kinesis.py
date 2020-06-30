@@ -9,26 +9,26 @@ class AWS_Kinesis_Stream_StreamEncryption(CloudFormationProperty):
 
 class AWS_Kinesis_Stream(CloudFormationResource):
   cfn_type = "AWS::Kinesis::Stream"
-  tf_type = "aws_kinesis_stream"
+  tf_type = "aws_kinesis_video_stream"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "Name", "name", StringValueConverter())
-      self.property(w, "RetentionPeriodHours", "retention_period_hours", BasicValueConverter())
-      self.property(w, "ShardCount", "shard_count", BasicValueConverter())
-      self.block(w, "StreamEncryption", AWS_Kinesis_Stream_StreamEncryption)
+      self.property(w, "RetentionPeriodHours", "retention_period_hours", BasicValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "ShardCount", "shard_count", BasicValueConverter()) # TODO: Probably not the correct mapping
+      self.block(w, "StreamEncryption", AWS_Kinesis_Stream_StreamEncryption) # TODO: Probably not the correct mapping
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
 
 class AWS_Kinesis_StreamConsumer(CloudFormationResource):
   cfn_type = "AWS::Kinesis::StreamConsumer"
-  tf_type = "aws_kinesis_stream_consumer"
+  tf_type = "aws_kinesis_stream"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "ConsumerName", "consumer_name", StringValueConverter())
-      self.property(w, "StreamARN", "stream_arn", StringValueConverter())
+      self.property(w, "ConsumerName", "name", StringValueConverter())
+      self.property(w, "StreamARN", "arn", StringValueConverter())
 
 

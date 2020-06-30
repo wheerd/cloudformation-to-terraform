@@ -66,11 +66,11 @@ class AWS_EFS_FileSystem(CloudFormationResource):
       self.property(w, "Encrypted", "encrypted", BasicValueConverter())
       self.repeated_block(w, "FileSystemTags", AWS_EFS_FileSystem_ElasticFileSystemTag)
       self.property(w, "KmsKeyId", "kms_key_id", StringValueConverter())
-      self.repeated_block(w, "LifecyclePolicies", AWS_EFS_FileSystem_LifecyclePolicy)
+      self.repeated_block(w, "LifecyclePolicies", AWS_EFS_FileSystem_LifecyclePolicy) # TODO: Probably not the correct mapping
       self.property(w, "PerformanceMode", "performance_mode", StringValueConverter())
       self.property(w, "ProvisionedThroughputInMibps", "provisioned_throughput_in_mibps", BasicValueConverter())
       self.property(w, "ThroughputMode", "throughput_mode", StringValueConverter())
-      self.property(w, "FileSystemPolicy", "file_system_policy", JsonValueConverter())
+      self.property(w, "FileSystemPolicy", "file_system_policy", JsonValueConverter()) # TODO: Probably not the correct mapping
 
 
 class AWS_EFS_AccessPoint(CloudFormationResource):
@@ -80,7 +80,7 @@ class AWS_EFS_AccessPoint(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "ClientToken", "client_token", StringValueConverter())
+      self.property(w, "ClientToken", "client_token", StringValueConverter()) # TODO: Probably not the correct mapping
       self.repeated_block(w, "AccessPointTags", AWS_EFS_AccessPoint_AccessPointTag)
       self.property(w, "FileSystemId", "file_system_id", StringValueConverter())
       self.block(w, "PosixUser", AWS_EFS_AccessPoint_PosixUser)

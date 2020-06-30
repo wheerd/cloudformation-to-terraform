@@ -16,7 +16,7 @@ class AWS_DirectoryService_SimpleAD_VpcSettings(CloudFormationProperty):
 
 class AWS_DirectoryService_MicrosoftAD(CloudFormationResource):
   cfn_type = "AWS::DirectoryService::MicrosoftAD"
-  tf_type = "aws_directory_service_microsoft_ad"
+  tf_type = "aws_directory_service_microsoft_ad" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -32,7 +32,7 @@ class AWS_DirectoryService_MicrosoftAD(CloudFormationResource):
 
 class AWS_DirectoryService_SimpleAD(CloudFormationResource):
   cfn_type = "AWS::DirectoryService::SimpleAD"
-  tf_type = "aws_directory_service_simple_ad"
+  tf_type = "aws_directory_service_simple_ad" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):

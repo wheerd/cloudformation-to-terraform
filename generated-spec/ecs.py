@@ -307,7 +307,7 @@ class AWS_ECS_Cluster(CloudFormationResource):
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
-      self.property(w, "ClusterName", "cluster_name", StringValueConverter())
+      self.property(w, "ClusterName", "name", StringValueConverter())
       self.repeated_block(w, "ClusterSettings", AWS_ECS_Cluster_ClusterSettings)
       self.property(w, "CapacityProviders", "capacity_providers", ListValueConverter(StringValueConverter()))
       self.repeated_block(w, "DefaultCapacityProviderStrategy", AWS_ECS_Cluster_CapacityProviderStrategyItem)
@@ -327,7 +327,7 @@ class AWS_ECS_CapacityProvider(CloudFormationResource):
 
 class AWS_ECS_PrimaryTaskSet(CloudFormationResource):
   cfn_type = "AWS::ECS::PrimaryTaskSet"
-  tf_type = "aws_ecs_primary_task_set"
+  tf_type = "aws_ecs_primary_task_set" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -345,7 +345,7 @@ class AWS_ECS_Service(CloudFormationResource):
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "Cluster", "cluster", StringValueConverter())
-      self.block(w, "DeploymentConfiguration", AWS_ECS_Service_DeploymentConfiguration)
+      self.block(w, "DeploymentConfiguration", AWS_ECS_Service_DeploymentConfiguration) # TODO: Probably not the correct mapping
       self.block(w, "DeploymentController", AWS_ECS_Service_DeploymentController)
       self.property(w, "DesiredCount", "desired_count", BasicValueConverter())
       self.property(w, "EnableECSManagedTags", "enable_ecs_managed_tags", BasicValueConverter())
@@ -354,12 +354,12 @@ class AWS_ECS_Service(CloudFormationResource):
       self.repeated_block(w, "LoadBalancers", AWS_ECS_Service_LoadBalancer)
       self.block(w, "NetworkConfiguration", AWS_ECS_Service_NetworkConfiguration)
       self.repeated_block(w, "PlacementConstraints", AWS_ECS_Service_PlacementConstraint)
-      self.repeated_block(w, "PlacementStrategies", AWS_ECS_Service_PlacementStrategy)
+      self.repeated_block(w, "PlacementStrategies", AWS_ECS_Service_PlacementStrategy) # TODO: Probably not the correct mapping
       self.property(w, "PlatformVersion", "platform_version", StringValueConverter())
       self.property(w, "PropagateTags", "propagate_tags", StringValueConverter())
-      self.property(w, "Role", "role", StringValueConverter())
+      self.property(w, "Role", "iam_role", StringValueConverter())
       self.property(w, "SchedulingStrategy", "scheduling_strategy", StringValueConverter())
-      self.property(w, "ServiceName", "service_name", StringValueConverter())
+      self.property(w, "ServiceName", "name", StringValueConverter())
       self.repeated_block(w, "ServiceRegistries", AWS_ECS_Service_ServiceRegistry)
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
       self.property(w, "TaskDefinition", "task_definition", StringValueConverter())
@@ -367,7 +367,7 @@ class AWS_ECS_Service(CloudFormationResource):
 
 class AWS_ECS_TaskSet(CloudFormationResource):
   cfn_type = "AWS::ECS::TaskSet"
-  tf_type = "aws_ecs_task_set"
+  tf_type = "aws_ecs_task_set" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):

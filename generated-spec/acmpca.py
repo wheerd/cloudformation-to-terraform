@@ -37,7 +37,7 @@ class AWS_ACMPCA_CertificateAuthority_CrlConfiguration(CloudFormationProperty):
 
 class AWS_ACMPCA_CertificateAuthorityActivation(CloudFormationResource):
   cfn_type = "AWS::ACMPCA::CertificateAuthorityActivation"
-  tf_type = "aws_acmpca_certificate_authority_activation"
+  tf_type = "aws_acmpca_certificate_authority_activation" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -50,15 +50,15 @@ class AWS_ACMPCA_CertificateAuthorityActivation(CloudFormationResource):
 
 class AWS_ACMPCA_Certificate(CloudFormationResource):
   cfn_type = "AWS::ACMPCA::Certificate"
-  tf_type = "aws_acmpca_certificate"
+  tf_type = "aws_acm_certificate"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "CertificateAuthorityArn", "certificate_authority_arn", StringValueConverter())
-      self.property(w, "CertificateSigningRequest", "certificate_signing_request", StringValueConverter())
-      self.property(w, "SigningAlgorithm", "signing_algorithm", StringValueConverter())
-      self.property(w, "TemplateArn", "template_arn", StringValueConverter())
+      self.property(w, "CertificateSigningRequest", "certificate_signing_request", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "SigningAlgorithm", "signing_algorithm", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "TemplateArn", "arn", StringValueConverter())
       self.block(w, "Validity", AWS_ACMPCA_Certificate_Validity)
 
 
@@ -76,9 +76,9 @@ class AWS_ACMPCA_CertificateAuthority(CloudFormationResource):
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "Type", "type", StringValueConverter())
-      self.property(w, "KeyAlgorithm", "key_algorithm", StringValueConverter())
-      self.property(w, "SigningAlgorithm", "signing_algorithm", StringValueConverter())
-      self.block(w, "Subject", AWS_ACMPCA_CertificateAuthority_Subject)
+      self.property(w, "KeyAlgorithm", "key_algorithm", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "SigningAlgorithm", "signing_algorithm", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.block(w, "Subject", AWS_ACMPCA_CertificateAuthority_Subject) # TODO: Probably not the correct mapping
       self.block(w, "RevocationConfiguration", AWS_ACMPCA_CertificateAuthority_RevocationConfiguration)
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 

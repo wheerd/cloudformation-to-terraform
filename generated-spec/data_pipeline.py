@@ -46,17 +46,17 @@ class AWS_DataPipeline_Pipeline_PipelineObject(CloudFormationProperty):
 
 class AWS_DataPipeline_Pipeline(CloudFormationResource):
   cfn_type = "AWS::DataPipeline::Pipeline"
-  tf_type = "aws_data_pipeline_pipeline"
+  tf_type = "aws_datapipeline_pipeline"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "Activate", "activate", BasicValueConverter())
+      self.property(w, "Activate", "activate", BasicValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "Description", "description", StringValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
-      self.repeated_block(w, "ParameterObjects", AWS_DataPipeline_Pipeline_ParameterObject)
-      self.repeated_block(w, "ParameterValues", AWS_DataPipeline_Pipeline_ParameterValue)
-      self.repeated_block(w, "PipelineObjects", AWS_DataPipeline_Pipeline_PipelineObject)
+      self.repeated_block(w, "ParameterObjects", AWS_DataPipeline_Pipeline_ParameterObject) # TODO: Probably not the correct mapping
+      self.repeated_block(w, "ParameterValues", AWS_DataPipeline_Pipeline_ParameterValue) # TODO: Probably not the correct mapping
+      self.repeated_block(w, "PipelineObjects", AWS_DataPipeline_Pipeline_PipelineObject) # TODO: Probably not the correct mapping
       self.repeated_block(w, "PipelineTags", AWS_DataPipeline_Pipeline_PipelineTag)
 
 

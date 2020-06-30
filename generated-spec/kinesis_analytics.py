@@ -151,7 +151,7 @@ class AWS_KinesisAnalytics_Application_InputProcessingConfiguration(CloudFormati
 
 class AWS_KinesisAnalytics_ApplicationOutput(CloudFormationResource):
   cfn_type = "AWS::KinesisAnalytics::ApplicationOutput"
-  tf_type = "aws_kinesis_analytics_application_output"
+  tf_type = "aws_kinesis_analytics_application_output" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -196,7 +196,7 @@ class AWS_KinesisAnalytics_ApplicationReferenceDataSource_ReferenceDataSource(Cl
 
 class AWS_KinesisAnalytics_ApplicationReferenceDataSource(CloudFormationResource):
   cfn_type = "AWS::KinesisAnalytics::ApplicationReferenceDataSource"
-  tf_type = "aws_kinesis_analytics_application_reference_data_source"
+  tf_type = "aws_kinesis_analytics_application_reference_data_source" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -212,9 +212,9 @@ class AWS_KinesisAnalytics_Application(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "ApplicationName", "application_name", StringValueConverter())
+      self.property(w, "ApplicationName", "name", StringValueConverter())
       self.repeated_block(w, "Inputs", AWS_KinesisAnalytics_Application_Input)
-      self.property(w, "ApplicationDescription", "application_description", StringValueConverter())
-      self.property(w, "ApplicationCode", "application_code", StringValueConverter())
+      self.property(w, "ApplicationDescription", "description", StringValueConverter())
+      self.property(w, "ApplicationCode", "code", StringValueConverter())
 
 

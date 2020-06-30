@@ -39,7 +39,7 @@ class AWS_Athena_NamedQuery(CloudFormationResource):
       self.property(w, "Name", "name", StringValueConverter())
       self.property(w, "Database", "database", StringValueConverter())
       self.property(w, "Description", "description", StringValueConverter())
-      self.property(w, "QueryString", "query_string", StringValueConverter())
+      self.property(w, "QueryString", "query", StringValueConverter())
 
 
 class AWS_Athena_WorkGroup_WorkGroupConfigurationUpdates(CloudFormationProperty):
@@ -65,7 +65,7 @@ class AWS_Athena_WorkGroup_WorkGroupConfiguration(CloudFormationProperty):
 
 class AWS_Athena_WorkGroup(CloudFormationResource):
   cfn_type = "AWS::Athena::WorkGroup"
-  tf_type = "aws_athena_work_group"
+  tf_type = "aws_athena_workgroup"
   ref = "arn"
 
   def write(self, w):
@@ -74,8 +74,8 @@ class AWS_Athena_WorkGroup(CloudFormationResource):
       self.property(w, "Description", "description", StringValueConverter())
       self.block(w, "Tags", AWS_Athena_WorkGroup_Tags)
       self.block(w, "WorkGroupConfiguration", AWS_Athena_WorkGroup_WorkGroupConfiguration)
-      self.block(w, "WorkGroupConfigurationUpdates", AWS_Athena_WorkGroup_WorkGroupConfigurationUpdates)
+      self.block(w, "WorkGroupConfigurationUpdates", AWS_Athena_WorkGroup_WorkGroupConfigurationUpdates) # TODO: Probably not the correct mapping
       self.property(w, "State", "state", StringValueConverter())
-      self.property(w, "RecursiveDeleteOption", "recursive_delete_option", BasicValueConverter())
+      self.property(w, "RecursiveDeleteOption", "recursive_delete_option", BasicValueConverter()) # TODO: Probably not the correct mapping
 
 

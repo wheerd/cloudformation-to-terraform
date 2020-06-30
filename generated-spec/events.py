@@ -73,7 +73,7 @@ class AWS_Events_Rule_BatchParameters(CloudFormationProperty):
 
 class AWS_Events_EventBusPolicy(CloudFormationResource):
   cfn_type = "AWS::Events::EventBusPolicy"
-  tf_type = "aws_events_event_bus_policy"
+  tf_type = "aws_events_event_bus_policy" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -87,7 +87,7 @@ class AWS_Events_EventBusPolicy(CloudFormationResource):
 
 class AWS_Events_EventBus(CloudFormationResource):
   cfn_type = "AWS::Events::EventBus"
-  tf_type = "aws_events_event_bus"
+  tf_type = "aws_events_event_bus" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -138,7 +138,7 @@ class AWS_Events_Rule_Target(CloudFormationProperty):
 
 class AWS_Events_Rule(CloudFormationResource):
   cfn_type = "AWS::Events::Rule"
-  tf_type = "aws_events_rule"
+  tf_type = "aws_events_rule" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):

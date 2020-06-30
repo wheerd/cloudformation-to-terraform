@@ -17,7 +17,7 @@ class AWS_CloudTrail_Trail_EventSelector(CloudFormationProperty):
 
 class AWS_CloudTrail_Trail(CloudFormationResource):
   cfn_type = "AWS::CloudTrail::Trail"
-  tf_type = "aws_cloud_trail_trail"
+  tf_type = "aws_cloud_trail_trail" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):

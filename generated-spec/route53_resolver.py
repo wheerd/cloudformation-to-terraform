@@ -16,7 +16,7 @@ class AWS_Route53Resolver_ResolverRule_TargetAddress(CloudFormationProperty):
 
 class AWS_Route53Resolver_ResolverRule(CloudFormationResource):
   cfn_type = "AWS::Route53Resolver::ResolverRule"
-  tf_type = "aws_route53_resolver_resolver_rule"
+  tf_type = "aws_route53_resolver_rule"
   ref = "arn"
 
   def write(self, w):
@@ -31,7 +31,7 @@ class AWS_Route53Resolver_ResolverRule(CloudFormationResource):
 
 class AWS_Route53Resolver_ResolverRuleAssociation(CloudFormationResource):
   cfn_type = "AWS::Route53Resolver::ResolverRuleAssociation"
-  tf_type = "aws_route53_resolver_resolver_rule_association"
+  tf_type = "aws_route53_resolver_rule_association"
   ref = "arn"
 
   def write(self, w):
@@ -43,7 +43,7 @@ class AWS_Route53Resolver_ResolverRuleAssociation(CloudFormationResource):
 
 class AWS_Route53Resolver_ResolverEndpoint(CloudFormationResource):
   cfn_type = "AWS::Route53Resolver::ResolverEndpoint"
-  tf_type = "aws_route53_resolver_resolver_endpoint"
+  tf_type = "aws_route53_resolver_endpoint"
   ref = "arn"
 
   def write(self, w):

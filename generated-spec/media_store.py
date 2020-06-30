@@ -31,12 +31,12 @@ class AWS_MediaStore_Container(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "Policy", "policy", StringValueConverter())
-      self.block(w, "MetricPolicy", AWS_MediaStore_Container_MetricPolicy)
-      self.property(w, "ContainerName", "container_name", StringValueConverter())
-      self.repeated_block(w, "CorsPolicy", AWS_MediaStore_Container_CorsRule)
-      self.property(w, "LifecyclePolicy", "lifecycle_policy", StringValueConverter())
-      self.property(w, "AccessLoggingEnabled", "access_logging_enabled", BasicValueConverter())
+      self.property(w, "Policy", "policy", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.block(w, "MetricPolicy", AWS_MediaStore_Container_MetricPolicy) # TODO: Probably not the correct mapping
+      self.property(w, "ContainerName", "name", StringValueConverter())
+      self.repeated_block(w, "CorsPolicy", AWS_MediaStore_Container_CorsRule) # TODO: Probably not the correct mapping
+      self.property(w, "LifecyclePolicy", "lifecycle_policy", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "AccessLoggingEnabled", "access_logging_enabled", BasicValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
 

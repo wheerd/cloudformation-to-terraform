@@ -2,7 +2,7 @@ from . import *
 
 class AWS_CodeStarConnections_Connection(CloudFormationResource):
   cfn_type = "AWS::CodeStarConnections::Connection"
-  tf_type = "aws_code_star_connections_connection"
+  tf_type = "aws_code_star_connections_connection" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):

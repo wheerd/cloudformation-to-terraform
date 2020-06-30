@@ -70,7 +70,7 @@ class AWS_SageMaker_Model_ContainerDefinition(CloudFormationProperty):
 
 class AWS_SageMaker_Workteam(CloudFormationResource):
   cfn_type = "AWS::SageMaker::Workteam"
-  tf_type = "aws_sage_maker_workteam"
+  tf_type = "aws_sage_maker_workteam" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -84,61 +84,61 @@ class AWS_SageMaker_Workteam(CloudFormationResource):
 
 class AWS_SageMaker_NotebookInstanceLifecycleConfig(CloudFormationResource):
   cfn_type = "AWS::SageMaker::NotebookInstanceLifecycleConfig"
-  tf_type = "aws_sage_maker_notebook_instance_lifecycle_config"
+  tf_type = "aws_sagemaker_notebook_instance_lifecycle_configuration"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
       self.repeated_block(w, "OnStart", AWS_SageMaker_NotebookInstanceLifecycleConfig_NotebookInstanceLifecycleHook)
-      self.property(w, "NotebookInstanceLifecycleConfigName", "notebook_instance_lifecycle_config_name", StringValueConverter())
+      self.property(w, "NotebookInstanceLifecycleConfigName", "notebook_instance_lifecycle_config_name", StringValueConverter()) # TODO: Probably not the correct mapping
       self.repeated_block(w, "OnCreate", AWS_SageMaker_NotebookInstanceLifecycleConfig_NotebookInstanceLifecycleHook)
 
 
 class AWS_SageMaker_EndpointConfig(CloudFormationResource):
   cfn_type = "AWS::SageMaker::EndpointConfig"
-  tf_type = "aws_sage_maker_endpoint_config"
+  tf_type = "aws_sagemaker_endpoint_configuration"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
       self.repeated_block(w, "ProductionVariants", AWS_SageMaker_EndpointConfig_ProductionVariant)
-      self.property(w, "KmsKeyId", "kms_key_id", StringValueConverter())
-      self.property(w, "EndpointConfigName", "endpoint_config_name", StringValueConverter())
+      self.property(w, "KmsKeyId", "id", StringValueConverter())
+      self.property(w, "EndpointConfigName", "name", StringValueConverter())
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
 
 class AWS_SageMaker_Endpoint(CloudFormationResource):
   cfn_type = "AWS::SageMaker::Endpoint"
-  tf_type = "aws_sage_maker_endpoint"
+  tf_type = "aws_sagemaker_endpoint"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "RetainAllVariantProperties", "retain_all_variant_properties", BasicValueConverter())
-      self.property(w, "EndpointName", "endpoint_name", StringValueConverter())
-      self.repeated_block(w, "ExcludeRetainedVariantProperties", AWS_SageMaker_Endpoint_VariantProperty)
+      self.property(w, "RetainAllVariantProperties", "retain_all_variant_properties", BasicValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "EndpointName", "name", StringValueConverter())
+      self.repeated_block(w, "ExcludeRetainedVariantProperties", AWS_SageMaker_Endpoint_VariantProperty) # TODO: Probably not the correct mapping
       self.property(w, "EndpointConfigName", "endpoint_config_name", StringValueConverter())
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
 
 class AWS_SageMaker_NotebookInstance(CloudFormationResource):
   cfn_type = "AWS::SageMaker::NotebookInstance"
-  tf_type = "aws_sage_maker_notebook_instance"
+  tf_type = "aws_sagemaker_notebook_instance"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "KmsKeyId", "kms_key_id", StringValueConverter())
-      self.property(w, "VolumeSizeInGB", "volume_size_in_gb", BasicValueConverter())
-      self.property(w, "AdditionalCodeRepositories", "additional_code_repositories", ListValueConverter(StringValueConverter()))
-      self.property(w, "DefaultCodeRepository", "default_code_repository", StringValueConverter())
+      self.property(w, "VolumeSizeInGB", "volume_size_in_gb", BasicValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "AdditionalCodeRepositories", "additional_code_repositories", ListValueConverter(StringValueConverter())) # TODO: Probably not the correct mapping
+      self.property(w, "DefaultCodeRepository", "default_code_repository", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "DirectInternetAccess", "direct_internet_access", StringValueConverter())
-      self.property(w, "AcceleratorTypes", "accelerator_types", ListValueConverter(StringValueConverter()))
+      self.property(w, "AcceleratorTypes", "accelerator_types", ListValueConverter(StringValueConverter())) # TODO: Probably not the correct mapping
       self.property(w, "SubnetId", "subnet_id", StringValueConverter())
-      self.property(w, "SecurityGroupIds", "security_group_ids", ListValueConverter(StringValueConverter()))
+      self.property(w, "SecurityGroupIds", "security_groups", ListValueConverter(StringValueConverter()))
       self.property(w, "RoleArn", "role_arn", StringValueConverter())
-      self.property(w, "RootAccess", "root_access", StringValueConverter())
-      self.property(w, "NotebookInstanceName", "notebook_instance_name", StringValueConverter())
+      self.property(w, "RootAccess", "root_access", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "NotebookInstanceName", "name", StringValueConverter())
       self.property(w, "InstanceType", "instance_type", StringValueConverter())
       self.property(w, "LifecycleConfigName", "lifecycle_config_name", StringValueConverter())
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
@@ -146,7 +146,7 @@ class AWS_SageMaker_NotebookInstance(CloudFormationResource):
 
 class AWS_SageMaker_CodeRepository(CloudFormationResource):
   cfn_type = "AWS::SageMaker::CodeRepository"
-  tf_type = "aws_sage_maker_code_repository"
+  tf_type = "aws_sage_maker_code_repository" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -157,14 +157,14 @@ class AWS_SageMaker_CodeRepository(CloudFormationResource):
 
 class AWS_SageMaker_Model(CloudFormationResource):
   cfn_type = "AWS::SageMaker::Model"
-  tf_type = "aws_sage_maker_model"
+  tf_type = "aws_sagemaker_model"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "ExecutionRoleArn", "execution_role_arn", StringValueConverter())
       self.block(w, "PrimaryContainer", AWS_SageMaker_Model_ContainerDefinition)
-      self.property(w, "ModelName", "model_name", StringValueConverter())
+      self.property(w, "ModelName", "name", StringValueConverter())
       self.block(w, "VpcConfig", AWS_SageMaker_Model_VpcConfig)
       self.repeated_block(w, "Containers", AWS_SageMaker_Model_ContainerDefinition)
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))

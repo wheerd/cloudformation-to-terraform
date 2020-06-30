@@ -14,10 +14,10 @@ class AWS_Cloud9_EnvironmentEC2(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.repeated_block(w, "Repositories", AWS_Cloud9_EnvironmentEC2_Repository)
+      self.repeated_block(w, "Repositories", AWS_Cloud9_EnvironmentEC2_Repository) # TODO: Probably not the correct mapping
       self.property(w, "OwnerArn", "owner_arn", StringValueConverter())
       self.property(w, "Description", "description", StringValueConverter())
-      self.property(w, "ConnectionType", "connection_type", StringValueConverter())
+      self.property(w, "ConnectionType", "type", StringValueConverter())
       self.property(w, "AutomaticStopTimeMinutes", "automatic_stop_time_minutes", BasicValueConverter())
       self.property(w, "SubnetId", "subnet_id", StringValueConverter())
       self.property(w, "InstanceType", "instance_type", StringValueConverter())

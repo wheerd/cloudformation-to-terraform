@@ -211,14 +211,14 @@ class AWS_AppMesh_Route_TcpRouteAction(CloudFormationProperty):
 
 class AWS_AppMesh_VirtualRouter(CloudFormationResource):
   cfn_type = "AWS::AppMesh::VirtualRouter"
-  tf_type = "aws_app_mesh_virtual_router"
+  tf_type = "aws_appmesh_virtual_router"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "MeshName", "mesh_name", StringValueConverter())
-      self.property(w, "VirtualRouterName", "virtual_router_name", StringValueConverter())
-      self.property(w, "MeshOwner", "mesh_owner", StringValueConverter())
+      self.property(w, "VirtualRouterName", "name", StringValueConverter())
+      self.property(w, "MeshOwner", "mesh_owner", StringValueConverter()) # TODO: Probably not the correct mapping
       self.block(w, "Spec", AWS_AppMesh_VirtualRouter_VirtualRouterSpec)
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
@@ -381,26 +381,26 @@ class AWS_AppMesh_Route_HttpRoute(CloudFormationProperty):
 
 class AWS_AppMesh_VirtualService(CloudFormationResource):
   cfn_type = "AWS::AppMesh::VirtualService"
-  tf_type = "aws_app_mesh_virtual_service"
+  tf_type = "aws_appmesh_virtual_service"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "MeshName", "mesh_name", StringValueConverter())
-      self.property(w, "MeshOwner", "mesh_owner", StringValueConverter())
-      self.property(w, "VirtualServiceName", "virtual_service_name", StringValueConverter())
+      self.property(w, "MeshOwner", "mesh_owner", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "VirtualServiceName", "name", StringValueConverter())
       self.block(w, "Spec", AWS_AppMesh_VirtualService_VirtualServiceSpec)
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
 
 class AWS_AppMesh_Mesh(CloudFormationResource):
   cfn_type = "AWS::AppMesh::Mesh"
-  tf_type = "aws_app_mesh_mesh"
+  tf_type = "aws_appmesh_mesh"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "MeshName", "mesh_name", StringValueConverter())
+      self.property(w, "MeshName", "name", StringValueConverter())
       self.block(w, "Spec", AWS_AppMesh_Mesh_MeshSpec)
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
@@ -453,15 +453,15 @@ class AWS_AppMesh_VirtualNode_BackendDefaults(CloudFormationProperty):
 
 class AWS_AppMesh_Route(CloudFormationResource):
   cfn_type = "AWS::AppMesh::Route"
-  tf_type = "aws_app_mesh_route"
+  tf_type = "aws_appmesh_route"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "MeshName", "mesh_name", StringValueConverter())
       self.property(w, "VirtualRouterName", "virtual_router_name", StringValueConverter())
-      self.property(w, "MeshOwner", "mesh_owner", StringValueConverter())
-      self.property(w, "RouteName", "route_name", StringValueConverter())
+      self.property(w, "MeshOwner", "mesh_owner", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "RouteName", "name", StringValueConverter())
       self.block(w, "Spec", AWS_AppMesh_Route_RouteSpec)
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
@@ -484,15 +484,15 @@ class AWS_AppMesh_VirtualNode_VirtualNodeSpec(CloudFormationProperty):
 
 class AWS_AppMesh_VirtualNode(CloudFormationResource):
   cfn_type = "AWS::AppMesh::VirtualNode"
-  tf_type = "aws_app_mesh_virtual_node"
+  tf_type = "aws_appmesh_virtual_node"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "MeshName", "mesh_name", StringValueConverter())
-      self.property(w, "MeshOwner", "mesh_owner", StringValueConverter())
+      self.property(w, "MeshOwner", "mesh_owner", StringValueConverter()) # TODO: Probably not the correct mapping
       self.block(w, "Spec", AWS_AppMesh_VirtualNode_VirtualNodeSpec)
-      self.property(w, "VirtualNodeName", "virtual_node_name", StringValueConverter())
+      self.property(w, "VirtualNodeName", "name", StringValueConverter())
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
 

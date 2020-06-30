@@ -99,10 +99,10 @@ class AWS_Batch_JobQueue(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.repeated_block(w, "ComputeEnvironmentOrder", AWS_Batch_JobQueue_ComputeEnvironmentOrder)
+      self.repeated_block(w, "ComputeEnvironmentOrder", AWS_Batch_JobQueue_ComputeEnvironmentOrder) # TODO: Probably not the correct mapping
       self.property(w, "Priority", "priority", BasicValueConverter())
       self.property(w, "State", "state", StringValueConverter())
-      self.property(w, "JobQueueName", "job_queue_name", StringValueConverter())
+      self.property(w, "JobQueueName", "name", StringValueConverter())
 
 
 class AWS_Batch_ComputeEnvironment(CloudFormationResource):
@@ -176,10 +176,10 @@ class AWS_Batch_JobDefinition(CloudFormationResource):
     with self.resource_block(w):
       self.property(w, "Type", "type", StringValueConverter())
       self.property(w, "Parameters", "parameters", JsonValueConverter())
-      self.block(w, "NodeProperties", AWS_Batch_JobDefinition_NodeProperties)
+      self.block(w, "NodeProperties", AWS_Batch_JobDefinition_NodeProperties) # TODO: Probably not the correct mapping
       self.block(w, "Timeout", AWS_Batch_JobDefinition_Timeout)
       self.block(w, "ContainerProperties", AWS_Batch_JobDefinition_ContainerProperties)
-      self.property(w, "JobDefinitionName", "job_definition_name", StringValueConverter())
+      self.property(w, "JobDefinitionName", "name", StringValueConverter())
       self.block(w, "RetryStrategy", AWS_Batch_JobDefinition_RetryStrategy)
 
 

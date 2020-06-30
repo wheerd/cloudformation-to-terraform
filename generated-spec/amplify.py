@@ -62,7 +62,7 @@ class AWS_Amplify_App_AutoBranchCreationConfig(CloudFormationProperty):
 
 class AWS_Amplify_App(CloudFormationResource):
   cfn_type = "AWS::Amplify::App"
-  tf_type = "aws_amplify_app"
+  tf_type = "aws_amplify_app" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -83,7 +83,7 @@ class AWS_Amplify_App(CloudFormationResource):
 
 class AWS_Amplify_Branch(CloudFormationResource):
   cfn_type = "AWS::Amplify::Branch"
-  tf_type = "aws_amplify_branch"
+  tf_type = "aws_amplify_branch" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -103,7 +103,7 @@ class AWS_Amplify_Branch(CloudFormationResource):
 
 class AWS_Amplify_Domain(CloudFormationResource):
   cfn_type = "AWS::Amplify::Domain"
-  tf_type = "aws_amplify_domain"
+  tf_type = "aws_amplify_domain" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):

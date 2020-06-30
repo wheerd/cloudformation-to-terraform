@@ -42,7 +42,7 @@ class AWS_StepFunctions_StateMachine_DefinitionSubstitutions(CloudFormationPrope
 
 class AWS_StepFunctions_Activity(CloudFormationResource):
   cfn_type = "AWS::StepFunctions::Activity"
-  tf_type = "aws_step_functions_activity"
+  tf_type = "aws_step_functions_activity" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -61,7 +61,7 @@ class AWS_StepFunctions_StateMachine_LoggingConfiguration(CloudFormationProperty
 
 class AWS_StepFunctions_StateMachine(CloudFormationResource):
   cfn_type = "AWS::StepFunctions::StateMachine"
-  tf_type = "aws_step_functions_state_machine"
+  tf_type = "aws_step_functions_state_machine" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):

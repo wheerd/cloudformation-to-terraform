@@ -138,13 +138,13 @@ class AWS_CodeBuild_Project_Source(CloudFormationProperty):
 
 class AWS_CodeBuild_SourceCredential(CloudFormationResource):
   cfn_type = "AWS::CodeBuild::SourceCredential"
-  tf_type = "aws_code_build_source_credential"
+  tf_type = "aws_codebuild_source_credential"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "ServerType", "server_type", StringValueConverter())
-      self.property(w, "Username", "username", StringValueConverter())
+      self.property(w, "Username", "user_name", StringValueConverter())
       self.property(w, "Token", "token", StringValueConverter())
       self.property(w, "AuthType", "auth_type", StringValueConverter())
 
@@ -178,7 +178,7 @@ class AWS_CodeBuild_ReportGroup_ReportExportConfig(CloudFormationProperty):
 
 class AWS_CodeBuild_Project(CloudFormationResource):
   cfn_type = "AWS::CodeBuild::Project"
-  tf_type = "aws_code_build_project"
+  tf_type = "aws_codebuild_project"
   ref = "arn"
 
   def write(self, w):
@@ -188,7 +188,7 @@ class AWS_CodeBuild_Project(CloudFormationResource):
       self.repeated_block(w, "SecondarySources", AWS_CodeBuild_Project_Source)
       self.property(w, "EncryptionKey", "encryption_key", StringValueConverter())
       self.property(w, "SourceVersion", "source_version", StringValueConverter())
-      self.block(w, "Triggers", AWS_CodeBuild_Project_ProjectTriggers)
+      self.block(w, "Triggers", AWS_CodeBuild_Project_ProjectTriggers) # TODO: Probably not the correct mapping
       self.repeated_block(w, "SecondaryArtifacts", AWS_CodeBuild_Project_Artifacts)
       self.block(w, "Source", AWS_CodeBuild_Project_Source)
       self.property(w, "Name", "name", StringValueConverter())
@@ -196,18 +196,18 @@ class AWS_CodeBuild_Project(CloudFormationResource):
       self.property(w, "BadgeEnabled", "badge_enabled", BasicValueConverter())
       self.block(w, "LogsConfig", AWS_CodeBuild_Project_LogsConfig)
       self.property(w, "ServiceRole", "service_role", StringValueConverter())
-      self.property(w, "QueuedTimeoutInMinutes", "queued_timeout_in_minutes", BasicValueConverter())
-      self.repeated_block(w, "FileSystemLocations", AWS_CodeBuild_Project_ProjectFileSystemLocation)
+      self.property(w, "QueuedTimeoutInMinutes", "queued_timeout", BasicValueConverter())
+      self.repeated_block(w, "FileSystemLocations", AWS_CodeBuild_Project_ProjectFileSystemLocation) # TODO: Probably not the correct mapping
       self.block(w, "Environment", AWS_CodeBuild_Project_Environment)
-      self.repeated_block(w, "SecondarySourceVersions", AWS_CodeBuild_Project_ProjectSourceVersion)
+      self.repeated_block(w, "SecondarySourceVersions", AWS_CodeBuild_Project_ProjectSourceVersion) # TODO: Probably not the correct mapping
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
-      self.property(w, "TimeoutInMinutes", "timeout_in_minutes", BasicValueConverter())
+      self.property(w, "TimeoutInMinutes", "timeout_in_minutes", BasicValueConverter()) # TODO: Probably not the correct mapping
       self.block(w, "Cache", AWS_CodeBuild_Project_ProjectCache)
 
 
 class AWS_CodeBuild_ReportGroup(CloudFormationResource):
   cfn_type = "AWS::CodeBuild::ReportGroup"
-  tf_type = "aws_code_build_report_group"
+  tf_type = "aws_code_build_report_group" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):

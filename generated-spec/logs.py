@@ -11,7 +11,7 @@ class AWS_Logs_MetricFilter_MetricTransformation(CloudFormationProperty):
 
 class AWS_Logs_MetricFilter(CloudFormationResource):
   cfn_type = "AWS::Logs::MetricFilter"
-  tf_type = "aws_logs_metric_filter"
+  tf_type = "aws_logs_metric_filter" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -23,7 +23,7 @@ class AWS_Logs_MetricFilter(CloudFormationResource):
 
 class AWS_Logs_SubscriptionFilter(CloudFormationResource):
   cfn_type = "AWS::Logs::SubscriptionFilter"
-  tf_type = "aws_logs_subscription_filter"
+  tf_type = "aws_logs_subscription_filter" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -36,7 +36,7 @@ class AWS_Logs_SubscriptionFilter(CloudFormationResource):
 
 class AWS_Logs_Destination(CloudFormationResource):
   cfn_type = "AWS::Logs::Destination"
-  tf_type = "aws_logs_destination"
+  tf_type = "aws_logs_destination" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -49,7 +49,7 @@ class AWS_Logs_Destination(CloudFormationResource):
 
 class AWS_Logs_LogGroup(CloudFormationResource):
   cfn_type = "AWS::Logs::LogGroup"
-  tf_type = "aws_logs_log_group"
+  tf_type = "aws_logs_log_group" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -60,7 +60,7 @@ class AWS_Logs_LogGroup(CloudFormationResource):
 
 class AWS_Logs_LogStream(CloudFormationResource):
   cfn_type = "AWS::Logs::LogStream"
-  tf_type = "aws_logs_log_stream"
+  tf_type = "aws_logs_log_stream" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):

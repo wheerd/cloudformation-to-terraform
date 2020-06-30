@@ -35,22 +35,22 @@ class AWS_IAM_Group(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "GroupName", "group_name", StringValueConverter())
-      self.property(w, "ManagedPolicyArns", "managed_policy_arns", ListValueConverter(StringValueConverter()))
+      self.property(w, "GroupName", "name", StringValueConverter())
+      self.property(w, "ManagedPolicyArns", "arn", ListValueConverter(StringValueConverter()))
       self.property(w, "Path", "path", StringValueConverter())
-      self.repeated_block(w, "Policies", AWS_IAM_Group_Policy)
+      self.repeated_block(w, "Policies", AWS_IAM_Group_Policy) # TODO: Probably not the correct mapping
 
 
 class AWS_IAM_Policy(CloudFormationResource):
   cfn_type = "AWS::IAM::Policy"
-  tf_type = "aws_iam_policy"
+  tf_type = "aws_iam_policy_attachment"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "Groups", "groups", ListValueConverter(StringValueConverter()))
-      self.property(w, "PolicyDocument", "policy_document", JsonValueConverter())
-      self.property(w, "PolicyName", "policy_name", StringValueConverter())
+      self.property(w, "PolicyDocument", "policy_document", JsonValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "PolicyName", "name", StringValueConverter())
       self.property(w, "Roles", "roles", ListValueConverter(StringValueConverter()))
       self.property(w, "Users", "users", ListValueConverter(StringValueConverter()))
 
@@ -74,26 +74,26 @@ class AWS_IAM_AccessKey(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "Serial", "serial", BasicValueConverter())
+      self.property(w, "Serial", "serial", BasicValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "Status", "status", StringValueConverter())
-      self.property(w, "UserName", "user_name", StringValueConverter())
+      self.property(w, "UserName", "user", StringValueConverter())
 
 
 class AWS_IAM_User(CloudFormationResource):
   cfn_type = "AWS::IAM::User"
-  tf_type = "aws_iam_user"
+  tf_type = "aws_iam_user_group_membership"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "Groups", "groups", ListValueConverter(StringValueConverter()))
-      self.block(w, "LoginProfile", AWS_IAM_User_LoginProfile)
-      self.property(w, "ManagedPolicyArns", "managed_policy_arns", ListValueConverter(StringValueConverter()))
-      self.property(w, "Path", "path", StringValueConverter())
-      self.property(w, "PermissionsBoundary", "permissions_boundary", StringValueConverter())
-      self.repeated_block(w, "Policies", AWS_IAM_User_Policy)
-      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
-      self.property(w, "UserName", "user_name", StringValueConverter())
+      self.block(w, "LoginProfile", AWS_IAM_User_LoginProfile) # TODO: Probably not the correct mapping
+      self.property(w, "ManagedPolicyArns", "managed_policy_arns", ListValueConverter(StringValueConverter())) # TODO: Probably not the correct mapping
+      self.property(w, "Path", "path", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "PermissionsBoundary", "permissions_boundary", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.repeated_block(w, "Policies", AWS_IAM_User_Policy) # TODO: Probably not the correct mapping
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag())) # TODO: Probably not the correct mapping
+      self.property(w, "UserName", "user", StringValueConverter())
 
 
 class AWS_IAM_Role(CloudFormationResource):
@@ -103,26 +103,26 @@ class AWS_IAM_Role(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "AssumeRolePolicyDocument", "assume_role_policy_document", JsonValueConverter())
+      self.property(w, "AssumeRolePolicyDocument", "assume_role_policy", JsonValueConverter())
       self.property(w, "Description", "description", StringValueConverter())
-      self.property(w, "ManagedPolicyArns", "managed_policy_arns", ListValueConverter(StringValueConverter()))
+      self.property(w, "ManagedPolicyArns", "arn", ListValueConverter(StringValueConverter()))
       self.property(w, "MaxSessionDuration", "max_session_duration", BasicValueConverter())
       self.property(w, "Path", "path", StringValueConverter())
       self.property(w, "PermissionsBoundary", "permissions_boundary", StringValueConverter())
       self.repeated_block(w, "Policies", AWS_IAM_Role_Policy)
-      self.property(w, "RoleName", "role_name", StringValueConverter())
+      self.property(w, "RoleName", "name", StringValueConverter())
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
 
 class AWS_IAM_UserToGroupAddition(CloudFormationResource):
   cfn_type = "AWS::IAM::UserToGroupAddition"
-  tf_type = "aws_iam_user_to_group_addition"
+  tf_type = "aws_iam_user"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "GroupName", "group_name", StringValueConverter())
-      self.property(w, "Users", "users", ListValueConverter(StringValueConverter()))
+      self.property(w, "GroupName", "name", StringValueConverter())
+      self.property(w, "Users", "users", ListValueConverter(StringValueConverter())) # TODO: Probably not the correct mapping
 
 
 class AWS_IAM_InstanceProfile(CloudFormationResource):
@@ -132,14 +132,14 @@ class AWS_IAM_InstanceProfile(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "InstanceProfileName", "instance_profile_name", StringValueConverter())
+      self.property(w, "InstanceProfileName", "name", StringValueConverter())
       self.property(w, "Path", "path", StringValueConverter())
       self.property(w, "Roles", "roles", ListValueConverter(StringValueConverter()))
 
 
 class AWS_IAM_ManagedPolicy(CloudFormationResource):
   cfn_type = "AWS::IAM::ManagedPolicy"
-  tf_type = "aws_iam_managed_policy"
+  tf_type = "aws_iam_managed_policy" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):

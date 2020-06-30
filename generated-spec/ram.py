@@ -7,9 +7,9 @@ class AWS_RAM_ResourceShare(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "Principals", "principals", ListValueConverter(StringValueConverter()))
+      self.property(w, "Principals", "principals", ListValueConverter(StringValueConverter())) # TODO: Probably not the correct mapping
       self.property(w, "AllowExternalPrincipals", "allow_external_principals", BasicValueConverter())
-      self.property(w, "ResourceArns", "resource_arns", ListValueConverter(StringValueConverter()))
+      self.property(w, "ResourceArns", "arn", ListValueConverter(StringValueConverter()))
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
       self.property(w, "Name", "name", StringValueConverter())
 

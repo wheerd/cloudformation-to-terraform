@@ -539,7 +539,7 @@ class AWS_EC2_EC2Fleet_SpotOptionsRequest(CloudFormationProperty):
 
 class AWS_EC2_RouteTable(CloudFormationResource):
   cfn_type = "AWS::EC2::RouteTable"
-  tf_type = "aws_ec2_route_table"
+  tf_type = "aws_route_table"
   ref = "arn"
 
   def write(self, w):
@@ -550,14 +550,14 @@ class AWS_EC2_RouteTable(CloudFormationResource):
 
 class AWS_EC2_VPCPeeringConnection(CloudFormationResource):
   cfn_type = "AWS::EC2::VPCPeeringConnection"
-  tf_type = "aws_ec2_vpc_peering_connection"
+  tf_type = "aws_vpc_peering_connection"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "PeerOwnerId", "peer_owner_id", StringValueConverter())
       self.property(w, "PeerRegion", "peer_region", StringValueConverter())
-      self.property(w, "PeerRoleArn", "peer_role_arn", StringValueConverter())
+      self.property(w, "PeerRoleArn", "peer_role_arn", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "PeerVpcId", "peer_vpc_id", StringValueConverter())
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
       self.property(w, "VpcId", "vpc_id", StringValueConverter())
@@ -565,18 +565,18 @@ class AWS_EC2_VPCPeeringConnection(CloudFormationResource):
 
 class AWS_EC2_TransitGateway(CloudFormationResource):
   cfn_type = "AWS::EC2::TransitGateway"
-  tf_type = "aws_ec2_transit_gateway"
+  tf_type = "aws_ec2_transit_gateway_peering_attachment"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "DefaultRouteTablePropagation", "default_route_table_propagation", StringValueConverter())
-      self.property(w, "Description", "description", StringValueConverter())
-      self.property(w, "AutoAcceptSharedAttachments", "auto_accept_shared_attachments", StringValueConverter())
-      self.property(w, "DefaultRouteTableAssociation", "default_route_table_association", StringValueConverter())
-      self.property(w, "VpnEcmpSupport", "vpn_ecmp_support", StringValueConverter())
-      self.property(w, "DnsSupport", "dns_support", StringValueConverter())
-      self.property(w, "AmazonSideAsn", "amazon_side_asn", BasicValueConverter())
+      self.property(w, "DefaultRouteTablePropagation", "default_route_table_propagation", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "Description", "description", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "AutoAcceptSharedAttachments", "auto_accept_shared_attachments", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "DefaultRouteTableAssociation", "default_route_table_association", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "VpnEcmpSupport", "vpn_ecmp_support", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "DnsSupport", "dns_support", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "AmazonSideAsn", "id", BasicValueConverter())
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
 
@@ -590,7 +590,7 @@ class AWS_EC2_CapacityReservation(CloudFormationResource):
       self.property(w, "Tenancy", "tenancy", StringValueConverter())
       self.property(w, "EndDateType", "end_date_type", StringValueConverter())
       self.property(w, "InstanceCount", "instance_count", BasicValueConverter())
-      self.repeated_block(w, "TagSpecifications", AWS_EC2_CapacityReservation_TagSpecification)
+      self.repeated_block(w, "TagSpecifications", AWS_EC2_CapacityReservation_TagSpecification) # TODO: Probably not the correct mapping
       self.property(w, "AvailabilityZone", "availability_zone", StringValueConverter())
       self.property(w, "InstancePlatform", "instance_platform", StringValueConverter())
       self.property(w, "InstanceType", "instance_type", StringValueConverter())
@@ -602,7 +602,7 @@ class AWS_EC2_CapacityReservation(CloudFormationResource):
 
 class AWS_EC2_VPCEndpointServicePermissions(CloudFormationResource):
   cfn_type = "AWS::EC2::VPCEndpointServicePermissions"
-  tf_type = "aws_ec2_vpc_endpoint_service_permissions"
+  tf_type = "aws_ec2_vpc_endpoint_service_permissions" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -613,23 +613,23 @@ class AWS_EC2_VPCEndpointServicePermissions(CloudFormationResource):
 
 class AWS_EC2_TransitGatewayRouteTableAssociation(CloudFormationResource):
   cfn_type = "AWS::EC2::TransitGatewayRouteTableAssociation"
-  tf_type = "aws_ec2_transit_gateway_route_table_association"
+  tf_type = "aws_ec2_transit_gateway"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "TransitGatewayRouteTableId", "transit_gateway_route_table_id", StringValueConverter())
-      self.property(w, "TransitGatewayAttachmentId", "transit_gateway_attachment_id", StringValueConverter())
+      self.property(w, "TransitGatewayRouteTableId", "transit_gateway_route_table_id", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "TransitGatewayAttachmentId", "transit_gateway_attachment_id", StringValueConverter()) # TODO: Probably not the correct mapping
 
 
 class AWS_EC2_Volume(CloudFormationResource):
   cfn_type = "AWS::EC2::Volume"
-  tf_type = "aws_ec2_volume"
+  tf_type = "aws_ebs_volume"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "AutoEnableIO", "auto_enable_io", BasicValueConverter())
+      self.property(w, "AutoEnableIO", "auto_enable_io", BasicValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "AvailabilityZone", "availability_zone", StringValueConverter())
       self.property(w, "Encrypted", "encrypted", BasicValueConverter())
       self.property(w, "Iops", "iops", BasicValueConverter())
@@ -639,12 +639,12 @@ class AWS_EC2_Volume(CloudFormationResource):
       self.property(w, "Size", "size", BasicValueConverter())
       self.property(w, "SnapshotId", "snapshot_id", StringValueConverter())
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
-      self.property(w, "VolumeType", "volume_type", StringValueConverter())
+      self.property(w, "VolumeType", "type", StringValueConverter())
 
 
 class AWS_EC2_EIP(CloudFormationResource):
   cfn_type = "AWS::EC2::EIP"
-  tf_type = "aws_ec2_eip"
+  tf_type = "aws_ec2_eip" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -669,36 +669,36 @@ class AWS_EC2_LocalGatewayRoute(CloudFormationResource):
 
 class AWS_EC2_VPCEndpointConnectionNotification(CloudFormationResource):
   cfn_type = "AWS::EC2::VPCEndpointConnectionNotification"
-  tf_type = "aws_ec2_vpc_endpoint_connection_notification"
+  tf_type = "aws_vpc_endpoint_connection_notification"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "ConnectionEvents", "connection_events", ListValueConverter(StringValueConverter()))
       self.property(w, "VPCEndpointId", "vpc_endpoint_id", StringValueConverter())
-      self.property(w, "ServiceId", "service_id", StringValueConverter())
+      self.property(w, "ServiceId", "id", StringValueConverter())
       self.property(w, "ConnectionNotificationArn", "connection_notification_arn", StringValueConverter())
 
 
 class AWS_EC2_FlowLog(CloudFormationResource):
   cfn_type = "AWS::EC2::FlowLog"
-  tf_type = "aws_ec2_flow_log"
+  tf_type = "aws_flow_log"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "DeliverLogsPermissionArn", "deliver_logs_permission_arn", StringValueConverter())
+      self.property(w, "DeliverLogsPermissionArn", "deliver_logs_permission_arn", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "LogDestination", "log_destination", StringValueConverter())
       self.property(w, "LogDestinationType", "log_destination_type", StringValueConverter())
       self.property(w, "LogGroupName", "log_group_name", StringValueConverter())
-      self.property(w, "ResourceId", "resource_id", StringValueConverter())
-      self.property(w, "ResourceType", "resource_type", StringValueConverter())
+      self.property(w, "ResourceId", "id", StringValueConverter())
+      self.property(w, "ResourceType", "resource_type", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "TrafficType", "traffic_type", StringValueConverter())
 
 
 class AWS_EC2_SecurityGroupEgress(CloudFormationResource):
   cfn_type = "AWS::EC2::SecurityGroupEgress"
-  tf_type = "aws_ec2_security_group_egress"
+  tf_type = "aws_ec2_security_group_egress" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -716,7 +716,7 @@ class AWS_EC2_SecurityGroupEgress(CloudFormationResource):
 
 class AWS_EC2_TransitGatewayAttachment(CloudFormationResource):
   cfn_type = "AWS::EC2::TransitGatewayAttachment"
-  tf_type = "aws_ec2_transit_gateway_attachment"
+  tf_type = "aws_ec2_transit_gateway_vpc_attachment"
   ref = "arn"
 
   def write(self, w):
@@ -729,7 +729,7 @@ class AWS_EC2_TransitGatewayAttachment(CloudFormationResource):
 
 class AWS_EC2_Subnet(CloudFormationResource):
   cfn_type = "AWS::EC2::Subnet"
-  tf_type = "aws_ec2_subnet"
+  tf_type = "aws_ec2_subnet" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -745,7 +745,7 @@ class AWS_EC2_Subnet(CloudFormationResource):
 
 class AWS_EC2_DHCPOptions(CloudFormationResource):
   cfn_type = "AWS::EC2::DHCPOptions"
-  tf_type = "aws_ec2_dhcp_options"
+  tf_type = "aws_vpc_dhcp_options"
   ref = "arn"
 
   def write(self, w):
@@ -760,7 +760,7 @@ class AWS_EC2_DHCPOptions(CloudFormationResource):
 
 class AWS_EC2_EgressOnlyInternetGateway(CloudFormationResource):
   cfn_type = "AWS::EC2::EgressOnlyInternetGateway"
-  tf_type = "aws_ec2_egress_only_internet_gateway"
+  tf_type = "aws_egress_only_internet_gateway"
   ref = "arn"
 
   def write(self, w):
@@ -770,12 +770,12 @@ class AWS_EC2_EgressOnlyInternetGateway(CloudFormationResource):
 
 class AWS_EC2_NetworkInterfaceAttachment(CloudFormationResource):
   cfn_type = "AWS::EC2::NetworkInterfaceAttachment"
-  tf_type = "aws_ec2_network_interface_attachment"
+  tf_type = "aws_network_interface_attachment"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "DeleteOnTermination", "delete_on_termination", BasicValueConverter())
+      self.property(w, "DeleteOnTermination", "delete_on_termination", BasicValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "DeviceIndex", "device_index", StringValueConverter())
       self.property(w, "InstanceId", "instance_id", StringValueConverter())
       self.property(w, "NetworkInterfaceId", "network_interface_id", StringValueConverter())
@@ -783,7 +783,7 @@ class AWS_EC2_NetworkInterfaceAttachment(CloudFormationResource):
 
 class AWS_EC2_CustomerGateway(CloudFormationResource):
   cfn_type = "AWS::EC2::CustomerGateway"
-  tf_type = "aws_ec2_customer_gateway"
+  tf_type = "aws_customer_gateway"
   ref = "arn"
 
   def write(self, w):
@@ -796,13 +796,13 @@ class AWS_EC2_CustomerGateway(CloudFormationResource):
 
 class AWS_EC2_EIPAssociation(CloudFormationResource):
   cfn_type = "AWS::EC2::EIPAssociation"
-  tf_type = "aws_ec2_eip_association"
+  tf_type = "aws_eip_association"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "AllocationId", "allocation_id", StringValueConverter())
-      self.property(w, "EIP", "eip", StringValueConverter())
+      self.property(w, "EIP", "eip", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "InstanceId", "instance_id", StringValueConverter())
       self.property(w, "NetworkInterfaceId", "network_interface_id", StringValueConverter())
       self.property(w, "PrivateIpAddress", "private_ip_address", StringValueConverter())
@@ -810,19 +810,19 @@ class AWS_EC2_EIPAssociation(CloudFormationResource):
 
 class AWS_EC2_VPNGateway(CloudFormationResource):
   cfn_type = "AWS::EC2::VPNGateway"
-  tf_type = "aws_ec2_vpn_gateway"
+  tf_type = "aws_vpn_gateway"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "AmazonSideAsn", "amazon_side_asn", BasicValueConverter())
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
-      self.property(w, "Type", "type", StringValueConverter())
+      self.property(w, "Type", "type", StringValueConverter()) # TODO: Probably not the correct mapping
 
 
 class AWS_EC2_VPNConnection(CloudFormationResource):
   cfn_type = "AWS::EC2::VPNConnection"
-  tf_type = "aws_ec2_vpn_connection"
+  tf_type = "aws_vpn_connection"
   ref = "arn"
 
   def write(self, w):
@@ -833,7 +833,7 @@ class AWS_EC2_VPNConnection(CloudFormationResource):
       self.property(w, "TransitGatewayId", "transit_gateway_id", StringValueConverter())
       self.property(w, "Type", "type", StringValueConverter())
       self.property(w, "VpnGatewayId", "vpn_gateway_id", StringValueConverter())
-      self.repeated_block(w, "VpnTunnelOptionsSpecifications", AWS_EC2_VPNConnection_VpnTunnelOptionsSpecification)
+      self.repeated_block(w, "VpnTunnelOptionsSpecifications", AWS_EC2_VPNConnection_VpnTunnelOptionsSpecification) # TODO: Probably not the correct mapping
 
 
 class AWS_EC2_TransitGatewayRouteTable(CloudFormationResource):
@@ -849,7 +849,7 @@ class AWS_EC2_TransitGatewayRouteTable(CloudFormationResource):
 
 class AWS_EC2_VPCEndpointService(CloudFormationResource):
   cfn_type = "AWS::EC2::VPCEndpointService"
-  tf_type = "aws_ec2_vpc_endpoint_service"
+  tf_type = "aws_vpc_endpoint_service"
   ref = "arn"
 
   def write(self, w):
@@ -860,7 +860,7 @@ class AWS_EC2_VPCEndpointService(CloudFormationResource):
 
 class AWS_EC2_ClientVpnRoute(CloudFormationResource):
   cfn_type = "AWS::EC2::ClientVpnRoute"
-  tf_type = "aws_ec2_client_vpn_route"
+  tf_type = "aws_ec2_client_vpn_route" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -873,7 +873,7 @@ class AWS_EC2_ClientVpnRoute(CloudFormationResource):
 
 class AWS_EC2_PlacementGroup(CloudFormationResource):
   cfn_type = "AWS::EC2::PlacementGroup"
-  tf_type = "aws_ec2_placement_group"
+  tf_type = "aws_placement_group"
   ref = "arn"
 
   def write(self, w):
@@ -883,18 +883,18 @@ class AWS_EC2_PlacementGroup(CloudFormationResource):
 
 class AWS_EC2_GatewayRouteTableAssociation(CloudFormationResource):
   cfn_type = "AWS::EC2::GatewayRouteTableAssociation"
-  tf_type = "aws_ec2_gateway_route_table_association"
+  tf_type = "aws_ec2_transit_gateway_route_table_association"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "RouteTableId", "route_table_id", StringValueConverter())
-      self.property(w, "GatewayId", "gateway_id", StringValueConverter())
+      self.property(w, "RouteTableId", "transit_gateway_route_table_id", StringValueConverter())
+      self.property(w, "GatewayId", "id", StringValueConverter())
 
 
 class AWS_EC2_NetworkAclEntry(CloudFormationResource):
   cfn_type = "AWS::EC2::NetworkAclEntry"
-  tf_type = "aws_ec2_network_acl_entry"
+  tf_type = "aws_ec2_network_acl_entry" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -912,7 +912,7 @@ class AWS_EC2_NetworkAclEntry(CloudFormationResource):
 
 class AWS_EC2_InternetGateway(CloudFormationResource):
   cfn_type = "AWS::EC2::InternetGateway"
-  tf_type = "aws_ec2_internet_gateway"
+  tf_type = "aws_internet_gateway"
   ref = "arn"
 
   def write(self, w):
@@ -922,7 +922,7 @@ class AWS_EC2_InternetGateway(CloudFormationResource):
 
 class AWS_EC2_VPNConnectionRoute(CloudFormationResource):
   cfn_type = "AWS::EC2::VPNConnectionRoute"
-  tf_type = "aws_ec2_vpn_connection_route"
+  tf_type = "aws_vpn_connection_route"
   ref = "arn"
 
   def write(self, w):
@@ -933,7 +933,7 @@ class AWS_EC2_VPNConnectionRoute(CloudFormationResource):
 
 class AWS_EC2_NetworkInterfacePermission(CloudFormationResource):
   cfn_type = "AWS::EC2::NetworkInterfacePermission"
-  tf_type = "aws_ec2_network_interface_permission"
+  tf_type = "aws_ec2_network_interface_permission" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -957,7 +957,7 @@ class AWS_EC2_TrafficMirrorFilter(CloudFormationResource):
 
 class AWS_EC2_SecurityGroupIngress(CloudFormationResource):
   cfn_type = "AWS::EC2::SecurityGroupIngress"
-  tf_type = "aws_ec2_security_group_ingress"
+  tf_type = "aws_ec2_security_group_ingress" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -978,7 +978,7 @@ class AWS_EC2_SecurityGroupIngress(CloudFormationResource):
 
 class AWS_EC2_SubnetRouteTableAssociation(CloudFormationResource):
   cfn_type = "AWS::EC2::SubnetRouteTableAssociation"
-  tf_type = "aws_ec2_subnet_route_table_association"
+  tf_type = "aws_ec2_subnet_route_table_association" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -989,7 +989,7 @@ class AWS_EC2_SubnetRouteTableAssociation(CloudFormationResource):
 
 class AWS_EC2_Route(CloudFormationResource):
   cfn_type = "AWS::EC2::Route"
-  tf_type = "aws_ec2_route"
+  tf_type = "aws_ec2_route" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -1031,19 +1031,19 @@ class AWS_EC2_TransitGatewayRouteTablePropagation(CloudFormationResource):
 
 class AWS_EC2_NetworkInterface(CloudFormationResource):
   cfn_type = "AWS::EC2::NetworkInterface"
-  tf_type = "aws_ec2_network_interface"
+  tf_type = "aws_network_interface"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "Description", "description", StringValueConverter())
-      self.property(w, "GroupSet", "group_set", ListValueConverter(StringValueConverter()))
-      self.property(w, "InterfaceType", "interface_type", StringValueConverter())
-      self.property(w, "Ipv6AddressCount", "ipv6_address_count", BasicValueConverter())
-      self.block(w, "Ipv6Addresses", AWS_EC2_NetworkInterface_InstanceIpv6Address)
-      self.property(w, "PrivateIpAddress", "private_ip_address", StringValueConverter())
-      self.repeated_block(w, "PrivateIpAddresses", AWS_EC2_NetworkInterface_PrivateIpAddressSpecification)
-      self.property(w, "SecondaryPrivateIpAddressCount", "secondary_private_ip_address_count", BasicValueConverter())
+      self.property(w, "GroupSet", "group_set", ListValueConverter(StringValueConverter())) # TODO: Probably not the correct mapping
+      self.property(w, "InterfaceType", "interface_type", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "Ipv6AddressCount", "ipv6_address_count", BasicValueConverter()) # TODO: Probably not the correct mapping
+      self.block(w, "Ipv6Addresses", AWS_EC2_NetworkInterface_InstanceIpv6Address) # TODO: Probably not the correct mapping
+      self.property(w, "PrivateIpAddress", "private_ip", StringValueConverter())
+      self.repeated_block(w, "PrivateIpAddresses", AWS_EC2_NetworkInterface_PrivateIpAddressSpecification) # TODO: Probably not the correct mapping
+      self.property(w, "SecondaryPrivateIpAddressCount", "secondary_private_ip_address_count", BasicValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "SourceDestCheck", "source_dest_check", BasicValueConverter())
       self.property(w, "SubnetId", "subnet_id", StringValueConverter())
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
@@ -1051,7 +1051,7 @@ class AWS_EC2_NetworkInterface(CloudFormationResource):
 
 class AWS_EC2_ClientVpnAuthorizationRule(CloudFormationResource):
   cfn_type = "AWS::EC2::ClientVpnAuthorizationRule"
-  tf_type = "aws_ec2_client_vpn_authorization_rule"
+  tf_type = "aws_ec2_client_vpn_authorization_rule" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -1065,7 +1065,7 @@ class AWS_EC2_ClientVpnAuthorizationRule(CloudFormationResource):
 
 class AWS_EC2_SubnetNetworkAclAssociation(CloudFormationResource):
   cfn_type = "AWS::EC2::SubnetNetworkAclAssociation"
-  tf_type = "aws_ec2_subnet_network_acl_association"
+  tf_type = "aws_ec2_subnet_network_acl_association" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -1093,7 +1093,7 @@ class AWS_EC2_TrafficMirrorSession(CloudFormationResource):
 
 class AWS_EC2_SubnetCidrBlock(CloudFormationResource):
   cfn_type = "AWS::EC2::SubnetCidrBlock"
-  tf_type = "aws_ec2_subnet_cidr_block"
+  tf_type = "aws_ec2_subnet_cidr_block" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -1104,7 +1104,7 @@ class AWS_EC2_SubnetCidrBlock(CloudFormationResource):
 
 class AWS_EC2_NatGateway(CloudFormationResource):
   cfn_type = "AWS::EC2::NatGateway"
-  tf_type = "aws_ec2_nat_gateway"
+  tf_type = "aws_nat_gateway"
   ref = "arn"
 
   def write(self, w):
@@ -1116,13 +1116,13 @@ class AWS_EC2_NatGateway(CloudFormationResource):
 
 class AWS_EC2_SecurityGroup(CloudFormationResource):
   cfn_type = "AWS::EC2::SecurityGroup"
-  tf_type = "aws_ec2_security_group"
+  tf_type = "aws_security_group"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "GroupDescription", "group_description", StringValueConverter())
-      self.property(w, "GroupName", "group_name", StringValueConverter())
+      self.property(w, "GroupDescription", "description", StringValueConverter())
+      self.property(w, "GroupName", "name", StringValueConverter())
       self.repeated_block(w, "SecurityGroupEgress", AWS_EC2_SecurityGroup_Egress)
       self.repeated_block(w, "SecurityGroupIngress", AWS_EC2_SecurityGroup_Ingress)
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
@@ -1150,7 +1150,7 @@ class AWS_EC2_TrafficMirrorFilterRule(CloudFormationResource):
 
 class AWS_EC2_VPC(CloudFormationResource):
   cfn_type = "AWS::EC2::VPC"
-  tf_type = "aws_ec2_vpc"
+  tf_type = "aws_ec2_vpc" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -1177,7 +1177,7 @@ class AWS_EC2_TransitGatewayRoute(CloudFormationResource):
 
 class AWS_EC2_NetworkAcl(CloudFormationResource):
   cfn_type = "AWS::EC2::NetworkAcl"
-  tf_type = "aws_ec2_network_acl"
+  tf_type = "aws_network_acl"
   ref = "arn"
 
   def write(self, w):
@@ -1188,18 +1188,18 @@ class AWS_EC2_NetworkAcl(CloudFormationResource):
 
 class AWS_EC2_VPNGatewayRoutePropagation(CloudFormationResource):
   cfn_type = "AWS::EC2::VPNGatewayRoutePropagation"
-  tf_type = "aws_ec2_vpn_gateway_route_propagation"
+  tf_type = "aws_vpn_gateway_route_propagation"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "RouteTableIds", "route_table_ids", ListValueConverter(StringValueConverter()))
+      self.property(w, "RouteTableIds", "route_table_id", ListValueConverter(StringValueConverter()))
       self.property(w, "VpnGatewayId", "vpn_gateway_id", StringValueConverter())
 
 
 class AWS_EC2_ClientVpnTargetNetworkAssociation(CloudFormationResource):
   cfn_type = "AWS::EC2::ClientVpnTargetNetworkAssociation"
-  tf_type = "aws_ec2_client_vpn_target_network_association"
+  tf_type = "aws_ec2_client_vpn_network_association"
   ref = "arn"
 
   def write(self, w):
@@ -1210,19 +1210,19 @@ class AWS_EC2_ClientVpnTargetNetworkAssociation(CloudFormationResource):
 
 class AWS_EC2_VolumeAttachment(CloudFormationResource):
   cfn_type = "AWS::EC2::VolumeAttachment"
-  tf_type = "aws_ec2_volume_attachment"
+  tf_type = "aws_volume_attachment"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "Device", "device", StringValueConverter())
+      self.property(w, "Device", "device_name", StringValueConverter())
       self.property(w, "InstanceId", "instance_id", StringValueConverter())
       self.property(w, "VolumeId", "volume_id", StringValueConverter())
 
 
 class AWS_EC2_Host(CloudFormationResource):
   cfn_type = "AWS::EC2::Host"
-  tf_type = "aws_ec2_host"
+  tf_type = "aws_ec2_host" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -1235,12 +1235,12 @@ class AWS_EC2_Host(CloudFormationResource):
 
 class AWS_EC2_VPCEndpoint(CloudFormationResource):
   cfn_type = "AWS::EC2::VPCEndpoint"
-  tf_type = "aws_ec2_vpc_endpoint"
+  tf_type = "aws_vpc_endpoint"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "PolicyDocument", "policy_document", JsonValueConverter())
+      self.property(w, "PolicyDocument", "policy", JsonValueConverter())
       self.property(w, "PrivateDnsEnabled", "private_dns_enabled", BasicValueConverter())
       self.property(w, "RouteTableIds", "route_table_ids", ListValueConverter(StringValueConverter()))
       self.property(w, "SecurityGroupIds", "security_group_ids", ListValueConverter(StringValueConverter()))
@@ -1252,19 +1252,19 @@ class AWS_EC2_VPCEndpoint(CloudFormationResource):
 
 class AWS_EC2_VPCGatewayAttachment(CloudFormationResource):
   cfn_type = "AWS::EC2::VPCGatewayAttachment"
-  tf_type = "aws_ec2_vpc_gateway_attachment"
+  tf_type = "aws_vpn_gateway_attachment"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "InternetGatewayId", "internet_gateway_id", StringValueConverter())
+      self.property(w, "InternetGatewayId", "internet_gateway_id", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "VpcId", "vpc_id", StringValueConverter())
       self.property(w, "VpnGatewayId", "vpn_gateway_id", StringValueConverter())
 
 
 class AWS_EC2_VPCCidrBlock(CloudFormationResource):
   cfn_type = "AWS::EC2::VPCCidrBlock"
-  tf_type = "aws_ec2_vpc_cidr_block"
+  tf_type = "aws_ec2_vpc_cidr_block" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -1276,7 +1276,7 @@ class AWS_EC2_VPCCidrBlock(CloudFormationResource):
 
 class AWS_EC2_VPCDHCPOptionsAssociation(CloudFormationResource):
   cfn_type = "AWS::EC2::VPCDHCPOptionsAssociation"
-  tf_type = "aws_ec2_vpcdhcp_options_association"
+  tf_type = "aws_vpc_dhcp_options_association"
   ref = "arn"
 
   def write(self, w):
@@ -1436,53 +1436,53 @@ class AWS_EC2_EC2Fleet_FleetLaunchTemplateConfigRequest(CloudFormationProperty):
 
 class AWS_EC2_Instance(CloudFormationResource):
   cfn_type = "AWS::EC2::Instance"
-  tf_type = "aws_ec2_instance"
+  tf_type = "aws_instance"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "AdditionalInfo", "additional_info", StringValueConverter())
-      self.property(w, "Affinity", "affinity", StringValueConverter())
+      self.property(w, "AdditionalInfo", "additional_info", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "Affinity", "affinity", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "AvailabilityZone", "availability_zone", StringValueConverter())
-      self.repeated_block(w, "BlockDeviceMappings", AWS_EC2_Instance_BlockDeviceMapping)
-      self.block(w, "CpuOptions", AWS_EC2_Instance_CpuOptions)
+      self.repeated_block(w, "BlockDeviceMappings", AWS_EC2_Instance_BlockDeviceMapping) # TODO: Probably not the correct mapping
+      self.block(w, "CpuOptions", AWS_EC2_Instance_CpuOptions) # TODO: Probably not the correct mapping
       self.block(w, "CreditSpecification", AWS_EC2_Instance_CreditSpecification)
       self.property(w, "DisableApiTermination", "disable_api_termination", BasicValueConverter())
       self.property(w, "EbsOptimized", "ebs_optimized", BasicValueConverter())
-      self.repeated_block(w, "ElasticGpuSpecifications", AWS_EC2_Instance_ElasticGpuSpecification)
-      self.repeated_block(w, "ElasticInferenceAccelerators", AWS_EC2_Instance_ElasticInferenceAccelerator)
+      self.repeated_block(w, "ElasticGpuSpecifications", AWS_EC2_Instance_ElasticGpuSpecification) # TODO: Probably not the correct mapping
+      self.repeated_block(w, "ElasticInferenceAccelerators", AWS_EC2_Instance_ElasticInferenceAccelerator) # TODO: Probably not the correct mapping
       self.block(w, "HibernationOptions", AWS_EC2_Instance_HibernationOptions)
       self.property(w, "HostId", "host_id", StringValueConverter())
-      self.property(w, "HostResourceGroupArn", "host_resource_group_arn", StringValueConverter())
+      self.property(w, "HostResourceGroupArn", "arn", StringValueConverter())
       self.property(w, "IamInstanceProfile", "iam_instance_profile", StringValueConverter())
-      self.property(w, "ImageId", "image_id", StringValueConverter())
+      self.property(w, "ImageId", "id", StringValueConverter())
       self.property(w, "InstanceInitiatedShutdownBehavior", "instance_initiated_shutdown_behavior", StringValueConverter())
       self.property(w, "InstanceType", "instance_type", StringValueConverter())
       self.property(w, "Ipv6AddressCount", "ipv6_address_count", BasicValueConverter())
       self.repeated_block(w, "Ipv6Addresses", AWS_EC2_Instance_InstanceIpv6Address)
-      self.property(w, "KernelId", "kernel_id", StringValueConverter())
+      self.property(w, "KernelId", "kernel_id", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "KeyName", "key_name", StringValueConverter())
-      self.block(w, "LaunchTemplate", AWS_EC2_Instance_LaunchTemplateSpecification)
-      self.repeated_block(w, "LicenseSpecifications", AWS_EC2_Instance_LicenseSpecification)
+      self.block(w, "LaunchTemplate", AWS_EC2_Instance_LaunchTemplateSpecification) # TODO: Probably not the correct mapping
+      self.repeated_block(w, "LicenseSpecifications", AWS_EC2_Instance_LicenseSpecification) # TODO: Probably not the correct mapping
       self.property(w, "Monitoring", "monitoring", BasicValueConverter())
       self.repeated_block(w, "NetworkInterfaces", AWS_EC2_Instance_NetworkInterface)
-      self.property(w, "PlacementGroupName", "placement_group_name", StringValueConverter())
-      self.property(w, "PrivateIpAddress", "private_ip_address", StringValueConverter())
-      self.property(w, "RamdiskId", "ramdisk_id", StringValueConverter())
-      self.property(w, "SecurityGroupIds", "security_group_ids", ListValueConverter(StringValueConverter()))
+      self.property(w, "PlacementGroupName", "placement_group_name", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "PrivateIpAddress", "private_ip", StringValueConverter())
+      self.property(w, "RamdiskId", "ramdisk_id", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "SecurityGroupIds", "vpc_security_group_ids", ListValueConverter(StringValueConverter()))
       self.property(w, "SecurityGroups", "security_groups", ListValueConverter(StringValueConverter()))
       self.property(w, "SourceDestCheck", "source_dest_check", BasicValueConverter())
-      self.repeated_block(w, "SsmAssociations", AWS_EC2_Instance_SsmAssociation)
+      self.repeated_block(w, "SsmAssociations", AWS_EC2_Instance_SsmAssociation) # TODO: Probably not the correct mapping
       self.property(w, "SubnetId", "subnet_id", StringValueConverter())
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
       self.property(w, "Tenancy", "tenancy", StringValueConverter())
       self.property(w, "UserData", "user_data", StringValueConverter())
-      self.repeated_block(w, "Volumes", AWS_EC2_Instance_Volume)
+      self.repeated_block(w, "Volumes", AWS_EC2_Instance_Volume) # TODO: Probably not the correct mapping
 
 
 class AWS_EC2_SpotFleet(CloudFormationResource):
   cfn_type = "AWS::EC2::SpotFleet"
-  tf_type = "aws_ec2_spot_fleet"
+  tf_type = "aws_ec2_spot_fleet" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -1501,19 +1501,19 @@ class AWS_EC2_ClientVpnEndpoint(CloudFormationResource):
       self.block(w, "ConnectionLogOptions", AWS_EC2_ClientVpnEndpoint_ConnectionLogOptions)
       self.property(w, "SplitTunnel", "split_tunnel", BasicValueConverter())
       self.property(w, "Description", "description", StringValueConverter())
-      self.repeated_block(w, "TagSpecifications", AWS_EC2_ClientVpnEndpoint_TagSpecification)
-      self.property(w, "VpcId", "vpc_id", StringValueConverter())
+      self.repeated_block(w, "TagSpecifications", AWS_EC2_ClientVpnEndpoint_TagSpecification) # TODO: Probably not the correct mapping
+      self.property(w, "VpcId", "id", StringValueConverter())
       self.repeated_block(w, "AuthenticationOptions", AWS_EC2_ClientVpnEndpoint_ClientAuthenticationRequest)
       self.property(w, "ServerCertificateArn", "server_certificate_arn", StringValueConverter())
       self.property(w, "DnsServers", "dns_servers", ListValueConverter(StringValueConverter()))
       self.property(w, "TransportProtocol", "transport_protocol", StringValueConverter())
-      self.property(w, "SecurityGroupIds", "security_group_ids", ListValueConverter(StringValueConverter()))
-      self.property(w, "VpnPort", "vpn_port", BasicValueConverter())
+      self.property(w, "SecurityGroupIds", "security_group_ids", ListValueConverter(StringValueConverter())) # TODO: Probably not the correct mapping
+      self.property(w, "VpnPort", "vpn_port", BasicValueConverter()) # TODO: Probably not the correct mapping
 
 
 class AWS_EC2_EC2Fleet(CloudFormationResource):
   cfn_type = "AWS::EC2::EC2Fleet"
-  tf_type = "aws_ec2_ec2_fleet"
+  tf_type = "aws_ec2_fleet"
   ref = "arn"
 
   def write(self, w):
@@ -1522,13 +1522,13 @@ class AWS_EC2_EC2Fleet(CloudFormationResource):
       self.block(w, "OnDemandOptions", AWS_EC2_EC2Fleet_OnDemandOptionsRequest)
       self.property(w, "Type", "type", StringValueConverter())
       self.property(w, "ExcessCapacityTerminationPolicy", "excess_capacity_termination_policy", StringValueConverter())
-      self.repeated_block(w, "TagSpecifications", AWS_EC2_EC2Fleet_TagSpecification)
+      self.repeated_block(w, "TagSpecifications", AWS_EC2_EC2Fleet_TagSpecification) # TODO: Probably not the correct mapping
       self.block(w, "SpotOptions", AWS_EC2_EC2Fleet_SpotOptionsRequest)
-      self.property(w, "ValidFrom", "valid_from", StringValueConverter())
+      self.property(w, "ValidFrom", "id", StringValueConverter())
       self.property(w, "ReplaceUnhealthyInstances", "replace_unhealthy_instances", BasicValueConverter())
       self.repeated_block(w, "LaunchTemplateConfigs", AWS_EC2_EC2Fleet_FleetLaunchTemplateConfigRequest)
       self.property(w, "TerminateInstancesWithExpiration", "terminate_instances_with_expiration", BasicValueConverter())
-      self.property(w, "ValidUntil", "valid_until", StringValueConverter())
+      self.property(w, "ValidUntil", "valid_until", StringValueConverter()) # TODO: Probably not the correct mapping
 
 
 class AWS_EC2_LaunchTemplate_LaunchTemplateData(CloudFormationProperty):
@@ -1564,12 +1564,12 @@ class AWS_EC2_LaunchTemplate_LaunchTemplateData(CloudFormationProperty):
 
 class AWS_EC2_LaunchTemplate(CloudFormationResource):
   cfn_type = "AWS::EC2::LaunchTemplate"
-  tf_type = "aws_ec2_launch_template"
+  tf_type = "aws_launch_template"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "LaunchTemplateName", "launch_template_name", StringValueConverter())
-      self.block(w, "LaunchTemplateData", AWS_EC2_LaunchTemplate_LaunchTemplateData)
+      self.property(w, "LaunchTemplateName", "name", StringValueConverter())
+      self.block(w, "LaunchTemplateData", AWS_EC2_LaunchTemplate_LaunchTemplateData) # TODO: Probably not the correct mapping
 
 

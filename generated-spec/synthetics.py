@@ -33,7 +33,7 @@ class AWS_Synthetics_Canary_Schedule(CloudFormationProperty):
 
 class AWS_Synthetics_Canary(CloudFormationResource):
   cfn_type = "AWS::Synthetics::Canary"
-  tf_type = "aws_synthetics_canary"
+  tf_type = "aws_synthetics_canary" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):

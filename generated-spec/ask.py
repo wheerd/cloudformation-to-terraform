@@ -26,7 +26,7 @@ class Alexa_ASK_Skill_SkillPackage(CloudFormationProperty):
 
 class Alexa_ASK_Skill(CloudFormationResource):
   cfn_type = "Alexa::ASK::Skill"
-  tf_type = "alexa_ask_skill"
+  tf_type = "alexa_ask_skill" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):

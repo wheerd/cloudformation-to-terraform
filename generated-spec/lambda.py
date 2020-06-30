@@ -123,12 +123,12 @@ class AWS_Lambda_LayerVersion(CloudFormationResource):
       self.property(w, "LicenseInfo", "license_info", StringValueConverter())
       self.property(w, "Description", "description", StringValueConverter())
       self.property(w, "LayerName", "layer_name", StringValueConverter())
-      self.block(w, "Content", AWS_Lambda_LayerVersion_Content)
+      self.block(w, "Content", AWS_Lambda_LayerVersion_Content) # TODO: Probably not the correct mapping
 
 
 class AWS_Lambda_LayerVersionPermission(CloudFormationResource):
   cfn_type = "AWS::Lambda::LayerVersionPermission"
-  tf_type = "aws_lambda_layer_version_permission"
+  tf_type = "aws_lambda_layer_version_permission" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -141,7 +141,7 @@ class AWS_Lambda_LayerVersionPermission(CloudFormationResource):
 
 class AWS_Lambda_Version(CloudFormationResource):
   cfn_type = "AWS::Lambda::Version"
-  tf_type = "aws_lambda_version"
+  tf_type = "aws_lambda_version" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -154,7 +154,7 @@ class AWS_Lambda_Version(CloudFormationResource):
 
 class AWS_Lambda_EventInvokeConfig(CloudFormationResource):
   cfn_type = "AWS::Lambda::EventInvokeConfig"
-  tf_type = "aws_lambda_event_invoke_config"
+  tf_type = "aws_lambda_function_event_invoke_config"
   ref = "arn"
 
   def write(self, w):
@@ -223,7 +223,7 @@ class AWS_Lambda_Alias(CloudFormationResource):
       self.property(w, "FunctionName", "function_name", StringValueConverter())
       self.property(w, "FunctionVersion", "function_version", StringValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
-      self.block(w, "ProvisionedConcurrencyConfig", AWS_Lambda_Alias_ProvisionedConcurrencyConfiguration)
+      self.block(w, "ProvisionedConcurrencyConfig", AWS_Lambda_Alias_ProvisionedConcurrencyConfiguration) # TODO: Probably not the correct mapping
       self.block(w, "RoutingConfig", AWS_Lambda_Alias_AliasRoutingConfiguration)
 
 

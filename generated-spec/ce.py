@@ -2,7 +2,7 @@ from . import *
 
 class AWS_CE_CostCategory(CloudFormationResource):
   cfn_type = "AWS::CE::CostCategory"
-  tf_type = "aws_ce_cost_category"
+  tf_type = "aws_ce_cost_category" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):

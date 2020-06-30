@@ -222,7 +222,7 @@ class AWS_Cognito_UserPool_UsernameConfiguration(CloudFormationProperty):
 
 class AWS_Cognito_UserPoolIdentityProvider(CloudFormationResource):
   cfn_type = "AWS::Cognito::UserPoolIdentityProvider"
-  tf_type = "aws_cognito_user_pool_identity_provider"
+  tf_type = "aws_cognito_identity_provider"
   ref = "arn"
 
   def write(self, w):
@@ -237,12 +237,12 @@ class AWS_Cognito_UserPoolIdentityProvider(CloudFormationResource):
 
 class AWS_Cognito_UserPoolGroup(CloudFormationResource):
   cfn_type = "AWS::Cognito::UserPoolGroup"
-  tf_type = "aws_cognito_user_pool_group"
+  tf_type = "aws_cognito_user_group"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "GroupName", "group_name", StringValueConverter())
+      self.property(w, "GroupName", "name", StringValueConverter())
       self.property(w, "Description", "description", StringValueConverter())
       self.property(w, "UserPoolId", "user_pool_id", StringValueConverter())
       self.property(w, "Precedence", "precedence", BasicValueConverter())
@@ -256,22 +256,22 @@ class AWS_Cognito_IdentityPool(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.block(w, "PushSync", AWS_Cognito_IdentityPool_PushSync)
+      self.block(w, "PushSync", AWS_Cognito_IdentityPool_PushSync) # TODO: Probably not the correct mapping
       self.repeated_block(w, "CognitoIdentityProviders", AWS_Cognito_IdentityPool_CognitoIdentityProvider)
-      self.property(w, "CognitoEvents", "cognito_events", JsonValueConverter())
+      self.property(w, "CognitoEvents", "cognito_events", JsonValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "DeveloperProviderName", "developer_provider_name", StringValueConverter())
-      self.block(w, "CognitoStreams", AWS_Cognito_IdentityPool_CognitoStreams)
+      self.block(w, "CognitoStreams", AWS_Cognito_IdentityPool_CognitoStreams) # TODO: Probably not the correct mapping
       self.property(w, "IdentityPoolName", "identity_pool_name", StringValueConverter())
       self.property(w, "AllowUnauthenticatedIdentities", "allow_unauthenticated_identities", BasicValueConverter())
       self.property(w, "SupportedLoginProviders", "supported_login_providers", JsonValueConverter())
-      self.property(w, "SamlProviderARNs", "saml_provider_ar_ns", ListValueConverter(StringValueConverter()))
-      self.property(w, "OpenIdConnectProviderARNs", "open_id_connect_provider_ar_ns", ListValueConverter(StringValueConverter()))
-      self.property(w, "AllowClassicFlow", "allow_classic_flow", BasicValueConverter())
+      self.property(w, "SamlProviderARNs", "saml_provider_arns", ListValueConverter(StringValueConverter()))
+      self.property(w, "OpenIdConnectProviderARNs", "openid_connect_provider_arns", ListValueConverter(StringValueConverter()))
+      self.property(w, "AllowClassicFlow", "allow_classic_flow", BasicValueConverter()) # TODO: Probably not the correct mapping
 
 
 class AWS_Cognito_UserPoolResourceServer(CloudFormationResource):
   cfn_type = "AWS::Cognito::UserPoolResourceServer"
-  tf_type = "aws_cognito_user_pool_resource_server"
+  tf_type = "aws_cognito_user_pool_resource_server" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -291,17 +291,17 @@ class AWS_Cognito_UserPoolClient(CloudFormationResource):
     with self.resource_block(w):
       self.block(w, "AnalyticsConfiguration", AWS_Cognito_UserPoolClient_AnalyticsConfiguration)
       self.property(w, "GenerateSecret", "generate_secret", BasicValueConverter())
-      self.property(w, "CallbackURLs", "callback_ur_ls", ListValueConverter(StringValueConverter()))
-      self.property(w, "AllowedOAuthScopes", "allowed_o_auth_scopes", ListValueConverter(StringValueConverter()))
+      self.property(w, "CallbackURLs", "callback_urls", ListValueConverter(StringValueConverter()))
+      self.property(w, "AllowedOAuthScopes", "allowed_oauth_scopes", ListValueConverter(StringValueConverter()))
       self.property(w, "ReadAttributes", "read_attributes", ListValueConverter(StringValueConverter()))
-      self.property(w, "AllowedOAuthFlowsUserPoolClient", "allowed_o_auth_flows_user_pool_client", BasicValueConverter())
+      self.property(w, "AllowedOAuthFlowsUserPoolClient", "allowed_oauth_flows_user_pool_client", BasicValueConverter())
       self.property(w, "DefaultRedirectURI", "default_redirect_uri", StringValueConverter())
       self.property(w, "SupportedIdentityProviders", "supported_identity_providers", ListValueConverter(StringValueConverter()))
-      self.property(w, "ClientName", "client_name", StringValueConverter())
+      self.property(w, "ClientName", "name", StringValueConverter())
       self.property(w, "UserPoolId", "user_pool_id", StringValueConverter())
-      self.property(w, "AllowedOAuthFlows", "allowed_o_auth_flows", ListValueConverter(StringValueConverter()))
+      self.property(w, "AllowedOAuthFlows", "allowed_oauth_flows", ListValueConverter(StringValueConverter()))
       self.property(w, "ExplicitAuthFlows", "explicit_auth_flows", ListValueConverter(StringValueConverter()))
-      self.property(w, "LogoutURLs", "logout_ur_ls", ListValueConverter(StringValueConverter()))
+      self.property(w, "LogoutURLs", "logout_urls", ListValueConverter(StringValueConverter()))
       self.property(w, "RefreshTokenValidity", "refresh_token_validity", BasicValueConverter())
       self.property(w, "WriteAttributes", "write_attributes", ListValueConverter(StringValueConverter()))
       self.property(w, "PreventUserExistenceErrors", "prevent_user_existence_errors", StringValueConverter())
@@ -309,7 +309,7 @@ class AWS_Cognito_UserPoolClient(CloudFormationResource):
 
 class AWS_Cognito_UserPoolUserToGroupAttachment(CloudFormationResource):
   cfn_type = "AWS::Cognito::UserPoolUserToGroupAttachment"
-  tf_type = "aws_cognito_user_pool_user_to_group_attachment"
+  tf_type = "aws_cognito_user_pool_user_to_group_attachment" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -321,19 +321,19 @@ class AWS_Cognito_UserPoolUserToGroupAttachment(CloudFormationResource):
 
 class AWS_Cognito_IdentityPoolRoleAttachment(CloudFormationResource):
   cfn_type = "AWS::Cognito::IdentityPoolRoleAttachment"
-  tf_type = "aws_cognito_identity_pool_role_attachment"
+  tf_type = "aws_cognito_identity_pool_roles_attachment"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "RoleMappings", "role_mappings", JsonValueConverter())
+      self.property(w, "RoleMappings", "role_mapping", JsonValueConverter())
       self.property(w, "IdentityPoolId", "identity_pool_id", StringValueConverter())
       self.property(w, "Roles", "roles", JsonValueConverter())
 
 
 class AWS_Cognito_UserPoolUser(CloudFormationResource):
   cfn_type = "AWS::Cognito::UserPoolUser"
-  tf_type = "aws_cognito_user_pool_user"
+  tf_type = "aws_cognito_user_pool_user" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -350,7 +350,7 @@ class AWS_Cognito_UserPoolUser(CloudFormationResource):
 
 class AWS_Cognito_UserPoolUICustomizationAttachment(CloudFormationResource):
   cfn_type = "AWS::Cognito::UserPoolUICustomizationAttachment"
-  tf_type = "aws_cognito_user_pool_ui_customization_attachment"
+  tf_type = "aws_cognito_user_pool_ui_customization_attachment" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -368,7 +368,7 @@ class AWS_Cognito_UserPoolDomain(CloudFormationResource):
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "UserPoolId", "user_pool_id", StringValueConverter())
-      self.block(w, "CustomDomainConfig", AWS_Cognito_UserPoolDomain_CustomDomainConfigType)
+      self.block(w, "CustomDomainConfig", AWS_Cognito_UserPoolDomain_CustomDomainConfigType) # TODO: Probably not the correct mapping
       self.property(w, "Domain", "domain", StringValueConverter())
 
 
@@ -425,7 +425,7 @@ class AWS_Cognito_UserPoolRiskConfigurationAttachment_AccountTakeoverRiskConfigu
 
 class AWS_Cognito_UserPoolRiskConfigurationAttachment(CloudFormationResource):
   cfn_type = "AWS::Cognito::UserPoolRiskConfigurationAttachment"
-  tf_type = "aws_cognito_user_pool_risk_configuration_attachment"
+  tf_type = "aws_cognito_user_pool_risk_configuration_attachment" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -444,27 +444,27 @@ class AWS_Cognito_UserPool(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "UserPoolTags", "user_pool_tags", JsonValueConverter())
-      self.block(w, "Policies", AWS_Cognito_UserPool_Policies)
+      self.property(w, "UserPoolTags", "tags", JsonValueConverter())
+      self.block(w, "Policies", AWS_Cognito_UserPool_Policies) # TODO: Probably not the correct mapping
       self.block(w, "VerificationMessageTemplate", AWS_Cognito_UserPool_VerificationMessageTemplate)
       self.property(w, "MfaConfiguration", "mfa_configuration", StringValueConverter())
       self.repeated_block(w, "Schema", AWS_Cognito_UserPool_SchemaAttribute)
       self.block(w, "AdminCreateUserConfig", AWS_Cognito_UserPool_AdminCreateUserConfig)
       self.property(w, "SmsAuthenticationMessage", "sms_authentication_message", StringValueConverter())
       self.block(w, "UsernameConfiguration", AWS_Cognito_UserPool_UsernameConfiguration)
-      self.property(w, "UserPoolName", "user_pool_name", StringValueConverter())
+      self.property(w, "UserPoolName", "name", StringValueConverter())
       self.property(w, "SmsVerificationMessage", "sms_verification_message", StringValueConverter())
       self.block(w, "UserPoolAddOns", AWS_Cognito_UserPool_UserPoolAddOns)
       self.block(w, "EmailConfiguration", AWS_Cognito_UserPool_EmailConfiguration)
       self.block(w, "SmsConfiguration", AWS_Cognito_UserPool_SmsConfiguration)
       self.property(w, "AliasAttributes", "alias_attributes", ListValueConverter(StringValueConverter()))
-      self.property(w, "EnabledMfas", "enabled_mfas", ListValueConverter(StringValueConverter()))
+      self.property(w, "EnabledMfas", "enabled_mfas", ListValueConverter(StringValueConverter())) # TODO: Probably not the correct mapping
       self.property(w, "EmailVerificationSubject", "email_verification_subject", StringValueConverter())
       self.block(w, "LambdaConfig", AWS_Cognito_UserPool_LambdaConfig)
       self.property(w, "UsernameAttributes", "username_attributes", ListValueConverter(StringValueConverter()))
       self.property(w, "AutoVerifiedAttributes", "auto_verified_attributes", ListValueConverter(StringValueConverter()))
       self.block(w, "DeviceConfiguration", AWS_Cognito_UserPool_DeviceConfiguration)
       self.property(w, "EmailVerificationMessage", "email_verification_message", StringValueConverter())
-      self.block(w, "AccountRecoverySetting", AWS_Cognito_UserPool_AccountRecoverySetting)
+      self.block(w, "AccountRecoverySetting", AWS_Cognito_UserPool_AccountRecoverySetting) # TODO: Probably not the correct mapping
 
 

@@ -78,7 +78,7 @@ class AWS_DMS_ReplicationSubnetGroup(CloudFormationResource):
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "ReplicationSubnetGroupDescription", "replication_subnet_group_description", StringValueConverter())
-      self.property(w, "ReplicationSubnetGroupIdentifier", "replication_subnet_group_identifier", StringValueConverter())
+      self.property(w, "ReplicationSubnetGroupIdentifier", "replication_subnet_group_identifier", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "SubnetIds", "subnet_ids", ListValueConverter(StringValueConverter()))
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
@@ -93,7 +93,7 @@ class AWS_DMS_EventSubscription(CloudFormationResource):
       self.property(w, "SourceType", "source_type", StringValueConverter())
       self.property(w, "EventCategories", "event_categories", ListValueConverter(StringValueConverter()))
       self.property(w, "Enabled", "enabled", BasicValueConverter())
-      self.property(w, "SubscriptionName", "subscription_name", StringValueConverter())
+      self.property(w, "SubscriptionName", "name", StringValueConverter())
       self.property(w, "SnsTopicArn", "sns_topic_arn", StringValueConverter())
       self.property(w, "SourceIds", "source_ids", ListValueConverter(StringValueConverter()))
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
@@ -106,7 +106,7 @@ class AWS_DMS_Certificate(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "CertificateIdentifier", "certificate_identifier", StringValueConverter())
+      self.property(w, "CertificateIdentifier", "certificate_id", StringValueConverter())
       self.property(w, "CertificatePem", "certificate_pem", StringValueConverter())
       self.property(w, "CertificateWallet", "certificate_wallet", StringValueConverter())
 
@@ -118,15 +118,15 @@ class AWS_DMS_Endpoint(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "KmsKeyId", "kms_key_id", StringValueConverter())
+      self.property(w, "KmsKeyId", "id", StringValueConverter())
       self.block(w, "KafkaSettings", AWS_DMS_Endpoint_KafkaSettings)
       self.property(w, "Port", "port", BasicValueConverter())
       self.property(w, "DatabaseName", "database_name", StringValueConverter())
-      self.block(w, "NeptuneSettings", AWS_DMS_Endpoint_NeptuneSettings)
+      self.block(w, "NeptuneSettings", AWS_DMS_Endpoint_NeptuneSettings) # TODO: Probably not the correct mapping
       self.block(w, "ElasticsearchSettings", AWS_DMS_Endpoint_ElasticsearchSettings)
       self.block(w, "S3Settings", AWS_DMS_Endpoint_S3Settings)
       self.property(w, "EngineName", "engine_name", StringValueConverter())
-      self.block(w, "DynamoDbSettings", AWS_DMS_Endpoint_DynamoDbSettings)
+      self.block(w, "DynamoDbSettings", AWS_DMS_Endpoint_DynamoDbSettings) # TODO: Probably not the correct mapping
       self.block(w, "KinesisSettings", AWS_DMS_Endpoint_KinesisSettings)
       self.property(w, "Username", "username", StringValueConverter())
       self.property(w, "SslMode", "ssl_mode", StringValueConverter())
@@ -134,7 +134,7 @@ class AWS_DMS_Endpoint(CloudFormationResource):
       self.property(w, "ExtraConnectionAttributes", "extra_connection_attributes", StringValueConverter())
       self.property(w, "EndpointType", "endpoint_type", StringValueConverter())
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
-      self.property(w, "EndpointIdentifier", "endpoint_identifier", StringValueConverter())
+      self.property(w, "EndpointIdentifier", "endpoint_id", StringValueConverter())
       self.property(w, "Password", "password", StringValueConverter())
       self.property(w, "CertificateArn", "certificate_arn", StringValueConverter())
       self.block(w, "MongoDbSettings", AWS_DMS_Endpoint_MongoDbSettings)
@@ -149,15 +149,15 @@ class AWS_DMS_ReplicationTask(CloudFormationResource):
     with self.resource_block(w):
       self.property(w, "ReplicationTaskSettings", "replication_task_settings", StringValueConverter())
       self.property(w, "TableMappings", "table_mappings", StringValueConverter())
-      self.property(w, "CdcStartPosition", "cdc_start_position", StringValueConverter())
-      self.property(w, "ReplicationTaskIdentifier", "replication_task_identifier", StringValueConverter())
-      self.property(w, "CdcStopPosition", "cdc_stop_position", StringValueConverter())
+      self.property(w, "CdcStartPosition", "cdc_start_position", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "ReplicationTaskIdentifier", "replication_task_identifier", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "CdcStopPosition", "cdc_stop_position", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "SourceEndpointArn", "source_endpoint_arn", StringValueConverter())
       self.property(w, "MigrationType", "migration_type", StringValueConverter())
       self.property(w, "TargetEndpointArn", "target_endpoint_arn", StringValueConverter())
       self.property(w, "ReplicationInstanceArn", "replication_instance_arn", StringValueConverter())
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
-      self.property(w, "TaskData", "task_data", StringValueConverter())
+      self.property(w, "TaskData", "task_data", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "CdcStartTime", "cdc_start_time", BasicValueConverter())
 
 
@@ -168,16 +168,16 @@ class AWS_DMS_ReplicationInstance(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "ReplicationInstanceIdentifier", "replication_instance_identifier", StringValueConverter())
+      self.property(w, "ReplicationInstanceIdentifier", "replication_instance_identifier", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "EngineVersion", "engine_version", StringValueConverter())
-      self.property(w, "KmsKeyId", "kms_key_id", StringValueConverter())
+      self.property(w, "KmsKeyId", "id", StringValueConverter())
       self.property(w, "AvailabilityZone", "availability_zone", StringValueConverter())
       self.property(w, "PreferredMaintenanceWindow", "preferred_maintenance_window", StringValueConverter())
       self.property(w, "AutoMinorVersionUpgrade", "auto_minor_version_upgrade", BasicValueConverter())
-      self.property(w, "ReplicationSubnetGroupIdentifier", "replication_subnet_group_identifier", StringValueConverter())
+      self.property(w, "ReplicationSubnetGroupIdentifier", "replication_subnet_group_identifier", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "AllocatedStorage", "allocated_storage", BasicValueConverter())
       self.property(w, "VpcSecurityGroupIds", "vpc_security_group_ids", ListValueConverter(StringValueConverter()))
-      self.property(w, "AllowMajorVersionUpgrade", "allow_major_version_upgrade", BasicValueConverter())
+      self.property(w, "AllowMajorVersionUpgrade", "allow_major_version_upgrade", BasicValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "ReplicationInstanceClass", "replication_instance_class", StringValueConverter())
       self.property(w, "PubliclyAccessible", "publicly_accessible", BasicValueConverter())
       self.property(w, "MultiAZ", "multi_az", BasicValueConverter())

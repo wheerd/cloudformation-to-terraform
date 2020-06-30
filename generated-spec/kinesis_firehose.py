@@ -268,13 +268,13 @@ class AWS_KinesisFirehose_DeliveryStream(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "DeliveryStreamName", "delivery_stream_name", StringValueConverter())
-      self.property(w, "DeliveryStreamType", "delivery_stream_type", StringValueConverter())
+      self.property(w, "DeliveryStreamName", "name", StringValueConverter())
+      self.property(w, "DeliveryStreamType", "delivery_stream_type", StringValueConverter()) # TODO: Probably not the correct mapping
       self.block(w, "ElasticsearchDestinationConfiguration", AWS_KinesisFirehose_DeliveryStream_ElasticsearchDestinationConfiguration)
-      self.block(w, "ExtendedS3DestinationConfiguration", AWS_KinesisFirehose_DeliveryStream_ExtendedS3DestinationConfiguration)
-      self.block(w, "KinesisStreamSourceConfiguration", AWS_KinesisFirehose_DeliveryStream_KinesisStreamSourceConfiguration)
-      self.block(w, "RedshiftDestinationConfiguration", AWS_KinesisFirehose_DeliveryStream_RedshiftDestinationConfiguration)
-      self.block(w, "S3DestinationConfiguration", AWS_KinesisFirehose_DeliveryStream_S3DestinationConfiguration)
-      self.block(w, "SplunkDestinationConfiguration", AWS_KinesisFirehose_DeliveryStream_SplunkDestinationConfiguration)
+      self.block(w, "ExtendedS3DestinationConfiguration", AWS_KinesisFirehose_DeliveryStream_ExtendedS3DestinationConfiguration) # TODO: Probably not the correct mapping
+      self.block(w, "KinesisStreamSourceConfiguration", AWS_KinesisFirehose_DeliveryStream_KinesisStreamSourceConfiguration) # TODO: Probably not the correct mapping
+      self.block(w, "RedshiftDestinationConfiguration", AWS_KinesisFirehose_DeliveryStream_RedshiftDestinationConfiguration) # TODO: Probably not the correct mapping
+      self.block(w, "S3DestinationConfiguration", AWS_KinesisFirehose_DeliveryStream_S3DestinationConfiguration) # TODO: Probably not the correct mapping
+      self.block(w, "SplunkDestinationConfiguration", AWS_KinesisFirehose_DeliveryStream_SplunkDestinationConfiguration) # TODO: Probably not the correct mapping
 
 

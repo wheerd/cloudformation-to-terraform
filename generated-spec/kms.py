@@ -9,10 +9,10 @@ class AWS_KMS_Key(CloudFormationResource):
     with self.resource_block(w):
       self.property(w, "Description", "description", StringValueConverter())
       self.property(w, "EnableKeyRotation", "enable_key_rotation", BasicValueConverter())
-      self.property(w, "Enabled", "enabled", BasicValueConverter())
-      self.property(w, "KeyPolicy", "key_policy", JsonValueConverter())
+      self.property(w, "Enabled", "enabled", BasicValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "KeyPolicy", "policy", JsonValueConverter())
       self.property(w, "KeyUsage", "key_usage", StringValueConverter())
-      self.property(w, "PendingWindowInDays", "pending_window_in_days", BasicValueConverter())
+      self.property(w, "PendingWindowInDays", "pending_window_in_days", BasicValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
 
@@ -23,7 +23,7 @@ class AWS_KMS_Alias(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "AliasName", "alias_name", StringValueConverter())
+      self.property(w, "AliasName", "name", StringValueConverter())
       self.property(w, "TargetKeyId", "target_key_id", StringValueConverter())
 
 

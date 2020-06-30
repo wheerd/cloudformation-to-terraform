@@ -23,7 +23,7 @@ class AWS_ServiceDiscovery_Service_HealthCheckConfig(CloudFormationProperty):
 
 class AWS_ServiceDiscovery_Instance(CloudFormationResource):
   cfn_type = "AWS::ServiceDiscovery::Instance"
-  tf_type = "aws_service_discovery_instance"
+  tf_type = "aws_service_discovery_instance" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):

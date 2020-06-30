@@ -83,9 +83,9 @@ class AWS_Elasticsearch_Domain(CloudFormationResource):
       self.block(w, "EBSOptions", AWS_Elasticsearch_Domain_EBSOptions)
       self.block(w, "ElasticsearchClusterConfig", AWS_Elasticsearch_Domain_ElasticsearchClusterConfig)
       self.property(w, "ElasticsearchVersion", "elasticsearch_version", StringValueConverter())
-      self.block(w, "EncryptionAtRestOptions", AWS_Elasticsearch_Domain_EncryptionAtRestOptions)
+      self.block(w, "EncryptionAtRestOptions", AWS_Elasticsearch_Domain_EncryptionAtRestOptions) # TODO: Probably not the correct mapping
       self.property(w, "LogPublishingOptions", "log_publishing_options", MapValueConverter(AWS_Elasticsearch_Domain_LogPublishingOption))
-      self.block(w, "NodeToNodeEncryptionOptions", AWS_Elasticsearch_Domain_NodeToNodeEncryptionOptions)
+      self.block(w, "NodeToNodeEncryptionOptions", AWS_Elasticsearch_Domain_NodeToNodeEncryptionOptions) # TODO: Probably not the correct mapping
       self.block(w, "SnapshotOptions", AWS_Elasticsearch_Domain_SnapshotOptions)
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
       self.block(w, "VPCOptions", AWS_Elasticsearch_Domain_VPCOptions)

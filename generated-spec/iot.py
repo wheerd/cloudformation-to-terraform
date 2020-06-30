@@ -194,7 +194,7 @@ class AWS_IoT_TopicRule_CloudwatchMetricAction(CloudFormationProperty):
 
 class AWS_IoT_ProvisioningTemplate(CloudFormationResource):
   cfn_type = "AWS::IoT::ProvisioningTemplate"
-  tf_type = "aws_iot_provisioning_template"
+  tf_type = "aws_iot_provisioning_template" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -215,30 +215,30 @@ class AWS_IoT_Thing(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.block(w, "AttributePayload", AWS_IoT_Thing_AttributePayload)
-      self.property(w, "ThingName", "thing_name", StringValueConverter())
+      self.block(w, "AttributePayload", AWS_IoT_Thing_AttributePayload) # TODO: Probably not the correct mapping
+      self.property(w, "ThingName", "name", StringValueConverter())
 
 
 class AWS_IoT_Policy(CloudFormationResource):
   cfn_type = "AWS::IoT::Policy"
+  tf_type = "aws_iot_policy_attachment"
+  ref = "arn"
+
+  def write(self, w):
+    with self.resource_block(w):
+      self.property(w, "PolicyDocument", "policy", JsonValueConverter())
+      self.property(w, "PolicyName", "policy_name", StringValueConverter()) # TODO: Probably not the correct mapping
+
+
+class AWS_IoT_PolicyPrincipalAttachment(CloudFormationResource):
+  cfn_type = "AWS::IoT::PolicyPrincipalAttachment"
   tf_type = "aws_iot_policy"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "PolicyDocument", "policy_document", JsonValueConverter())
-      self.property(w, "PolicyName", "policy_name", StringValueConverter())
-
-
-class AWS_IoT_PolicyPrincipalAttachment(CloudFormationResource):
-  cfn_type = "AWS::IoT::PolicyPrincipalAttachment"
-  tf_type = "aws_iot_policy_principal_attachment"
-  ref = "arn"
-
-  def write(self, w):
-    with self.resource_block(w):
-      self.property(w, "PolicyName", "policy_name", StringValueConverter())
-      self.property(w, "Principal", "principal", StringValueConverter())
+      self.property(w, "PolicyName", "name", StringValueConverter())
+      self.property(w, "Principal", "principal", StringValueConverter()) # TODO: Probably not the correct mapping
 
 
 class AWS_IoT_ThingPrincipalAttachment(CloudFormationResource):
@@ -249,7 +249,7 @@ class AWS_IoT_ThingPrincipalAttachment(CloudFormationResource):
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "Principal", "principal", StringValueConverter())
-      self.property(w, "ThingName", "thing_name", StringValueConverter())
+      self.property(w, "ThingName", "thing", StringValueConverter())
 
 
 class AWS_IoT_Certificate(CloudFormationResource):
@@ -259,8 +259,8 @@ class AWS_IoT_Certificate(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "CertificateSigningRequest", "certificate_signing_request", StringValueConverter())
-      self.property(w, "Status", "status", StringValueConverter())
+      self.property(w, "CertificateSigningRequest", "certificate_signing_request", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "Status", "status", StringValueConverter()) # TODO: Probably not the correct mapping
 
 
 class AWS_IoT_TopicRule_HttpAction(CloudFormationProperty):
@@ -329,7 +329,7 @@ class AWS_IoT_TopicRule(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "RuleName", "rule_name", StringValueConverter())
-      self.block(w, "TopicRulePayload", AWS_IoT_TopicRule_TopicRulePayload)
+      self.property(w, "RuleName", "name", StringValueConverter())
+      self.block(w, "TopicRulePayload", AWS_IoT_TopicRule_TopicRulePayload) # TODO: Probably not the correct mapping
 
 

@@ -204,7 +204,7 @@ class AWS_EMR_SecurityConfiguration(CloudFormationResource):
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "Name", "name", StringValueConverter())
-      self.property(w, "SecurityConfiguration", "security_configuration", JsonValueConverter())
+      self.property(w, "SecurityConfiguration", "configuration", JsonValueConverter())
 
 
 class AWS_EMR_Step_HadoopJarStepConfig(CloudFormationProperty):
@@ -339,7 +339,7 @@ class AWS_EMR_Cluster_ScalingTrigger(CloudFormationProperty):
 
 class AWS_EMR_InstanceFleetConfig(CloudFormationResource):
   cfn_type = "AWS::EMR::InstanceFleetConfig"
-  tf_type = "aws_emr_instance_fleet_config"
+  tf_type = "aws_emr_instance_fleet_config" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -355,7 +355,7 @@ class AWS_EMR_InstanceFleetConfig(CloudFormationResource):
 
 class AWS_EMR_Step(CloudFormationResource):
   cfn_type = "AWS::EMR::Step"
-  tf_type = "aws_emr_step"
+  tf_type = "aws_emr_step" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -401,20 +401,20 @@ class AWS_EMR_Cluster_AutoScalingPolicy(CloudFormationProperty):
 
 class AWS_EMR_InstanceGroupConfig(CloudFormationResource):
   cfn_type = "AWS::EMR::InstanceGroupConfig"
-  tf_type = "aws_emr_instance_group_config"
+  tf_type = "aws_emr_instance_group"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
       self.block(w, "AutoScalingPolicy", AWS_EMR_InstanceGroupConfig_AutoScalingPolicy)
       self.property(w, "BidPrice", "bid_price", StringValueConverter())
-      self.repeated_block(w, "Configurations", AWS_EMR_InstanceGroupConfig_Configuration)
+      self.repeated_block(w, "Configurations", AWS_EMR_InstanceGroupConfig_Configuration) # TODO: Probably not the correct mapping
       self.block(w, "EbsConfiguration", AWS_EMR_InstanceGroupConfig_EbsConfiguration)
       self.property(w, "InstanceCount", "instance_count", BasicValueConverter())
-      self.property(w, "InstanceRole", "instance_role", StringValueConverter())
+      self.property(w, "InstanceRole", "instance_role", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "InstanceType", "instance_type", StringValueConverter())
-      self.property(w, "JobFlowId", "job_flow_id", StringValueConverter())
-      self.property(w, "Market", "market", StringValueConverter())
+      self.property(w, "JobFlowId", "id", StringValueConverter())
+      self.property(w, "Market", "market", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "Name", "name", StringValueConverter())
 
 
@@ -461,13 +461,13 @@ class AWS_EMR_Cluster(CloudFormationResource):
     with self.resource_block(w):
       self.property(w, "AdditionalInfo", "additional_info", JsonValueConverter())
       self.repeated_block(w, "Applications", AWS_EMR_Cluster_Application)
-      self.property(w, "AutoScalingRole", "auto_scaling_role", StringValueConverter())
+      self.property(w, "AutoScalingRole", "autoscaling_role", StringValueConverter())
       self.repeated_block(w, "BootstrapActions", AWS_EMR_Cluster_BootstrapActionConfig)
       self.repeated_block(w, "Configurations", AWS_EMR_Cluster_Configuration)
       self.property(w, "CustomAmiId", "custom_ami_id", StringValueConverter())
       self.property(w, "EbsRootVolumeSize", "ebs_root_volume_size", BasicValueConverter())
-      self.block(w, "Instances", AWS_EMR_Cluster_JobFlowInstancesConfig)
-      self.property(w, "JobFlowRole", "job_flow_role", StringValueConverter())
+      self.block(w, "Instances", AWS_EMR_Cluster_JobFlowInstancesConfig) # TODO: Probably not the correct mapping
+      self.property(w, "JobFlowRole", "job_flow_role", StringValueConverter()) # TODO: Probably not the correct mapping
       self.block(w, "KerberosAttributes", AWS_EMR_Cluster_KerberosAttributes)
       self.property(w, "LogUri", "log_uri", StringValueConverter())
       self.property(w, "Name", "name", StringValueConverter())

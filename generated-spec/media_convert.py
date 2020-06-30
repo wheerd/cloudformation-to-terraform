@@ -30,7 +30,7 @@ class AWS_MediaConvert_Queue(CloudFormationResource):
 
 class AWS_MediaConvert_JobTemplate(CloudFormationResource):
   cfn_type = "AWS::MediaConvert::JobTemplate"
-  tf_type = "aws_media_convert_job_template"
+  tf_type = "aws_media_convert_job_template" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -49,7 +49,7 @@ class AWS_MediaConvert_JobTemplate(CloudFormationResource):
 
 class AWS_MediaConvert_Preset(CloudFormationResource):
   cfn_type = "AWS::MediaConvert::Preset"
-  tf_type = "aws_media_convert_preset"
+  tf_type = "aws_media_convert_preset" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):

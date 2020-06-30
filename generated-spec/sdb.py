@@ -2,7 +2,7 @@ from . import *
 
 class AWS_SDB_Domain(CloudFormationResource):
   cfn_type = "AWS::SDB::Domain"
-  tf_type = "aws_sdb_domain"
+  tf_type = "aws_swf_domain"
   ref = "arn"
 
   def write(self, w):

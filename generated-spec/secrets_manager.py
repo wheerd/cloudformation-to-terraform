@@ -23,7 +23,7 @@ class AWS_SecretsManager_Secret_GenerateSecretString(CloudFormationProperty):
 
 class AWS_SecretsManager_RotationSchedule(CloudFormationResource):
   cfn_type = "AWS::SecretsManager::RotationSchedule"
-  tf_type = "aws_secrets_manager_rotation_schedule"
+  tf_type = "aws_secrets_manager_rotation_schedule" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -35,7 +35,7 @@ class AWS_SecretsManager_RotationSchedule(CloudFormationResource):
 
 class AWS_SecretsManager_ResourcePolicy(CloudFormationResource):
   cfn_type = "AWS::SecretsManager::ResourcePolicy"
-  tf_type = "aws_secrets_manager_resource_policy"
+  tf_type = "aws_secrets_manager_resource_policy" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -46,28 +46,28 @@ class AWS_SecretsManager_ResourcePolicy(CloudFormationResource):
 
 class AWS_SecretsManager_Secret(CloudFormationResource):
   cfn_type = "AWS::SecretsManager::Secret"
-  tf_type = "aws_secrets_manager_secret"
+  tf_type = "aws_secretsmanager_secret_version"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "Description", "description", StringValueConverter())
-      self.property(w, "KmsKeyId", "kms_key_id", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "KmsKeyId", "id", StringValueConverter())
       self.property(w, "SecretString", "secret_string", StringValueConverter())
-      self.block(w, "GenerateSecretString", AWS_SecretsManager_Secret_GenerateSecretString)
-      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
-      self.property(w, "Name", "name", StringValueConverter())
+      self.block(w, "GenerateSecretString", AWS_SecretsManager_Secret_GenerateSecretString) # TODO: Probably not the correct mapping
+      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag())) # TODO: Probably not the correct mapping
+      self.property(w, "Name", "name", StringValueConverter()) # TODO: Probably not the correct mapping
 
 
 class AWS_SecretsManager_SecretTargetAttachment(CloudFormationResource):
   cfn_type = "AWS::SecretsManager::SecretTargetAttachment"
-  tf_type = "aws_secrets_manager_secret_target_attachment"
+  tf_type = "aws_secretsmanager_secret"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "SecretId", "secret_id", StringValueConverter())
-      self.property(w, "TargetType", "target_type", StringValueConverter())
-      self.property(w, "TargetId", "target_id", StringValueConverter())
+      self.property(w, "SecretId", "id", StringValueConverter())
+      self.property(w, "TargetType", "target_type", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "TargetId", "target_id", StringValueConverter()) # TODO: Probably not the correct mapping
 
 

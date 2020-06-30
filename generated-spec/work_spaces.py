@@ -12,7 +12,7 @@ class AWS_WorkSpaces_Workspace_WorkspaceProperties(CloudFormationProperty):
 
 class AWS_WorkSpaces_Workspace(CloudFormationResource):
   cfn_type = "AWS::WorkSpaces::Workspace"
-  tf_type = "aws_work_spaces_workspace"
+  tf_type = "aws_workspaces_workspace"
   ref = "arn"
 
   def write(self, w):

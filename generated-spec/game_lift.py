@@ -86,37 +86,37 @@ class AWS_GameLift_GameSessionQueue_PlayerLatencyPolicy(CloudFormationProperty):
 
 class AWS_GameLift_Fleet(CloudFormationResource):
   cfn_type = "AWS::GameLift::Fleet"
-  tf_type = "aws_game_lift_fleet"
+  tf_type = "aws_gamelift_fleet"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "BuildId", "build_id", StringValueConverter())
-      self.block(w, "CertificateConfiguration", AWS_GameLift_Fleet_CertificateConfiguration)
+      self.block(w, "CertificateConfiguration", AWS_GameLift_Fleet_CertificateConfiguration) # TODO: Probably not the correct mapping
       self.property(w, "Description", "description", StringValueConverter())
-      self.property(w, "DesiredEC2Instances", "desired_ec2_instances", BasicValueConverter())
+      self.property(w, "DesiredEC2Instances", "desired_ec2_instances", BasicValueConverter()) # TODO: Probably not the correct mapping
       self.repeated_block(w, "EC2InboundPermissions", AWS_GameLift_Fleet_IpPermission)
       self.property(w, "EC2InstanceType", "ec2_instance_type", StringValueConverter())
       self.property(w, "FleetType", "fleet_type", StringValueConverter())
       self.property(w, "InstanceRoleARN", "instance_role_arn", StringValueConverter())
       self.property(w, "LogPaths", "log_paths", ListValueConverter(StringValueConverter()))
-      self.property(w, "MaxSize", "max_size", BasicValueConverter())
+      self.property(w, "MaxSize", "max_size", BasicValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "MetricGroups", "metric_groups", ListValueConverter(StringValueConverter()))
-      self.property(w, "MinSize", "min_size", BasicValueConverter())
+      self.property(w, "MinSize", "min_size", BasicValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "Name", "name", StringValueConverter())
       self.property(w, "NewGameSessionProtectionPolicy", "new_game_session_protection_policy", StringValueConverter())
-      self.property(w, "PeerVpcAwsAccountId", "peer_vpc_aws_account_id", StringValueConverter())
-      self.property(w, "PeerVpcId", "peer_vpc_id", StringValueConverter())
+      self.property(w, "PeerVpcAwsAccountId", "peer_vpc_aws_account_id", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "PeerVpcId", "id", StringValueConverter())
       self.block(w, "ResourceCreationLimitPolicy", AWS_GameLift_Fleet_ResourceCreationLimitPolicy)
       self.block(w, "RuntimeConfiguration", AWS_GameLift_Fleet_RuntimeConfiguration)
-      self.property(w, "ScriptId", "script_id", StringValueConverter())
-      self.property(w, "ServerLaunchParameters", "server_launch_parameters", StringValueConverter())
-      self.property(w, "ServerLaunchPath", "server_launch_path", StringValueConverter())
+      self.property(w, "ScriptId", "script_id", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "ServerLaunchParameters", "server_launch_parameters", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "ServerLaunchPath", "server_launch_path", StringValueConverter()) # TODO: Probably not the correct mapping
 
 
 class AWS_GameLift_MatchmakingConfiguration(CloudFormationResource):
   cfn_type = "AWS::GameLift::MatchmakingConfiguration"
-  tf_type = "aws_game_lift_matchmaking_configuration"
+  tf_type = "aws_game_lift_matchmaking_configuration" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -138,7 +138,7 @@ class AWS_GameLift_MatchmakingConfiguration(CloudFormationResource):
 
 class AWS_GameLift_Alias(CloudFormationResource):
   cfn_type = "AWS::GameLift::Alias"
-  tf_type = "aws_game_lift_alias"
+  tf_type = "aws_gamelift_alias"
   ref = "arn"
 
   def write(self, w):
@@ -150,7 +150,7 @@ class AWS_GameLift_Alias(CloudFormationResource):
 
 class AWS_GameLift_Build(CloudFormationResource):
   cfn_type = "AWS::GameLift::Build"
-  tf_type = "aws_game_lift_build"
+  tf_type = "aws_gamelift_build"
   ref = "arn"
 
   def write(self, w):
@@ -163,7 +163,7 @@ class AWS_GameLift_Build(CloudFormationResource):
 
 class AWS_GameLift_MatchmakingRuleSet(CloudFormationResource):
   cfn_type = "AWS::GameLift::MatchmakingRuleSet"
-  tf_type = "aws_game_lift_matchmaking_rule_set"
+  tf_type = "aws_game_lift_matchmaking_rule_set" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -174,7 +174,7 @@ class AWS_GameLift_MatchmakingRuleSet(CloudFormationResource):
 
 class AWS_GameLift_GameSessionQueue(CloudFormationResource):
   cfn_type = "AWS::GameLift::GameSessionQueue"
-  tf_type = "aws_game_lift_game_session_queue"
+  tf_type = "aws_gamelift_game_session_queue"
   ref = "arn"
 
   def write(self, w):
@@ -187,7 +187,7 @@ class AWS_GameLift_GameSessionQueue(CloudFormationResource):
 
 class AWS_GameLift_Script(CloudFormationResource):
   cfn_type = "AWS::GameLift::Script"
-  tf_type = "aws_game_lift_script"
+  tf_type = "aws_game_lift_script" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):

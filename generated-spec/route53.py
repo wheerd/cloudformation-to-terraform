@@ -74,40 +74,40 @@ class AWS_Route53_HostedZone_VPC(CloudFormationProperty):
 
 class AWS_Route53_RecordSet(CloudFormationResource):
   cfn_type = "AWS::Route53::RecordSet"
-  tf_type = "aws_route53_record_set"
+  tf_type = "aws_route53_record"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
       self.block(w, "AliasTarget", AWS_Route53_RecordSet_AliasTarget)
-      self.property(w, "Comment", "comment", StringValueConverter())
-      self.property(w, "Failover", "failover", StringValueConverter())
-      self.block(w, "GeoLocation", AWS_Route53_RecordSet_GeoLocation)
+      self.property(w, "Comment", "comment", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "Failover", "failover_routing_policy", StringValueConverter())
+      self.block(w, "GeoLocation", AWS_Route53_RecordSet_GeoLocation) # TODO: Probably not the correct mapping
       self.property(w, "HealthCheckId", "health_check_id", StringValueConverter())
-      self.property(w, "HostedZoneId", "hosted_zone_id", StringValueConverter())
-      self.property(w, "HostedZoneName", "hosted_zone_name", StringValueConverter())
-      self.property(w, "MultiValueAnswer", "multi_value_answer", BasicValueConverter())
+      self.property(w, "HostedZoneId", "id", StringValueConverter())
+      self.property(w, "HostedZoneName", "hosted_zone_name", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "MultiValueAnswer", "multi_value_answer", BasicValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "Name", "name", StringValueConverter())
-      self.property(w, "Region", "region", StringValueConverter())
-      self.property(w, "ResourceRecords", "resource_records", ListValueConverter(StringValueConverter()))
+      self.property(w, "Region", "region", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "ResourceRecords", "records", ListValueConverter(StringValueConverter()))
       self.property(w, "SetIdentifier", "set_identifier", StringValueConverter())
       self.property(w, "TTL", "ttl", StringValueConverter())
       self.property(w, "Type", "type", StringValueConverter())
-      self.property(w, "Weight", "weight", BasicValueConverter())
+      self.property(w, "Weight", "weighted_routing_policy", BasicValueConverter())
 
 
 class AWS_Route53_HostedZone(CloudFormationResource):
   cfn_type = "AWS::Route53::HostedZone"
-  tf_type = "aws_route53_hosted_zone"
+  tf_type = "aws_route"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.block(w, "HostedZoneConfig", AWS_Route53_HostedZone_HostedZoneConfig)
-      self.repeated_block(w, "HostedZoneTags", AWS_Route53_HostedZone_HostedZoneTag)
-      self.property(w, "Name", "name", StringValueConverter())
-      self.block(w, "QueryLoggingConfig", AWS_Route53_HostedZone_QueryLoggingConfig)
-      self.repeated_block(w, "VPCs", AWS_Route53_HostedZone_VPC)
+      self.block(w, "HostedZoneConfig", AWS_Route53_HostedZone_HostedZoneConfig) # TODO: Probably not the correct mapping
+      self.repeated_block(w, "HostedZoneTags", AWS_Route53_HostedZone_HostedZoneTag) # TODO: Probably not the correct mapping
+      self.property(w, "Name", "name", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.block(w, "QueryLoggingConfig", AWS_Route53_HostedZone_QueryLoggingConfig) # TODO: Probably not the correct mapping
+      self.repeated_block(w, "VPCs", AWS_Route53_HostedZone_VPC) # TODO: Probably not the correct mapping
 
 
 class AWS_Route53_HealthCheck_HealthCheckConfig(CloudFormationProperty):
@@ -158,13 +158,13 @@ class AWS_Route53_HealthCheck(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.block(w, "HealthCheckConfig", AWS_Route53_HealthCheck_HealthCheckConfig)
+      self.block(w, "HealthCheckConfig", AWS_Route53_HealthCheck_HealthCheckConfig) # TODO: Probably not the correct mapping
       self.repeated_block(w, "HealthCheckTags", AWS_Route53_HealthCheck_HealthCheckTag)
 
 
 class AWS_Route53_RecordSetGroup(CloudFormationResource):
   cfn_type = "AWS::Route53::RecordSetGroup"
-  tf_type = "aws_route53_record_set_group"
+  tf_type = "aws_route53_record_set_group" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):

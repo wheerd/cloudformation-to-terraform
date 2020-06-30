@@ -19,13 +19,13 @@ class AWS_AccessAnalyzer_Analyzer_ArchiveRule(CloudFormationProperty):
 
 class AWS_AccessAnalyzer_Analyzer(CloudFormationResource):
   cfn_type = "AWS::AccessAnalyzer::Analyzer"
-  tf_type = "aws_access_analyzer_analyzer"
+  tf_type = "aws_accessanalyzer_analyzer"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "AnalyzerName", "analyzer_name", StringValueConverter())
-      self.repeated_block(w, "ArchiveRules", AWS_AccessAnalyzer_Analyzer_ArchiveRule)
+      self.repeated_block(w, "ArchiveRules", AWS_AccessAnalyzer_Analyzer_ArchiveRule) # TODO: Probably not the correct mapping
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
       self.property(w, "Type", "type", StringValueConverter())
 

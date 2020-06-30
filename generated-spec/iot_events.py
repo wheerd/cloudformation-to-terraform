@@ -101,7 +101,7 @@ class AWS_IoTEvents_DetectorModel_Lambda(CloudFormationProperty):
 
 class AWS_IoTEvents_Input(CloudFormationResource):
   cfn_type = "AWS::IoTEvents::Input"
-  tf_type = "aws_iot_events_input"
+  tf_type = "aws_iot_events_input" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -231,7 +231,7 @@ class AWS_IoTEvents_DetectorModel_DetectorModelDefinition(CloudFormationProperty
 
 class AWS_IoTEvents_DetectorModel(CloudFormationResource):
   cfn_type = "AWS::IoTEvents::DetectorModel"
-  tf_type = "aws_iot_events_detector_model"
+  tf_type = "aws_iot_events_detector_model" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):

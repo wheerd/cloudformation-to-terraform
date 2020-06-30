@@ -26,15 +26,15 @@ class AWS_CodeCommit_Repository_Code(CloudFormationProperty):
 
 class AWS_CodeCommit_Repository(CloudFormationResource):
   cfn_type = "AWS::CodeCommit::Repository"
-  tf_type = "aws_code_commit_repository"
+  tf_type = "aws_codecommit_repository"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "RepositoryName", "repository_name", StringValueConverter())
-      self.repeated_block(w, "Triggers", AWS_CodeCommit_Repository_RepositoryTrigger)
-      self.block(w, "Code", AWS_CodeCommit_Repository_Code)
-      self.property(w, "RepositoryDescription", "repository_description", StringValueConverter())
+      self.repeated_block(w, "Triggers", AWS_CodeCommit_Repository_RepositoryTrigger) # TODO: Probably not the correct mapping
+      self.block(w, "Code", AWS_CodeCommit_Repository_Code) # TODO: Probably not the correct mapping
+      self.property(w, "RepositoryDescription", "description", StringValueConverter())
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
 

@@ -150,7 +150,7 @@ class AWS_CloudFront_StreamingDistribution_StreamingDistributionConfig(CloudForm
 
 class AWS_CloudFront_StreamingDistribution(CloudFormationResource):
   cfn_type = "AWS::CloudFront::StreamingDistribution"
-  tf_type = "aws_cloud_front_streaming_distribution"
+  tf_type = "aws_cloud_front_streaming_distribution" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -161,12 +161,12 @@ class AWS_CloudFront_StreamingDistribution(CloudFormationResource):
 
 class AWS_CloudFront_CloudFrontOriginAccessIdentity(CloudFormationResource):
   cfn_type = "AWS::CloudFront::CloudFrontOriginAccessIdentity"
-  tf_type = "aws_cloud_front_cloud_front_origin_access_identity"
+  tf_type = "aws_cloudfront_origin_access_identity"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.block(w, "CloudFrontOriginAccessIdentityConfig", AWS_CloudFront_CloudFrontOriginAccessIdentity_CloudFrontOriginAccessIdentityConfig)
+      self.block(w, "CloudFrontOriginAccessIdentityConfig", AWS_CloudFront_CloudFrontOriginAccessIdentity_CloudFrontOriginAccessIdentityConfig) # TODO: Probably not the correct mapping
 
 
 class AWS_CloudFront_Distribution_CacheBehavior(CloudFormationProperty):
@@ -263,12 +263,12 @@ class AWS_CloudFront_Distribution_DistributionConfig(CloudFormationProperty):
 
 class AWS_CloudFront_Distribution(CloudFormationResource):
   cfn_type = "AWS::CloudFront::Distribution"
-  tf_type = "aws_cloud_front_distribution"
+  tf_type = "aws_cloudfront_distribution"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.block(w, "DistributionConfig", AWS_CloudFront_Distribution_DistributionConfig)
+      self.block(w, "DistributionConfig", AWS_CloudFront_Distribution_DistributionConfig) # TODO: Probably not the correct mapping
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
 

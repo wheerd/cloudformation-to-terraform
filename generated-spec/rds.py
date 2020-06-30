@@ -86,55 +86,55 @@ class AWS_RDS_OptionGroup_OptionConfiguration(CloudFormationProperty):
 
 class AWS_RDS_DBSubnetGroup(CloudFormationResource):
   cfn_type = "AWS::RDS::DBSubnetGroup"
-  tf_type = "aws_rds_db_subnet_group"
+  tf_type = "aws_db_subnet_group"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "DBSubnetGroupDescription", "db_subnet_group_description", StringValueConverter())
-      self.property(w, "DBSubnetGroupName", "db_subnet_group_name", StringValueConverter())
+      self.property(w, "DBSubnetGroupDescription", "description", StringValueConverter())
+      self.property(w, "DBSubnetGroupName", "name", StringValueConverter())
       self.property(w, "SubnetIds", "subnet_ids", ListValueConverter(StringValueConverter()))
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
 
 class AWS_RDS_DBInstance(CloudFormationResource):
   cfn_type = "AWS::RDS::DBInstance"
-  tf_type = "aws_rds_db_instance"
+  tf_type = "aws_db_instance"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "AllocatedStorage", "allocated_storage", StringValueConverter())
       self.property(w, "AllowMajorVersionUpgrade", "allow_major_version_upgrade", BasicValueConverter())
-      self.repeated_block(w, "AssociatedRoles", AWS_RDS_DBInstance_DBInstanceRole)
+      self.repeated_block(w, "AssociatedRoles", AWS_RDS_DBInstance_DBInstanceRole) # TODO: Probably not the correct mapping
       self.property(w, "AutoMinorVersionUpgrade", "auto_minor_version_upgrade", BasicValueConverter())
       self.property(w, "AvailabilityZone", "availability_zone", StringValueConverter())
       self.property(w, "BackupRetentionPeriod", "backup_retention_period", BasicValueConverter())
-      self.property(w, "CACertificateIdentifier", "ca_certificate_identifier", StringValueConverter())
+      self.property(w, "CACertificateIdentifier", "identifier", StringValueConverter())
       self.property(w, "CharacterSetName", "character_set_name", StringValueConverter())
       self.property(w, "CopyTagsToSnapshot", "copy_tags_to_snapshot", BasicValueConverter())
-      self.property(w, "DBClusterIdentifier", "db_cluster_identifier", StringValueConverter())
-      self.property(w, "DBInstanceClass", "db_instance_class", StringValueConverter())
-      self.property(w, "DBInstanceIdentifier", "db_instance_identifier", StringValueConverter())
-      self.property(w, "DBName", "db_name", StringValueConverter())
-      self.property(w, "DBParameterGroupName", "db_parameter_group_name", StringValueConverter())
-      self.property(w, "DBSecurityGroups", "db_security_groups", ListValueConverter(StringValueConverter()))
-      self.property(w, "DBSnapshotIdentifier", "db_snapshot_identifier", StringValueConverter())
+      self.property(w, "DBClusterIdentifier", "db_cluster_identifier", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "DBInstanceClass", "instance_class", StringValueConverter())
+      self.property(w, "DBInstanceIdentifier", "db_instance_identifier", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "DBName", "name", StringValueConverter())
+      self.property(w, "DBParameterGroupName", "parameter_group_name", StringValueConverter())
+      self.property(w, "DBSecurityGroups", "db_security_groups", ListValueConverter(StringValueConverter())) # TODO: Probably not the correct mapping
+      self.property(w, "DBSnapshotIdentifier", "snapshot_identifier", StringValueConverter())
       self.property(w, "DBSubnetGroupName", "db_subnet_group_name", StringValueConverter())
       self.property(w, "DeleteAutomatedBackups", "delete_automated_backups", BasicValueConverter())
       self.property(w, "DeletionProtection", "deletion_protection", BasicValueConverter())
       self.property(w, "Domain", "domain", StringValueConverter())
       self.property(w, "DomainIAMRoleName", "domain_iam_role_name", StringValueConverter())
-      self.property(w, "EnableCloudwatchLogsExports", "enable_cloudwatch_logs_exports", ListValueConverter(StringValueConverter()))
-      self.property(w, "EnableIAMDatabaseAuthentication", "enable_iam_database_authentication", BasicValueConverter())
-      self.property(w, "EnablePerformanceInsights", "enable_performance_insights", BasicValueConverter())
+      self.property(w, "EnableCloudwatchLogsExports", "enabled_cloudwatch_logs_exports", ListValueConverter(StringValueConverter()))
+      self.property(w, "EnableIAMDatabaseAuthentication", "enable_iam_database_authentication", BasicValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "EnablePerformanceInsights", "enable_performance_insights", BasicValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "Engine", "engine", StringValueConverter())
       self.property(w, "EngineVersion", "engine_version", StringValueConverter())
       self.property(w, "Iops", "iops", BasicValueConverter())
       self.property(w, "KmsKeyId", "kms_key_id", StringValueConverter())
       self.property(w, "LicenseModel", "license_model", StringValueConverter())
-      self.property(w, "MasterUserPassword", "master_user_password", StringValueConverter())
-      self.property(w, "MasterUsername", "master_username", StringValueConverter())
+      self.property(w, "MasterUserPassword", "password", StringValueConverter())
+      self.property(w, "MasterUsername", "username", StringValueConverter())
       self.property(w, "MaxAllocatedStorage", "max_allocated_storage", BasicValueConverter())
       self.property(w, "MonitoringInterval", "monitoring_interval", BasicValueConverter())
       self.property(w, "MonitoringRoleArn", "monitoring_role_arn", StringValueConverter())
@@ -143,50 +143,50 @@ class AWS_RDS_DBInstance(CloudFormationResource):
       self.property(w, "PerformanceInsightsKMSKeyId", "performance_insights_kms_key_id", StringValueConverter())
       self.property(w, "PerformanceInsightsRetentionPeriod", "performance_insights_retention_period", BasicValueConverter())
       self.property(w, "Port", "port", StringValueConverter())
-      self.property(w, "PreferredBackupWindow", "preferred_backup_window", StringValueConverter())
-      self.property(w, "PreferredMaintenanceWindow", "preferred_maintenance_window", StringValueConverter())
-      self.repeated_block(w, "ProcessorFeatures", AWS_RDS_DBInstance_ProcessorFeature)
-      self.property(w, "PromotionTier", "promotion_tier", BasicValueConverter())
+      self.property(w, "PreferredBackupWindow", "backup_window", StringValueConverter())
+      self.property(w, "PreferredMaintenanceWindow", "maintenance_window", StringValueConverter())
+      self.repeated_block(w, "ProcessorFeatures", AWS_RDS_DBInstance_ProcessorFeature) # TODO: Probably not the correct mapping
+      self.property(w, "PromotionTier", "promotion_tier", BasicValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "PubliclyAccessible", "publicly_accessible", BasicValueConverter())
-      self.property(w, "SourceDBInstanceIdentifier", "source_db_instance_identifier", StringValueConverter())
-      self.property(w, "SourceRegion", "source_region", StringValueConverter())
+      self.property(w, "SourceDBInstanceIdentifier", "source_db_instance_identifier", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "SourceRegion", "source_region", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "StorageEncrypted", "storage_encrypted", BasicValueConverter())
       self.property(w, "StorageType", "storage_type", StringValueConverter())
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
       self.property(w, "Timezone", "timezone", StringValueConverter())
-      self.property(w, "UseDefaultProcessorFeatures", "use_default_processor_features", BasicValueConverter())
-      self.property(w, "VPCSecurityGroups", "vpc_security_groups", ListValueConverter(StringValueConverter()))
+      self.property(w, "UseDefaultProcessorFeatures", "use_default_processor_features", BasicValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "VPCSecurityGroups", "vpc_security_group_ids", ListValueConverter(StringValueConverter()))
 
 
 class AWS_RDS_DBSecurityGroup(CloudFormationResource):
   cfn_type = "AWS::RDS::DBSecurityGroup"
-  tf_type = "aws_rds_db_security_group"
+  tf_type = "aws_db_security_group"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
       self.repeated_block(w, "DBSecurityGroupIngress", AWS_RDS_DBSecurityGroup_Ingress)
-      self.property(w, "EC2VpcId", "ec2_vpc_id", StringValueConverter())
-      self.property(w, "GroupDescription", "group_description", StringValueConverter())
+      self.property(w, "EC2VpcId", "id", StringValueConverter())
+      self.property(w, "GroupDescription", "description", StringValueConverter())
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
 
 class AWS_RDS_DBClusterParameterGroup(CloudFormationResource):
   cfn_type = "AWS::RDS::DBClusterParameterGroup"
-  tf_type = "aws_rds_db_cluster_parameter_group"
+  tf_type = "aws_rds_cluster_parameter_group"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "Description", "description", StringValueConverter())
       self.property(w, "Family", "family", StringValueConverter())
-      self.property(w, "Parameters", "parameters", JsonValueConverter())
+      self.property(w, "Parameters", "parameter", JsonValueConverter())
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
 
 class AWS_RDS_DBSecurityGroupIngress(CloudFormationResource):
   cfn_type = "AWS::RDS::DBSecurityGroupIngress"
-  tf_type = "aws_rds_db_security_group_ingress"
+  tf_type = "aws_rds_db_security_group_ingress" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -200,47 +200,47 @@ class AWS_RDS_DBSecurityGroupIngress(CloudFormationResource):
 
 class AWS_RDS_DBCluster(CloudFormationResource):
   cfn_type = "AWS::RDS::DBCluster"
-  tf_type = "aws_rds_db_cluster"
+  tf_type = "aws_rds_cluster"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.repeated_block(w, "AssociatedRoles", AWS_RDS_DBCluster_DBClusterRole)
+      self.repeated_block(w, "AssociatedRoles", AWS_RDS_DBCluster_DBClusterRole) # TODO: Probably not the correct mapping
       self.property(w, "AvailabilityZones", "availability_zones", ListValueConverter(StringValueConverter()))
       self.property(w, "BacktrackWindow", "backtrack_window", BasicValueConverter())
       self.property(w, "BackupRetentionPeriod", "backup_retention_period", BasicValueConverter())
-      self.property(w, "DBClusterIdentifier", "db_cluster_identifier", StringValueConverter())
+      self.property(w, "DBClusterIdentifier", "cluster_identifier", StringValueConverter())
       self.property(w, "DBClusterParameterGroupName", "db_cluster_parameter_group_name", StringValueConverter())
       self.property(w, "DBSubnetGroupName", "db_subnet_group_name", StringValueConverter())
       self.property(w, "DatabaseName", "database_name", StringValueConverter())
       self.property(w, "DeletionProtection", "deletion_protection", BasicValueConverter())
-      self.property(w, "EnableCloudwatchLogsExports", "enable_cloudwatch_logs_exports", ListValueConverter(StringValueConverter()))
+      self.property(w, "EnableCloudwatchLogsExports", "enabled_cloudwatch_logs_exports", ListValueConverter(StringValueConverter()))
       self.property(w, "EnableHttpEndpoint", "enable_http_endpoint", BasicValueConverter())
-      self.property(w, "EnableIAMDatabaseAuthentication", "enable_iam_database_authentication", BasicValueConverter())
+      self.property(w, "EnableIAMDatabaseAuthentication", "enable_iam_database_authentication", BasicValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "Engine", "engine", StringValueConverter())
       self.property(w, "EngineMode", "engine_mode", StringValueConverter())
       self.property(w, "EngineVersion", "engine_version", StringValueConverter())
       self.property(w, "KmsKeyId", "kms_key_id", StringValueConverter())
-      self.property(w, "MasterUserPassword", "master_user_password", StringValueConverter())
+      self.property(w, "MasterUserPassword", "master_user_password", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "MasterUsername", "master_username", StringValueConverter())
       self.property(w, "Port", "port", BasicValueConverter())
       self.property(w, "PreferredBackupWindow", "preferred_backup_window", StringValueConverter())
       self.property(w, "PreferredMaintenanceWindow", "preferred_maintenance_window", StringValueConverter())
       self.property(w, "ReplicationSourceIdentifier", "replication_source_identifier", StringValueConverter())
-      self.property(w, "RestoreType", "restore_type", StringValueConverter())
+      self.property(w, "RestoreType", "restore_type", StringValueConverter()) # TODO: Probably not the correct mapping
       self.block(w, "ScalingConfiguration", AWS_RDS_DBCluster_ScalingConfiguration)
       self.property(w, "SnapshotIdentifier", "snapshot_identifier", StringValueConverter())
-      self.property(w, "SourceDBClusterIdentifier", "source_db_cluster_identifier", StringValueConverter())
+      self.property(w, "SourceDBClusterIdentifier", "source_db_cluster_identifier", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "SourceRegion", "source_region", StringValueConverter())
       self.property(w, "StorageEncrypted", "storage_encrypted", BasicValueConverter())
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
-      self.property(w, "UseLatestRestorableTime", "use_latest_restorable_time", BasicValueConverter())
+      self.property(w, "UseLatestRestorableTime", "use_latest_restorable_time", BasicValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "VpcSecurityGroupIds", "vpc_security_group_ids", ListValueConverter(StringValueConverter()))
 
 
 class AWS_RDS_OptionGroup(CloudFormationResource):
   cfn_type = "AWS::RDS::OptionGroup"
-  tf_type = "aws_rds_option_group"
+  tf_type = "aws_db_option_group"
   ref = "arn"
 
   def write(self, w):
@@ -254,34 +254,34 @@ class AWS_RDS_OptionGroup(CloudFormationResource):
 
 class AWS_RDS_DBParameterGroup(CloudFormationResource):
   cfn_type = "AWS::RDS::DBParameterGroup"
-  tf_type = "aws_rds_db_parameter_group"
+  tf_type = "aws_db_parameter_group"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "Description", "description", StringValueConverter())
       self.property(w, "Family", "family", StringValueConverter())
-      self.property(w, "Parameters", "parameters", MapValueConverter(StringValueConverter()))
+      self.property(w, "Parameters", "parameter", MapValueConverter(StringValueConverter()))
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
 
 class AWS_RDS_EventSubscription(CloudFormationResource):
   cfn_type = "AWS::RDS::EventSubscription"
-  tf_type = "aws_rds_event_subscription"
+  tf_type = "aws_db_event_subscription"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "Enabled", "enabled", BasicValueConverter())
       self.property(w, "EventCategories", "event_categories", ListValueConverter(StringValueConverter()))
-      self.property(w, "SnsTopicArn", "sns_topic_arn", StringValueConverter())
+      self.property(w, "SnsTopicArn", "arn", StringValueConverter())
       self.property(w, "SourceIds", "source_ids", ListValueConverter(StringValueConverter()))
       self.property(w, "SourceType", "source_type", StringValueConverter())
 
 
 class AWS_RDS_DBProxy(CloudFormationResource):
   cfn_type = "AWS::RDS::DBProxy"
-  tf_type = "aws_rds_db_proxy"
+  tf_type = "aws_rds_db_proxy" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -300,7 +300,7 @@ class AWS_RDS_DBProxy(CloudFormationResource):
 
 class AWS_RDS_DBProxyTargetGroup(CloudFormationResource):
   cfn_type = "AWS::RDS::DBProxyTargetGroup"
-  tf_type = "aws_rds_db_proxy_target_group"
+  tf_type = "aws_rds_db_proxy_target_group" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):

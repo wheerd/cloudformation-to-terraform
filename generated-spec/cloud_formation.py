@@ -2,21 +2,21 @@ from . import *
 
 class AWS_CloudFormation_Stack(CloudFormationResource):
   cfn_type = "AWS::CloudFormation::Stack"
-  tf_type = "aws_cloud_formation_stack"
+  tf_type = "aws_cloudformation_stack_set"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "NotificationARNs", "notification_ar_ns", ListValueConverter(StringValueConverter()))
+      self.property(w, "NotificationARNs", "notification_ar_ns", ListValueConverter(StringValueConverter())) # TODO: Probably not the correct mapping
       self.property(w, "Parameters", "parameters", MapValueConverter(StringValueConverter()))
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
       self.property(w, "TemplateURL", "template_url", StringValueConverter())
-      self.property(w, "TimeoutInMinutes", "timeout_in_minutes", BasicValueConverter())
+      self.property(w, "TimeoutInMinutes", "timeout_in_minutes", BasicValueConverter()) # TODO: Probably not the correct mapping
 
 
 class AWS_CloudFormation_CustomResource(CloudFormationResource):
   cfn_type = "AWS::CloudFormation::CustomResource"
-  tf_type = "aws_cloud_formation_custom_resource"
+  tf_type = "aws_cloud_formation_custom_resource" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -26,7 +26,7 @@ class AWS_CloudFormation_CustomResource(CloudFormationResource):
 
 class AWS_CloudFormation_WaitCondition(CloudFormationResource):
   cfn_type = "AWS::CloudFormation::WaitCondition"
-  tf_type = "aws_cloud_formation_wait_condition"
+  tf_type = "aws_cloud_formation_wait_condition" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -38,7 +38,7 @@ class AWS_CloudFormation_WaitCondition(CloudFormationResource):
 
 class AWS_CloudFormation_WaitConditionHandle(CloudFormationResource):
   cfn_type = "AWS::CloudFormation::WaitConditionHandle"
-  tf_type = "aws_cloud_formation_wait_condition_handle"
+  tf_type = "aws_cloud_formation_wait_condition_handle" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -48,15 +48,15 @@ class AWS_CloudFormation_WaitConditionHandle(CloudFormationResource):
 
 class AWS_CloudFormation_Macro(CloudFormationResource):
   cfn_type = "AWS::CloudFormation::Macro"
-  tf_type = "aws_cloud_formation_macro"
+  tf_type = "aws_cloudformation_stack"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "Description", "description", StringValueConverter())
-      self.property(w, "FunctionName", "function_name", StringValueConverter())
-      self.property(w, "LogGroupName", "log_group_name", StringValueConverter())
-      self.property(w, "LogRoleARN", "log_role_arn", StringValueConverter())
+      self.property(w, "Description", "description", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "FunctionName", "function_name", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "LogGroupName", "log_group_name", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "LogRoleARN", "log_role_arn", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "Name", "name", StringValueConverter())
 
 

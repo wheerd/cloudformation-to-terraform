@@ -145,7 +145,7 @@ class AWS_OpsWorks_App_Source(CloudFormationProperty):
 
 class AWS_OpsWorks_App(CloudFormationResource):
   cfn_type = "AWS::OpsWorks::App"
-  tf_type = "aws_ops_works_app"
+  tf_type = "aws_ops_works_app" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -166,7 +166,7 @@ class AWS_OpsWorks_App(CloudFormationResource):
 
 class AWS_OpsWorks_ElasticLoadBalancerAttachment(CloudFormationResource):
   cfn_type = "AWS::OpsWorks::ElasticLoadBalancerAttachment"
-  tf_type = "aws_ops_works_elastic_load_balancer_attachment"
+  tf_type = "aws_ops_works_elastic_load_balancer_attachment" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -177,20 +177,20 @@ class AWS_OpsWorks_ElasticLoadBalancerAttachment(CloudFormationResource):
 
 class AWS_OpsWorks_UserProfile(CloudFormationResource):
   cfn_type = "AWS::OpsWorks::UserProfile"
-  tf_type = "aws_ops_works_user_profile"
+  tf_type = "aws_opsworks_user_profile"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "AllowSelfManagement", "allow_self_management", BasicValueConverter())
-      self.property(w, "IamUserArn", "iam_user_arn", StringValueConverter())
+      self.property(w, "IamUserArn", "user_arn", StringValueConverter())
       self.property(w, "SshPublicKey", "ssh_public_key", StringValueConverter())
       self.property(w, "SshUsername", "ssh_username", StringValueConverter())
 
 
 class AWS_OpsWorks_Volume(CloudFormationResource):
   cfn_type = "AWS::OpsWorks::Volume"
-  tf_type = "aws_ops_works_volume"
+  tf_type = "aws_ops_works_volume" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -203,17 +203,17 @@ class AWS_OpsWorks_Volume(CloudFormationResource):
 
 class AWS_OpsWorks_Stack(CloudFormationResource):
   cfn_type = "AWS::OpsWorks::Stack"
-  tf_type = "aws_ops_works_stack"
+  tf_type = "aws_opsworks_stack"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "AgentVersion", "agent_version", StringValueConverter())
-      self.property(w, "Attributes", "attributes", MapValueConverter(StringValueConverter()))
-      self.block(w, "ChefConfiguration", AWS_OpsWorks_Stack_ChefConfiguration)
-      self.property(w, "CloneAppIds", "clone_app_ids", ListValueConverter(StringValueConverter()))
-      self.property(w, "ClonePermissions", "clone_permissions", BasicValueConverter())
-      self.block(w, "ConfigurationManager", AWS_OpsWorks_Stack_StackConfigurationManager)
+      self.property(w, "Attributes", "attributes", MapValueConverter(StringValueConverter())) # TODO: Probably not the correct mapping
+      self.block(w, "ChefConfiguration", AWS_OpsWorks_Stack_ChefConfiguration) # TODO: Probably not the correct mapping
+      self.property(w, "CloneAppIds", "id", ListValueConverter(StringValueConverter()))
+      self.property(w, "ClonePermissions", "clone_permissions", BasicValueConverter()) # TODO: Probably not the correct mapping
+      self.block(w, "ConfigurationManager", AWS_OpsWorks_Stack_StackConfigurationManager) # TODO: Probably not the correct mapping
       self.block(w, "CustomCookbooksSource", AWS_OpsWorks_Stack_Source)
       self.property(w, "CustomJson", "custom_json", JsonValueConverter())
       self.property(w, "DefaultAvailabilityZone", "default_availability_zone", StringValueConverter())
@@ -222,13 +222,13 @@ class AWS_OpsWorks_Stack(CloudFormationResource):
       self.property(w, "DefaultRootDeviceType", "default_root_device_type", StringValueConverter())
       self.property(w, "DefaultSshKeyName", "default_ssh_key_name", StringValueConverter())
       self.property(w, "DefaultSubnetId", "default_subnet_id", StringValueConverter())
-      self.property(w, "EcsClusterArn", "ecs_cluster_arn", StringValueConverter())
-      self.repeated_block(w, "ElasticIps", AWS_OpsWorks_Stack_ElasticIp)
+      self.property(w, "EcsClusterArn", "arn", StringValueConverter())
+      self.repeated_block(w, "ElasticIps", AWS_OpsWorks_Stack_ElasticIp) # TODO: Probably not the correct mapping
       self.property(w, "HostnameTheme", "hostname_theme", StringValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
-      self.repeated_block(w, "RdsDbInstances", AWS_OpsWorks_Stack_RdsDbInstance)
+      self.repeated_block(w, "RdsDbInstances", AWS_OpsWorks_Stack_RdsDbInstance) # TODO: Probably not the correct mapping
       self.property(w, "ServiceRoleArn", "service_role_arn", StringValueConverter())
-      self.property(w, "SourceStackId", "source_stack_id", StringValueConverter())
+      self.property(w, "SourceStackId", "source_stack_id", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
       self.property(w, "UseCustomCookbooks", "use_custom_cookbooks", BasicValueConverter())
       self.property(w, "UseOpsworksSecurityGroups", "use_opsworks_security_groups", BasicValueConverter())
@@ -254,7 +254,7 @@ class AWS_OpsWorks_Layer_LoadBasedAutoScaling(CloudFormationProperty):
 
 class AWS_OpsWorks_Instance(CloudFormationResource):
   cfn_type = "AWS::OpsWorks::Instance"
-  tf_type = "aws_ops_works_instance"
+  tf_type = "aws_opsworks_instance"
   ref = "arn"
 
   def write(self, w):
@@ -264,9 +264,9 @@ class AWS_OpsWorks_Instance(CloudFormationResource):
       self.property(w, "Architecture", "architecture", StringValueConverter())
       self.property(w, "AutoScalingType", "auto_scaling_type", StringValueConverter())
       self.property(w, "AvailabilityZone", "availability_zone", StringValueConverter())
-      self.repeated_block(w, "BlockDeviceMappings", AWS_OpsWorks_Instance_BlockDeviceMapping)
+      self.repeated_block(w, "BlockDeviceMappings", AWS_OpsWorks_Instance_BlockDeviceMapping) # TODO: Probably not the correct mapping
       self.property(w, "EbsOptimized", "ebs_optimized", BasicValueConverter())
-      self.property(w, "ElasticIps", "elastic_ips", ListValueConverter(StringValueConverter()))
+      self.property(w, "ElasticIps", "elastic_ip", ListValueConverter(StringValueConverter()))
       self.property(w, "Hostname", "hostname", StringValueConverter())
       self.property(w, "InstallUpdatesOnBoot", "install_updates_on_boot", BasicValueConverter())
       self.property(w, "InstanceType", "instance_type", StringValueConverter())
@@ -277,14 +277,14 @@ class AWS_OpsWorks_Instance(CloudFormationResource):
       self.property(w, "StackId", "stack_id", StringValueConverter())
       self.property(w, "SubnetId", "subnet_id", StringValueConverter())
       self.property(w, "Tenancy", "tenancy", StringValueConverter())
-      self.block(w, "TimeBasedAutoScaling", AWS_OpsWorks_Instance_TimeBasedAutoScaling)
+      self.block(w, "TimeBasedAutoScaling", AWS_OpsWorks_Instance_TimeBasedAutoScaling) # TODO: Probably not the correct mapping
       self.property(w, "VirtualizationType", "virtualization_type", StringValueConverter())
-      self.property(w, "Volumes", "volumes", ListValueConverter(StringValueConverter()))
+      self.property(w, "Volumes", "volumes", ListValueConverter(StringValueConverter())) # TODO: Probably not the correct mapping
 
 
 class AWS_OpsWorks_Layer(CloudFormationResource):
   cfn_type = "AWS::OpsWorks::Layer"
-  tf_type = "aws_ops_works_layer"
+  tf_type = "aws_ops_works_layer" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):

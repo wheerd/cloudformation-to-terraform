@@ -228,10 +228,10 @@ class AWS_S3_AccessPoint(CloudFormationResource):
       self.property(w, "Bucket", "bucket", StringValueConverter())
       self.block(w, "VpcConfiguration", AWS_S3_AccessPoint_VpcConfiguration)
       self.block(w, "PublicAccessBlockConfiguration", AWS_S3_AccessPoint_PublicAccessBlockConfiguration)
-      self.property(w, "Policy", "policy", JsonValueConverter())
-      self.property(w, "PolicyStatus", "policy_status", JsonValueConverter())
+      self.property(w, "Policy", "has_public_access_policy", JsonValueConverter())
+      self.property(w, "PolicyStatus", "policy", JsonValueConverter())
       self.property(w, "NetworkOrigin", "network_origin", StringValueConverter())
-      self.property(w, "CreationDate", "creation_date", StringValueConverter())
+      self.property(w, "CreationDate", "creation_date", StringValueConverter()) # TODO: Probably not the correct mapping
 
 
 class AWS_S3_BucketPolicy(CloudFormationResource):
@@ -242,7 +242,7 @@ class AWS_S3_BucketPolicy(CloudFormationResource):
   def write(self, w):
     with self.resource_block(w):
       self.property(w, "Bucket", "bucket", StringValueConverter())
-      self.property(w, "PolicyDocument", "policy_document", JsonValueConverter())
+      self.property(w, "PolicyDocument", "policy", JsonValueConverter())
 
 
 class AWS_S3_Bucket_BucketEncryption(CloudFormationProperty):
@@ -425,20 +425,20 @@ class AWS_S3_Bucket(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.block(w, "AccelerateConfiguration", AWS_S3_Bucket_AccelerateConfiguration)
-      self.property(w, "AccessControl", "access_control", StringValueConverter())
-      self.repeated_block(w, "AnalyticsConfigurations", AWS_S3_Bucket_AnalyticsConfiguration)
+      self.block(w, "AccelerateConfiguration", AWS_S3_Bucket_AccelerateConfiguration) # TODO: Probably not the correct mapping
+      self.property(w, "AccessControl", "access_control", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.repeated_block(w, "AnalyticsConfigurations", AWS_S3_Bucket_AnalyticsConfiguration) # TODO: Probably not the correct mapping
       self.block(w, "BucketEncryption", AWS_S3_Bucket_BucketEncryption)
-      self.property(w, "BucketName", "bucket_name", StringValueConverter())
-      self.block(w, "CorsConfiguration", AWS_S3_Bucket_CorsConfiguration)
-      self.repeated_block(w, "InventoryConfigurations", AWS_S3_Bucket_InventoryConfiguration)
-      self.block(w, "LifecycleConfiguration", AWS_S3_Bucket_LifecycleConfiguration)
+      self.property(w, "BucketName", "bucket_name", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.block(w, "CorsConfiguration", AWS_S3_Bucket_CorsConfiguration) # TODO: Probably not the correct mapping
+      self.repeated_block(w, "InventoryConfigurations", AWS_S3_Bucket_InventoryConfiguration) # TODO: Probably not the correct mapping
+      self.block(w, "LifecycleConfiguration", AWS_S3_Bucket_LifecycleConfiguration) # TODO: Probably not the correct mapping
       self.block(w, "LoggingConfiguration", AWS_S3_Bucket_LoggingConfiguration)
-      self.repeated_block(w, "MetricsConfigurations", AWS_S3_Bucket_MetricsConfiguration)
-      self.block(w, "NotificationConfiguration", AWS_S3_Bucket_NotificationConfiguration)
+      self.repeated_block(w, "MetricsConfigurations", AWS_S3_Bucket_MetricsConfiguration) # TODO: Probably not the correct mapping
+      self.block(w, "NotificationConfiguration", AWS_S3_Bucket_NotificationConfiguration) # TODO: Probably not the correct mapping
       self.block(w, "ObjectLockConfiguration", AWS_S3_Bucket_ObjectLockConfiguration)
-      self.property(w, "ObjectLockEnabled", "object_lock_enabled", BasicValueConverter())
-      self.block(w, "PublicAccessBlockConfiguration", AWS_S3_Bucket_PublicAccessBlockConfiguration)
+      self.property(w, "ObjectLockEnabled", "object_lock_enabled", BasicValueConverter()) # TODO: Probably not the correct mapping
+      self.block(w, "PublicAccessBlockConfiguration", AWS_S3_Bucket_PublicAccessBlockConfiguration) # TODO: Probably not the correct mapping
       self.block(w, "ReplicationConfiguration", AWS_S3_Bucket_ReplicationConfiguration)
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
       self.block(w, "VersioningConfiguration", AWS_S3_Bucket_VersioningConfiguration)

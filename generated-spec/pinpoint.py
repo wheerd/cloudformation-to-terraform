@@ -222,7 +222,7 @@ class AWS_Pinpoint_SMSChannel(CloudFormationResource):
 
 class AWS_Pinpoint_VoiceChannel(CloudFormationResource):
   cfn_type = "AWS::Pinpoint::VoiceChannel"
-  tf_type = "aws_pinpoint_voice_channel"
+  tf_type = "aws_pinpoint_voice_channel" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -245,7 +245,7 @@ class AWS_Pinpoint_EventStream(CloudFormationResource):
 
 class AWS_Pinpoint_EmailTemplate(CloudFormationResource):
   cfn_type = "AWS::Pinpoint::EmailTemplate"
-  tf_type = "aws_pinpoint_email_template"
+  tf_type = "aws_pinpoint_email_template" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -304,7 +304,7 @@ class AWS_Pinpoint_APNSChannel(CloudFormationResource):
 
 class AWS_Pinpoint_SmsTemplate(CloudFormationResource):
   cfn_type = "AWS::Pinpoint::SmsTemplate"
-  tf_type = "aws_pinpoint_sms_template"
+  tf_type = "aws_pinpoint_sms_template" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -349,7 +349,7 @@ class AWS_Pinpoint_ADMChannel(CloudFormationResource):
 
 class AWS_Pinpoint_ApplicationSettings(CloudFormationResource):
   cfn_type = "AWS::Pinpoint::ApplicationSettings"
-  tf_type = "aws_pinpoint_application_settings"
+  tf_type = "aws_pinpoint_application_settings" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -363,7 +363,7 @@ class AWS_Pinpoint_ApplicationSettings(CloudFormationResource):
 
 class AWS_Pinpoint_PushTemplate(CloudFormationResource):
   cfn_type = "AWS::Pinpoint::PushTemplate"
-  tf_type = "aws_pinpoint_push_template"
+  tf_type = "aws_pinpoint_push_template" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -422,7 +422,7 @@ class AWS_Pinpoint_EmailChannel(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "ConfigurationSet", "configuration_set", StringValueConverter())
+      self.property(w, "ConfigurationSet", "configuration_set", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "FromAddress", "from_address", StringValueConverter())
       self.property(w, "Enabled", "enabled", BasicValueConverter())
       self.property(w, "ApplicationId", "application_id", StringValueConverter())
@@ -488,7 +488,7 @@ class AWS_Pinpoint_Campaign_WriteTreatmentResource(CloudFormationProperty):
 
 class AWS_Pinpoint_Campaign(CloudFormationResource):
   cfn_type = "AWS::Pinpoint::Campaign"
-  tf_type = "aws_pinpoint_campaign"
+  tf_type = "aws_pinpoint_campaign" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -539,7 +539,7 @@ class AWS_Pinpoint_Segment_SegmentGroups(CloudFormationProperty):
 
 class AWS_Pinpoint_Segment(CloudFormationResource):
   cfn_type = "AWS::Pinpoint::Segment"
-  tf_type = "aws_pinpoint_segment"
+  tf_type = "aws_pinpoint_segment" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):

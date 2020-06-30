@@ -135,28 +135,28 @@ class AWS_AppSync_DataSource_DeltaSyncConfig(CloudFormationProperty):
 
 class AWS_AppSync_Resolver(CloudFormationResource):
   cfn_type = "AWS::AppSync::Resolver"
-  tf_type = "aws_app_sync_resolver"
+  tf_type = "aws_appsync_resolver"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "ResponseMappingTemplateS3Location", "response_mapping_template_s3_location", StringValueConverter())
-      self.property(w, "TypeName", "type_name", StringValueConverter())
+      self.property(w, "ResponseMappingTemplateS3Location", "response_mapping_template_s3_location", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "TypeName", "type", StringValueConverter())
       self.block(w, "PipelineConfig", AWS_AppSync_Resolver_PipelineConfig)
-      self.property(w, "DataSourceName", "data_source_name", StringValueConverter())
-      self.property(w, "RequestMappingTemplate", "request_mapping_template", StringValueConverter())
-      self.property(w, "ResponseMappingTemplate", "response_mapping_template", StringValueConverter())
+      self.property(w, "DataSourceName", "data_source_name", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "RequestMappingTemplate", "request_mapping_template", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "ResponseMappingTemplate", "response_mapping_template", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "Kind", "kind", StringValueConverter())
       self.block(w, "CachingConfig", AWS_AppSync_Resolver_CachingConfig)
-      self.block(w, "SyncConfig", AWS_AppSync_Resolver_SyncConfig)
-      self.property(w, "RequestMappingTemplateS3Location", "request_mapping_template_s3_location", StringValueConverter())
+      self.block(w, "SyncConfig", AWS_AppSync_Resolver_SyncConfig) # TODO: Probably not the correct mapping
+      self.property(w, "RequestMappingTemplateS3Location", "request_mapping_template_s3_location", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "ApiId", "api_id", StringValueConverter())
-      self.property(w, "FieldName", "field_name", StringValueConverter())
+      self.property(w, "FieldName", "field", StringValueConverter())
 
 
 class AWS_AppSync_GraphQLSchema(CloudFormationResource):
   cfn_type = "AWS::AppSync::GraphQLSchema"
-  tf_type = "aws_app_sync_graph_ql_schema"
+  tf_type = "aws_app_sync_graph_ql_schema" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -168,7 +168,7 @@ class AWS_AppSync_GraphQLSchema(CloudFormationResource):
 
 class AWS_AppSync_GraphQLApi(CloudFormationResource):
   cfn_type = "AWS::AppSync::GraphQLApi"
-  tf_type = "aws_app_sync_graph_ql_api"
+  tf_type = "aws_appsync_graphql_api"
   ref = "arn"
 
   def write(self, w):
@@ -185,7 +185,7 @@ class AWS_AppSync_GraphQLApi(CloudFormationResource):
 
 class AWS_AppSync_ApiKey(CloudFormationResource):
   cfn_type = "AWS::AppSync::ApiKey"
-  tf_type = "aws_app_sync_api_key"
+  tf_type = "aws_appsync_api_key"
   ref = "arn"
 
   def write(self, w):
@@ -197,25 +197,25 @@ class AWS_AppSync_ApiKey(CloudFormationResource):
 
 class AWS_AppSync_FunctionConfiguration(CloudFormationResource):
   cfn_type = "AWS::AppSync::FunctionConfiguration"
-  tf_type = "aws_app_sync_function_configuration"
+  tf_type = "aws_appsync_function"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "ResponseMappingTemplateS3Location", "response_mapping_template_s3_location", StringValueConverter())
+      self.property(w, "ResponseMappingTemplateS3Location", "response_mapping_template_s3_location", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "Description", "description", StringValueConverter())
-      self.property(w, "DataSourceName", "data_source_name", StringValueConverter())
+      self.property(w, "DataSourceName", "data_source_name", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "RequestMappingTemplate", "request_mapping_template", StringValueConverter())
       self.property(w, "ResponseMappingTemplate", "response_mapping_template", StringValueConverter())
       self.property(w, "FunctionVersion", "function_version", StringValueConverter())
-      self.property(w, "RequestMappingTemplateS3Location", "request_mapping_template_s3_location", StringValueConverter())
+      self.property(w, "RequestMappingTemplateS3Location", "request_mapping_template_s3_location", StringValueConverter()) # TODO: Probably not the correct mapping
       self.property(w, "ApiId", "api_id", StringValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
 
 
 class AWS_AppSync_ApiCache(CloudFormationResource):
   cfn_type = "AWS::AppSync::ApiCache"
-  tf_type = "aws_app_sync_api_cache"
+  tf_type = "aws_app_sync_api_cache" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -247,7 +247,7 @@ class AWS_AppSync_DataSource_DynamoDBConfig(CloudFormationProperty):
 
 class AWS_AppSync_DataSource(CloudFormationResource):
   cfn_type = "AWS::AppSync::DataSource"
-  tf_type = "aws_app_sync_data_source"
+  tf_type = "aws_appsync_datasource"
   ref = "arn"
 
   def write(self, w):
@@ -256,7 +256,7 @@ class AWS_AppSync_DataSource(CloudFormationResource):
       self.property(w, "Description", "description", StringValueConverter())
       self.property(w, "ServiceRoleArn", "service_role_arn", StringValueConverter())
       self.block(w, "HttpConfig", AWS_AppSync_DataSource_HttpConfig)
-      self.block(w, "RelationalDatabaseConfig", AWS_AppSync_DataSource_RelationalDatabaseConfig)
+      self.block(w, "RelationalDatabaseConfig", AWS_AppSync_DataSource_RelationalDatabaseConfig) # TODO: Probably not the correct mapping
       self.block(w, "LambdaConfig", AWS_AppSync_DataSource_LambdaConfig)
       self.property(w, "ApiId", "api_id", StringValueConverter())
       self.property(w, "Name", "name", StringValueConverter())

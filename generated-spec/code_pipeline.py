@@ -94,24 +94,24 @@ class AWS_CodePipeline_Webhook_WebhookAuthConfiguration(CloudFormationProperty):
 
 class AWS_CodePipeline_CustomActionType(CloudFormationResource):
   cfn_type = "AWS::CodePipeline::CustomActionType"
-  tf_type = "aws_code_pipeline_custom_action_type"
+  tf_type = "aws_codepipeline"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.property(w, "Category", "category", StringValueConverter())
-      self.repeated_block(w, "ConfigurationProperties", AWS_CodePipeline_CustomActionType_ConfigurationProperties)
-      self.block(w, "InputArtifactDetails", AWS_CodePipeline_CustomActionType_ArtifactDetails)
-      self.block(w, "OutputArtifactDetails", AWS_CodePipeline_CustomActionType_ArtifactDetails)
-      self.property(w, "Provider", "provider", StringValueConverter())
-      self.block(w, "Settings", AWS_CodePipeline_CustomActionType_Settings)
+      self.property(w, "Category", "category", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.repeated_block(w, "ConfigurationProperties", AWS_CodePipeline_CustomActionType_ConfigurationProperties) # TODO: Probably not the correct mapping
+      self.block(w, "InputArtifactDetails", AWS_CodePipeline_CustomActionType_ArtifactDetails) # TODO: Probably not the correct mapping
+      self.block(w, "OutputArtifactDetails", AWS_CodePipeline_CustomActionType_ArtifactDetails) # TODO: Probably not the correct mapping
+      self.property(w, "Provider", "id", StringValueConverter())
+      self.block(w, "Settings", AWS_CodePipeline_CustomActionType_Settings) # TODO: Probably not the correct mapping
       self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
-      self.property(w, "Version", "version", StringValueConverter())
+      self.property(w, "Version", "version", StringValueConverter()) # TODO: Probably not the correct mapping
 
 
 class AWS_CodePipeline_Webhook(CloudFormationResource):
   cfn_type = "AWS::CodePipeline::Webhook"
-  tf_type = "aws_code_pipeline_webhook"
+  tf_type = "aws_codepipeline_webhook"
   ref = "arn"
 
   def write(self, w):
@@ -122,8 +122,8 @@ class AWS_CodePipeline_Webhook(CloudFormationResource):
       self.property(w, "TargetPipeline", "target_pipeline", StringValueConverter())
       self.property(w, "TargetAction", "target_action", StringValueConverter())
       self.property(w, "Name", "name", StringValueConverter())
-      self.property(w, "TargetPipelineVersion", "target_pipeline_version", BasicValueConverter())
-      self.property(w, "RegisterWithThirdParty", "register_with_third_party", BasicValueConverter())
+      self.property(w, "TargetPipelineVersion", "target_pipeline_version", BasicValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "RegisterWithThirdParty", "register_with_third_party", BasicValueConverter()) # TODO: Probably not the correct mapping
 
 
 class AWS_CodePipeline_Pipeline_ArtifactStoreMap(CloudFormationProperty):
@@ -157,7 +157,7 @@ class AWS_CodePipeline_Pipeline_StageDeclaration(CloudFormationProperty):
 
 class AWS_CodePipeline_Pipeline(CloudFormationResource):
   cfn_type = "AWS::CodePipeline::Pipeline"
-  tf_type = "aws_code_pipeline_pipeline"
+  tf_type = "aws_code_pipeline_pipeline" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):

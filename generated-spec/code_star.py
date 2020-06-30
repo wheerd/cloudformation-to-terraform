@@ -16,7 +16,7 @@ class AWS_CodeStar_GitHubRepository_Code(CloudFormationProperty):
 
 class AWS_CodeStar_GitHubRepository(CloudFormationResource):
   cfn_type = "AWS::CodeStar::GitHubRepository"
-  tf_type = "aws_code_star_git_hub_repository"
+  tf_type = "aws_code_star_git_hub_repository" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):

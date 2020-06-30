@@ -24,7 +24,7 @@ class AWS_Backup_BackupVault_NotificationObjectType(CloudFormationProperty):
 
 class AWS_Backup_BackupVault(CloudFormationResource):
   cfn_type = "AWS::Backup::BackupVault"
-  tf_type = "aws_backup_backup_vault"
+  tf_type = "aws_backup_backup_vault" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -74,7 +74,7 @@ class AWS_Backup_BackupPlan_BackupPlanResourceType(CloudFormationProperty):
 
 class AWS_Backup_BackupPlan(CloudFormationResource):
   cfn_type = "AWS::Backup::BackupPlan"
-  tf_type = "aws_backup_backup_plan"
+  tf_type = "aws_backup_backup_plan" # TODO: Most likely not working
   ref = "arn"
 
   def write(self, w):
@@ -85,12 +85,12 @@ class AWS_Backup_BackupPlan(CloudFormationResource):
 
 class AWS_Backup_BackupSelection(CloudFormationResource):
   cfn_type = "AWS::Backup::BackupSelection"
-  tf_type = "aws_backup_backup_selection"
+  tf_type = "aws_backup_selection"
   ref = "arn"
 
   def write(self, w):
     with self.resource_block(w):
-      self.block(w, "BackupSelection", AWS_Backup_BackupSelection_BackupSelectionResourceType)
-      self.property(w, "BackupPlanId", "backup_plan_id", StringValueConverter())
+      self.block(w, "BackupSelection", AWS_Backup_BackupSelection_BackupSelectionResourceType) # TODO: Probably not the correct mapping
+      self.property(w, "BackupPlanId", "id", StringValueConverter())
 
 

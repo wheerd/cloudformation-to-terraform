@@ -9,7 +9,7 @@ class AWS_CodeStarNotifications_NotificationRule_Target(CloudFormationProperty):
 
 class AWS_CodeStarNotifications_NotificationRule(CloudFormationResource):
   cfn_type = "AWS::CodeStarNotifications::NotificationRule"
-  tf_type = "aws_code_star_notifications_notification_rule"
+  tf_type = "aws_codestarnotifications_notification_rule"
   ref = "arn"
 
   def write(self, w):
