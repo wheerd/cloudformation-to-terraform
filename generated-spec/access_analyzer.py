@@ -20,7 +20,10 @@ class AWS_AccessAnalyzer_Analyzer_ArchiveRule(CloudFormationProperty):
 class AWS_AccessAnalyzer_Analyzer(CloudFormationResource):
   cfn_type = "AWS::AccessAnalyzer::Analyzer"
   tf_type = "aws_accessanalyzer_analyzer"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+  }
 
   def write(self, w):
     with self.resource_block(w):

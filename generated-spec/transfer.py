@@ -38,7 +38,12 @@ class AWS_Transfer_Server_Protocol(CloudFormationProperty):
 class AWS_Transfer_Server(CloudFormationResource):
   cfn_type = "AWS::Transfer::Server"
   tf_type = "aws_transfer_server"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "ServerId": "id",
+    "Arn": "arn",
+    # Additional TF attributes: endpoint, host_key_fingerprint
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -55,7 +60,12 @@ class AWS_Transfer_Server(CloudFormationResource):
 class AWS_Transfer_User(CloudFormationResource):
   cfn_type = "AWS::Transfer::User"
   tf_type = "aws_transfer_user"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "ServerId": "id",
+    "UserName": "user_name", # TODO: Probably not the correct mapping
+    "Arn": "arn",
+  }
 
   def write(self, w):
     with self.resource_block(w):

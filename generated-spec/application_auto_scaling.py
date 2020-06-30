@@ -82,6 +82,7 @@ class AWS_ApplicationAutoScaling_ScalingPolicy(CloudFormationResource):
   cfn_type = "AWS::ApplicationAutoScaling::ScalingPolicy"
   tf_type = "aws_application_auto_scaling_scaling_policy" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -99,6 +100,7 @@ class AWS_ApplicationAutoScaling_ScalableTarget(CloudFormationResource):
   cfn_type = "AWS::ApplicationAutoScaling::ScalableTarget"
   tf_type = "aws_application_auto_scaling_scalable_target" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):

@@ -25,6 +25,7 @@ class AWS_FMS_NotificationChannel(CloudFormationResource):
   cfn_type = "AWS::FMS::NotificationChannel"
   tf_type = "aws_fms_notification_channel" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -35,7 +36,11 @@ class AWS_FMS_NotificationChannel(CloudFormationResource):
 class AWS_FMS_Policy(CloudFormationResource):
   cfn_type = "AWS::FMS::Policy"
   tf_type = "aws_iam_policy"
-  ref = "arn"
+  ref = "name"
+  attrs = {
+    "Id": "id",
+    "Arn": "arn",
+  }
 
   def write(self, w):
     with self.resource_block(w):

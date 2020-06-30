@@ -302,7 +302,10 @@ class AWS_ECS_TaskDefinition_RepositoryCredentials(CloudFormationProperty):
 class AWS_ECS_Cluster(CloudFormationResource):
   cfn_type = "AWS::ECS::Cluster"
   tf_type = "aws_ecs_cluster"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -316,7 +319,8 @@ class AWS_ECS_Cluster(CloudFormationResource):
 class AWS_ECS_CapacityProvider(CloudFormationResource):
   cfn_type = "AWS::ECS::CapacityProvider"
   tf_type = "aws_ecs_capacity_provider"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn
 
   def write(self, w):
     with self.resource_block(w):
@@ -329,6 +333,7 @@ class AWS_ECS_PrimaryTaskSet(CloudFormationResource):
   cfn_type = "AWS::ECS::PrimaryTaskSet"
   tf_type = "aws_ecs_primary_task_set" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -340,7 +345,11 @@ class AWS_ECS_PrimaryTaskSet(CloudFormationResource):
 class AWS_ECS_Service(CloudFormationResource):
   cfn_type = "AWS::ECS::Service"
   tf_type = "aws_ecs_service"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Name": "name", # TODO: Probably not the correct mapping
+    # Additional TF attributes: cluster, iam_role, launch_type, platform_version
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -369,6 +378,9 @@ class AWS_ECS_TaskSet(CloudFormationResource):
   cfn_type = "AWS::ECS::TaskSet"
   tf_type = "aws_ecs_task_set" # TODO: Most likely not working
   ref = "arn"
+  attrs = {
+    "Id": "id",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -446,7 +458,8 @@ class AWS_ECS_TaskDefinition_ContainerDefinition(CloudFormationProperty):
 class AWS_ECS_TaskDefinition(CloudFormationResource):
   cfn_type = "AWS::ECS::TaskDefinition"
   tf_type = "aws_ecs_task_definition"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, network_mode, revision
 
   def write(self, w):
     with self.resource_block(w):

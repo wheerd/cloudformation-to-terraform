@@ -3,7 +3,12 @@ from . import *
 class AWS_SQS_Queue(CloudFormationResource):
   cfn_type = "AWS::SQS::Queue"
   tf_type = "aws_sqs_queue"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+    "QueueName": "name",
+    # Additional TF attributes: kms_data_key_reuse_period_seconds, policy
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -24,7 +29,8 @@ class AWS_SQS_Queue(CloudFormationResource):
 class AWS_SQS_QueuePolicy(CloudFormationResource):
   cfn_type = "AWS::SQS::QueuePolicy"
   tf_type = "aws_sqs_queue_policy"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):

@@ -75,7 +75,10 @@ class AWS_DLM_LifecyclePolicy_PolicyDetails(CloudFormationProperty):
 class AWS_DLM_LifecyclePolicy(CloudFormationResource):
   cfn_type = "AWS::DLM::LifecyclePolicy"
   tf_type = "aws_dlm_lifecycle_policy"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+  }
 
   def write(self, w):
     with self.resource_block(w):

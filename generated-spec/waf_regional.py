@@ -75,7 +75,8 @@ class AWS_WAFRegional_RateBasedRule_Predicate(CloudFormationProperty):
 class AWS_WAFRegional_RateBasedRule(CloudFormationResource):
   cfn_type = "AWS::WAFRegional::RateBasedRule"
   tf_type = "aws_wafregional_rate_based_rule"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn
 
   def write(self, w):
     with self.resource_block(w):
@@ -89,7 +90,8 @@ class AWS_WAFRegional_RateBasedRule(CloudFormationResource):
 class AWS_WAFRegional_GeoMatchSet(CloudFormationResource):
   cfn_type = "AWS::WAFRegional::GeoMatchSet"
   tf_type = "aws_wafregional_geo_match_set"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -100,7 +102,8 @@ class AWS_WAFRegional_GeoMatchSet(CloudFormationResource):
 class AWS_WAFRegional_RegexPatternSet(CloudFormationResource):
   cfn_type = "AWS::WAFRegional::RegexPatternSet"
   tf_type = "aws_wafregional_regex_pattern_set"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -111,7 +114,8 @@ class AWS_WAFRegional_RegexPatternSet(CloudFormationResource):
 class AWS_WAFRegional_WebACLAssociation(CloudFormationResource):
   cfn_type = "AWS::WAFRegional::WebACLAssociation"
   tf_type = "aws_wafregional_web_acl_association"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -122,7 +126,8 @@ class AWS_WAFRegional_WebACLAssociation(CloudFormationResource):
 class AWS_WAFRegional_WebACL(CloudFormationResource):
   cfn_type = "AWS::WAFRegional::WebACL"
   tf_type = "aws_wafregional_web_acl"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn
 
   def write(self, w):
     with self.resource_block(w):
@@ -135,7 +140,8 @@ class AWS_WAFRegional_WebACL(CloudFormationResource):
 class AWS_WAFRegional_IPSet(CloudFormationResource):
   cfn_type = "AWS::WAFRegional::IPSet"
   tf_type = "aws_wafregional_ipset"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn
 
   def write(self, w):
     with self.resource_block(w):
@@ -146,7 +152,8 @@ class AWS_WAFRegional_IPSet(CloudFormationResource):
 class AWS_WAFRegional_Rule(CloudFormationResource):
   cfn_type = "AWS::WAFRegional::Rule"
   tf_type = "aws_wafregional_rule"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn
 
   def write(self, w):
     with self.resource_block(w):
@@ -191,7 +198,8 @@ class AWS_WAFRegional_XssMatchSet_XssMatchTuple(CloudFormationProperty):
 class AWS_WAFRegional_SqlInjectionMatchSet(CloudFormationResource):
   cfn_type = "AWS::WAFRegional::SqlInjectionMatchSet"
   tf_type = "aws_wafregional_sql_injection_match_set"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -202,7 +210,8 @@ class AWS_WAFRegional_SqlInjectionMatchSet(CloudFormationResource):
 class AWS_WAFRegional_SizeConstraintSet(CloudFormationResource):
   cfn_type = "AWS::WAFRegional::SizeConstraintSet"
   tf_type = "aws_wafregional_size_constraint_set"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn
 
   def write(self, w):
     with self.resource_block(w):
@@ -213,7 +222,8 @@ class AWS_WAFRegional_SizeConstraintSet(CloudFormationResource):
 class AWS_WAFRegional_XssMatchSet(CloudFormationResource):
   cfn_type = "AWS::WAFRegional::XssMatchSet"
   tf_type = "aws_wafregional_xss_match_set"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -224,7 +234,8 @@ class AWS_WAFRegional_XssMatchSet(CloudFormationResource):
 class AWS_WAFRegional_ByteMatchSet(CloudFormationResource):
   cfn_type = "AWS::WAFRegional::ByteMatchSet"
   tf_type = "aws_wafregional_byte_match_set"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):

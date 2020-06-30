@@ -10,7 +10,11 @@ class AWS_OpsWorksCM_Server_EngineAttribute(CloudFormationProperty):
 class AWS_OpsWorksCM_Server(CloudFormationResource):
   cfn_type = "AWS::OpsWorksCM::Server"
   tf_type = "aws_ops_works_cm_server" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Endpoint": "endpoint",
+    "Arn": "arn",
+  }
 
   def write(self, w):
     with self.resource_block(w):

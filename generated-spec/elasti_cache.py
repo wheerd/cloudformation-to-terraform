@@ -13,7 +13,8 @@ class AWS_ElastiCache_ReplicationGroup_NodeGroupConfiguration(CloudFormationProp
 class AWS_ElastiCache_SecurityGroup(CloudFormationResource):
   cfn_type = "AWS::ElastiCache::SecurityGroup"
   tf_type = "aws_elasticache_security_group"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -23,7 +24,8 @@ class AWS_ElastiCache_SecurityGroup(CloudFormationResource):
 class AWS_ElastiCache_SubnetGroup(CloudFormationResource):
   cfn_type = "AWS::ElastiCache::SubnetGroup"
   tf_type = "aws_elasticache_subnet_group"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -36,6 +38,7 @@ class AWS_ElastiCache_SecurityGroupIngress(CloudFormationResource):
   cfn_type = "AWS::ElastiCache::SecurityGroupIngress"
   tf_type = "aws_elasti_cache_security_group_ingress" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -47,7 +50,20 @@ class AWS_ElastiCache_SecurityGroupIngress(CloudFormationResource):
 class AWS_ElastiCache_ReplicationGroup(CloudFormationResource):
   cfn_type = "AWS::ElastiCache::ReplicationGroup"
   tf_type = "aws_elasticache_replication_group"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "ConfigurationEndPoint.Address": "configuration_endpoint_address",
+    "ConfigurationEndPoint.Port": "configuration_end_point._port", # TODO: Probably not the correct mapping
+    "PrimaryEndPoint.Address": "primary_endpoint_address",
+    "PrimaryEndPoint.Port": "primary_end_point._port", # TODO: Probably not the correct mapping
+    "ReadEndPoint.Addresses": "read_end_point._addresses", # TODO: Probably not the correct mapping
+    "ReadEndPoint.Addresses.List": "read_end_point._addresses._list", # TODO: Probably not the correct mapping
+    "ReadEndPoint.Ports": "read_end_point._ports", # TODO: Probably not the correct mapping
+    "ReadEndPoint.Ports.List": "read_end_point._ports._list", # TODO: Probably not the correct mapping
+    "ReaderEndPoint.Address": "reader_end_point._address", # TODO: Probably not the correct mapping
+    "ReaderEndPoint.Port": "reader_end_point._port", # TODO: Probably not the correct mapping
+    # Additional TF attributes: apply_immediately, engine_version, maintenance_window, member_clusters, node_type, number_cache_clusters, parameter_group_name, security_group_ids, security_group_names, snapshot_window, subnet_group_name
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -87,7 +103,8 @@ class AWS_ElastiCache_ReplicationGroup(CloudFormationResource):
 class AWS_ElastiCache_ParameterGroup(CloudFormationResource):
   cfn_type = "AWS::ElastiCache::ParameterGroup"
   tf_type = "aws_elasticache_parameter_group"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -99,7 +116,14 @@ class AWS_ElastiCache_ParameterGroup(CloudFormationResource):
 class AWS_ElastiCache_CacheCluster(CloudFormationResource):
   cfn_type = "AWS::ElastiCache::CacheCluster"
   tf_type = "aws_elasticache_cluster"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "ConfigurationEndpoint.Address": "configuration_endpoint",
+    "ConfigurationEndpoint.Port": "port",
+    "RedisEndpoint.Address": "redis_endpoint._address", # TODO: Probably not the correct mapping
+    "RedisEndpoint.Port": "redis_endpoint._port", # TODO: Probably not the correct mapping
+    # Additional TF attributes: apply_immediately, arn, availability_zone, az_mode, cache_nodes, cluster_address, engine, engine_version, maintenance_window, node_type, num_cache_nodes, parameter_group_name, replication_group_id, security_group_ids, security_group_names, snapshot_window, subnet_group_name
+  }
 
   def write(self, w):
     with self.resource_block(w):

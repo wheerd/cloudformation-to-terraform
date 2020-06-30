@@ -10,7 +10,12 @@ class AWS_Cloud9_EnvironmentEC2_Repository(CloudFormationProperty):
 class AWS_Cloud9_EnvironmentEC2(CloudFormationResource):
   cfn_type = "AWS::Cloud9::EnvironmentEC2"
   tf_type = "aws_cloud9_environment_ec2"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+    "Name": "name", # TODO: Probably not the correct mapping
+    # Additional TF attributes: owner_arn, type
+  }
 
   def write(self, w):
     with self.resource_block(w):

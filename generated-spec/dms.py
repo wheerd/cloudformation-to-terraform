@@ -73,7 +73,8 @@ class AWS_DMS_Endpoint_ElasticsearchSettings(CloudFormationProperty):
 class AWS_DMS_ReplicationSubnetGroup(CloudFormationResource):
   cfn_type = "AWS::DMS::ReplicationSubnetGroup"
   tf_type = "aws_dms_replication_subnet_group"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: replication_subnet_group_arn, vpc_id
 
   def write(self, w):
     with self.resource_block(w):
@@ -86,7 +87,8 @@ class AWS_DMS_ReplicationSubnetGroup(CloudFormationResource):
 class AWS_DMS_EventSubscription(CloudFormationResource):
   cfn_type = "AWS::DMS::EventSubscription"
   tf_type = "aws_dms_event_subscription"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn
 
   def write(self, w):
     with self.resource_block(w):
@@ -102,7 +104,8 @@ class AWS_DMS_EventSubscription(CloudFormationResource):
 class AWS_DMS_Certificate(CloudFormationResource):
   cfn_type = "AWS::DMS::Certificate"
   tf_type = "aws_dms_certificate"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: certificate_arn
 
   def write(self, w):
     with self.resource_block(w):
@@ -114,7 +117,11 @@ class AWS_DMS_Certificate(CloudFormationResource):
 class AWS_DMS_Endpoint(CloudFormationResource):
   cfn_type = "AWS::DMS::Endpoint"
   tf_type = "aws_dms_endpoint"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "ExternalId": "id",
+    # Additional TF attributes: certificate_arn, endpoint_arn, extra_connection_attributes, kms_key_arn, ssl_mode
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -143,7 +150,8 @@ class AWS_DMS_Endpoint(CloudFormationResource):
 class AWS_DMS_ReplicationTask(CloudFormationResource):
   cfn_type = "AWS::DMS::ReplicationTask"
   tf_type = "aws_dms_replication_task"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: replication_task_arn
 
   def write(self, w):
     with self.resource_block(w):
@@ -164,7 +172,12 @@ class AWS_DMS_ReplicationTask(CloudFormationResource):
 class AWS_DMS_ReplicationInstance(CloudFormationResource):
   cfn_type = "AWS::DMS::ReplicationInstance"
   tf_type = "aws_dms_replication_instance"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "ReplicationInstancePublicIpAddresses": "replication_instance_public_ip_addresses", # TODO: Probably not the correct mapping
+    "ReplicationInstancePrivateIpAddresses": "replication_instance_private_ip_addresses", # TODO: Probably not the correct mapping
+    # Additional TF attributes: allocated_storage, auto_minor_version_upgrade, availability_zone, engine_version, kms_key_arn, multi_az, preferred_maintenance_window, publicly_accessible, replication_instance_arn, replication_instance_private_ips, replication_instance_public_ips, replication_subnet_group_id, vpc_security_group_ids
+  }
 
   def write(self, w):
     with self.resource_block(w):

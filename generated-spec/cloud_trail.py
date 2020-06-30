@@ -18,7 +18,11 @@ class AWS_CloudTrail_Trail_EventSelector(CloudFormationProperty):
 class AWS_CloudTrail_Trail(CloudFormationResource):
   cfn_type = "AWS::CloudTrail::Trail"
   tf_type = "aws_cloud_trail_trail" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+    "SnsTopicArn": "sns_topic_arn",
+  }
 
   def write(self, w):
     with self.resource_block(w):

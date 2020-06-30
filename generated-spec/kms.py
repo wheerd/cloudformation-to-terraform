@@ -3,7 +3,11 @@ from . import *
 class AWS_KMS_Key(CloudFormationResource):
   cfn_type = "AWS::KMS::Key"
   tf_type = "aws_kms_key"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+    # Additional TF attributes: description, key_id, policy
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -19,7 +23,8 @@ class AWS_KMS_Key(CloudFormationResource):
 class AWS_KMS_Alias(CloudFormationResource):
   cfn_type = "AWS::KMS::Alias"
   tf_type = "aws_kms_alias"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, target_key_arn
 
   def write(self, w):
     with self.resource_block(w):

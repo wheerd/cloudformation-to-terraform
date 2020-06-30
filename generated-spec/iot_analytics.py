@@ -281,6 +281,7 @@ class AWS_IoTAnalytics_Channel(CloudFormationResource):
   cfn_type = "AWS::IoTAnalytics::Channel"
   tf_type = "aws_iot_analytics_channel" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -294,6 +295,7 @@ class AWS_IoTAnalytics_Datastore(CloudFormationResource):
   cfn_type = "AWS::IoTAnalytics::Datastore"
   tf_type = "aws_iot_analytics_datastore" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -307,6 +309,7 @@ class AWS_IoTAnalytics_Pipeline(CloudFormationResource):
   cfn_type = "AWS::IoTAnalytics::Pipeline"
   tf_type = "aws_iot_analytics_pipeline" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -334,6 +337,7 @@ class AWS_IoTAnalytics_Dataset(CloudFormationResource):
   cfn_type = "AWS::IoTAnalytics::Dataset"
   tf_type = "aws_iot_analytics_dataset" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):

@@ -95,7 +95,8 @@ class AWS_CodePipeline_Webhook_WebhookAuthConfiguration(CloudFormationProperty):
 class AWS_CodePipeline_CustomActionType(CloudFormationResource):
   cfn_type = "AWS::CodePipeline::CustomActionType"
   tf_type = "aws_codepipeline"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn
 
   def write(self, w):
     with self.resource_block(w):
@@ -112,7 +113,10 @@ class AWS_CodePipeline_CustomActionType(CloudFormationResource):
 class AWS_CodePipeline_Webhook(CloudFormationResource):
   cfn_type = "AWS::CodePipeline::Webhook"
   tf_type = "aws_codepipeline_webhook"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Url": "url",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -159,6 +163,9 @@ class AWS_CodePipeline_Pipeline(CloudFormationResource):
   cfn_type = "AWS::CodePipeline::Pipeline"
   tf_type = "aws_code_pipeline_pipeline" # TODO: Most likely not working
   ref = "arn"
+  attrs = {
+    "Version": "version",
+  }
 
   def write(self, w):
     with self.resource_block(w):

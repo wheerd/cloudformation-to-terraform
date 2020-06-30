@@ -210,7 +210,8 @@ class AWS_Pinpoint_ApplicationSettings_QuietTime(CloudFormationProperty):
 class AWS_Pinpoint_SMSChannel(CloudFormationResource):
   cfn_type = "AWS::Pinpoint::SMSChannel"
   tf_type = "aws_pinpoint_sms_channel"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: promotional_messages_per_second, transactional_messages_per_second
 
   def write(self, w):
     with self.resource_block(w):
@@ -224,6 +225,7 @@ class AWS_Pinpoint_VoiceChannel(CloudFormationResource):
   cfn_type = "AWS::Pinpoint::VoiceChannel"
   tf_type = "aws_pinpoint_voice_channel" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -234,7 +236,8 @@ class AWS_Pinpoint_VoiceChannel(CloudFormationResource):
 class AWS_Pinpoint_EventStream(CloudFormationResource):
   cfn_type = "AWS::Pinpoint::EventStream"
   tf_type = "aws_pinpoint_event_stream"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -246,7 +249,10 @@ class AWS_Pinpoint_EventStream(CloudFormationResource):
 class AWS_Pinpoint_EmailTemplate(CloudFormationResource):
   cfn_type = "AWS::Pinpoint::EmailTemplate"
   tf_type = "aws_pinpoint_email_template" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -262,7 +268,8 @@ class AWS_Pinpoint_EmailTemplate(CloudFormationResource):
 class AWS_Pinpoint_BaiduChannel(CloudFormationResource):
   cfn_type = "AWS::Pinpoint::BaiduChannel"
   tf_type = "aws_pinpoint_baidu_channel"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -275,7 +282,8 @@ class AWS_Pinpoint_BaiduChannel(CloudFormationResource):
 class AWS_Pinpoint_GCMChannel(CloudFormationResource):
   cfn_type = "AWS::Pinpoint::GCMChannel"
   tf_type = "aws_pinpoint_gcm_channel"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -287,7 +295,8 @@ class AWS_Pinpoint_GCMChannel(CloudFormationResource):
 class AWS_Pinpoint_APNSChannel(CloudFormationResource):
   cfn_type = "AWS::Pinpoint::APNSChannel"
   tf_type = "aws_pinpoint_apns_channel"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -305,7 +314,10 @@ class AWS_Pinpoint_APNSChannel(CloudFormationResource):
 class AWS_Pinpoint_SmsTemplate(CloudFormationResource):
   cfn_type = "AWS::Pinpoint::SmsTemplate"
   tf_type = "aws_pinpoint_sms_template" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -319,7 +331,8 @@ class AWS_Pinpoint_SmsTemplate(CloudFormationResource):
 class AWS_Pinpoint_APNSSandboxChannel(CloudFormationResource):
   cfn_type = "AWS::Pinpoint::APNSSandboxChannel"
   tf_type = "aws_pinpoint_apns_sandbox_channel"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -337,7 +350,8 @@ class AWS_Pinpoint_APNSSandboxChannel(CloudFormationResource):
 class AWS_Pinpoint_ADMChannel(CloudFormationResource):
   cfn_type = "AWS::Pinpoint::ADMChannel"
   tf_type = "aws_pinpoint_adm_channel"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -351,6 +365,7 @@ class AWS_Pinpoint_ApplicationSettings(CloudFormationResource):
   cfn_type = "AWS::Pinpoint::ApplicationSettings"
   tf_type = "aws_pinpoint_application_settings" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -364,7 +379,10 @@ class AWS_Pinpoint_ApplicationSettings(CloudFormationResource):
 class AWS_Pinpoint_PushTemplate(CloudFormationResource):
   cfn_type = "AWS::Pinpoint::PushTemplate"
   tf_type = "aws_pinpoint_push_template" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -382,7 +400,8 @@ class AWS_Pinpoint_PushTemplate(CloudFormationResource):
 class AWS_Pinpoint_APNSVoipSandboxChannel(CloudFormationResource):
   cfn_type = "AWS::Pinpoint::APNSVoipSandboxChannel"
   tf_type = "aws_pinpoint_apns_voip_sandbox_channel"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -400,7 +419,8 @@ class AWS_Pinpoint_APNSVoipSandboxChannel(CloudFormationResource):
 class AWS_Pinpoint_APNSVoipChannel(CloudFormationResource):
   cfn_type = "AWS::Pinpoint::APNSVoipChannel"
   tf_type = "aws_pinpoint_apns_voip_channel"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -418,7 +438,8 @@ class AWS_Pinpoint_APNSVoipChannel(CloudFormationResource):
 class AWS_Pinpoint_EmailChannel(CloudFormationResource):
   cfn_type = "AWS::Pinpoint::EmailChannel"
   tf_type = "aws_pinpoint_email_channel"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: messages_per_second
 
   def write(self, w):
     with self.resource_block(w):
@@ -433,7 +454,11 @@ class AWS_Pinpoint_EmailChannel(CloudFormationResource):
 class AWS_Pinpoint_App(CloudFormationResource):
   cfn_type = "AWS::Pinpoint::App"
   tf_type = "aws_pinpoint_app"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+    # Additional TF attributes: application_id, name
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -489,7 +514,11 @@ class AWS_Pinpoint_Campaign_WriteTreatmentResource(CloudFormationProperty):
 class AWS_Pinpoint_Campaign(CloudFormationResource):
   cfn_type = "AWS::Pinpoint::Campaign"
   tf_type = "aws_pinpoint_campaign" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "CampaignId": "campaign_id",
+    "Arn": "arn",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -540,7 +569,11 @@ class AWS_Pinpoint_Segment_SegmentGroups(CloudFormationProperty):
 class AWS_Pinpoint_Segment(CloudFormationResource):
   cfn_type = "AWS::Pinpoint::Segment"
   tf_type = "aws_pinpoint_segment" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "SegmentId": "segment_id",
+    "Arn": "arn",
+  }
 
   def write(self, w):
     with self.resource_block(w):

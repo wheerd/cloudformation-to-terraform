@@ -73,7 +73,8 @@ class AWS_ApiGatewayV2_Stage_RouteSettings(CloudFormationProperty):
 class AWS_ApiGatewayV2_Route(CloudFormationResource):
   cfn_type = "AWS::ApiGatewayV2::Route"
   tf_type = "aws_apigatewayv2_route"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -94,7 +95,8 @@ class AWS_ApiGatewayV2_Route(CloudFormationResource):
 class AWS_ApiGatewayV2_Stage(CloudFormationResource):
   cfn_type = "AWS::ApiGatewayV2::Stage"
   tf_type = "aws_apigatewayv2_stage"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, execution_arn, invoke_url
 
   def write(self, w):
     with self.resource_block(w):
@@ -114,7 +116,8 @@ class AWS_ApiGatewayV2_Stage(CloudFormationResource):
 class AWS_ApiGatewayV2_Api(CloudFormationResource):
   cfn_type = "AWS::ApiGatewayV2::Api"
   tf_type = "aws_apigatewayv2_api"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: api_endpoint, arn, execution_arn
 
   def write(self, w):
     with self.resource_block(w):
@@ -139,7 +142,8 @@ class AWS_ApiGatewayV2_Api(CloudFormationResource):
 class AWS_ApiGatewayV2_RouteResponse(CloudFormationResource):
   cfn_type = "AWS::ApiGatewayV2::RouteResponse"
   tf_type = "aws_apigatewayv2_route_response"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -154,7 +158,12 @@ class AWS_ApiGatewayV2_RouteResponse(CloudFormationResource):
 class AWS_ApiGatewayV2_DomainName(CloudFormationResource):
   cfn_type = "AWS::ApiGatewayV2::DomainName"
   tf_type = "aws_apigatewayv2_domain_name"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "RegionalHostedZoneId": "regional_hosted_zone_id", # TODO: Probably not the correct mapping
+    "RegionalDomainName": "regional_domain_name", # TODO: Probably not the correct mapping
+    # Additional TF attributes: api_mapping_selection_expression, arn
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -166,7 +175,8 @@ class AWS_ApiGatewayV2_DomainName(CloudFormationResource):
 class AWS_ApiGatewayV2_Integration(CloudFormationResource):
   cfn_type = "AWS::ApiGatewayV2::Integration"
   tf_type = "aws_apigatewayv2_integration"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: integration_response_selection_expression
 
   def write(self, w):
     with self.resource_block(w):
@@ -191,7 +201,8 @@ class AWS_ApiGatewayV2_Integration(CloudFormationResource):
 class AWS_ApiGatewayV2_Deployment(CloudFormationResource):
   cfn_type = "AWS::ApiGatewayV2::Deployment"
   tf_type = "aws_apigatewayv2_deployment"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: auto_deployed
 
   def write(self, w):
     with self.resource_block(w):
@@ -203,7 +214,8 @@ class AWS_ApiGatewayV2_Deployment(CloudFormationResource):
 class AWS_ApiGatewayV2_Model(CloudFormationResource):
   cfn_type = "AWS::ApiGatewayV2::Model"
   tf_type = "aws_apigatewayv2_model"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -217,7 +229,8 @@ class AWS_ApiGatewayV2_Model(CloudFormationResource):
 class AWS_ApiGatewayV2_Authorizer(CloudFormationResource):
   cfn_type = "AWS::ApiGatewayV2::Authorizer"
   tf_type = "aws_apigatewayv2_authorizer"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -235,7 +248,8 @@ class AWS_ApiGatewayV2_Authorizer(CloudFormationResource):
 class AWS_ApiGatewayV2_IntegrationResponse(CloudFormationResource):
   cfn_type = "AWS::ApiGatewayV2::IntegrationResponse"
   tf_type = "aws_apigatewayv2_integration_response"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -251,7 +265,8 @@ class AWS_ApiGatewayV2_IntegrationResponse(CloudFormationResource):
 class AWS_ApiGatewayV2_ApiMapping(CloudFormationResource):
   cfn_type = "AWS::ApiGatewayV2::ApiMapping"
   tf_type = "aws_apigatewayv2_api_mapping"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):

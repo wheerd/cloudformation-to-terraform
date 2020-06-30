@@ -16,6 +16,10 @@ class AWS_Macie_Session(CloudFormationResource):
   cfn_type = "AWS::Macie::Session"
   tf_type = "aws_macie_session" # TODO: Most likely not working
   ref = "arn"
+  attrs = {
+    "AwsAccountId": "aws_account_id",
+    "ServiceRole": "service_role",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -26,7 +30,12 @@ class AWS_Macie_Session(CloudFormationResource):
 class AWS_Macie_FindingsFilter(CloudFormationResource):
   cfn_type = "AWS::Macie::FindingsFilter"
   tf_type = "aws_macie_findings_filter" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Id": "id",
+    "Arn": "arn",
+    "FindingsFilterListItems": "findings_filter_list_items",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -40,7 +49,13 @@ class AWS_Macie_FindingsFilter(CloudFormationResource):
 class AWS_Macie_CustomDataIdentifier(CloudFormationResource):
   cfn_type = "AWS::Macie::CustomDataIdentifier"
   tf_type = "aws_macie_custom_data_identifier" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Id": "id",
+    "Arn": "arn",
+    "CreatedAt": "created_at",
+    "Deleted": "deleted",
+  }
 
   def write(self, w):
     with self.resource_block(w):

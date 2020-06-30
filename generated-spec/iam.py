@@ -31,7 +31,11 @@ class AWS_IAM_User_Policy(CloudFormationProperty):
 class AWS_IAM_Group(CloudFormationResource):
   cfn_type = "AWS::IAM::Group"
   tf_type = "aws_iam_group"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+    # Additional TF attributes: unique_id
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -44,7 +48,8 @@ class AWS_IAM_Group(CloudFormationResource):
 class AWS_IAM_Policy(CloudFormationResource):
   cfn_type = "AWS::IAM::Policy"
   tf_type = "aws_iam_policy_attachment"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -58,7 +63,8 @@ class AWS_IAM_Policy(CloudFormationResource):
 class AWS_IAM_ServiceLinkedRole(CloudFormationResource):
   cfn_type = "AWS::IAM::ServiceLinkedRole"
   tf_type = "aws_iam_service_linked_role"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, create_date, name, path, unique_id
 
   def write(self, w):
     with self.resource_block(w):
@@ -70,7 +76,11 @@ class AWS_IAM_ServiceLinkedRole(CloudFormationResource):
 class AWS_IAM_AccessKey(CloudFormationResource):
   cfn_type = "AWS::IAM::AccessKey"
   tf_type = "aws_iam_access_key"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "SecretAccessKey": "secret",
+    # Additional TF attributes: encrypted_secret, key_fingerprint, ses_smtp_password, ses_smtp_password_v4, status
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -82,7 +92,10 @@ class AWS_IAM_AccessKey(CloudFormationResource):
 class AWS_IAM_User(CloudFormationResource):
   cfn_type = "AWS::IAM::User"
   tf_type = "aws_iam_user_group_membership"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn", # TODO: Probably not the correct mapping
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -99,7 +112,12 @@ class AWS_IAM_User(CloudFormationResource):
 class AWS_IAM_Role(CloudFormationResource):
   cfn_type = "AWS::IAM::Role"
   tf_type = "aws_iam_role"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+    "RoleId": "id",
+    # Additional TF attributes: create_date, name, unique_id
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -117,7 +135,8 @@ class AWS_IAM_Role(CloudFormationResource):
 class AWS_IAM_UserToGroupAddition(CloudFormationResource):
   cfn_type = "AWS::IAM::UserToGroupAddition"
   tf_type = "aws_iam_user"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, unique_id
 
   def write(self, w):
     with self.resource_block(w):
@@ -128,7 +147,11 @@ class AWS_IAM_UserToGroupAddition(CloudFormationResource):
 class AWS_IAM_InstanceProfile(CloudFormationResource):
   cfn_type = "AWS::IAM::InstanceProfile"
   tf_type = "aws_iam_instance_profile"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+    # Additional TF attributes: create_date, name, role, roles, unique_id
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -141,6 +164,7 @@ class AWS_IAM_ManagedPolicy(CloudFormationResource):
   cfn_type = "AWS::IAM::ManagedPolicy"
   tf_type = "aws_iam_managed_policy" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):

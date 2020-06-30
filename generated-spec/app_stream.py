@@ -81,6 +81,7 @@ class AWS_AppStream_Stack(CloudFormationResource):
   cfn_type = "AWS::AppStream::Stack"
   tf_type = "aws_app_stream_stack" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -103,6 +104,7 @@ class AWS_AppStream_User(CloudFormationResource):
   cfn_type = "AWS::AppStream::User"
   tf_type = "aws_app_stream_user" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -117,6 +119,7 @@ class AWS_AppStream_Fleet(CloudFormationResource):
   cfn_type = "AWS::AppStream::Fleet"
   tf_type = "aws_app_stream_fleet" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -141,6 +144,9 @@ class AWS_AppStream_ImageBuilder(CloudFormationResource):
   cfn_type = "AWS::AppStream::ImageBuilder"
   tf_type = "aws_app_stream_image_builder" # TODO: Most likely not working
   ref = "arn"
+  attrs = {
+    "StreamingUrl": "streaming_url",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -162,6 +168,7 @@ class AWS_AppStream_DirectoryConfig(CloudFormationResource):
   cfn_type = "AWS::AppStream::DirectoryConfig"
   tf_type = "aws_app_stream_directory_config" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -174,6 +181,7 @@ class AWS_AppStream_StackFleetAssociation(CloudFormationResource):
   cfn_type = "AWS::AppStream::StackFleetAssociation"
   tf_type = "aws_app_stream_stack_fleet_association" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -185,6 +193,7 @@ class AWS_AppStream_StackUserAssociation(CloudFormationResource):
   cfn_type = "AWS::AppStream::StackUserAssociation"
   tf_type = "aws_app_stream_stack_user_association" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):

@@ -28,6 +28,7 @@ class Alexa_ASK_Skill(CloudFormationResource):
   cfn_type = "Alexa::ASK::Skill"
   tf_type = "alexa_ask_skill" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):

@@ -39,6 +39,9 @@ class AWS_ACMPCA_CertificateAuthorityActivation(CloudFormationResource):
   cfn_type = "AWS::ACMPCA::CertificateAuthorityActivation"
   tf_type = "aws_acmpca_certificate_authority_activation" # TODO: Most likely not working
   ref = "arn"
+  attrs = {
+    "CompleteCertificateChain": "complete_certificate_chain",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -51,7 +54,12 @@ class AWS_ACMPCA_CertificateAuthorityActivation(CloudFormationResource):
 class AWS_ACMPCA_Certificate(CloudFormationResource):
   cfn_type = "AWS::ACMPCA::Certificate"
   tf_type = "aws_acm_certificate"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Certificate": "certificate", # TODO: Probably not the correct mapping
+    "Arn": "arn",
+    # Additional TF attributes: domain_name, domain_validation_options, status, subject_alternative_names, validation_emails, validation_method
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -71,7 +79,12 @@ class AWS_ACMPCA_CertificateAuthority_RevocationConfiguration(CloudFormationProp
 class AWS_ACMPCA_CertificateAuthority(CloudFormationResource):
   cfn_type = "AWS::ACMPCA::CertificateAuthority"
   tf_type = "aws_acmpca_certificate_authority"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+    "CertificateSigningRequest": "certificate_signing_request",
+    # Additional TF attributes: certificate, certificate_chain, not_after, not_before, serial, status
+  }
 
   def write(self, w):
     with self.resource_block(w):

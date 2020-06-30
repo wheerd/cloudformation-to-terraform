@@ -124,6 +124,7 @@ class AWS_Config_RemediationConfiguration(CloudFormationResource):
   cfn_type = "AWS::Config::RemediationConfiguration"
   tf_type = "aws_config_remediation_configuration" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -142,7 +143,8 @@ class AWS_Config_RemediationConfiguration(CloudFormationResource):
 class AWS_Config_ConfigurationAggregator(CloudFormationResource):
   cfn_type = "AWS::Config::ConfigurationAggregator"
   tf_type = "aws_config_configuration_aggregator"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn
 
   def write(self, w):
     with self.resource_block(w):
@@ -155,7 +157,8 @@ class AWS_Config_ConfigurationAggregator(CloudFormationResource):
 class AWS_Config_AggregationAuthorization(CloudFormationResource):
   cfn_type = "AWS::Config::AggregationAuthorization"
   tf_type = "aws_config_aggregate_authorization"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn
 
   def write(self, w):
     with self.resource_block(w):
@@ -167,7 +170,8 @@ class AWS_Config_AggregationAuthorization(CloudFormationResource):
 class AWS_Config_ConfigurationRecorder(CloudFormationResource):
   cfn_type = "AWS::Config::ConfigurationRecorder"
   tf_type = "aws_config_configuration_recorder"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -179,7 +183,8 @@ class AWS_Config_ConfigurationRecorder(CloudFormationResource):
 class AWS_Config_DeliveryChannel(CloudFormationResource):
   cfn_type = "AWS::Config::DeliveryChannel"
   tf_type = "aws_config_delivery_channel"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -193,7 +198,8 @@ class AWS_Config_DeliveryChannel(CloudFormationResource):
 class AWS_Config_OrganizationConfigRule(CloudFormationResource):
   cfn_type = "AWS::Config::OrganizationConfigRule"
   tf_type = "aws_config_organization_custom_rule"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn
 
   def write(self, w):
     with self.resource_block(w):
@@ -207,6 +213,7 @@ class AWS_Config_OrganizationConformancePack(CloudFormationResource):
   cfn_type = "AWS::Config::OrganizationConformancePack"
   tf_type = "aws_config_organization_conformance_pack" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -223,6 +230,7 @@ class AWS_Config_ConformancePack(CloudFormationResource):
   cfn_type = "AWS::Config::ConformancePack"
   tf_type = "aws_config_conformance_pack" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -245,7 +253,12 @@ class AWS_Config_ConfigRule_Source(CloudFormationProperty):
 class AWS_Config_ConfigRule(CloudFormationResource):
   cfn_type = "AWS::Config::ConfigRule"
   tf_type = "aws_config_config_rule"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+    "Compliance.Type": "compliance._type", # TODO: Probably not the correct mapping
+    "ConfigRuleId": "rule_id",
+  }
 
   def write(self, w):
     with self.resource_block(w):

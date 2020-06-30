@@ -124,7 +124,8 @@ class AWS_CodeDeploy_DeploymentGroup_EC2TagSetListObject(CloudFormationProperty)
 class AWS_CodeDeploy_DeploymentConfig(CloudFormationResource):
   cfn_type = "AWS::CodeDeploy::DeploymentConfig"
   tf_type = "aws_codedeploy_deployment_config"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: deployment_config_id
 
   def write(self, w):
     with self.resource_block(w):
@@ -135,7 +136,8 @@ class AWS_CodeDeploy_DeploymentConfig(CloudFormationResource):
 class AWS_CodeDeploy_Application(CloudFormationResource):
   cfn_type = "AWS::CodeDeploy::Application"
   tf_type = "aws_codedeploy_app"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: unique_id
 
   def write(self, w):
     with self.resource_block(w):
@@ -160,7 +162,8 @@ class AWS_CodeDeploy_DeploymentGroup_EC2TagSet(CloudFormationProperty):
 class AWS_CodeDeploy_DeploymentGroup(CloudFormationResource):
   cfn_type = "AWS::CodeDeploy::DeploymentGroup"
   tf_type = "aws_codedeploy_deployment_group"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):

@@ -103,7 +103,8 @@ class AWS_AutoScaling_AutoScalingGroup_TagProperty(CloudFormationProperty):
 class AWS_AutoScaling_LifecycleHook(CloudFormationResource):
   cfn_type = "AWS::AutoScaling::LifecycleHook"
   tf_type = "aws_autoscaling_lifecycle_hook"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: default_result
 
   def write(self, w):
     with self.resource_block(w):
@@ -120,7 +121,8 @@ class AWS_AutoScaling_LifecycleHook(CloudFormationResource):
 class AWS_AutoScaling_ScheduledAction(CloudFormationResource):
   cfn_type = "AWS::AutoScaling::ScheduledAction"
   tf_type = "aws_appautoscaling_scheduled_action"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn
 
   def write(self, w):
     with self.resource_block(w):
@@ -172,6 +174,7 @@ class AWS_AutoScaling_LaunchConfiguration(CloudFormationResource):
   cfn_type = "AWS::AutoScaling::LaunchConfiguration"
   tf_type = "aws_auto_scaling_launch_configuration" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -199,6 +202,7 @@ class AWS_AutoScaling_ScalingPolicy(CloudFormationResource):
   cfn_type = "AWS::AutoScaling::ScalingPolicy"
   tf_type = "aws_auto_scaling_scaling_policy" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -218,6 +222,7 @@ class AWS_AutoScaling_AutoScalingGroup(CloudFormationResource):
   cfn_type = "AWS::AutoScaling::AutoScalingGroup"
   tf_type = "aws_auto_scaling_auto_scaling_group" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):

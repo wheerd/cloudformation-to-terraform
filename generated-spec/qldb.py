@@ -3,7 +3,8 @@ from . import *
 class AWS_QLDB_Ledger(CloudFormationResource):
   cfn_type = "AWS::QLDB::Ledger"
   tf_type = "aws_qldb_ledger"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, name
 
   def write(self, w):
     with self.resource_block(w):

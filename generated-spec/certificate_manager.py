@@ -12,6 +12,7 @@ class AWS_CertificateManager_Certificate(CloudFormationResource):
   cfn_type = "AWS::CertificateManager::Certificate"
   tf_type = "aws_certificate_manager_certificate" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):

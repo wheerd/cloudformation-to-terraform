@@ -3,7 +3,11 @@ from . import *
 class AWS_CE_CostCategory(CloudFormationResource):
   cfn_type = "AWS::CE::CostCategory"
   tf_type = "aws_ce_cost_category" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+    "EffectiveStart": "effective_start",
+  }
 
   def write(self, w):
     with self.resource_block(w):

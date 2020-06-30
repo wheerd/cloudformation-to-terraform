@@ -87,7 +87,8 @@ class AWS_GameLift_GameSessionQueue_PlayerLatencyPolicy(CloudFormationProperty):
 class AWS_GameLift_Fleet(CloudFormationResource):
   cfn_type = "AWS::GameLift::Fleet"
   tf_type = "aws_gamelift_fleet"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, log_paths, metric_groups, operating_system
 
   def write(self, w):
     with self.resource_block(w):
@@ -117,7 +118,11 @@ class AWS_GameLift_Fleet(CloudFormationResource):
 class AWS_GameLift_MatchmakingConfiguration(CloudFormationResource):
   cfn_type = "AWS::GameLift::MatchmakingConfiguration"
   tf_type = "aws_game_lift_matchmaking_configuration" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+    "Name": "name",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -139,7 +144,8 @@ class AWS_GameLift_MatchmakingConfiguration(CloudFormationResource):
 class AWS_GameLift_Alias(CloudFormationResource):
   cfn_type = "AWS::GameLift::Alias"
   tf_type = "aws_gamelift_alias"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn
 
   def write(self, w):
     with self.resource_block(w):
@@ -151,7 +157,8 @@ class AWS_GameLift_Alias(CloudFormationResource):
 class AWS_GameLift_Build(CloudFormationResource):
   cfn_type = "AWS::GameLift::Build"
   tf_type = "aws_gamelift_build"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn
 
   def write(self, w):
     with self.resource_block(w):
@@ -164,7 +171,11 @@ class AWS_GameLift_Build(CloudFormationResource):
 class AWS_GameLift_MatchmakingRuleSet(CloudFormationResource):
   cfn_type = "AWS::GameLift::MatchmakingRuleSet"
   tf_type = "aws_game_lift_matchmaking_rule_set" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+    "Name": "name",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -175,7 +186,11 @@ class AWS_GameLift_MatchmakingRuleSet(CloudFormationResource):
 class AWS_GameLift_GameSessionQueue(CloudFormationResource):
   cfn_type = "AWS::GameLift::GameSessionQueue"
   tf_type = "aws_gamelift_game_session_queue"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+    "Name": "name", # TODO: Probably not the correct mapping
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -188,7 +203,11 @@ class AWS_GameLift_GameSessionQueue(CloudFormationResource):
 class AWS_GameLift_Script(CloudFormationResource):
   cfn_type = "AWS::GameLift::Script"
   tf_type = "aws_game_lift_script" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Id": "id",
+    "Arn": "arn",
+  }
 
   def write(self, w):
     with self.resource_block(w):

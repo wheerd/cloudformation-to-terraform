@@ -87,7 +87,8 @@ class AWS_RDS_OptionGroup_OptionConfiguration(CloudFormationProperty):
 class AWS_RDS_DBSubnetGroup(CloudFormationResource):
   cfn_type = "AWS::RDS::DBSubnetGroup"
   tf_type = "aws_db_subnet_group"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, name, name_prefix
 
   def write(self, w):
     with self.resource_block(w):
@@ -100,7 +101,12 @@ class AWS_RDS_DBSubnetGroup(CloudFormationResource):
 class AWS_RDS_DBInstance(CloudFormationResource):
   cfn_type = "AWS::RDS::DBInstance"
   tf_type = "aws_db_instance"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Endpoint.Address": "address",
+    "Endpoint.Port": "endpoint",
+    # Additional TF attributes: allocated_storage, apply_immediately, arn, availability_zone, backup_retention_period, backup_window, ca_cert_identifier, character_set_name, db_subnet_group_name, engine, engine_version, hosted_zone_id, identifier, identifier_prefix, kms_key_id, license_model, maintenance_window, monitoring_role_arn, multi_az, name, option_group_name, parameter_group_name, performance_insights_kms_key_id, performance_insights_retention_period, port, replicas, resource_id, status, storage_type, timezone, username, vpc_security_group_ids
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -161,7 +167,8 @@ class AWS_RDS_DBInstance(CloudFormationResource):
 class AWS_RDS_DBSecurityGroup(CloudFormationResource):
   cfn_type = "AWS::RDS::DBSecurityGroup"
   tf_type = "aws_db_security_group"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn
 
   def write(self, w):
     with self.resource_block(w):
@@ -174,7 +181,8 @@ class AWS_RDS_DBSecurityGroup(CloudFormationResource):
 class AWS_RDS_DBClusterParameterGroup(CloudFormationResource):
   cfn_type = "AWS::RDS::DBClusterParameterGroup"
   tf_type = "aws_rds_cluster_parameter_group"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, name, name_prefix
 
   def write(self, w):
     with self.resource_block(w):
@@ -188,6 +196,7 @@ class AWS_RDS_DBSecurityGroupIngress(CloudFormationResource):
   cfn_type = "AWS::RDS::DBSecurityGroupIngress"
   tf_type = "aws_rds_db_security_group_ingress" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -201,7 +210,13 @@ class AWS_RDS_DBSecurityGroupIngress(CloudFormationResource):
 class AWS_RDS_DBCluster(CloudFormationResource):
   cfn_type = "AWS::RDS::DBCluster"
   tf_type = "aws_rds_cluster"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Endpoint.Address": "endpoint",
+    "Endpoint.Port": "port",
+    "ReadEndpoint.Address": "read_endpoint._address", # TODO: Probably not the correct mapping
+    # Additional TF attributes: apply_immediately, arn, availability_zones, cluster_identifier, cluster_identifier_prefix, cluster_members, cluster_resource_id, database_name, db_cluster_parameter_group_name, db_subnet_group_name, engine_version, hosted_zone_id, kms_key_id, master_username, preferred_backup_window, preferred_maintenance_window, reader_endpoint, vpc_security_group_ids
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -241,7 +256,8 @@ class AWS_RDS_DBCluster(CloudFormationResource):
 class AWS_RDS_OptionGroup(CloudFormationResource):
   cfn_type = "AWS::RDS::OptionGroup"
   tf_type = "aws_db_option_group"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, name, name_prefix
 
   def write(self, w):
     with self.resource_block(w):
@@ -255,7 +271,8 @@ class AWS_RDS_OptionGroup(CloudFormationResource):
 class AWS_RDS_DBParameterGroup(CloudFormationResource):
   cfn_type = "AWS::RDS::DBParameterGroup"
   tf_type = "aws_db_parameter_group"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, name, name_prefix
 
   def write(self, w):
     with self.resource_block(w):
@@ -268,7 +285,8 @@ class AWS_RDS_DBParameterGroup(CloudFormationResource):
 class AWS_RDS_EventSubscription(CloudFormationResource):
   cfn_type = "AWS::RDS::EventSubscription"
   tf_type = "aws_db_event_subscription"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, customer_aws_id, name
 
   def write(self, w):
     with self.resource_block(w):
@@ -283,6 +301,10 @@ class AWS_RDS_DBProxy(CloudFormationResource):
   cfn_type = "AWS::RDS::DBProxy"
   tf_type = "aws_rds_db_proxy" # TODO: Most likely not working
   ref = "arn"
+  attrs = {
+    "DBProxyArn": "db_proxy_arn",
+    "Endpoint": "endpoint",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -302,6 +324,10 @@ class AWS_RDS_DBProxyTargetGroup(CloudFormationResource):
   cfn_type = "AWS::RDS::DBProxyTargetGroup"
   tf_type = "aws_rds_db_proxy_target_group" # TODO: Most likely not working
   ref = "arn"
+  attrs = {
+    "TargetGroupArn": "target_group_arn",
+    "TargetGroupName": "target_group_name",
+  }
 
   def write(self, w):
     with self.resource_block(w):

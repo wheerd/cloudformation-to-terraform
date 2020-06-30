@@ -75,7 +75,8 @@ class AWS_Route53_HostedZone_VPC(CloudFormationProperty):
 class AWS_Route53_RecordSet(CloudFormationResource):
   cfn_type = "AWS::Route53::RecordSet"
   tf_type = "aws_route53_record"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: allow_overwrite, fqdn
 
   def write(self, w):
     with self.resource_block(w):
@@ -99,7 +100,11 @@ class AWS_Route53_RecordSet(CloudFormationResource):
 class AWS_Route53_HostedZone(CloudFormationResource):
   cfn_type = "AWS::Route53::HostedZone"
   tf_type = "aws_route"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "NameServers": "name_servers", # TODO: Probably not the correct mapping
+    # Additional TF attributes: destination_prefix_list_id, egress_only_gateway_id, gateway_id, instance_id, instance_owner_id, nat_gateway_id, network_interface_id, origin, state
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -154,7 +159,8 @@ class AWS_Route53_RecordSetGroup_RecordSet(CloudFormationProperty):
 class AWS_Route53_HealthCheck(CloudFormationResource):
   cfn_type = "AWS::Route53::HealthCheck"
   tf_type = "aws_route53_health_check"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: enable_sni
 
   def write(self, w):
     with self.resource_block(w):
@@ -166,6 +172,7 @@ class AWS_Route53_RecordSetGroup(CloudFormationResource):
   cfn_type = "AWS::Route53::RecordSetGroup"
   tf_type = "aws_route53_record_set_group" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):

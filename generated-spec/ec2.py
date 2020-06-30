@@ -540,7 +540,8 @@ class AWS_EC2_EC2Fleet_SpotOptionsRequest(CloudFormationProperty):
 class AWS_EC2_RouteTable(CloudFormationResource):
   cfn_type = "AWS::EC2::RouteTable"
   tf_type = "aws_route_table"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: owner_id, propagating_vgws, route
 
   def write(self, w):
     with self.resource_block(w):
@@ -551,7 +552,8 @@ class AWS_EC2_RouteTable(CloudFormationResource):
 class AWS_EC2_VPCPeeringConnection(CloudFormationResource):
   cfn_type = "AWS::EC2::VPCPeeringConnection"
   tf_type = "aws_vpc_peering_connection"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: accept_status, peer_owner_id, peer_region
 
   def write(self, w):
     with self.resource_block(w):
@@ -566,7 +568,8 @@ class AWS_EC2_VPCPeeringConnection(CloudFormationResource):
 class AWS_EC2_TransitGateway(CloudFormationResource):
   cfn_type = "AWS::EC2::TransitGateway"
   tf_type = "aws_ec2_transit_gateway_peering_attachment"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: peer_account_id
 
   def write(self, w):
     with self.resource_block(w):
@@ -583,7 +586,15 @@ class AWS_EC2_TransitGateway(CloudFormationResource):
 class AWS_EC2_CapacityReservation(CloudFormationResource):
   cfn_type = "AWS::EC2::CapacityReservation"
   tf_type = "aws_ec2_capacity_reservation"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Tenancy": "tenancy", # TODO: Probably not the correct mapping
+    "AvailableInstanceCount": "available_instance_count", # TODO: Probably not the correct mapping
+    "AvailabilityZone": "availability_zone", # TODO: Probably not the correct mapping
+    "TotalInstanceCount": "total_instance_count", # TODO: Probably not the correct mapping
+    "InstanceType": "instance_type", # TODO: Probably not the correct mapping
+    # Additional TF attributes: arn
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -604,6 +615,7 @@ class AWS_EC2_VPCEndpointServicePermissions(CloudFormationResource):
   cfn_type = "AWS::EC2::VPCEndpointServicePermissions"
   tf_type = "aws_ec2_vpc_endpoint_service_permissions" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -614,7 +626,8 @@ class AWS_EC2_VPCEndpointServicePermissions(CloudFormationResource):
 class AWS_EC2_TransitGatewayRouteTableAssociation(CloudFormationResource):
   cfn_type = "AWS::EC2::TransitGatewayRouteTableAssociation"
   tf_type = "aws_ec2_transit_gateway"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, association_default_route_table_id, owner_id, propagation_default_route_table_id
 
   def write(self, w):
     with self.resource_block(w):
@@ -625,7 +638,8 @@ class AWS_EC2_TransitGatewayRouteTableAssociation(CloudFormationResource):
 class AWS_EC2_Volume(CloudFormationResource):
   cfn_type = "AWS::EC2::Volume"
   tf_type = "aws_ebs_volume"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, encrypted, iops, kms_key_id, size, snapshot_id, type
 
   def write(self, w):
     with self.resource_block(w):
@@ -646,6 +660,9 @@ class AWS_EC2_EIP(CloudFormationResource):
   cfn_type = "AWS::EC2::EIP"
   tf_type = "aws_ec2_eip" # TODO: Most likely not working
   ref = "arn"
+  attrs = {
+    "AllocationId": "allocation_id",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -658,7 +675,11 @@ class AWS_EC2_EIP(CloudFormationResource):
 class AWS_EC2_LocalGatewayRoute(CloudFormationResource):
   cfn_type = "AWS::EC2::LocalGatewayRoute"
   tf_type = "aws_ec2_local_gateway_route"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "State": "state", # TODO: Probably not the correct mapping
+    "Type": "type", # TODO: Probably not the correct mapping
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -670,7 +691,8 @@ class AWS_EC2_LocalGatewayRoute(CloudFormationResource):
 class AWS_EC2_VPCEndpointConnectionNotification(CloudFormationResource):
   cfn_type = "AWS::EC2::VPCEndpointConnectionNotification"
   tf_type = "aws_vpc_endpoint_connection_notification"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: notification_type, state
 
   def write(self, w):
     with self.resource_block(w):
@@ -684,6 +706,10 @@ class AWS_EC2_FlowLog(CloudFormationResource):
   cfn_type = "AWS::EC2::FlowLog"
   tf_type = "aws_flow_log"
   ref = "arn"
+  attrs = {
+    "Id": "id",
+    # Additional TF attributes: log_destination, log_format, log_group_name
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -700,6 +726,7 @@ class AWS_EC2_SecurityGroupEgress(CloudFormationResource):
   cfn_type = "AWS::EC2::SecurityGroupEgress"
   tf_type = "aws_ec2_security_group_egress" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -717,7 +744,8 @@ class AWS_EC2_SecurityGroupEgress(CloudFormationResource):
 class AWS_EC2_TransitGatewayAttachment(CloudFormationResource):
   cfn_type = "AWS::EC2::TransitGatewayAttachment"
   tf_type = "aws_ec2_transit_gateway_vpc_attachment"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: vpc_owner_id
 
   def write(self, w):
     with self.resource_block(w):
@@ -731,6 +759,12 @@ class AWS_EC2_Subnet(CloudFormationResource):
   cfn_type = "AWS::EC2::Subnet"
   tf_type = "aws_ec2_subnet" # TODO: Most likely not working
   ref = "arn"
+  attrs = {
+    "AvailabilityZone": "availability_zone",
+    "Ipv6CidrBlocks": "ipv6_cidr_blocks",
+    "NetworkAclAssociationId": "network_acl_association_id",
+    "VpcId": "vpc_id",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -746,7 +780,8 @@ class AWS_EC2_Subnet(CloudFormationResource):
 class AWS_EC2_DHCPOptions(CloudFormationResource):
   cfn_type = "AWS::EC2::DHCPOptions"
   tf_type = "aws_vpc_dhcp_options"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, owner_id
 
   def write(self, w):
     with self.resource_block(w):
@@ -761,7 +796,8 @@ class AWS_EC2_DHCPOptions(CloudFormationResource):
 class AWS_EC2_EgressOnlyInternetGateway(CloudFormationResource):
   cfn_type = "AWS::EC2::EgressOnlyInternetGateway"
   tf_type = "aws_egress_only_internet_gateway"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -771,7 +807,8 @@ class AWS_EC2_EgressOnlyInternetGateway(CloudFormationResource):
 class AWS_EC2_NetworkInterfaceAttachment(CloudFormationResource):
   cfn_type = "AWS::EC2::NetworkInterfaceAttachment"
   tf_type = "aws_network_interface_attachment"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: attachment_id, status
 
   def write(self, w):
     with self.resource_block(w):
@@ -784,7 +821,8 @@ class AWS_EC2_NetworkInterfaceAttachment(CloudFormationResource):
 class AWS_EC2_CustomerGateway(CloudFormationResource):
   cfn_type = "AWS::EC2::CustomerGateway"
   tf_type = "aws_customer_gateway"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn
 
   def write(self, w):
     with self.resource_block(w):
@@ -797,7 +835,8 @@ class AWS_EC2_CustomerGateway(CloudFormationResource):
 class AWS_EC2_EIPAssociation(CloudFormationResource):
   cfn_type = "AWS::EC2::EIPAssociation"
   tf_type = "aws_eip_association"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: allocation_id, instance_id, network_interface_id, private_ip_address, public_ip
 
   def write(self, w):
     with self.resource_block(w):
@@ -811,7 +850,8 @@ class AWS_EC2_EIPAssociation(CloudFormationResource):
 class AWS_EC2_VPNGateway(CloudFormationResource):
   cfn_type = "AWS::EC2::VPNGateway"
   tf_type = "aws_vpn_gateway"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: amazon_side_asn, arn, vpc_id
 
   def write(self, w):
     with self.resource_block(w):
@@ -823,7 +863,8 @@ class AWS_EC2_VPNGateway(CloudFormationResource):
 class AWS_EC2_VPNConnection(CloudFormationResource):
   cfn_type = "AWS::EC2::VPNConnection"
   tf_type = "aws_vpn_connection"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, customer_gateway_configuration, routes, static_routes_only, transit_gateway_attachment_id, tunnel1_address, tunnel1_bgp_asn, tunnel1_bgp_holdtime, tunnel1_cgw_inside_address, tunnel1_inside_cidr, tunnel1_preshared_key, tunnel1_vgw_inside_address, tunnel2_address, tunnel2_bgp_asn, tunnel2_bgp_holdtime, tunnel2_cgw_inside_address, tunnel2_inside_cidr, tunnel2_preshared_key, tunnel2_vgw_inside_address, vgw_telemetry
 
   def write(self, w):
     with self.resource_block(w):
@@ -839,7 +880,8 @@ class AWS_EC2_VPNConnection(CloudFormationResource):
 class AWS_EC2_TransitGatewayRouteTable(CloudFormationResource):
   cfn_type = "AWS::EC2::TransitGatewayRouteTable"
   tf_type = "aws_ec2_transit_gateway_route_table"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: default_association_route_table, default_propagation_route_table
 
   def write(self, w):
     with self.resource_block(w):
@@ -850,7 +892,8 @@ class AWS_EC2_TransitGatewayRouteTable(CloudFormationResource):
 class AWS_EC2_VPCEndpointService(CloudFormationResource):
   cfn_type = "AWS::EC2::VPCEndpointService"
   tf_type = "aws_vpc_endpoint_service"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: allowed_principals, arn, availability_zones, base_endpoint_dns_names, manages_vpc_endpoints, private_dns_name, service_name, service_type, state
 
   def write(self, w):
     with self.resource_block(w):
@@ -862,6 +905,7 @@ class AWS_EC2_ClientVpnRoute(CloudFormationResource):
   cfn_type = "AWS::EC2::ClientVpnRoute"
   tf_type = "aws_ec2_client_vpn_route" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -874,7 +918,8 @@ class AWS_EC2_ClientVpnRoute(CloudFormationResource):
 class AWS_EC2_PlacementGroup(CloudFormationResource):
   cfn_type = "AWS::EC2::PlacementGroup"
   tf_type = "aws_placement_group"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, placement_group_id
 
   def write(self, w):
     with self.resource_block(w):
@@ -884,7 +929,11 @@ class AWS_EC2_PlacementGroup(CloudFormationResource):
 class AWS_EC2_GatewayRouteTableAssociation(CloudFormationResource):
   cfn_type = "AWS::EC2::GatewayRouteTableAssociation"
   tf_type = "aws_ec2_transit_gateway_route_table_association"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "AssociationId": "id",
+    # Additional TF attributes: resource_id, resource_type
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -896,6 +945,7 @@ class AWS_EC2_NetworkAclEntry(CloudFormationResource):
   cfn_type = "AWS::EC2::NetworkAclEntry"
   tf_type = "aws_ec2_network_acl_entry" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -913,7 +963,8 @@ class AWS_EC2_NetworkAclEntry(CloudFormationResource):
 class AWS_EC2_InternetGateway(CloudFormationResource):
   cfn_type = "AWS::EC2::InternetGateway"
   tf_type = "aws_internet_gateway"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, owner_id
 
   def write(self, w):
     with self.resource_block(w):
@@ -923,7 +974,8 @@ class AWS_EC2_InternetGateway(CloudFormationResource):
 class AWS_EC2_VPNConnectionRoute(CloudFormationResource):
   cfn_type = "AWS::EC2::VPNConnectionRoute"
   tf_type = "aws_vpn_connection_route"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -935,6 +987,7 @@ class AWS_EC2_NetworkInterfacePermission(CloudFormationResource):
   cfn_type = "AWS::EC2::NetworkInterfacePermission"
   tf_type = "aws_ec2_network_interface_permission" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -946,7 +999,8 @@ class AWS_EC2_NetworkInterfacePermission(CloudFormationResource):
 class AWS_EC2_TrafficMirrorFilter(CloudFormationResource):
   cfn_type = "AWS::EC2::TrafficMirrorFilter"
   tf_type = "aws_ec2_traffic_mirror_filter"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -959,6 +1013,7 @@ class AWS_EC2_SecurityGroupIngress(CloudFormationResource):
   cfn_type = "AWS::EC2::SecurityGroupIngress"
   tf_type = "aws_ec2_security_group_ingress" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -980,6 +1035,7 @@ class AWS_EC2_SubnetRouteTableAssociation(CloudFormationResource):
   cfn_type = "AWS::EC2::SubnetRouteTableAssociation"
   tf_type = "aws_ec2_subnet_route_table_association" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -991,6 +1047,7 @@ class AWS_EC2_Route(CloudFormationResource):
   cfn_type = "AWS::EC2::Route"
   tf_type = "aws_ec2_route" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -1009,7 +1066,12 @@ class AWS_EC2_Route(CloudFormationResource):
 class AWS_EC2_LocalGatewayRouteTableVPCAssociation(CloudFormationResource):
   cfn_type = "AWS::EC2::LocalGatewayRouteTableVPCAssociation"
   tf_type = "aws_ec2_local_gateway_route_table_vpc_association"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "LocalGatewayId": "local_gateway_id",
+    "LocalGatewayRouteTableVpcAssociationId": "local_gateway_route_table_vpc_association_id", # TODO: Probably not the correct mapping
+    "State": "state", # TODO: Probably not the correct mapping
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -1021,7 +1083,8 @@ class AWS_EC2_LocalGatewayRouteTableVPCAssociation(CloudFormationResource):
 class AWS_EC2_TransitGatewayRouteTablePropagation(CloudFormationResource):
   cfn_type = "AWS::EC2::TransitGatewayRouteTablePropagation"
   tf_type = "aws_ec2_transit_gateway_route_table_propagation"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: resource_id, resource_type
 
   def write(self, w):
     with self.resource_block(w):
@@ -1032,7 +1095,12 @@ class AWS_EC2_TransitGatewayRouteTablePropagation(CloudFormationResource):
 class AWS_EC2_NetworkInterface(CloudFormationResource):
   cfn_type = "AWS::EC2::NetworkInterface"
   tf_type = "aws_network_interface"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "PrimaryPrivateIpAddress": "private_ip",
+    "SecondaryPrivateIpAddresses": "secondary_private_ip_addresses", # TODO: Probably not the correct mapping
+    # Additional TF attributes: mac_address, outpost_arn, private_dns_name, private_ips, private_ips_count, security_groups
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -1053,6 +1121,7 @@ class AWS_EC2_ClientVpnAuthorizationRule(CloudFormationResource):
   cfn_type = "AWS::EC2::ClientVpnAuthorizationRule"
   tf_type = "aws_ec2_client_vpn_authorization_rule" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -1067,6 +1136,9 @@ class AWS_EC2_SubnetNetworkAclAssociation(CloudFormationResource):
   cfn_type = "AWS::EC2::SubnetNetworkAclAssociation"
   tf_type = "aws_ec2_subnet_network_acl_association" # TODO: Most likely not working
   ref = "arn"
+  attrs = {
+    "AssociationId": "association_id",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -1077,7 +1149,8 @@ class AWS_EC2_SubnetNetworkAclAssociation(CloudFormationResource):
 class AWS_EC2_TrafficMirrorSession(CloudFormationResource):
   cfn_type = "AWS::EC2::TrafficMirrorSession"
   tf_type = "aws_ec2_traffic_mirror_session"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, virtual_network_id
 
   def write(self, w):
     with self.resource_block(w):
@@ -1095,6 +1168,7 @@ class AWS_EC2_SubnetCidrBlock(CloudFormationResource):
   cfn_type = "AWS::EC2::SubnetCidrBlock"
   tf_type = "aws_ec2_subnet_cidr_block" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -1105,7 +1179,8 @@ class AWS_EC2_SubnetCidrBlock(CloudFormationResource):
 class AWS_EC2_NatGateway(CloudFormationResource):
   cfn_type = "AWS::EC2::NatGateway"
   tf_type = "aws_nat_gateway"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: network_interface_id, private_ip, public_ip
 
   def write(self, w):
     with self.resource_block(w):
@@ -1117,7 +1192,12 @@ class AWS_EC2_NatGateway(CloudFormationResource):
 class AWS_EC2_SecurityGroup(CloudFormationResource):
   cfn_type = "AWS::EC2::SecurityGroup"
   tf_type = "aws_security_group"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "GroupId": "id",
+    "VpcId": "vpc_id",
+    # Additional TF attributes: arn, egress, ingress, name, owner_id
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -1132,7 +1212,8 @@ class AWS_EC2_SecurityGroup(CloudFormationResource):
 class AWS_EC2_TrafficMirrorFilterRule(CloudFormationResource):
   cfn_type = "AWS::EC2::TrafficMirrorFilterRule"
   tf_type = "aws_ec2_traffic_mirror_filter_rule"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -1152,6 +1233,13 @@ class AWS_EC2_VPC(CloudFormationResource):
   cfn_type = "AWS::EC2::VPC"
   tf_type = "aws_ec2_vpc" # TODO: Most likely not working
   ref = "arn"
+  attrs = {
+    "CidrBlock": "cidr_block",
+    "CidrBlockAssociations": "cidr_block_associations",
+    "DefaultNetworkAcl": "default_network_acl",
+    "DefaultSecurityGroup": "default_security_group",
+    "Ipv6CidrBlocks": "ipv6_cidr_blocks",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -1165,7 +1253,8 @@ class AWS_EC2_VPC(CloudFormationResource):
 class AWS_EC2_TransitGatewayRoute(CloudFormationResource):
   cfn_type = "AWS::EC2::TransitGatewayRoute"
   tf_type = "aws_ec2_transit_gateway_route"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -1178,7 +1267,8 @@ class AWS_EC2_TransitGatewayRoute(CloudFormationResource):
 class AWS_EC2_NetworkAcl(CloudFormationResource):
   cfn_type = "AWS::EC2::NetworkAcl"
   tf_type = "aws_network_acl"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, egress, ingress, owner_id, subnet_ids
 
   def write(self, w):
     with self.resource_block(w):
@@ -1189,7 +1279,8 @@ class AWS_EC2_NetworkAcl(CloudFormationResource):
 class AWS_EC2_VPNGatewayRoutePropagation(CloudFormationResource):
   cfn_type = "AWS::EC2::VPNGatewayRoutePropagation"
   tf_type = "aws_vpn_gateway_route_propagation"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -1200,7 +1291,8 @@ class AWS_EC2_VPNGatewayRoutePropagation(CloudFormationResource):
 class AWS_EC2_ClientVpnTargetNetworkAssociation(CloudFormationResource):
   cfn_type = "AWS::EC2::ClientVpnTargetNetworkAssociation"
   tf_type = "aws_ec2_client_vpn_network_association"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: security_groups, status, vpc_id
 
   def write(self, w):
     with self.resource_block(w):
@@ -1211,7 +1303,8 @@ class AWS_EC2_ClientVpnTargetNetworkAssociation(CloudFormationResource):
 class AWS_EC2_VolumeAttachment(CloudFormationResource):
   cfn_type = "AWS::EC2::VolumeAttachment"
   tf_type = "aws_volume_attachment"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -1224,6 +1317,7 @@ class AWS_EC2_Host(CloudFormationResource):
   cfn_type = "AWS::EC2::Host"
   tf_type = "aws_ec2_host" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -1236,7 +1330,13 @@ class AWS_EC2_Host(CloudFormationResource):
 class AWS_EC2_VPCEndpoint(CloudFormationResource):
   cfn_type = "AWS::EC2::VPCEndpoint"
   tf_type = "aws_vpc_endpoint"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "CreationTimestamp": "creation_timestamp", # TODO: Probably not the correct mapping
+    "DnsEntries": "dns_entries", # TODO: Probably not the correct mapping
+    "NetworkInterfaceIds": "network_interface_ids",
+    # Additional TF attributes: arn, cidr_blocks, dns_entry, owner_id, policy, prefix_list_id, requester_managed, route_table_ids, security_group_ids, state, subnet_ids
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -1253,7 +1353,8 @@ class AWS_EC2_VPCEndpoint(CloudFormationResource):
 class AWS_EC2_VPCGatewayAttachment(CloudFormationResource):
   cfn_type = "AWS::EC2::VPCGatewayAttachment"
   tf_type = "aws_vpn_gateway_attachment"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -1266,6 +1367,7 @@ class AWS_EC2_VPCCidrBlock(CloudFormationResource):
   cfn_type = "AWS::EC2::VPCCidrBlock"
   tf_type = "aws_ec2_vpc_cidr_block" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -1277,7 +1379,8 @@ class AWS_EC2_VPCCidrBlock(CloudFormationResource):
 class AWS_EC2_VPCDHCPOptionsAssociation(CloudFormationResource):
   cfn_type = "AWS::EC2::VPCDHCPOptionsAssociation"
   tf_type = "aws_vpc_dhcp_options_association"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -1288,7 +1391,8 @@ class AWS_EC2_VPCDHCPOptionsAssociation(CloudFormationResource):
 class AWS_EC2_TrafficMirrorTarget(CloudFormationResource):
   cfn_type = "AWS::EC2::TrafficMirrorTarget"
   tf_type = "aws_ec2_traffic_mirror_target"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn
 
   def write(self, w):
     with self.resource_block(w):
@@ -1437,7 +1541,15 @@ class AWS_EC2_EC2Fleet_FleetLaunchTemplateConfigRequest(CloudFormationProperty):
 class AWS_EC2_Instance(CloudFormationResource):
   cfn_type = "AWS::EC2::Instance"
   tf_type = "aws_instance"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "AvailabilityZone": "availability_zone",
+    "PrivateDnsName": "private_dns_name", # TODO: Probably not the correct mapping
+    "PrivateIp": "private_ip",
+    "PublicDnsName": "public_dns",
+    "PublicIp": "public_ip",
+    # Additional TF attributes: arn, associate_public_ip_address, cpu_core_count, cpu_threads_per_core, host_id, instance_state, ipv6_address_count, ipv6_addresses, key_name, network_interface_id, outpost_arn, password_data, placement_group, primary_network_interface_id, private_dns, security_groups, subnet_id, tenancy, volume_tags, vpc_security_group_ids
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -1484,6 +1596,7 @@ class AWS_EC2_SpotFleet(CloudFormationResource):
   cfn_type = "AWS::EC2::SpotFleet"
   tf_type = "aws_ec2_spot_fleet" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -1493,7 +1606,8 @@ class AWS_EC2_SpotFleet(CloudFormationResource):
 class AWS_EC2_ClientVpnEndpoint(CloudFormationResource):
   cfn_type = "AWS::EC2::ClientVpnEndpoint"
   tf_type = "aws_ec2_client_vpn_endpoint"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, dns_name, status
 
   def write(self, w):
     with self.resource_block(w):
@@ -1514,7 +1628,8 @@ class AWS_EC2_ClientVpnEndpoint(CloudFormationResource):
 class AWS_EC2_EC2Fleet(CloudFormationResource):
   cfn_type = "AWS::EC2::EC2Fleet"
   tf_type = "aws_ec2_fleet"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -1565,7 +1680,12 @@ class AWS_EC2_LaunchTemplate_LaunchTemplateData(CloudFormationProperty):
 class AWS_EC2_LaunchTemplate(CloudFormationResource):
   cfn_type = "AWS::EC2::LaunchTemplate"
   tf_type = "aws_launch_template"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "LatestVersionNumber": "latest_version",
+    "DefaultVersionNumber": "default_version_number", # TODO: Probably not the correct mapping
+    # Additional TF attributes: arn, default_version, name
+  }
 
   def write(self, w):
     with self.resource_block(w):

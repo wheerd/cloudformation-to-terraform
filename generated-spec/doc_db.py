@@ -4,6 +4,10 @@ class AWS_DocDB_DBInstance(CloudFormationResource):
   cfn_type = "AWS::DocDB::DBInstance"
   tf_type = "aws_doc_db_db_instance" # TODO: Most likely not working
   ref = "arn"
+  attrs = {
+    "Endpoint": "endpoint",
+    "Port": "port",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -19,7 +23,14 @@ class AWS_DocDB_DBInstance(CloudFormationResource):
 class AWS_DocDB_DBCluster(CloudFormationResource):
   cfn_type = "AWS::DocDB::DBCluster"
   tf_type = "aws_docdb_cluster"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "ClusterResourceId": "cluster_resource_id",
+    "Endpoint": "endpoint",
+    "Port": "port", # TODO: Probably not the correct mapping
+    "ReadEndpoint": "reader_endpoint",
+    # Additional TF attributes: apply_immediately, arn, availability_zones, cluster_identifier, cluster_identifier_prefix, cluster_members, db_cluster_parameter_group_name, db_subnet_group_name, engine_version, hosted_zone_id, kms_key_id, master_username, preferred_backup_window, preferred_maintenance_window, vpc_security_group_ids
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -46,7 +57,8 @@ class AWS_DocDB_DBCluster(CloudFormationResource):
 class AWS_DocDB_DBSubnetGroup(CloudFormationResource):
   cfn_type = "AWS::DocDB::DBSubnetGroup"
   tf_type = "aws_docdb_subnet_group"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, name, name_prefix
 
   def write(self, w):
     with self.resource_block(w):
@@ -59,7 +71,8 @@ class AWS_DocDB_DBSubnetGroup(CloudFormationResource):
 class AWS_DocDB_DBClusterParameterGroup(CloudFormationResource):
   cfn_type = "AWS::DocDB::DBClusterParameterGroup"
   tf_type = "aws_docdb_cluster_parameter_group"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, name, name_prefix
 
   def write(self, w):
     with self.resource_block(w):

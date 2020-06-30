@@ -38,7 +38,13 @@ class AWS_EKS_Cluster_ResourcesVpcConfig(CloudFormationProperty):
 class AWS_EKS_Nodegroup(CloudFormationResource):
   cfn_type = "AWS::EKS::Nodegroup"
   tf_type = "aws_eks_node_group"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "NodegroupName": "nodegroup_name", # TODO: Probably not the correct mapping
+    "ClusterName": "cluster_name", # TODO: Probably not the correct mapping
+    "Arn": "arn",
+    # Additional TF attributes: ami_type, disk_size, instance_types, release_version, resources, status, version
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -61,7 +67,15 @@ class AWS_EKS_Nodegroup(CloudFormationResource):
 class AWS_EKS_Cluster(CloudFormationResource):
   cfn_type = "AWS::EKS::Cluster"
   tf_type = "aws_eks_cluster"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Endpoint": "endpoint",
+    "ClusterSecurityGroupId": "cluster_security_group_id", # TODO: Probably not the correct mapping
+    "EncryptionConfigKeyArn": "encryption_config_key_arn", # TODO: Probably not the correct mapping
+    "Arn": "arn",
+    "CertificateAuthorityData": "certificate_authority_data", # TODO: Probably not the correct mapping
+    # Additional TF attributes: certificate_authority, created_at, identity, platform_version, status, version
+  }
 
   def write(self, w):
     with self.resource_block(w):

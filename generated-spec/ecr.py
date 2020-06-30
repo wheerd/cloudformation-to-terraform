@@ -10,7 +10,11 @@ class AWS_ECR_Repository_LifecyclePolicy(CloudFormationProperty):
 class AWS_ECR_Repository(CloudFormationResource):
   cfn_type = "AWS::ECR::Repository"
   tf_type = "aws_ecr_repository"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+    # Additional TF attributes: registry_id, repository_url
+  }
 
   def write(self, w):
     with self.resource_block(w):

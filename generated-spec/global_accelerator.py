@@ -18,7 +18,12 @@ class AWS_GlobalAccelerator_Listener_PortRange(CloudFormationProperty):
 class AWS_GlobalAccelerator_Accelerator(CloudFormationResource):
   cfn_type = "AWS::GlobalAccelerator::Accelerator"
   tf_type = "aws_globalaccelerator_accelerator"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "DnsName": "dns_name",
+    "AcceleratorArn": "accelerator_arn", # TODO: Probably not the correct mapping
+    # Additional TF attributes: hosted_zone_id, ip_sets
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -32,7 +37,10 @@ class AWS_GlobalAccelerator_Accelerator(CloudFormationResource):
 class AWS_GlobalAccelerator_Listener(CloudFormationResource):
   cfn_type = "AWS::GlobalAccelerator::Listener"
   tf_type = "aws_globalaccelerator_listener"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "ListenerArn": "listener_arn", # TODO: Probably not the correct mapping
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -45,7 +53,11 @@ class AWS_GlobalAccelerator_Listener(CloudFormationResource):
 class AWS_GlobalAccelerator_EndpointGroup(CloudFormationResource):
   cfn_type = "AWS::GlobalAccelerator::EndpointGroup"
   tf_type = "aws_globalaccelerator_endpoint_group"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "EndpointGroupArn": "endpoint_group_arn", # TODO: Probably not the correct mapping
+    # Additional TF attributes: endpoint_group_region
+  }
 
   def write(self, w):
     with self.resource_block(w):

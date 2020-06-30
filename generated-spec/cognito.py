@@ -223,7 +223,8 @@ class AWS_Cognito_UserPool_UsernameConfiguration(CloudFormationProperty):
 class AWS_Cognito_UserPoolIdentityProvider(CloudFormationResource):
   cfn_type = "AWS::Cognito::UserPoolIdentityProvider"
   tf_type = "aws_cognito_identity_provider"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: attribute_mapping
 
   def write(self, w):
     with self.resource_block(w):
@@ -238,7 +239,8 @@ class AWS_Cognito_UserPoolIdentityProvider(CloudFormationResource):
 class AWS_Cognito_UserPoolGroup(CloudFormationResource):
   cfn_type = "AWS::Cognito::UserPoolGroup"
   tf_type = "aws_cognito_user_group"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -252,7 +254,11 @@ class AWS_Cognito_UserPoolGroup(CloudFormationResource):
 class AWS_Cognito_IdentityPool(CloudFormationResource):
   cfn_type = "AWS::Cognito::IdentityPool"
   tf_type = "aws_cognito_identity_pool"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Name": "name", # TODO: Probably not the correct mapping
+    # Additional TF attributes: arn
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -273,6 +279,7 @@ class AWS_Cognito_UserPoolResourceServer(CloudFormationResource):
   cfn_type = "AWS::Cognito::UserPoolResourceServer"
   tf_type = "aws_cognito_user_pool_resource_server" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -285,7 +292,12 @@ class AWS_Cognito_UserPoolResourceServer(CloudFormationResource):
 class AWS_Cognito_UserPoolClient(CloudFormationResource):
   cfn_type = "AWS::Cognito::UserPoolClient"
   tf_type = "aws_cognito_user_pool_client"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "ClientSecret": "client_secret",
+    "Name": "name", # TODO: Probably not the correct mapping
+    # Additional TF attributes: prevent_user_existence_errors
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -311,6 +323,7 @@ class AWS_Cognito_UserPoolUserToGroupAttachment(CloudFormationResource):
   cfn_type = "AWS::Cognito::UserPoolUserToGroupAttachment"
   tf_type = "aws_cognito_user_pool_user_to_group_attachment" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -322,7 +335,8 @@ class AWS_Cognito_UserPoolUserToGroupAttachment(CloudFormationResource):
 class AWS_Cognito_IdentityPoolRoleAttachment(CloudFormationResource):
   cfn_type = "AWS::Cognito::IdentityPoolRoleAttachment"
   tf_type = "aws_cognito_identity_pool_roles_attachment"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -335,6 +349,7 @@ class AWS_Cognito_UserPoolUser(CloudFormationResource):
   cfn_type = "AWS::Cognito::UserPoolUser"
   tf_type = "aws_cognito_user_pool_user" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -352,6 +367,7 @@ class AWS_Cognito_UserPoolUICustomizationAttachment(CloudFormationResource):
   cfn_type = "AWS::Cognito::UserPoolUICustomizationAttachment"
   tf_type = "aws_cognito_user_pool_ui_customization_attachment" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -363,7 +379,8 @@ class AWS_Cognito_UserPoolUICustomizationAttachment(CloudFormationResource):
 class AWS_Cognito_UserPoolDomain(CloudFormationResource):
   cfn_type = "AWS::Cognito::UserPoolDomain"
   tf_type = "aws_cognito_user_pool_domain"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: aws_account_id, cloudfront_distribution_arn, s3_bucket, version
 
   def write(self, w):
     with self.resource_block(w):
@@ -427,6 +444,7 @@ class AWS_Cognito_UserPoolRiskConfigurationAttachment(CloudFormationResource):
   cfn_type = "AWS::Cognito::UserPoolRiskConfigurationAttachment"
   tf_type = "aws_cognito_user_pool_risk_configuration_attachment" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -440,7 +458,13 @@ class AWS_Cognito_UserPoolRiskConfigurationAttachment(CloudFormationResource):
 class AWS_Cognito_UserPool(CloudFormationResource):
   cfn_type = "AWS::Cognito::UserPool"
   tf_type = "aws_cognito_user_pool"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "ProviderName": "id",
+    "ProviderURL": "provider_url", # TODO: Probably not the correct mapping
+    "Arn": "arn",
+    # Additional TF attributes: creation_date, email_verification_message, email_verification_subject, endpoint, last_modified_date, sms_verification_message
+  }
 
   def write(self, w):
     with self.resource_block(w):

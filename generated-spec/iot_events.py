@@ -103,6 +103,7 @@ class AWS_IoTEvents_Input(CloudFormationResource):
   cfn_type = "AWS::IoTEvents::Input"
   tf_type = "aws_iot_events_input" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -233,6 +234,7 @@ class AWS_IoTEvents_DetectorModel(CloudFormationResource):
   cfn_type = "AWS::IoTEvents::DetectorModel"
   tf_type = "aws_iot_events_detector_model" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):

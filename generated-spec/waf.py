@@ -79,7 +79,8 @@ class AWS_WAF_SizeConstraintSet_SizeConstraint(CloudFormationProperty):
 class AWS_WAF_IPSet(CloudFormationResource):
   cfn_type = "AWS::WAF::IPSet"
   tf_type = "aws_waf_ipset"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn
 
   def write(self, w):
     with self.resource_block(w):
@@ -90,7 +91,8 @@ class AWS_WAF_IPSet(CloudFormationResource):
 class AWS_WAF_SizeConstraintSet(CloudFormationResource):
   cfn_type = "AWS::WAF::SizeConstraintSet"
   tf_type = "aws_waf_size_constraint_set"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn
 
   def write(self, w):
     with self.resource_block(w):
@@ -101,7 +103,8 @@ class AWS_WAF_SizeConstraintSet(CloudFormationResource):
 class AWS_WAF_ByteMatchSet(CloudFormationResource):
   cfn_type = "AWS::WAF::ByteMatchSet"
   tf_type = "aws_waf_byte_match_set"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -112,7 +115,8 @@ class AWS_WAF_ByteMatchSet(CloudFormationResource):
 class AWS_WAF_Rule(CloudFormationResource):
   cfn_type = "AWS::WAF::Rule"
   tf_type = "aws_waf_rule"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn
 
   def write(self, w):
     with self.resource_block(w):
@@ -124,7 +128,8 @@ class AWS_WAF_Rule(CloudFormationResource):
 class AWS_WAF_WebACL(CloudFormationResource):
   cfn_type = "AWS::WAF::WebACL"
   tf_type = "aws_waf_web_acl"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn
 
   def write(self, w):
     with self.resource_block(w):
@@ -151,7 +156,8 @@ class AWS_WAF_XssMatchSet_XssMatchTuple(CloudFormationProperty):
 class AWS_WAF_XssMatchSet(CloudFormationResource):
   cfn_type = "AWS::WAF::XssMatchSet"
   tf_type = "aws_waf_xss_match_set"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn
 
   def write(self, w):
     with self.resource_block(w):
@@ -162,7 +168,8 @@ class AWS_WAF_XssMatchSet(CloudFormationResource):
 class AWS_WAF_SqlInjectionMatchSet(CloudFormationResource):
   cfn_type = "AWS::WAF::SqlInjectionMatchSet"
   tf_type = "aws_waf_sql_injection_match_set"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):

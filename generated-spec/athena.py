@@ -32,7 +32,10 @@ class AWS_Athena_WorkGroup_Tags(CloudFormationProperty):
 class AWS_Athena_NamedQuery(CloudFormationResource):
   cfn_type = "AWS::Athena::NamedQuery"
   tf_type = "aws_athena_named_query"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "NamedQueryId": "id",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -66,7 +69,11 @@ class AWS_Athena_WorkGroup_WorkGroupConfiguration(CloudFormationProperty):
 class AWS_Athena_WorkGroup(CloudFormationResource):
   cfn_type = "AWS::Athena::WorkGroup"
   tf_type = "aws_athena_workgroup"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "CreationTime": "creation_time", # TODO: Probably not the correct mapping
+    # Additional TF attributes: arn
+  }
 
   def write(self, w):
     with self.resource_block(w):

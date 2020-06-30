@@ -3,7 +3,8 @@ from . import *
 class AWS_CloudFormation_Stack(CloudFormationResource):
   cfn_type = "AWS::CloudFormation::Stack"
   tf_type = "aws_cloudformation_stack_set"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, stack_set_id, template_body
 
   def write(self, w):
     with self.resource_block(w):
@@ -18,6 +19,7 @@ class AWS_CloudFormation_CustomResource(CloudFormationResource):
   cfn_type = "AWS::CloudFormation::CustomResource"
   tf_type = "aws_cloud_formation_custom_resource" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -28,6 +30,9 @@ class AWS_CloudFormation_WaitCondition(CloudFormationResource):
   cfn_type = "AWS::CloudFormation::WaitCondition"
   tf_type = "aws_cloud_formation_wait_condition" # TODO: Most likely not working
   ref = "arn"
+  attrs = {
+    "Data": "data",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -40,6 +45,7 @@ class AWS_CloudFormation_WaitConditionHandle(CloudFormationResource):
   cfn_type = "AWS::CloudFormation::WaitConditionHandle"
   tf_type = "aws_cloud_formation_wait_condition_handle" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -49,7 +55,8 @@ class AWS_CloudFormation_WaitConditionHandle(CloudFormationResource):
 class AWS_CloudFormation_Macro(CloudFormationResource):
   cfn_type = "AWS::CloudFormation::Macro"
   tf_type = "aws_cloudformation_stack"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: outputs, parameters, policy_body, template_body
 
   def write(self, w):
     with self.resource_block(w):

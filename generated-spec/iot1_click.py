@@ -17,7 +17,11 @@ class AWS_IoT1Click_Project_PlacementTemplate(CloudFormationProperty):
 class AWS_IoT1Click_Project(CloudFormationResource):
   cfn_type = "AWS::IoT1Click::Project"
   tf_type = "aws_iot1_click_project" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "ProjectName": "project_name",
+    "Arn": "arn",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -30,6 +34,10 @@ class AWS_IoT1Click_Placement(CloudFormationResource):
   cfn_type = "AWS::IoT1Click::Placement"
   tf_type = "aws_iot1_click_placement" # TODO: Most likely not working
   ref = "arn"
+  attrs = {
+    "PlacementName": "placement_name",
+    "ProjectName": "project_name",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -42,7 +50,12 @@ class AWS_IoT1Click_Placement(CloudFormationResource):
 class AWS_IoT1Click_Device(CloudFormationResource):
   cfn_type = "AWS::IoT1Click::Device"
   tf_type = "aws_iot1_click_device" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "DeviceId": "device_id",
+    "Enabled": "enabled",
+    "Arn": "arn",
+  }
 
   def write(self, w):
     with self.resource_block(w):

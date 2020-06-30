@@ -65,6 +65,7 @@ class AWS_LakeFormation_Resource(CloudFormationResource):
   cfn_type = "AWS::LakeFormation::Resource"
   tf_type = "aws_lake_formation_resource" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -77,6 +78,7 @@ class AWS_LakeFormation_Permissions(CloudFormationResource):
   cfn_type = "AWS::LakeFormation::Permissions"
   tf_type = "aws_lake_formation_permissions" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -90,6 +92,7 @@ class AWS_LakeFormation_DataLakeSettings(CloudFormationResource):
   cfn_type = "AWS::LakeFormation::DataLakeSettings"
   tf_type = "aws_lake_formation_data_lake_settings" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):

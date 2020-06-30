@@ -10,7 +10,11 @@ class AWS_Kinesis_Stream_StreamEncryption(CloudFormationProperty):
 class AWS_Kinesis_Stream(CloudFormationResource):
   cfn_type = "AWS::Kinesis::Stream"
   tf_type = "aws_kinesis_video_stream"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+    # Additional TF attributes: creation_time, kms_key_id, version
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -24,7 +28,14 @@ class AWS_Kinesis_Stream(CloudFormationResource):
 class AWS_Kinesis_StreamConsumer(CloudFormationResource):
   cfn_type = "AWS::Kinesis::StreamConsumer"
   tf_type = "aws_kinesis_stream"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "ConsumerCreationTimestamp": "consumer_creation_timestamp", # TODO: Probably not the correct mapping
+    "ConsumerName": "consumer_name", # TODO: Probably not the correct mapping
+    "ConsumerARN": "arn",
+    "ConsumerStatus": "consumer_status", # TODO: Probably not the correct mapping
+    "StreamARN": "stream_arn", # TODO: Probably not the correct mapping
+  }
 
   def write(self, w):
     with self.resource_block(w):

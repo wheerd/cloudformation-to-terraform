@@ -136,7 +136,12 @@ class AWS_AppSync_DataSource_DeltaSyncConfig(CloudFormationProperty):
 class AWS_AppSync_Resolver(CloudFormationResource):
   cfn_type = "AWS::AppSync::Resolver"
   tf_type = "aws_appsync_resolver"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "TypeName": "type_name", # TODO: Probably not the correct mapping
+    "ResolverArn": "arn",
+    "FieldName": "field_name", # TODO: Probably not the correct mapping
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -158,6 +163,7 @@ class AWS_AppSync_GraphQLSchema(CloudFormationResource):
   cfn_type = "AWS::AppSync::GraphQLSchema"
   tf_type = "aws_app_sync_graph_ql_schema" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -169,7 +175,13 @@ class AWS_AppSync_GraphQLSchema(CloudFormationResource):
 class AWS_AppSync_GraphQLApi(CloudFormationResource):
   cfn_type = "AWS::AppSync::GraphQLApi"
   tf_type = "aws_appsync_graphql_api"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "GraphQLUrl": "graph_ql_url", # TODO: Probably not the correct mapping
+    "Arn": "arn",
+    "ApiId": "id",
+    # Additional TF attributes: uris
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -186,7 +198,11 @@ class AWS_AppSync_GraphQLApi(CloudFormationResource):
 class AWS_AppSync_ApiKey(CloudFormationResource):
   cfn_type = "AWS::AppSync::ApiKey"
   tf_type = "aws_appsync_api_key"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "ApiKey": "key",
+    "Arn": "arn", # TODO: Probably not the correct mapping
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -198,7 +214,13 @@ class AWS_AppSync_ApiKey(CloudFormationResource):
 class AWS_AppSync_FunctionConfiguration(CloudFormationResource):
   cfn_type = "AWS::AppSync::FunctionConfiguration"
   tf_type = "aws_appsync_function"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "FunctionId": "function_id",
+    "FunctionArn": "arn",
+    "DataSourceName": "data_source_name", # TODO: Probably not the correct mapping
+    "Name": "name", # TODO: Probably not the correct mapping
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -217,6 +239,7 @@ class AWS_AppSync_ApiCache(CloudFormationResource):
   cfn_type = "AWS::AppSync::ApiCache"
   tf_type = "aws_app_sync_api_cache" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -248,7 +271,11 @@ class AWS_AppSync_DataSource_DynamoDBConfig(CloudFormationProperty):
 class AWS_AppSync_DataSource(CloudFormationResource):
   cfn_type = "AWS::AppSync::DataSource"
   tf_type = "aws_appsync_datasource"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "DataSourceArn": "arn",
+    "Name": "name", # TODO: Probably not the correct mapping
+  }
 
   def write(self, w):
     with self.resource_block(w):

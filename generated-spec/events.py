@@ -75,6 +75,7 @@ class AWS_Events_EventBusPolicy(CloudFormationResource):
   cfn_type = "AWS::Events::EventBusPolicy"
   tf_type = "aws_events_event_bus_policy" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -88,7 +89,12 @@ class AWS_Events_EventBusPolicy(CloudFormationResource):
 class AWS_Events_EventBus(CloudFormationResource):
   cfn_type = "AWS::Events::EventBus"
   tf_type = "aws_events_event_bus" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Policy": "policy",
+    "Arn": "arn",
+    "Name": "name",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -139,7 +145,10 @@ class AWS_Events_Rule_Target(CloudFormationProperty):
 class AWS_Events_Rule(CloudFormationResource):
   cfn_type = "AWS::Events::Rule"
   tf_type = "aws_events_rule" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+  }
 
   def write(self, w):
     with self.resource_block(w):

@@ -144,7 +144,8 @@ class AWS_ApiGateway_UsagePlan_QuotaSettings(CloudFormationProperty):
 class AWS_ApiGateway_Authorizer(CloudFormationResource):
   cfn_type = "AWS::ApiGateway::Authorizer"
   tf_type = "aws_api_gateway_authorizer"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -163,7 +164,14 @@ class AWS_ApiGateway_Authorizer(CloudFormationResource):
 class AWS_ApiGateway_DomainName(CloudFormationResource):
   cfn_type = "AWS::ApiGateway::DomainName"
   tf_type = "aws_api_gateway_domain_name"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "DistributionDomainName": "distribution_domain_name", # TODO: Probably not the correct mapping
+    "DistributionHostedZoneId": "distribution_hosted_zone_id", # TODO: Probably not the correct mapping
+    "RegionalDomainName": "regional_domain_name",
+    "RegionalHostedZoneId": "regional_hosted_zone_id", # TODO: Probably not the correct mapping
+    # Additional TF attributes: arn, certificate_upload_date, cloudfront_domain_name, cloudfront_zone_id, regional_zone_id, security_policy
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -178,7 +186,8 @@ class AWS_ApiGateway_DomainName(CloudFormationResource):
 class AWS_ApiGateway_DocumentationPart(CloudFormationResource):
   cfn_type = "AWS::ApiGateway::DocumentationPart"
   tf_type = "aws_api_gateway_documentation_part"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -190,7 +199,8 @@ class AWS_ApiGateway_DocumentationPart(CloudFormationResource):
 class AWS_ApiGateway_Model(CloudFormationResource):
   cfn_type = "AWS::ApiGateway::Model"
   tf_type = "aws_api_gateway_model"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -204,7 +214,8 @@ class AWS_ApiGateway_Model(CloudFormationResource):
 class AWS_ApiGateway_BasePathMapping(CloudFormationResource):
   cfn_type = "AWS::ApiGateway::BasePathMapping"
   tf_type = "aws_api_gateway_base_path_mapping"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -217,7 +228,8 @@ class AWS_ApiGateway_BasePathMapping(CloudFormationResource):
 class AWS_ApiGateway_Stage(CloudFormationResource):
   cfn_type = "AWS::ApiGateway::Stage"
   tf_type = "aws_api_gateway_stage"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, execution_arn, invoke_url
 
   def write(self, w):
     with self.resource_block(w):
@@ -240,7 +252,8 @@ class AWS_ApiGateway_Stage(CloudFormationResource):
 class AWS_ApiGateway_GatewayResponse(CloudFormationResource):
   cfn_type = "AWS::ApiGateway::GatewayResponse"
   tf_type = "aws_api_gateway_gateway_response"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -254,7 +267,8 @@ class AWS_ApiGateway_GatewayResponse(CloudFormationResource):
 class AWS_ApiGateway_ClientCertificate(CloudFormationResource):
   cfn_type = "AWS::ApiGateway::ClientCertificate"
   tf_type = "aws_api_gateway_client_certificate"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, created_date, expiration_date, pem_encoded_certificate
 
   def write(self, w):
     with self.resource_block(w):
@@ -265,7 +279,8 @@ class AWS_ApiGateway_ClientCertificate(CloudFormationResource):
 class AWS_ApiGateway_DocumentationVersion(CloudFormationResource):
   cfn_type = "AWS::ApiGateway::DocumentationVersion"
   tf_type = "aws_api_gateway_documentation_version"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -277,7 +292,8 @@ class AWS_ApiGateway_DocumentationVersion(CloudFormationResource):
 class AWS_ApiGateway_UsagePlanKey(CloudFormationResource):
   cfn_type = "AWS::ApiGateway::UsagePlanKey"
   tf_type = "aws_api_gateway_usage_plan_key"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: name, value
 
   def write(self, w):
     with self.resource_block(w):
@@ -289,7 +305,8 @@ class AWS_ApiGateway_UsagePlanKey(CloudFormationResource):
 class AWS_ApiGateway_RequestValidator(CloudFormationResource):
   cfn_type = "AWS::ApiGateway::RequestValidator"
   tf_type = "aws_api_gateway_request_validator"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -302,7 +319,8 @@ class AWS_ApiGateway_RequestValidator(CloudFormationResource):
 class AWS_ApiGateway_ApiKey(CloudFormationResource):
   cfn_type = "AWS::ApiGateway::ApiKey"
   tf_type = "aws_api_gateway_api_key"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, created_date, last_updated_date, value
 
   def write(self, w):
     with self.resource_block(w):
@@ -319,7 +337,8 @@ class AWS_ApiGateway_ApiKey(CloudFormationResource):
 class AWS_ApiGateway_Resource(CloudFormationResource):
   cfn_type = "AWS::ApiGateway::Resource"
   tf_type = "aws_api_gateway_resource"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: path
 
   def write(self, w):
     with self.resource_block(w):
@@ -331,7 +350,8 @@ class AWS_ApiGateway_Resource(CloudFormationResource):
 class AWS_ApiGateway_Account(CloudFormationResource):
   cfn_type = "AWS::ApiGateway::Account"
   tf_type = "aws_api_gateway_account"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: throttle_settings
 
   def write(self, w):
     with self.resource_block(w):
@@ -341,7 +361,11 @@ class AWS_ApiGateway_Account(CloudFormationResource):
 class AWS_ApiGateway_RestApi(CloudFormationResource):
   cfn_type = "AWS::ApiGateway::RestApi"
   tf_type = "aws_api_gateway_rest_api"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "RootResourceId": "root_resource_id",
+    # Additional TF attributes: arn, created_date, execution_arn
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -363,7 +387,8 @@ class AWS_ApiGateway_RestApi(CloudFormationResource):
 class AWS_ApiGateway_VpcLink(CloudFormationResource):
   cfn_type = "AWS::ApiGateway::VpcLink"
   tf_type = "aws_api_gateway_vpc_link"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn
 
   def write(self, w):
     with self.resource_block(w):
@@ -426,7 +451,8 @@ class AWS_ApiGateway_Method_Integration(CloudFormationProperty):
 class AWS_ApiGateway_Deployment(CloudFormationResource):
   cfn_type = "AWS::ApiGateway::Deployment"
   tf_type = "aws_api_gateway_deployment"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: created_date, execution_arn, invoke_url
 
   def write(self, w):
     with self.resource_block(w):
@@ -440,7 +466,8 @@ class AWS_ApiGateway_Deployment(CloudFormationResource):
 class AWS_ApiGateway_UsagePlan(CloudFormationResource):
   cfn_type = "AWS::ApiGateway::UsagePlan"
   tf_type = "aws_api_gateway_usage_plan"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn
 
   def write(self, w):
     with self.resource_block(w):
@@ -455,7 +482,8 @@ class AWS_ApiGateway_UsagePlan(CloudFormationResource):
 class AWS_ApiGateway_Method(CloudFormationResource):
   cfn_type = "AWS::ApiGateway::Method"
   tf_type = "aws_api_gateway_method"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):

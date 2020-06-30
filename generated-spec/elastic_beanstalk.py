@@ -59,7 +59,8 @@ class AWS_ElasticBeanstalk_Application_MaxCountRule(CloudFormationProperty):
 class AWS_ElasticBeanstalk_ConfigurationTemplate(CloudFormationResource):
   cfn_type = "AWS::ElasticBeanstalk::ConfigurationTemplate"
   tf_type = "aws_elastic_beanstalk_configuration_template"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -75,7 +76,11 @@ class AWS_ElasticBeanstalk_ConfigurationTemplate(CloudFormationResource):
 class AWS_ElasticBeanstalk_Environment(CloudFormationResource):
   cfn_type = "AWS::ElasticBeanstalk::Environment"
   tf_type = "aws_elastic_beanstalk_environment"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "EndpointURL": "endpoint_url",
+    # Additional TF attributes: all_settings, arn, autoscaling_groups, cname, cname_prefix, instances, launch_configurations, load_balancers, platform_arn, queues, solution_stack_name, triggers, version_label
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -95,7 +100,8 @@ class AWS_ElasticBeanstalk_Environment(CloudFormationResource):
 class AWS_ElasticBeanstalk_ApplicationVersion(CloudFormationResource):
   cfn_type = "AWS::ElasticBeanstalk::ApplicationVersion"
   tf_type = "aws_elastic_beanstalk_application_version"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn
 
   def write(self, w):
     with self.resource_block(w):
@@ -121,7 +127,8 @@ class AWS_ElasticBeanstalk_Application_ApplicationResourceLifecycleConfig(CloudF
 class AWS_ElasticBeanstalk_Application(CloudFormationResource):
   cfn_type = "AWS::ElasticBeanstalk::Application"
   tf_type = "aws_elastic_beanstalk_application"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn
 
   def write(self, w):
     with self.resource_block(w):

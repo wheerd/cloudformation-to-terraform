@@ -17,7 +17,16 @@ class AWS_Route53Resolver_ResolverRule_TargetAddress(CloudFormationProperty):
 class AWS_Route53Resolver_ResolverRule(CloudFormationResource):
   cfn_type = "AWS::Route53Resolver::ResolverRule"
   tf_type = "aws_route53_resolver_rule"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "ResolverEndpointId": "resolver_endpoint_id", # TODO: Probably not the correct mapping
+    "DomainName": "domain_name", # TODO: Probably not the correct mapping
+    "ResolverRuleId": "id",
+    "Arn": "arn",
+    "TargetIps": "target_ips", # TODO: Probably not the correct mapping
+    "Name": "name", # TODO: Probably not the correct mapping
+    # Additional TF attributes: owner_id, share_status
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -32,7 +41,13 @@ class AWS_Route53Resolver_ResolverRule(CloudFormationResource):
 class AWS_Route53Resolver_ResolverRuleAssociation(CloudFormationResource):
   cfn_type = "AWS::Route53Resolver::ResolverRuleAssociation"
   tf_type = "aws_route53_resolver_rule_association"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "VPCId": "vpc_id", # TODO: Probably not the correct mapping
+    "ResolverRuleId": "id",
+    "ResolverRuleAssociationId": "resolver_rule_association_id", # TODO: Probably not the correct mapping
+    "Name": "name", # TODO: Probably not the correct mapping
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -44,7 +59,15 @@ class AWS_Route53Resolver_ResolverRuleAssociation(CloudFormationResource):
 class AWS_Route53Resolver_ResolverEndpoint(CloudFormationResource):
   cfn_type = "AWS::Route53Resolver::ResolverEndpoint"
   tf_type = "aws_route53_resolver_endpoint"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "ResolverEndpointId": "resolver_endpoint_id", # TODO: Probably not the correct mapping
+    "IpAddressCount": "ip_address_count", # TODO: Probably not the correct mapping
+    "Arn": "arn",
+    "Direction": "direction", # TODO: Probably not the correct mapping
+    "HostVPCId": "host_vpc_id",
+    "Name": "name", # TODO: Probably not the correct mapping
+  }
 
   def write(self, w):
     with self.resource_block(w):

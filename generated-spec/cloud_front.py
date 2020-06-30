@@ -152,6 +152,9 @@ class AWS_CloudFront_StreamingDistribution(CloudFormationResource):
   cfn_type = "AWS::CloudFront::StreamingDistribution"
   tf_type = "aws_cloud_front_streaming_distribution" # TODO: Most likely not working
   ref = "arn"
+  attrs = {
+    "DomainName": "domain_name",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -162,7 +165,11 @@ class AWS_CloudFront_StreamingDistribution(CloudFormationResource):
 class AWS_CloudFront_CloudFrontOriginAccessIdentity(CloudFormationResource):
   cfn_type = "AWS::CloudFront::CloudFrontOriginAccessIdentity"
   tf_type = "aws_cloudfront_origin_access_identity"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "S3CanonicalUserId": "s3_canonical_user_id",
+    # Additional TF attributes: caller_reference, cloudfront_access_identity_path, etag, iam_arn
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -264,7 +271,11 @@ class AWS_CloudFront_Distribution_DistributionConfig(CloudFormationProperty):
 class AWS_CloudFront_Distribution(CloudFormationResource):
   cfn_type = "AWS::CloudFront::Distribution"
   tf_type = "aws_cloudfront_distribution"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "DomainName": "domain_name",
+    # Additional TF attributes: active_trusted_signers, arn, caller_reference, etag, hosted_zone_id, in_progress_validation_batches, last_modified_time, status
+  }
 
   def write(self, w):
     with self.resource_block(w):

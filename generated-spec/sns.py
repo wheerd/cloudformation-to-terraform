@@ -10,7 +10,8 @@ class AWS_SNS_Topic_Subscription(CloudFormationProperty):
 class AWS_SNS_Subscription(CloudFormationResource):
   cfn_type = "AWS::SNS::Subscription"
   tf_type = "aws_sns_topic_subscription"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn
 
   def write(self, w):
     with self.resource_block(w):
@@ -27,7 +28,11 @@ class AWS_SNS_Subscription(CloudFormationResource):
 class AWS_SNS_Topic(CloudFormationResource):
   cfn_type = "AWS::SNS::Topic"
   tf_type = "aws_sns_topic"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "TopicName": "name",
+    # Additional TF attributes: arn, policy
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -43,7 +48,8 @@ class AWS_SNS_Topic(CloudFormationResource):
 class AWS_SNS_TopicPolicy(CloudFormationResource):
   cfn_type = "AWS::SNS::TopicPolicy"
   tf_type = "aws_sns_topic_policy"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):

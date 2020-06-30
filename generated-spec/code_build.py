@@ -139,7 +139,8 @@ class AWS_CodeBuild_Project_Source(CloudFormationProperty):
 class AWS_CodeBuild_SourceCredential(CloudFormationResource):
   cfn_type = "AWS::CodeBuild::SourceCredential"
   tf_type = "aws_codebuild_source_credential"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn
 
   def write(self, w):
     with self.resource_block(w):
@@ -179,7 +180,11 @@ class AWS_CodeBuild_ReportGroup_ReportExportConfig(CloudFormationProperty):
 class AWS_CodeBuild_Project(CloudFormationResource):
   cfn_type = "AWS::CodeBuild::Project"
   tf_type = "aws_codebuild_project"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+    # Additional TF attributes: badge_url, description, encryption_key
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -208,7 +213,10 @@ class AWS_CodeBuild_Project(CloudFormationResource):
 class AWS_CodeBuild_ReportGroup(CloudFormationResource):
   cfn_type = "AWS::CodeBuild::ReportGroup"
   tf_type = "aws_code_build_report_group" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+  }
 
   def write(self, w):
     with self.resource_block(w):

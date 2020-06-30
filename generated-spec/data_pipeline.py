@@ -47,7 +47,8 @@ class AWS_DataPipeline_Pipeline_PipelineObject(CloudFormationProperty):
 class AWS_DataPipeline_Pipeline(CloudFormationResource):
   cfn_type = "AWS::DataPipeline::Pipeline"
   tf_type = "aws_datapipeline_pipeline"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):

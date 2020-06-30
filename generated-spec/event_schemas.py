@@ -25,6 +25,10 @@ class AWS_EventSchemas_Discoverer(CloudFormationResource):
   cfn_type = "AWS::EventSchemas::Discoverer"
   tf_type = "aws_event_schemas_discoverer" # TODO: Most likely not working
   ref = "arn"
+  attrs = {
+    "DiscovererArn": "discoverer_arn",
+    "DiscovererId": "discoverer_id",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -37,6 +41,9 @@ class AWS_EventSchemas_RegistryPolicy(CloudFormationResource):
   cfn_type = "AWS::EventSchemas::RegistryPolicy"
   tf_type = "aws_event_schemas_registry_policy" # TODO: Most likely not working
   ref = "arn"
+  attrs = {
+    "Id": "id",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -49,6 +56,11 @@ class AWS_EventSchemas_Schema(CloudFormationResource):
   cfn_type = "AWS::EventSchemas::Schema"
   tf_type = "aws_event_schemas_schema" # TODO: Most likely not working
   ref = "arn"
+  attrs = {
+    "SchemaVersion": "schema_version",
+    "SchemaArn": "schema_arn",
+    "SchemaName": "schema_name",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -64,6 +76,10 @@ class AWS_EventSchemas_Registry(CloudFormationResource):
   cfn_type = "AWS::EventSchemas::Registry"
   tf_type = "aws_event_schemas_registry" # TODO: Most likely not working
   ref = "arn"
+  attrs = {
+    "RegistryName": "registry_name",
+    "RegistryArn": "registry_arn",
+  }
 
   def write(self, w):
     with self.resource_block(w):

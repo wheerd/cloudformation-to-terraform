@@ -199,7 +199,8 @@ class AWS_EMR_Cluster_HadoopJarStepConfig(CloudFormationProperty):
 class AWS_EMR_SecurityConfiguration(CloudFormationResource):
   cfn_type = "AWS::EMR::SecurityConfiguration"
   tf_type = "aws_emr_security_configuration"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: creation_date, name
 
   def write(self, w):
     with self.resource_block(w):
@@ -341,6 +342,7 @@ class AWS_EMR_InstanceFleetConfig(CloudFormationResource):
   cfn_type = "AWS::EMR::InstanceFleetConfig"
   tf_type = "aws_emr_instance_fleet_config" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -357,6 +359,7 @@ class AWS_EMR_Step(CloudFormationResource):
   cfn_type = "AWS::EMR::Step"
   tf_type = "aws_emr_step" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -402,7 +405,8 @@ class AWS_EMR_Cluster_AutoScalingPolicy(CloudFormationProperty):
 class AWS_EMR_InstanceGroupConfig(CloudFormationResource):
   cfn_type = "AWS::EMR::InstanceGroupConfig"
   tf_type = "aws_emr_instance_group"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: running_instance_count, status
 
   def write(self, w):
     with self.resource_block(w):
@@ -455,7 +459,11 @@ class AWS_EMR_Cluster_JobFlowInstancesConfig(CloudFormationProperty):
 class AWS_EMR_Cluster(CloudFormationResource):
   cfn_type = "AWS::EMR::Cluster"
   tf_type = "aws_emr_cluster"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "MasterPublicDNS": "master_public_dns",
+    # Additional TF attributes: arn, cluster_state, core_instance_count, core_instance_type, keep_job_flow_alive_when_no_steps, master_instance_type, scale_down_behavior, step, termination_protection
+  }
 
   def write(self, w):
     with self.resource_block(w):

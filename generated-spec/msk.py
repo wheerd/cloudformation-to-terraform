@@ -125,7 +125,8 @@ class AWS_MSK_Cluster_BrokerNodeGroupInfo(CloudFormationProperty):
 class AWS_MSK_Cluster(CloudFormationResource):
   cfn_type = "AWS::MSK::Cluster"
   tf_type = "aws_msk_cluster"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, bootstrap_brokers, bootstrap_brokers_tls, current_version, zookeeper_connect_string
 
   def write(self, w):
     with self.resource_block(w):

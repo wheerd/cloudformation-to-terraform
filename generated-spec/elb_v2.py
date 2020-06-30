@@ -220,6 +220,13 @@ class AWS_ElasticLoadBalancingV2_LoadBalancer(CloudFormationResource):
   cfn_type = "AWS::ElasticLoadBalancingV2::LoadBalancer"
   tf_type = "aws_elb_v2_load_balancer" # TODO: Most likely not working
   ref = "arn"
+  attrs = {
+    "CanonicalHostedZoneID": "canonical_hosted_zone_id",
+    "DNSName": "dns_name",
+    "LoadBalancerFullName": "load_balancer_full_name",
+    "LoadBalancerName": "load_balancer_name",
+    "SecurityGroups": "security_groups",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -237,7 +244,8 @@ class AWS_ElasticLoadBalancingV2_LoadBalancer(CloudFormationResource):
 class AWS_ElasticLoadBalancingV2_ListenerCertificate(CloudFormationResource):
   cfn_type = "AWS::ElasticLoadBalancingV2::ListenerCertificate"
   tf_type = "aws_lb_listener_certificate"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -248,7 +256,13 @@ class AWS_ElasticLoadBalancingV2_ListenerCertificate(CloudFormationResource):
 class AWS_ElasticLoadBalancingV2_TargetGroup(CloudFormationResource):
   cfn_type = "AWS::ElasticLoadBalancingV2::TargetGroup"
   tf_type = "aws_lb_target_group"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "LoadBalancerArns": "arn",
+    "TargetGroupFullName": "name",
+    "TargetGroupName": "target_group_name", # TODO: Probably not the correct mapping
+    # Additional TF attributes: arn_suffix, load_balancing_algorithm_type
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -327,7 +341,8 @@ class AWS_ElasticLoadBalancingV2_ListenerRule_Action(CloudFormationProperty):
 class AWS_ElasticLoadBalancingV2_Listener(CloudFormationResource):
   cfn_type = "AWS::ElasticLoadBalancingV2::Listener"
   tf_type = "aws_lb_listener"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, ssl_policy
 
   def write(self, w):
     with self.resource_block(w):
@@ -342,7 +357,8 @@ class AWS_ElasticLoadBalancingV2_Listener(CloudFormationResource):
 class AWS_ElasticLoadBalancingV2_ListenerRule(CloudFormationResource):
   cfn_type = "AWS::ElasticLoadBalancingV2::ListenerRule"
   tf_type = "aws_lb_listener_rule"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, priority
 
   def write(self, w):
     with self.resource_block(w):

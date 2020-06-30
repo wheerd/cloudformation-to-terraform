@@ -27,7 +27,11 @@ class AWS_MediaStore_Container_MetricPolicy(CloudFormationProperty):
 class AWS_MediaStore_Container(CloudFormationResource):
   cfn_type = "AWS::MediaStore::Container"
   tf_type = "aws_media_store_container"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Endpoint": "endpoint",
+    # Additional TF attributes: arn
+  }
 
   def write(self, w):
     with self.resource_block(w):

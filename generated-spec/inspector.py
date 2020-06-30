@@ -3,7 +3,10 @@ from . import *
 class AWS_Inspector_ResourceGroup(CloudFormationResource):
   cfn_type = "AWS::Inspector::ResourceGroup"
   tf_type = "aws_inspector_resource_group"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -13,7 +16,10 @@ class AWS_Inspector_ResourceGroup(CloudFormationResource):
 class AWS_Inspector_AssessmentTemplate(CloudFormationResource):
   cfn_type = "AWS::Inspector::AssessmentTemplate"
   tf_type = "aws_inspector_assessment_template"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -27,7 +33,10 @@ class AWS_Inspector_AssessmentTemplate(CloudFormationResource):
 class AWS_Inspector_AssessmentTarget(CloudFormationResource):
   cfn_type = "AWS::Inspector::AssessmentTarget"
   tf_type = "aws_inspector_assessment_target"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+  }
 
   def write(self, w):
     with self.resource_block(w):

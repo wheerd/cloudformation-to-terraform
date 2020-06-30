@@ -63,7 +63,12 @@ class AWS_ImageBuilder_ImageRecipe_EbsInstanceBlockDeviceSpecification(CloudForm
 class AWS_ImageBuilder_Component(CloudFormationResource):
   cfn_type = "AWS::ImageBuilder::Component"
   tf_type = "aws_image_builder_component" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+    "Type": "type",
+    "Encrypted": "encrypted",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -81,7 +86,10 @@ class AWS_ImageBuilder_Component(CloudFormationResource):
 class AWS_ImageBuilder_InfrastructureConfiguration(CloudFormationResource):
   cfn_type = "AWS::ImageBuilder::InfrastructureConfiguration"
   tf_type = "aws_image_builder_infrastructure_configuration" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -101,7 +109,10 @@ class AWS_ImageBuilder_InfrastructureConfiguration(CloudFormationResource):
 class AWS_ImageBuilder_ImagePipeline(CloudFormationResource):
   cfn_type = "AWS::ImageBuilder::ImagePipeline"
   tf_type = "aws_image_builder_image_pipeline" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -119,7 +130,10 @@ class AWS_ImageBuilder_ImagePipeline(CloudFormationResource):
 class AWS_ImageBuilder_DistributionConfiguration(CloudFormationResource):
   cfn_type = "AWS::ImageBuilder::DistributionConfiguration"
   tf_type = "aws_image_builder_distribution_configuration" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -132,7 +146,11 @@ class AWS_ImageBuilder_DistributionConfiguration(CloudFormationResource):
 class AWS_ImageBuilder_Image(CloudFormationResource):
   cfn_type = "AWS::ImageBuilder::Image"
   tf_type = "aws_image_builder_image" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+    "ImageId": "image_id",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -155,7 +173,10 @@ class AWS_ImageBuilder_ImageRecipe_InstanceBlockDeviceMapping(CloudFormationProp
 class AWS_ImageBuilder_ImageRecipe(CloudFormationResource):
   cfn_type = "AWS::ImageBuilder::ImageRecipe"
   tf_type = "aws_image_builder_image_recipe" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+  }
 
   def write(self, w):
     with self.resource_block(w):

@@ -25,6 +25,7 @@ class AWS_SecretsManager_RotationSchedule(CloudFormationResource):
   cfn_type = "AWS::SecretsManager::RotationSchedule"
   tf_type = "aws_secrets_manager_rotation_schedule" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -37,6 +38,7 @@ class AWS_SecretsManager_ResourcePolicy(CloudFormationResource):
   cfn_type = "AWS::SecretsManager::ResourcePolicy"
   tf_type = "aws_secrets_manager_resource_policy" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -47,7 +49,8 @@ class AWS_SecretsManager_ResourcePolicy(CloudFormationResource):
 class AWS_SecretsManager_Secret(CloudFormationResource):
   cfn_type = "AWS::SecretsManager::Secret"
   tf_type = "aws_secretsmanager_secret_version"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, version_id, version_stages
 
   def write(self, w):
     with self.resource_block(w):
@@ -62,7 +65,8 @@ class AWS_SecretsManager_Secret(CloudFormationResource):
 class AWS_SecretsManager_SecretTargetAttachment(CloudFormationResource):
   cfn_type = "AWS::SecretsManager::SecretTargetAttachment"
   tf_type = "aws_secretsmanager_secret"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, name, name_prefix, rotation_enabled, rotation_lambda_arn
 
   def write(self, w):
     with self.resource_block(w):

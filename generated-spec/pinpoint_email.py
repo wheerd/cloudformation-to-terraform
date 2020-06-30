@@ -100,6 +100,7 @@ class AWS_PinpointEmail_ConfigurationSetEventDestination(CloudFormationResource)
   cfn_type = "AWS::PinpointEmail::ConfigurationSetEventDestination"
   tf_type = "aws_pinpoint_email_configuration_set_event_destination" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -112,6 +113,7 @@ class AWS_PinpointEmail_DedicatedIpPool(CloudFormationResource):
   cfn_type = "AWS::PinpointEmail::DedicatedIpPool"
   tf_type = "aws_pinpoint_email_dedicated_ip_pool" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -123,6 +125,14 @@ class AWS_PinpointEmail_Identity(CloudFormationResource):
   cfn_type = "AWS::PinpointEmail::Identity"
   tf_type = "aws_pinpoint_email_identity" # TODO: Most likely not working
   ref = "arn"
+  attrs = {
+    "IdentityDNSRecordName3": "identity_dns_record_name3",
+    "IdentityDNSRecordName1": "identity_dns_record_name1",
+    "IdentityDNSRecordName2": "identity_dns_record_name2",
+    "IdentityDNSRecordValue3": "identity_dns_record_value3",
+    "IdentityDNSRecordValue2": "identity_dns_record_value2",
+    "IdentityDNSRecordValue1": "identity_dns_record_value1",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -137,6 +147,7 @@ class AWS_PinpointEmail_ConfigurationSet(CloudFormationResource):
   cfn_type = "AWS::PinpointEmail::ConfigurationSet"
   tf_type = "aws_pinpoint_email_configuration_set" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):

@@ -129,7 +129,8 @@ class AWS_SSM_MaintenanceWindowTask_MaintenanceWindowStepFunctionsParameters(Clo
 class AWS_SSM_MaintenanceWindowTarget(CloudFormationResource):
   cfn_type = "AWS::SSM::MaintenanceWindowTarget"
   tf_type = "aws_ssm_maintenance_window_target"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -144,7 +145,8 @@ class AWS_SSM_MaintenanceWindowTarget(CloudFormationResource):
 class AWS_SSM_Document(CloudFormationResource):
   cfn_type = "AWS::SSM::Document"
   tf_type = "aws_ssm_document"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, created_date, default_version, description, document_version, hash, hash_type, latest_version, owner, parameter, platform_types, schema_version, status
 
   def write(self, w):
     with self.resource_block(w):
@@ -157,7 +159,8 @@ class AWS_SSM_Document(CloudFormationResource):
 class AWS_SSM_MaintenanceWindow(CloudFormationResource):
   cfn_type = "AWS::SSM::MaintenanceWindow"
   tf_type = "aws_ssm_maintenance_window"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -177,7 +180,12 @@ class AWS_SSM_MaintenanceWindow(CloudFormationResource):
 class AWS_SSM_Parameter(CloudFormationResource):
   cfn_type = "AWS::SSM::Parameter"
   tf_type = "aws_ssm_parameter"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Type": "type", # TODO: Probably not the correct mapping
+    "Value": "value", # TODO: Probably not the correct mapping
+    # Additional TF attributes: arn, key_id, version
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -195,7 +203,8 @@ class AWS_SSM_Parameter(CloudFormationResource):
 class AWS_SSM_ResourceDataSync(CloudFormationResource):
   cfn_type = "AWS::SSM::ResourceDataSync"
   tf_type = "aws_ssm_resource_data_sync"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -246,7 +255,8 @@ class AWS_SSM_PatchBaseline_Rule(CloudFormationProperty):
 class AWS_SSM_MaintenanceWindowTask(CloudFormationResource):
   cfn_type = "AWS::SSM::MaintenanceWindowTask"
   tf_type = "aws_ssm_maintenance_window_task"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -274,7 +284,8 @@ class AWS_SSM_PatchBaseline_RuleGroup(CloudFormationProperty):
 class AWS_SSM_PatchBaseline(CloudFormationResource):
   cfn_type = "AWS::SSM::PatchBaseline"
   tf_type = "aws_ssm_patch_baseline"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -296,7 +307,11 @@ class AWS_SSM_PatchBaseline(CloudFormationResource):
 class AWS_SSM_Association(CloudFormationResource):
   cfn_type = "AWS::SSM::Association"
   tf_type = "aws_ssm_association"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "AssociationId": "association_id",
+    # Additional TF attributes: document_version, parameters
+  }
 
   def write(self, w):
     with self.resource_block(w):

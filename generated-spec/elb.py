@@ -70,7 +70,15 @@ class AWS_ElasticLoadBalancing_LoadBalancer_AppCookieStickinessPolicy(CloudForma
 class AWS_ElasticLoadBalancing_LoadBalancer(CloudFormationResource):
   cfn_type = "AWS::ElasticLoadBalancing::LoadBalancer"
   tf_type = "aws_elb"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "CanonicalHostedZoneName": "name",
+    "CanonicalHostedZoneNameID": "canonical_hosted_zone_name_id", # TODO: Probably not the correct mapping
+    "DNSName": "dns_name",
+    "SourceSecurityGroup.GroupName": "source_security_group",
+    "SourceSecurityGroup.OwnerAlias": "source_security_group._owner_alias", # TODO: Probably not the correct mapping
+    # Additional TF attributes: arn, availability_zones, instances, internal, security_groups, source_security_group_id, subnets, zone_id
+  }
 
   def write(self, w):
     with self.resource_block(w):

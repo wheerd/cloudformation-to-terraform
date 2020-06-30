@@ -72,6 +72,9 @@ class AWS_SageMaker_Workteam(CloudFormationResource):
   cfn_type = "AWS::SageMaker::Workteam"
   tf_type = "aws_sage_maker_workteam" # TODO: Most likely not working
   ref = "arn"
+  attrs = {
+    "WorkteamName": "workteam_name",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -85,7 +88,11 @@ class AWS_SageMaker_Workteam(CloudFormationResource):
 class AWS_SageMaker_NotebookInstanceLifecycleConfig(CloudFormationResource):
   cfn_type = "AWS::SageMaker::NotebookInstanceLifecycleConfig"
   tf_type = "aws_sagemaker_notebook_instance_lifecycle_configuration"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "NotebookInstanceLifecycleConfigName": "notebook_instance_lifecycle_config_name", # TODO: Probably not the correct mapping
+    # Additional TF attributes: arn
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -97,7 +104,11 @@ class AWS_SageMaker_NotebookInstanceLifecycleConfig(CloudFormationResource):
 class AWS_SageMaker_EndpointConfig(CloudFormationResource):
   cfn_type = "AWS::SageMaker::EndpointConfig"
   tf_type = "aws_sagemaker_endpoint_configuration"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "EndpointConfigName": "name",
+    # Additional TF attributes: arn
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -110,7 +121,11 @@ class AWS_SageMaker_EndpointConfig(CloudFormationResource):
 class AWS_SageMaker_Endpoint(CloudFormationResource):
   cfn_type = "AWS::SageMaker::Endpoint"
   tf_type = "aws_sagemaker_endpoint"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "EndpointName": "name",
+    # Additional TF attributes: arn
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -124,7 +139,11 @@ class AWS_SageMaker_Endpoint(CloudFormationResource):
 class AWS_SageMaker_NotebookInstance(CloudFormationResource):
   cfn_type = "AWS::SageMaker::NotebookInstance"
   tf_type = "aws_sagemaker_notebook_instance"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "NotebookInstanceName": "notebook_instance_name", # TODO: Probably not the correct mapping
+    # Additional TF attributes: arn, security_groups
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -148,6 +167,9 @@ class AWS_SageMaker_CodeRepository(CloudFormationResource):
   cfn_type = "AWS::SageMaker::CodeRepository"
   tf_type = "aws_sage_maker_code_repository" # TODO: Most likely not working
   ref = "arn"
+  attrs = {
+    "CodeRepositoryName": "code_repository_name",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -158,7 +180,11 @@ class AWS_SageMaker_CodeRepository(CloudFormationResource):
 class AWS_SageMaker_Model(CloudFormationResource):
   cfn_type = "AWS::SageMaker::Model"
   tf_type = "aws_sagemaker_model"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "ModelName": "name",
+    # Additional TF attributes: arn
+  }
 
   def write(self, w):
     with self.resource_block(w):

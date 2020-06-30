@@ -153,6 +153,7 @@ class AWS_KinesisAnalytics_ApplicationOutput(CloudFormationResource):
   cfn_type = "AWS::KinesisAnalytics::ApplicationOutput"
   tf_type = "aws_kinesis_analytics_application_output" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -198,6 +199,7 @@ class AWS_KinesisAnalytics_ApplicationReferenceDataSource(CloudFormationResource
   cfn_type = "AWS::KinesisAnalytics::ApplicationReferenceDataSource"
   tf_type = "aws_kinesis_analytics_application_reference_data_source" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -208,7 +210,8 @@ class AWS_KinesisAnalytics_ApplicationReferenceDataSource(CloudFormationResource
 class AWS_KinesisAnalytics_Application(CloudFormationResource):
   cfn_type = "AWS::KinesisAnalytics::Application"
   tf_type = "aws_kinesis_analytics_application"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, create_timestamp, last_update_timestamp, status, version
 
   def write(self, w):
     with self.resource_block(w):

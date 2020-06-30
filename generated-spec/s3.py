@@ -220,7 +220,8 @@ class AWS_S3_Bucket_ReplicationRuleAndOperator(CloudFormationProperty):
 class AWS_S3_AccessPoint(CloudFormationResource):
   cfn_type = "AWS::S3::AccessPoint"
   tf_type = "aws_s3_access_point"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: account_id, arn, domain_name, has_public_access_policy, network_origin
 
   def write(self, w):
     with self.resource_block(w):
@@ -237,7 +238,8 @@ class AWS_S3_AccessPoint(CloudFormationResource):
 class AWS_S3_BucketPolicy(CloudFormationResource):
   cfn_type = "AWS::S3::BucketPolicy"
   tf_type = "aws_s3_bucket_policy"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -421,7 +423,15 @@ class AWS_S3_Bucket_ReplicationConfiguration(CloudFormationProperty):
 class AWS_S3_Bucket(CloudFormationResource):
   cfn_type = "AWS::S3::Bucket"
   tf_type = "aws_s3_bucket"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+    "DomainName": "bucket_domain_name",
+    "DualStackDomainName": "dual_stack_domain_name", # TODO: Probably not the correct mapping
+    "RegionalDomainName": "region",
+    "WebsiteURL": "website_url", # TODO: Probably not the correct mapping
+    # Additional TF attributes: acceleration_status, bucket, bucket_regional_domain_name, hosted_zone_id, request_payer, website_domain, website_endpoint
+  }
 
   def write(self, w):
     with self.resource_block(w):

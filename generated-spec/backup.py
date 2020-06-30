@@ -26,6 +26,10 @@ class AWS_Backup_BackupVault(CloudFormationResource):
   cfn_type = "AWS::Backup::BackupVault"
   tf_type = "aws_backup_backup_vault" # TODO: Most likely not working
   ref = "arn"
+  attrs = {
+    "BackupVaultName": "backup_vault_name",
+    "BackupVaultArn": "backup_vault_arn",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -76,6 +80,11 @@ class AWS_Backup_BackupPlan(CloudFormationResource):
   cfn_type = "AWS::Backup::BackupPlan"
   tf_type = "aws_backup_backup_plan" # TODO: Most likely not working
   ref = "arn"
+  attrs = {
+    "VersionId": "version_id",
+    "BackupPlanId": "backup_plan_id",
+    "BackupPlanArn": "backup_plan_arn",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -86,7 +95,11 @@ class AWS_Backup_BackupPlan(CloudFormationResource):
 class AWS_Backup_BackupSelection(CloudFormationResource):
   cfn_type = "AWS::Backup::BackupSelection"
   tf_type = "aws_backup_selection"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "BackupPlanId": "id",
+    "SelectionId": "selection_id", # TODO: Probably not the correct mapping
+  }
 
   def write(self, w):
     with self.resource_block(w):

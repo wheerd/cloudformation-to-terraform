@@ -45,7 +45,8 @@ class AWS_CloudWatch_AnomalyDetector_Configuration(CloudFormationProperty):
 class AWS_CloudWatch_Dashboard(CloudFormationResource):
   cfn_type = "AWS::CloudWatch::Dashboard"
   tf_type = "aws_cloudwatch_dashboard"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: dashboard_arn
 
   def write(self, w):
     with self.resource_block(w):
@@ -57,6 +58,7 @@ class AWS_CloudWatch_AnomalyDetector(CloudFormationResource):
   cfn_type = "AWS::CloudWatch::AnomalyDetector"
   tf_type = "aws_cloud_watch_anomaly_detector" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -70,7 +72,10 @@ class AWS_CloudWatch_AnomalyDetector(CloudFormationResource):
 class AWS_CloudWatch_CompositeAlarm(CloudFormationResource):
   cfn_type = "AWS::CloudWatch::CompositeAlarm"
   tf_type = "aws_cloud_watch_composite_alarm" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -86,7 +91,11 @@ class AWS_CloudWatch_CompositeAlarm(CloudFormationResource):
 class AWS_CloudWatch_InsightRule(CloudFormationResource):
   cfn_type = "AWS::CloudWatch::InsightRule"
   tf_type = "aws_cloud_watch_insight_rule" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+    "RuleName": "rule_name",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -119,7 +128,10 @@ class AWS_CloudWatch_Alarm_MetricDataQuery(CloudFormationProperty):
 class AWS_CloudWatch_Alarm(CloudFormationResource):
   cfn_type = "AWS::CloudWatch::Alarm"
   tf_type = "aws_cloud_watch_alarm" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+  }
 
   def write(self, w):
     with self.resource_block(w):

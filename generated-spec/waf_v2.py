@@ -140,7 +140,12 @@ class AWS_WAFv2_RuleGroup_SizeConstraintStatement(CloudFormationProperty):
 class AWS_WAFv2_RegexPatternSet(CloudFormationResource):
   cfn_type = "AWS::WAFv2::RegexPatternSet"
   tf_type = "aws_wafv2_regex_pattern_set"
-  ref = "arn"
+  ref = None # TODO: Could not determine the ref automatically
+  attrs = {
+    "Arn": "arn",
+    "Id": "id",
+    # Additional TF attributes: lock_token
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -154,7 +159,12 @@ class AWS_WAFv2_RegexPatternSet(CloudFormationResource):
 class AWS_WAFv2_IPSet(CloudFormationResource):
   cfn_type = "AWS::WAFv2::IPSet"
   tf_type = "aws_wafv2_ip_set"
-  ref = "arn"
+  ref = None # TODO: Could not determine the ref automatically
+  attrs = {
+    "Arn": "arn",
+    "Id": "id",
+    # Additional TF attributes: lock_token
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -169,7 +179,8 @@ class AWS_WAFv2_IPSet(CloudFormationResource):
 class AWS_WAFv2_WebACLAssociation(CloudFormationResource):
   cfn_type = "AWS::WAFv2::WebACLAssociation"
   tf_type = "aws_wafv2_web_acl_association"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -463,7 +474,13 @@ class AWS_WAFv2_WebACL_Rule(CloudFormationProperty):
 class AWS_WAFv2_WebACL(CloudFormationResource):
   cfn_type = "AWS::WAFv2::WebACL"
   tf_type = "aws_wafv2_web_acl"
-  ref = "arn"
+  ref = None # TODO: Could not determine the ref automatically
+  attrs = {
+    "Arn": "arn",
+    "Capacity": "capacity",
+    "Id": "id",
+    # Additional TF attributes: lock_token
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -489,7 +506,12 @@ class AWS_WAFv2_RuleGroup_Rule(CloudFormationProperty):
 class AWS_WAFv2_RuleGroup(CloudFormationResource):
   cfn_type = "AWS::WAFv2::RuleGroup"
   tf_type = "aws_wafv2_rule_group"
-  ref = "arn"
+  ref = None # TODO: Could not determine the ref automatically
+  attrs = {
+    "Arn": "arn",
+    "Id": "id",
+    # Additional TF attributes: lock_token
+  }
 
   def write(self, w):
     with self.resource_block(w):

@@ -63,7 +63,13 @@ class AWS_Amplify_App_AutoBranchCreationConfig(CloudFormationProperty):
 class AWS_Amplify_App(CloudFormationResource):
   cfn_type = "AWS::Amplify::App"
   tf_type = "aws_amplify_app" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "AppId": "app_id",
+    "Arn": "arn",
+    "DefaultDomain": "default_domain",
+    "AppName": "app_name",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -84,7 +90,11 @@ class AWS_Amplify_App(CloudFormationResource):
 class AWS_Amplify_Branch(CloudFormationResource):
   cfn_type = "AWS::Amplify::Branch"
   tf_type = "aws_amplify_branch" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "BranchName": "branch_name",
+    "Arn": "arn",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -104,7 +114,14 @@ class AWS_Amplify_Branch(CloudFormationResource):
 class AWS_Amplify_Domain(CloudFormationResource):
   cfn_type = "AWS::Amplify::Domain"
   tf_type = "aws_amplify_domain" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "DomainName": "domain_name",
+    "StatusReason": "status_reason",
+    "Arn": "arn",
+    "DomainStatus": "domain_status",
+    "CertificateRecord": "certificate_record",
+  }
 
   def write(self, w):
     with self.resource_block(w):

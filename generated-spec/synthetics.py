@@ -35,6 +35,10 @@ class AWS_Synthetics_Canary(CloudFormationResource):
   cfn_type = "AWS::Synthetics::Canary"
   tf_type = "aws_synthetics_canary" # TODO: Most likely not working
   ref = "arn"
+  attrs = {
+    "Id": "id",
+    "State": "state",
+  }
 
   def write(self, w):
     with self.resource_block(w):

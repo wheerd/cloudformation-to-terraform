@@ -75,7 +75,12 @@ class AWS_DynamoDB_Table_GlobalSecondaryIndex(CloudFormationProperty):
 class AWS_DynamoDB_Table(CloudFormationResource):
   cfn_type = "AWS::DynamoDB::Table"
   tf_type = "aws_dynamodb_table"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+    "StreamArn": "stream_arn",
+    # Additional TF attributes: stream_label, stream_view_type
+  }
 
   def write(self, w):
     with self.resource_block(w):

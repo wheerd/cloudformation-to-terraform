@@ -196,6 +196,9 @@ class AWS_IoT_ProvisioningTemplate(CloudFormationResource):
   cfn_type = "AWS::IoT::ProvisioningTemplate"
   tf_type = "aws_iot_provisioning_template" # TODO: Most likely not working
   ref = "arn"
+  attrs = {
+    "TemplateArn": "template_arn",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -211,7 +214,8 @@ class AWS_IoT_ProvisioningTemplate(CloudFormationResource):
 class AWS_IoT_Thing(CloudFormationResource):
   cfn_type = "AWS::IoT::Thing"
   tf_type = "aws_iot_thing"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, default_client_id, version
 
   def write(self, w):
     with self.resource_block(w):
@@ -222,7 +226,10 @@ class AWS_IoT_Thing(CloudFormationResource):
 class AWS_IoT_Policy(CloudFormationResource):
   cfn_type = "AWS::IoT::Policy"
   tf_type = "aws_iot_policy_attachment"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn", # TODO: Probably not the correct mapping
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -233,7 +240,8 @@ class AWS_IoT_Policy(CloudFormationResource):
 class AWS_IoT_PolicyPrincipalAttachment(CloudFormationResource):
   cfn_type = "AWS::IoT::PolicyPrincipalAttachment"
   tf_type = "aws_iot_policy"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, default_version_id
 
   def write(self, w):
     with self.resource_block(w):
@@ -244,7 +252,8 @@ class AWS_IoT_PolicyPrincipalAttachment(CloudFormationResource):
 class AWS_IoT_ThingPrincipalAttachment(CloudFormationResource):
   cfn_type = "AWS::IoT::ThingPrincipalAttachment"
   tf_type = "aws_iot_thing_principal_attachment"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -255,7 +264,11 @@ class AWS_IoT_ThingPrincipalAttachment(CloudFormationResource):
 class AWS_IoT_Certificate(CloudFormationResource):
   cfn_type = "AWS::IoT::Certificate"
   tf_type = "aws_iot_certificate"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+    # Additional TF attributes: certificate_pem, private_key, public_key
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -325,7 +338,10 @@ class AWS_IoT_TopicRule_TopicRulePayload(CloudFormationProperty):
 class AWS_IoT_TopicRule(CloudFormationResource):
   cfn_type = "AWS::IoT::TopicRule"
   tf_type = "aws_iot_topic_rule"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+  }
 
   def write(self, w):
     with self.resource_block(w):

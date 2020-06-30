@@ -10,7 +10,8 @@ class AWS_CodeStarNotifications_NotificationRule_Target(CloudFormationProperty):
 class AWS_CodeStarNotifications_NotificationRule(CloudFormationResource):
   cfn_type = "AWS::CodeStarNotifications::NotificationRule"
   tf_type = "aws_codestarnotifications_notification_rule"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn
 
   def write(self, w):
     with self.resource_block(w):

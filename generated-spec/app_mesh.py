@@ -212,7 +212,16 @@ class AWS_AppMesh_Route_TcpRouteAction(CloudFormationProperty):
 class AWS_AppMesh_VirtualRouter(CloudFormationResource):
   cfn_type = "AWS::AppMesh::VirtualRouter"
   tf_type = "aws_appmesh_virtual_router"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Uid": "id",
+    "MeshName": "mesh_name", # TODO: Probably not the correct mapping
+    "VirtualRouterName": "virtual_router_name", # TODO: Probably not the correct mapping
+    "MeshOwner": "mesh_owner", # TODO: Probably not the correct mapping
+    "ResourceOwner": "resource_owner", # TODO: Probably not the correct mapping
+    "Arn": "arn",
+    # Additional TF attributes: created_date, last_updated_date
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -382,7 +391,16 @@ class AWS_AppMesh_Route_HttpRoute(CloudFormationProperty):
 class AWS_AppMesh_VirtualService(CloudFormationResource):
   cfn_type = "AWS::AppMesh::VirtualService"
   tf_type = "aws_appmesh_virtual_service"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Uid": "id",
+    "MeshName": "mesh_name", # TODO: Probably not the correct mapping
+    "MeshOwner": "mesh_owner", # TODO: Probably not the correct mapping
+    "ResourceOwner": "resource_owner", # TODO: Probably not the correct mapping
+    "VirtualServiceName": "virtual_service_name", # TODO: Probably not the correct mapping
+    "Arn": "arn",
+    # Additional TF attributes: created_date, last_updated_date
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -396,7 +414,15 @@ class AWS_AppMesh_VirtualService(CloudFormationResource):
 class AWS_AppMesh_Mesh(CloudFormationResource):
   cfn_type = "AWS::AppMesh::Mesh"
   tf_type = "aws_appmesh_mesh"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Uid": "id",
+    "MeshName": "mesh_name", # TODO: Probably not the correct mapping
+    "MeshOwner": "mesh_owner", # TODO: Probably not the correct mapping
+    "ResourceOwner": "resource_owner", # TODO: Probably not the correct mapping
+    "Arn": "arn",
+    # Additional TF attributes: created_date, last_updated_date
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -454,7 +480,17 @@ class AWS_AppMesh_VirtualNode_BackendDefaults(CloudFormationProperty):
 class AWS_AppMesh_Route(CloudFormationResource):
   cfn_type = "AWS::AppMesh::Route"
   tf_type = "aws_appmesh_route"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Uid": "id",
+    "MeshName": "mesh_name", # TODO: Probably not the correct mapping
+    "VirtualRouterName": "virtual_router_name", # TODO: Probably not the correct mapping
+    "MeshOwner": "mesh_owner", # TODO: Probably not the correct mapping
+    "ResourceOwner": "resource_owner", # TODO: Probably not the correct mapping
+    "RouteName": "route_name", # TODO: Probably not the correct mapping
+    "Arn": "arn",
+    # Additional TF attributes: created_date, last_updated_date
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -485,7 +521,16 @@ class AWS_AppMesh_VirtualNode_VirtualNodeSpec(CloudFormationProperty):
 class AWS_AppMesh_VirtualNode(CloudFormationResource):
   cfn_type = "AWS::AppMesh::VirtualNode"
   tf_type = "aws_appmesh_virtual_node"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Uid": "id",
+    "MeshName": "mesh_name", # TODO: Probably not the correct mapping
+    "MeshOwner": "mesh_owner", # TODO: Probably not the correct mapping
+    "ResourceOwner": "resource_owner", # TODO: Probably not the correct mapping
+    "Arn": "arn",
+    "VirtualNodeName": "virtual_node_name", # TODO: Probably not the correct mapping
+    # Additional TF attributes: created_date, last_updated_date
+  }
 
   def write(self, w):
     with self.resource_block(w):

@@ -46,7 +46,11 @@ class AWS_EFS_AccessPoint_PosixUser(CloudFormationProperty):
 class AWS_EFS_MountTarget(CloudFormationResource):
   cfn_type = "AWS::EFS::MountTarget"
   tf_type = "aws_efs_mount_target"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "IpAddress": "ip_address",
+    # Additional TF attributes: availability_zone_id, availability_zone_name, dns_name, file_system_arn, mount_target_dns_name, network_interface_id, owner_id, security_groups
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -59,7 +63,11 @@ class AWS_EFS_MountTarget(CloudFormationResource):
 class AWS_EFS_FileSystem(CloudFormationResource):
   cfn_type = "AWS::EFS::FileSystem"
   tf_type = "aws_efs_file_system"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "FileSystemId": "id",
+    # Additional TF attributes: arn, creation_token, dns_name, encrypted, kms_key_id, performance_mode, reference_name
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -76,7 +84,12 @@ class AWS_EFS_FileSystem(CloudFormationResource):
 class AWS_EFS_AccessPoint(CloudFormationResource):
   cfn_type = "AWS::EFS::AccessPoint"
   tf_type = "aws_efs_access_point"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "AccessPointId": "id",
+    "Arn": "arn",
+    # Additional TF attributes: file_system_arn, owner_id
+  }
 
   def write(self, w):
     with self.resource_block(w):

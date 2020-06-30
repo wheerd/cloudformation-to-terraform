@@ -9,7 +9,8 @@ class AWS_DAX_Cluster_SSESpecification(CloudFormationProperty):
 class AWS_DAX_ParameterGroup(CloudFormationResource):
   cfn_type = "AWS::DAX::ParameterGroup"
   tf_type = "aws_dax_parameter_group"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -21,7 +22,12 @@ class AWS_DAX_ParameterGroup(CloudFormationResource):
 class AWS_DAX_Cluster(CloudFormationResource):
   cfn_type = "AWS::DAX::Cluster"
   tf_type = "aws_dax_cluster"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "ClusterDiscoveryEndpoint": "cluster_discovery_endpoint", # TODO: Probably not the correct mapping
+    "Arn": "arn",
+    # Additional TF attributes: cluster_address, configuration_endpoint, maintenance_window, nodes, parameter_group_name, port, security_group_ids, subnet_group_name
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -43,7 +49,8 @@ class AWS_DAX_Cluster(CloudFormationResource):
 class AWS_DAX_SubnetGroup(CloudFormationResource):
   cfn_type = "AWS::DAX::SubnetGroup"
   tf_type = "aws_dax_subnet_group"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: vpc_id
 
   def write(self, w):
     with self.resource_block(w):

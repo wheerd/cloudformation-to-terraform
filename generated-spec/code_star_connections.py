@@ -4,6 +4,11 @@ class AWS_CodeStarConnections_Connection(CloudFormationResource):
   cfn_type = "AWS::CodeStarConnections::Connection"
   tf_type = "aws_code_star_connections_connection" # TODO: Most likely not working
   ref = "arn"
+  attrs = {
+    "ConnectionArn": "connection_arn",
+    "ConnectionStatus": "connection_status",
+    "OwnerAccountId": "owner_account_id",
+  }
 
   def write(self, w):
     with self.resource_block(w):

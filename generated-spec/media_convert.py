@@ -17,7 +17,11 @@ class AWS_MediaConvert_JobTemplate_HopDestination(CloudFormationProperty):
 class AWS_MediaConvert_Queue(CloudFormationResource):
   cfn_type = "AWS::MediaConvert::Queue"
   tf_type = "aws_media_convert_queue"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+    "Name": "name", # TODO: Probably not the correct mapping
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -31,7 +35,11 @@ class AWS_MediaConvert_Queue(CloudFormationResource):
 class AWS_MediaConvert_JobTemplate(CloudFormationResource):
   cfn_type = "AWS::MediaConvert::JobTemplate"
   tf_type = "aws_media_convert_job_template" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+    "Name": "name",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -50,7 +58,11 @@ class AWS_MediaConvert_JobTemplate(CloudFormationResource):
 class AWS_MediaConvert_Preset(CloudFormationResource):
   cfn_type = "AWS::MediaConvert::Preset"
   tf_type = "aws_media_convert_preset" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+    "Name": "name",
+  }
 
   def write(self, w):
     with self.resource_block(w):

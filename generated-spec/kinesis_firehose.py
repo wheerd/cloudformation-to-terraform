@@ -264,7 +264,11 @@ class AWS_KinesisFirehose_DeliveryStream_ExtendedS3DestinationConfiguration(Clou
 class AWS_KinesisFirehose_DeliveryStream(CloudFormationResource):
   cfn_type = "AWS::KinesisFirehose::DeliveryStream"
   tf_type = "aws_kinesis_firehose_delivery_stream"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+    # Additional TF attributes: destination_id, version_id
+  }
 
   def write(self, w):
     with self.resource_block(w):

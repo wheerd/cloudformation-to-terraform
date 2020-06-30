@@ -95,7 +95,8 @@ class AWS_SES_ReceiptFilter_IpFilter(CloudFormationProperty):
 class AWS_SES_Template(CloudFormationResource):
   cfn_type = "AWS::SES::Template"
   tf_type = "aws_ses_template"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -105,7 +106,8 @@ class AWS_SES_Template(CloudFormationResource):
 class AWS_SES_ConfigurationSet(CloudFormationResource):
   cfn_type = "AWS::SES::ConfigurationSet"
   tf_type = "aws_ses_configuration_set"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -115,7 +117,8 @@ class AWS_SES_ConfigurationSet(CloudFormationResource):
 class AWS_SES_ReceiptRuleSet(CloudFormationResource):
   cfn_type = "AWS::SES::ReceiptRuleSet"
   tf_type = "aws_ses_receipt_rule_set"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -165,7 +168,8 @@ class AWS_SES_ReceiptRule_Rule(CloudFormationProperty):
 class AWS_SES_ReceiptFilter(CloudFormationResource):
   cfn_type = "AWS::SES::ReceiptFilter"
   tf_type = "aws_ses_receipt_filter"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn
 
   def write(self, w):
     with self.resource_block(w):
@@ -176,6 +180,7 @@ class AWS_SES_ConfigurationSetEventDestination(CloudFormationResource):
   cfn_type = "AWS::SES::ConfigurationSetEventDestination"
   tf_type = "aws_ses_configuration_set_event_destination" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -186,7 +191,8 @@ class AWS_SES_ConfigurationSetEventDestination(CloudFormationResource):
 class AWS_SES_ReceiptRule(CloudFormationResource):
   cfn_type = "AWS::SES::ReceiptRule"
   tf_type = "aws_ses_receipt_rule"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: enabled, scan_enabled, tls_policy
 
   def write(self, w):
     with self.resource_block(w):

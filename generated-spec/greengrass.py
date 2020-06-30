@@ -217,6 +217,7 @@ class AWS_Greengrass_ConnectorDefinitionVersion(CloudFormationResource):
   cfn_type = "AWS::Greengrass::ConnectorDefinitionVersion"
   tf_type = "aws_greengrass_connector_definition_version" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -227,7 +228,13 @@ class AWS_Greengrass_ConnectorDefinitionVersion(CloudFormationResource):
 class AWS_Greengrass_DeviceDefinition(CloudFormationResource):
   cfn_type = "AWS::Greengrass::DeviceDefinition"
   tf_type = "aws_greengrass_device_definition" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "LatestVersionArn": "latest_version_arn",
+    "Id": "id",
+    "Arn": "arn",
+    "Name": "name",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -240,6 +247,7 @@ class AWS_Greengrass_LoggerDefinitionVersion(CloudFormationResource):
   cfn_type = "AWS::Greengrass::LoggerDefinitionVersion"
   tf_type = "aws_greengrass_logger_definition_version" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -250,7 +258,15 @@ class AWS_Greengrass_LoggerDefinitionVersion(CloudFormationResource):
 class AWS_Greengrass_Group(CloudFormationResource):
   cfn_type = "AWS::Greengrass::Group"
   tf_type = "aws_greengrass_group" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "RoleAttachedAt": "role_attached_at",
+    "LatestVersionArn": "latest_version_arn",
+    "Id": "id",
+    "Arn": "arn",
+    "RoleArn": "role_arn",
+    "Name": "name",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -264,6 +280,7 @@ class AWS_Greengrass_SubscriptionDefinitionVersion(CloudFormationResource):
   cfn_type = "AWS::Greengrass::SubscriptionDefinitionVersion"
   tf_type = "aws_greengrass_subscription_definition_version" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -275,6 +292,7 @@ class AWS_Greengrass_CoreDefinitionVersion(CloudFormationResource):
   cfn_type = "AWS::Greengrass::CoreDefinitionVersion"
   tf_type = "aws_greengrass_core_definition_version" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -285,7 +303,13 @@ class AWS_Greengrass_CoreDefinitionVersion(CloudFormationResource):
 class AWS_Greengrass_LoggerDefinition(CloudFormationResource):
   cfn_type = "AWS::Greengrass::LoggerDefinition"
   tf_type = "aws_greengrass_logger_definition" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "LatestVersionArn": "latest_version_arn",
+    "Id": "id",
+    "Arn": "arn",
+    "Name": "name",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -297,7 +321,13 @@ class AWS_Greengrass_LoggerDefinition(CloudFormationResource):
 class AWS_Greengrass_CoreDefinition(CloudFormationResource):
   cfn_type = "AWS::Greengrass::CoreDefinition"
   tf_type = "aws_greengrass_core_definition" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "LatestVersionArn": "latest_version_arn",
+    "Id": "id",
+    "Arn": "arn",
+    "Name": "name",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -310,6 +340,7 @@ class AWS_Greengrass_DeviceDefinitionVersion(CloudFormationResource):
   cfn_type = "AWS::Greengrass::DeviceDefinitionVersion"
   tf_type = "aws_greengrass_device_definition_version" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -321,6 +352,7 @@ class AWS_Greengrass_GroupVersion(CloudFormationResource):
   cfn_type = "AWS::Greengrass::GroupVersion"
   tf_type = "aws_greengrass_group_version" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -452,7 +484,13 @@ class AWS_Greengrass_ResourceDefinition_ResourceDataContainer(CloudFormationProp
 class AWS_Greengrass_ConnectorDefinition(CloudFormationResource):
   cfn_type = "AWS::Greengrass::ConnectorDefinition"
   tf_type = "aws_greengrass_connector_definition" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "LatestVersionArn": "latest_version_arn",
+    "Id": "id",
+    "Arn": "arn",
+    "Name": "name",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -464,7 +502,13 @@ class AWS_Greengrass_ConnectorDefinition(CloudFormationResource):
 class AWS_Greengrass_SubscriptionDefinition(CloudFormationResource):
   cfn_type = "AWS::Greengrass::SubscriptionDefinition"
   tf_type = "aws_greengrass_subscription_definition" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "LatestVersionArn": "latest_version_arn",
+    "Id": "id",
+    "Arn": "arn",
+    "Name": "name",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -533,6 +577,7 @@ class AWS_Greengrass_FunctionDefinitionVersion(CloudFormationResource):
   cfn_type = "AWS::Greengrass::FunctionDefinitionVersion"
   tf_type = "aws_greengrass_function_definition_version" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -545,6 +590,7 @@ class AWS_Greengrass_ResourceDefinitionVersion(CloudFormationResource):
   cfn_type = "AWS::Greengrass::ResourceDefinitionVersion"
   tf_type = "aws_greengrass_resource_definition_version" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -568,7 +614,13 @@ class AWS_Greengrass_ResourceDefinition_ResourceDefinitionVersion(CloudFormation
 class AWS_Greengrass_ResourceDefinition(CloudFormationResource):
   cfn_type = "AWS::Greengrass::ResourceDefinition"
   tf_type = "aws_greengrass_resource_definition" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "LatestVersionArn": "latest_version_arn",
+    "Id": "id",
+    "Arn": "arn",
+    "Name": "name",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -580,7 +632,13 @@ class AWS_Greengrass_ResourceDefinition(CloudFormationResource):
 class AWS_Greengrass_FunctionDefinition(CloudFormationResource):
   cfn_type = "AWS::Greengrass::FunctionDefinition"
   tf_type = "aws_greengrass_function_definition" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "LatestVersionArn": "latest_version_arn",
+    "Id": "id",
+    "Arn": "arn",
+    "Name": "name",
+  }
 
   def write(self, w):
     with self.resource_block(w):

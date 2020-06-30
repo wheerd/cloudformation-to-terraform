@@ -11,6 +11,7 @@ class AWS_IoTThingsGraph_FlowTemplate(CloudFormationResource):
   cfn_type = "AWS::IoTThingsGraph::FlowTemplate"
   tf_type = "aws_iot_things_graph_flow_template" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):

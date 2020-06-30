@@ -25,6 +25,7 @@ class AWS_ServiceDiscovery_Instance(CloudFormationResource):
   cfn_type = "AWS::ServiceDiscovery::Instance"
   tf_type = "aws_service_discovery_instance" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -36,7 +37,11 @@ class AWS_ServiceDiscovery_Instance(CloudFormationResource):
 class AWS_ServiceDiscovery_HttpNamespace(CloudFormationResource):
   cfn_type = "AWS::ServiceDiscovery::HttpNamespace"
   tf_type = "aws_service_discovery_http_namespace"
-  ref = "arn"
+  ref = None # TODO: Could not determine the ref automatically
+  attrs = {
+    "Id": "id",
+    "Arn": "arn",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -48,7 +53,12 @@ class AWS_ServiceDiscovery_HttpNamespace(CloudFormationResource):
 class AWS_ServiceDiscovery_PrivateDnsNamespace(CloudFormationResource):
   cfn_type = "AWS::ServiceDiscovery::PrivateDnsNamespace"
   tf_type = "aws_service_discovery_private_dns_namespace"
-  ref = "arn"
+  ref = None # TODO: Could not determine the ref automatically
+  attrs = {
+    "Id": "id",
+    "Arn": "arn",
+    # Additional TF attributes: hosted_zone
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -61,7 +71,12 @@ class AWS_ServiceDiscovery_PrivateDnsNamespace(CloudFormationResource):
 class AWS_ServiceDiscovery_PublicDnsNamespace(CloudFormationResource):
   cfn_type = "AWS::ServiceDiscovery::PublicDnsNamespace"
   tf_type = "aws_service_discovery_public_dns_namespace"
-  ref = "arn"
+  ref = None # TODO: Could not determine the ref automatically
+  attrs = {
+    "Id": "id",
+    "Arn": "arn",
+    # Additional TF attributes: hosted_zone
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -81,7 +96,12 @@ class AWS_ServiceDiscovery_Service_DnsConfig(CloudFormationProperty):
 class AWS_ServiceDiscovery_Service(CloudFormationResource):
   cfn_type = "AWS::ServiceDiscovery::Service"
   tf_type = "aws_service_discovery_service"
-  ref = "arn"
+  ref = None # TODO: Could not determine the ref automatically
+  attrs = {
+    "Id": "id",
+    "Arn": "arn",
+    "Name": "namespace_id",
+  }
 
   def write(self, w):
     with self.resource_block(w):

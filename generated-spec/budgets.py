@@ -69,7 +69,8 @@ class AWS_Budgets_Budget_NotificationWithSubscribers(CloudFormationProperty):
 class AWS_Budgets_Budget(CloudFormationResource):
   cfn_type = "AWS::Budgets::Budget"
   tf_type = "aws_budgets_budget"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: account_id, cost_filters, name, name_prefix
 
   def write(self, w):
     with self.resource_block(w):

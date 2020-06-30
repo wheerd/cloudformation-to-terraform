@@ -3,7 +3,10 @@ from . import *
 class AWS_Chatbot_SlackChannelConfiguration(CloudFormationResource):
   cfn_type = "AWS::Chatbot::SlackChannelConfiguration"
   tf_type = "aws_chatbot_slack_channel_configuration" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+  }
 
   def write(self, w):
     with self.resource_block(w):

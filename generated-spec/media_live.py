@@ -178,7 +178,12 @@ class AWS_MediaLive_Channel_OutputDestination(CloudFormationProperty):
 class AWS_MediaLive_Input(CloudFormationResource):
   cfn_type = "AWS::MediaLive::Input"
   tf_type = "aws_media_live_input" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Destinations": "destinations",
+    "Arn": "arn",
+    "Sources": "sources",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -196,7 +201,10 @@ class AWS_MediaLive_Input(CloudFormationResource):
 class AWS_MediaLive_InputSecurityGroup(CloudFormationResource):
   cfn_type = "AWS::MediaLive::InputSecurityGroup"
   tf_type = "aws_media_live_input_security_group" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -255,7 +263,11 @@ class AWS_MediaLive_Channel_InputAttachment(CloudFormationProperty):
 class AWS_MediaLive_Channel(CloudFormationResource):
   cfn_type = "AWS::MediaLive::Channel"
   tf_type = "aws_media_live_channel" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+    "Inputs": "inputs",
+  }
 
   def write(self, w):
     with self.resource_block(w):

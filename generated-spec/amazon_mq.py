@@ -63,6 +63,7 @@ class AWS_AmazonMQ_ConfigurationAssociation(CloudFormationResource):
   cfn_type = "AWS::AmazonMQ::ConfigurationAssociation"
   tf_type = "aws_amazon_mq_configuration_association" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -73,7 +74,12 @@ class AWS_AmazonMQ_ConfigurationAssociation(CloudFormationResource):
 class AWS_AmazonMQ_Configuration(CloudFormationResource):
   cfn_type = "AWS::AmazonMQ::Configuration"
   tf_type = "aws_mq_configuration"
-  ref = "arn"
+  ref = None # TODO: Could not determine the ref automatically
+  attrs = {
+    "Revision": "latest_revision",
+    "Id": "id",
+    "Arn": "arn",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -88,7 +94,18 @@ class AWS_AmazonMQ_Configuration(CloudFormationResource):
 class AWS_AmazonMQ_Broker(CloudFormationResource):
   cfn_type = "AWS::AmazonMQ::Broker"
   tf_type = "aws_amazon_mq_broker" # TODO: Most likely not working
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "IpAddresses": "ip_addresses",
+    "OpenWireEndpoints": "open_wire_endpoints",
+    "ConfigurationRevision": "configuration_revision",
+    "StompEndpoints": "stomp_endpoints",
+    "MqttEndpoints": "mqtt_endpoints",
+    "AmqpEndpoints": "amqp_endpoints",
+    "Arn": "arn",
+    "ConfigurationId": "configuration_id",
+    "WssEndpoints": "wss_endpoints",
+  }
 
   def write(self, w):
     with self.resource_block(w):

@@ -74,7 +74,17 @@ class ApproximateResourceTypeDefinition(TypeDefinition):
         spec_file.write(f'class {self.cls_name}(CloudFormationResource):\n')
         spec_file.write(f'  cfn_type = "{self.name}"\n')
         spec_file.write(f'  tf_type = "{self.terraform_resource}" # TODO: Most likely not working\n')
-        spec_file.write(f'  ref = "arn"\n')
+        attrs = self.spec.get('Attributes', {}).keys()
+        ref = 'arn' if 'Arn' not in attrs else 'id'
+        spec_file.write(f'  ref = "{ref}"\n')
+        if len(attrs) > 0:
+            spec_file.write(f'  attrs = {{\n')
+            for attr in attrs:
+                mapped_name = snake_case_with_abbreviation_fix(attr)
+                spec_file.write(f'    "{attr}": "{mapped_name}",\n')
+            spec_file.write(f'  }}\n')
+        else:
+            spec_file.write(f'  attrs = {{}}\n')
         spec_file.write(f'\n')
         spec_file.write(f'  def write(self, w):\n')
         spec_file.write(f'    with self.resource_block(w):\n')
@@ -102,19 +112,64 @@ class TerraformResourceTypeDefinition(TypeDefinition):
         self.terraform_resource = tf_name
         self.tf_spec = tf_spec
 
-        # tf_props = [k for k, v in tf_spec['block']['attributes'].items() if not v.get('computed', False)]
         tf_props = [k for k, v in tf_spec['block']['attributes'].items()]
         tf_blocks = list(tf_spec['block'].get('block_types', {}).keys())
         possible_names = tf_props + tf_blocks
+        self.tf_attrs = [k for k, v in tf_spec['block']['attributes'].items() if v.get('computed', False)]
 
+        self.cf_attrs = spec.get('Attributes', {}).keys()
         self.property_names = generate_best_name_matches(sorted(spec['Properties'].keys()), possible_names, snake_case_with_abbreviation_fix, score_cutoff=90)
+        self.attribute_names = generate_best_name_matches(sorted(self.cf_attrs), self.tf_attrs, snake_case_with_abbreviation_fix, score_cutoff=90)
+
+    @property
+    def ref(self):
+        if 'Id' not in self.cf_attrs and 'id' in self.tf_attrs:
+            return 'id'
+        elif 'Arn' not in self.cf_attrs and 'arn' in self.tf_attrs:
+            return 'arn'
+        elif 'Name' not in self.cf_attrs and 'name' in self.tf_attrs:
+            return 'name'
+        else:
+            if len(self.tf_attrs) == 1:
+                return self.tf_attrs[0]
+            elif len(self.tf_attrs) > 1:
+                return ''
+        return None
 
     def write(self, spec_file):
         spec_file.write(f'class {self.cls_name}(CloudFormationResource):\n')
         spec_file.write(f'  cfn_type = "{self.name}"\n')
         spec_file.write(f'  tf_type = "{self.terraform_resource}"\n')
-        spec_file.write(f'  ref = "arn"\n')
+        
+        ref = self.ref
+        comment = ' # TODO: Probably not the correct mapping' if ref not in ('arn', 'id', 'name') else ''
+        if ref == '':
+            spec_file.write(f'  ref = None # TODO: Could not determine the ref automatically\n')
+        elif ref is not None:
+            spec_file.write(f'  ref = "{ref}"{comment}\n')
+
+        if len(self.cf_attrs) > 0:
+            spec_file.write(f'  attrs = {{\n')
+            for attr in self.cf_attrs:
+                if attr in self.attribute_names:
+                    mapped_name = self.attribute_names[attr]
+                    spec_file.write(f'    "{attr}": "{mapped_name}",\n')
+                else:
+                    mapped_name = snake_case_with_abbreviation_fix(attr)
+                    spec_file.write(f'    "{attr}": "{mapped_name}", # TODO: Probably not the correct mapping\n')
+            remaining_tf_names = sorted(set(self.tf_attrs) - set(self.attribute_names.values()) - set([ref or '']))
+            if len(remaining_tf_names) > 0:
+                    spec_file.write(f'    # Additional TF attributes: {", ".join(remaining_tf_names)}\n')
+            spec_file.write(f'  }}\n')
+        else:
+            remaining_tf_names = sorted(set(self.tf_attrs) - set([ref or '']))
+            if len(remaining_tf_names) > 0:
+                spec_file.write(f'  attrs = {{}} # Additional TF attributes: {", ".join(remaining_tf_names)}\n')
+            else:
+                spec_file.write(f'  attrs = {{}}\n')
+
         spec_file.write(f'\n')
+
         spec_file.write(f'  def write(self, w):\n')
         spec_file.write(f'    with self.resource_block(w):\n')
         properties = list(self.spec['Properties'].items())
@@ -126,7 +181,6 @@ class TerraformResourceTypeDefinition(TypeDefinition):
             else:
                 tf_prop_name = snake_case_with_abbreviation_fix(prop_name)
                 comment = ' # TODO: Probably not the correct mapping'
-
             if meta_type != 'property':
                 spec_file.write(f'      self.{meta_type}(w, "{prop_name}", {prop_type}){comment}\n')
             else:

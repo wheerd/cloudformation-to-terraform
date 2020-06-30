@@ -95,7 +95,8 @@ class AWS_Batch_JobDefinition_Device(CloudFormationProperty):
 class AWS_Batch_JobQueue(CloudFormationResource):
   cfn_type = "AWS::Batch::JobQueue"
   tf_type = "aws_batch_job_queue"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn
 
   def write(self, w):
     with self.resource_block(w):
@@ -108,7 +109,8 @@ class AWS_Batch_JobQueue(CloudFormationResource):
 class AWS_Batch_ComputeEnvironment(CloudFormationResource):
   cfn_type = "AWS::Batch::ComputeEnvironment"
   tf_type = "aws_batch_compute_environment"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, compute_environment_name, ecc_cluster_arn, ecs_cluster_arn, status, status_reason
 
   def write(self, w):
     with self.resource_block(w):
@@ -170,7 +172,8 @@ class AWS_Batch_JobDefinition_NodeProperties(CloudFormationProperty):
 class AWS_Batch_JobDefinition(CloudFormationResource):
   cfn_type = "AWS::Batch::JobDefinition"
   tf_type = "aws_batch_job_definition"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, revision
 
   def write(self, w):
     with self.resource_block(w):

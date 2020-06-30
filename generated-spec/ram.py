@@ -3,7 +3,10 @@ from . import *
 class AWS_RAM_ResourceShare(CloudFormationResource):
   cfn_type = "AWS::RAM::ResourceShare"
   tf_type = "aws_ram_resource_share"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+  }
 
   def write(self, w):
     with self.resource_block(w):

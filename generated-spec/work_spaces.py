@@ -13,7 +13,8 @@ class AWS_WorkSpaces_Workspace_WorkspaceProperties(CloudFormationProperty):
 class AWS_WorkSpaces_Workspace(CloudFormationResource):
   cfn_type = "AWS::WorkSpaces::Workspace"
   tf_type = "aws_workspaces_workspace"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: computer_name, ip_address, state
 
   def write(self, w):
     with self.resource_block(w):

@@ -13,7 +13,8 @@ class AWS_GuardDuty_Filter_Condition(CloudFormationProperty):
 class AWS_GuardDuty_ThreatIntelSet(CloudFormationResource):
   cfn_type = "AWS::GuardDuty::ThreatIntelSet"
   tf_type = "aws_guardduty_threatintelset"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn
 
   def write(self, w):
     with self.resource_block(w):
@@ -27,7 +28,8 @@ class AWS_GuardDuty_ThreatIntelSet(CloudFormationResource):
 class AWS_GuardDuty_Member(CloudFormationResource):
   cfn_type = "AWS::GuardDuty::Member"
   tf_type = "aws_guardduty_member"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: relationship_status
 
   def write(self, w):
     with self.resource_block(w):
@@ -42,7 +44,8 @@ class AWS_GuardDuty_Member(CloudFormationResource):
 class AWS_GuardDuty_Detector(CloudFormationResource):
   cfn_type = "AWS::GuardDuty::Detector"
   tf_type = "aws_guardduty_detector"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: account_id, arn, finding_publishing_frequency
 
   def write(self, w):
     with self.resource_block(w):
@@ -54,6 +57,7 @@ class AWS_GuardDuty_Master(CloudFormationResource):
   cfn_type = "AWS::GuardDuty::Master"
   tf_type = "aws_guard_duty_master" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -65,7 +69,8 @@ class AWS_GuardDuty_Master(CloudFormationResource):
 class AWS_GuardDuty_IPSet(CloudFormationResource):
   cfn_type = "AWS::GuardDuty::IPSet"
   tf_type = "aws_guardduty_ipset"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn
 
   def write(self, w):
     with self.resource_block(w):
@@ -87,6 +92,7 @@ class AWS_GuardDuty_Filter(CloudFormationResource):
   cfn_type = "AWS::GuardDuty::Filter"
   tf_type = "aws_guard_duty_filter" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):

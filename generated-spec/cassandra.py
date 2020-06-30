@@ -25,6 +25,7 @@ class AWS_Cassandra_Keyspace(CloudFormationResource):
   cfn_type = "AWS::Cassandra::Keyspace"
   tf_type = "aws_cassandra_keyspace" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -42,6 +43,7 @@ class AWS_Cassandra_Table(CloudFormationResource):
   cfn_type = "AWS::Cassandra::Table"
   tf_type = "aws_cassandra_table" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):

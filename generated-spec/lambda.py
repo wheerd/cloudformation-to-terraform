@@ -95,7 +95,8 @@ class AWS_Lambda_Alias_VersionWeight(CloudFormationProperty):
 class AWS_Lambda_EventSourceMapping(CloudFormationResource):
   cfn_type = "AWS::Lambda::EventSourceMapping"
   tf_type = "aws_lambda_event_source_mapping"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: function_arn, last_modified, last_processing_result, maximum_record_age_in_seconds, maximum_retry_attempts, parallelization_factor, state, state_transition_reason, uuid
 
   def write(self, w):
     with self.resource_block(w):
@@ -115,7 +116,8 @@ class AWS_Lambda_EventSourceMapping(CloudFormationResource):
 class AWS_Lambda_LayerVersion(CloudFormationResource):
   cfn_type = "AWS::Lambda::LayerVersion"
   tf_type = "aws_lambda_layer_version"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, created_date, layer_arn, source_code_hash, source_code_size, version
 
   def write(self, w):
     with self.resource_block(w):
@@ -130,6 +132,7 @@ class AWS_Lambda_LayerVersionPermission(CloudFormationResource):
   cfn_type = "AWS::Lambda::LayerVersionPermission"
   tf_type = "aws_lambda_layer_version_permission" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -143,6 +146,9 @@ class AWS_Lambda_Version(CloudFormationResource):
   cfn_type = "AWS::Lambda::Version"
   tf_type = "aws_lambda_version" # TODO: Most likely not working
   ref = "arn"
+  attrs = {
+    "Version": "version",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -155,7 +161,8 @@ class AWS_Lambda_Version(CloudFormationResource):
 class AWS_Lambda_EventInvokeConfig(CloudFormationResource):
   cfn_type = "AWS::Lambda::EventInvokeConfig"
   tf_type = "aws_lambda_function_event_invoke_config"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -169,7 +176,11 @@ class AWS_Lambda_EventInvokeConfig(CloudFormationResource):
 class AWS_Lambda_Function(CloudFormationResource):
   cfn_type = "AWS::Lambda::Function"
   tf_type = "aws_lambda_function"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+    # Additional TF attributes: invoke_arn, last_modified, qualified_arn, source_code_hash, source_code_size, version
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -194,7 +205,8 @@ class AWS_Lambda_Function(CloudFormationResource):
 class AWS_Lambda_Permission(CloudFormationResource):
   cfn_type = "AWS::Lambda::Permission"
   tf_type = "aws_lambda_permission"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: statement_id
 
   def write(self, w):
     with self.resource_block(w):
@@ -215,7 +227,8 @@ class AWS_Lambda_Alias_AliasRoutingConfiguration(CloudFormationProperty):
 class AWS_Lambda_Alias(CloudFormationResource):
   cfn_type = "AWS::Lambda::Alias"
   tf_type = "aws_lambda_alias"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, invoke_arn
 
   def write(self, w):
     with self.resource_block(w):

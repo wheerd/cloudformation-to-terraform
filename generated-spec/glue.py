@@ -274,7 +274,8 @@ class AWS_Glue_MLTransform_GlueTables(CloudFormationProperty):
 class AWS_Glue_Workflow(CloudFormationResource):
   cfn_type = "AWS::Glue::Workflow"
   tf_type = "aws_glue_workflow"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -287,7 +288,8 @@ class AWS_Glue_Workflow(CloudFormationResource):
 class AWS_Glue_Job(CloudFormationResource):
   cfn_type = "AWS::Glue::Job"
   tf_type = "aws_glue_job"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: allocated_capacity, arn, glue_version, max_capacity
 
   def write(self, w):
     with self.resource_block(w):
@@ -315,6 +317,7 @@ class AWS_Glue_Database(CloudFormationResource):
   cfn_type = "AWS::Glue::Database"
   tf_type = "aws_glue_database" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -326,6 +329,7 @@ class AWS_Glue_DevEndpoint(CloudFormationResource):
   cfn_type = "AWS::Glue::DevEndpoint"
   tf_type = "aws_glue_dev_endpoint" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -349,7 +353,8 @@ class AWS_Glue_DevEndpoint(CloudFormationResource):
 class AWS_Glue_Classifier(CloudFormationResource):
   cfn_type = "AWS::Glue::Classifier"
   tf_type = "aws_glue_classifier"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -464,6 +469,7 @@ class AWS_Glue_DataCatalogEncryptionSettings(CloudFormationResource):
   cfn_type = "AWS::Glue::DataCatalogEncryptionSettings"
   tf_type = "aws_glue_data_catalog_encryption_settings" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -474,7 +480,8 @@ class AWS_Glue_DataCatalogEncryptionSettings(CloudFormationResource):
 class AWS_Glue_Crawler(CloudFormationResource):
   cfn_type = "AWS::Glue::Crawler"
   tf_type = "aws_glue_crawler"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn
 
   def write(self, w):
     with self.resource_block(w):
@@ -496,6 +503,7 @@ class AWS_Glue_MLTransform(CloudFormationResource):
   cfn_type = "AWS::Glue::MLTransform"
   tf_type = "aws_glue_ml_transform" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -517,6 +525,7 @@ class AWS_Glue_Table(CloudFormationResource):
   cfn_type = "AWS::Glue::Table"
   tf_type = "aws_glue_table" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -528,7 +537,8 @@ class AWS_Glue_Table(CloudFormationResource):
 class AWS_Glue_Connection(CloudFormationResource):
   cfn_type = "AWS::Glue::Connection"
   tf_type = "aws_glue_connection"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, catalog_id
 
   def write(self, w):
     with self.resource_block(w):
@@ -539,7 +549,8 @@ class AWS_Glue_Connection(CloudFormationResource):
 class AWS_Glue_Trigger(CloudFormationResource):
   cfn_type = "AWS::Glue::Trigger"
   tf_type = "aws_glue_trigger"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn
 
   def write(self, w):
     with self.resource_block(w):
@@ -557,7 +568,8 @@ class AWS_Glue_Trigger(CloudFormationResource):
 class AWS_Glue_SecurityConfiguration(CloudFormationResource):
   cfn_type = "AWS::Glue::SecurityConfiguration"
   tf_type = "aws_glue_security_configuration"
-  ref = "arn"
+  ref = "id"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -577,6 +589,7 @@ class AWS_Glue_Partition(CloudFormationResource):
   cfn_type = "AWS::Glue::Partition"
   tf_type = "aws_glue_partition" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):

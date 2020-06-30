@@ -147,6 +147,7 @@ class AWS_OpsWorks_App(CloudFormationResource):
   cfn_type = "AWS::OpsWorks::App"
   tf_type = "aws_ops_works_app" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -168,6 +169,7 @@ class AWS_OpsWorks_ElasticLoadBalancerAttachment(CloudFormationResource):
   cfn_type = "AWS::OpsWorks::ElasticLoadBalancerAttachment"
   tf_type = "aws_ops_works_elastic_load_balancer_attachment" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -178,7 +180,10 @@ class AWS_OpsWorks_ElasticLoadBalancerAttachment(CloudFormationResource):
 class AWS_OpsWorks_UserProfile(CloudFormationResource):
   cfn_type = "AWS::OpsWorks::UserProfile"
   tf_type = "aws_opsworks_user_profile"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "SshUsername": "ssh_username", # TODO: Probably not the correct mapping
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -192,6 +197,7 @@ class AWS_OpsWorks_Volume(CloudFormationResource):
   cfn_type = "AWS::OpsWorks::Volume"
   tf_type = "aws_ops_works_volume" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):
@@ -204,7 +210,8 @@ class AWS_OpsWorks_Volume(CloudFormationResource):
 class AWS_OpsWorks_Stack(CloudFormationResource):
   cfn_type = "AWS::OpsWorks::Stack"
   tf_type = "aws_opsworks_stack"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: agent_version, arn, default_availability_zone, default_subnet_id, stack_endpoint, vpc_id
 
   def write(self, w):
     with self.resource_block(w):
@@ -255,7 +262,15 @@ class AWS_OpsWorks_Layer_LoadBasedAutoScaling(CloudFormationProperty):
 class AWS_OpsWorks_Instance(CloudFormationResource):
   cfn_type = "AWS::OpsWorks::Instance"
   tf_type = "aws_opsworks_instance"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "AvailabilityZone": "availability_zone",
+    "PrivateDnsName": "private_dns_name", # TODO: Probably not the correct mapping
+    "PrivateIp": "private_ip",
+    "PublicDnsName": "public_dns",
+    "PublicIp": "public_ip",
+    # Additional TF attributes: ami_id, created_at, ec2_instance_id, ecs_cluster_arn, elastic_ip, hostname, infrastructure_class, instance_profile_arn, last_service_error_id, os, platform, private_dns, registered_by, reported_agent_version, reported_os_family, reported_os_name, reported_os_version, root_device_type, root_device_volume_id, security_group_ids, ssh_host_dsa_key_fingerprint, ssh_host_rsa_key_fingerprint, ssh_key_name, status, subnet_id, tenancy, virtualization_type
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -286,6 +301,7 @@ class AWS_OpsWorks_Layer(CloudFormationResource):
   cfn_type = "AWS::OpsWorks::Layer"
   tf_type = "aws_ops_works_layer" # TODO: Most likely not working
   ref = "arn"
+  attrs = {}
 
   def write(self, w):
     with self.resource_block(w):

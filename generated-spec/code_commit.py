@@ -27,7 +27,14 @@ class AWS_CodeCommit_Repository_Code(CloudFormationProperty):
 class AWS_CodeCommit_Repository(CloudFormationResource):
   cfn_type = "AWS::CodeCommit::Repository"
   tf_type = "aws_codecommit_repository"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "CloneUrlHttp": "clone_url_http",
+    "CloneUrlSsh": "clone_url_ssh",
+    "Arn": "arn",
+    "Name": "name", # TODO: Probably not the correct mapping
+    # Additional TF attributes: repository_id
+  }
 
   def write(self, w):
     with self.resource_block(w):

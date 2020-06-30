@@ -44,6 +44,9 @@ class AWS_StepFunctions_Activity(CloudFormationResource):
   cfn_type = "AWS::StepFunctions::Activity"
   tf_type = "aws_step_functions_activity" # TODO: Most likely not working
   ref = "arn"
+  attrs = {
+    "Name": "name",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -63,6 +66,9 @@ class AWS_StepFunctions_StateMachine(CloudFormationResource):
   cfn_type = "AWS::StepFunctions::StateMachine"
   tf_type = "aws_step_functions_state_machine" # TODO: Most likely not working
   ref = "arn"
+  attrs = {
+    "Name": "name",
+  }
 
   def write(self, w):
     with self.resource_block(w):

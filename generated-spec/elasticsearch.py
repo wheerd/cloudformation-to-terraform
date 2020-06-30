@@ -72,7 +72,13 @@ class AWS_Elasticsearch_Domain_ElasticsearchClusterConfig(CloudFormationProperty
 class AWS_Elasticsearch_Domain(CloudFormationResource):
   cfn_type = "AWS::Elasticsearch::Domain"
   tf_type = "aws_elasticsearch_domain"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "Arn": "arn",
+    "DomainArn": "domain_arn", # TODO: Probably not the correct mapping
+    "DomainEndpoint": "endpoint",
+    # Additional TF attributes: access_policies, advanced_options, domain_id, kibana_endpoint
+  }
 
   def write(self, w):
     with self.resource_block(w):

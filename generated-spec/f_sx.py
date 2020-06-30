@@ -40,6 +40,9 @@ class AWS_FSx_FileSystem(CloudFormationResource):
   cfn_type = "AWS::FSx::FileSystem"
   tf_type = "aws_f_sx_file_system" # TODO: Most likely not working
   ref = "arn"
+  attrs = {
+    "LustreMountName": "lustre_mount_name",
+  }
 
   def write(self, w):
     with self.resource_block(w):

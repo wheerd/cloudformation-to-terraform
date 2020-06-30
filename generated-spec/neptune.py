@@ -3,7 +3,8 @@ from . import *
 class AWS_Neptune_DBClusterParameterGroup(CloudFormationResource):
   cfn_type = "AWS::Neptune::DBClusterParameterGroup"
   tf_type = "aws_neptune_cluster_parameter_group"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, name, name_prefix
 
   def write(self, w):
     with self.resource_block(w):
@@ -17,7 +18,8 @@ class AWS_Neptune_DBClusterParameterGroup(CloudFormationResource):
 class AWS_Neptune_DBSubnetGroup(CloudFormationResource):
   cfn_type = "AWS::Neptune::DBSubnetGroup"
   tf_type = "aws_neptune_subnet_group"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn, name, name_prefix
 
   def write(self, w):
     with self.resource_block(w):
@@ -31,6 +33,10 @@ class AWS_Neptune_DBInstance(CloudFormationResource):
   cfn_type = "AWS::Neptune::DBInstance"
   tf_type = "aws_neptune_db_instance" # TODO: Most likely not working
   ref = "arn"
+  attrs = {
+    "Endpoint": "endpoint",
+    "Port": "port",
+  }
 
   def write(self, w):
     with self.resource_block(w):
@@ -50,7 +56,8 @@ class AWS_Neptune_DBInstance(CloudFormationResource):
 class AWS_Neptune_DBParameterGroup(CloudFormationResource):
   cfn_type = "AWS::Neptune::DBParameterGroup"
   tf_type = "aws_neptune_parameter_group"
-  ref = "arn"
+  ref = "id"
+  attrs = {} # Additional TF attributes: arn
 
   def write(self, w):
     with self.resource_block(w):
@@ -64,7 +71,14 @@ class AWS_Neptune_DBParameterGroup(CloudFormationResource):
 class AWS_Neptune_DBCluster(CloudFormationResource):
   cfn_type = "AWS::Neptune::DBCluster"
   tf_type = "aws_neptune_cluster"
-  ref = "arn"
+  ref = "id"
+  attrs = {
+    "ClusterResourceId": "cluster_resource_id",
+    "Endpoint": "endpoint",
+    "Port": "port", # TODO: Probably not the correct mapping
+    "ReadEndpoint": "reader_endpoint",
+    # Additional TF attributes: apply_immediately, arn, availability_zones, cluster_identifier, cluster_identifier_prefix, cluster_members, engine_version, hosted_zone_id, kms_key_arn, neptune_subnet_group_name, preferred_backup_window, preferred_maintenance_window, vpc_security_group_ids
+  }
 
   def write(self, w):
     with self.resource_block(w):

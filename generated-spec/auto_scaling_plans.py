@@ -90,6 +90,10 @@ class AWS_AutoScalingPlans_ScalingPlan(CloudFormationResource):
   cfn_type = "AWS::AutoScalingPlans::ScalingPlan"
   tf_type = "aws_auto_scaling_plans_scaling_plan" # TODO: Most likely not working
   ref = "arn"
+  attrs = {
+    "ScalingPlanName": "scaling_plan_name",
+    "ScalingPlanVersion": "scaling_plan_version",
+  }
 
   def write(self, w):
     with self.resource_block(w):
