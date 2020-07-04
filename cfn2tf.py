@@ -9,38 +9,49 @@ from util import import_submodules
 
 import_submodules('spec')
 
-from spec import CloudFormationEntityMeta, CloudFormationParameter, OutputWriter, CloudFormationTemplate
+from spec import CloudFormationEntityMeta, CloudFormationParameter, OutputWriter, CloudFormationTemplate, CloudFormationCondition, CloudFormationMapping
 
 
 def main():
     with open('ElasticBeanstalk_Simple.template.json', encoding='utf-8') as json_file:
         with OutputWriter('output/main.tf') as writer:
             cfn = json.load(json_file)
-            convertCfn(cfn, writer)
+            convert_cloudformation(cfn, writer)
 
 
-def convertCfn(cfn, writer):
+def convert_cloudformation(cfn, writer):
     template = CloudFormationTemplate()
-    convertVariables(cfn['Parameters'], template, writer)
-    convertResources(cfn['Resources'], template, writer)
+    convert_mappings(cfn.get('Mappings', {}), template)
+    convert_conditions(cfn.get('Conditions', {}), template)
+    convert_variables(cfn['Parameters'], template, writer)
+    convert_resources(cfn['Resources'], template, writer)
     template.write(writer)
 
 
-def convertVariables(vars, template, writer):
+def convert_conditions(conditions, template):
+    for name, expression in conditions.items():
+        template.add(CloudFormationCondition(name, expression))
+
+
+def convert_mappings(mappings, template):
+    for name, mapping in mappings.items():
+        template.add(CloudFormationMapping(name, mapping))
+
+
+def convert_variables(vars, template, writer):
     for name, props in vars.items():
-        parameter = CloudFormationParameter(name, props)
-        template.add(parameter)
+        template.add(CloudFormationParameter(name, props))
 
 
-def convertResources(resources, template, writer):
+def convert_resources(resources, template, writer):
     for name, attributes in resources.items():
-        resourceType = attributes['Type']
+        resource_type = attributes['Type']
 
-        if resourceType not in CloudFormationEntityMeta.mapping:
+        if resource_type not in CloudFormationEntityMeta.mapping:
             raise NotImplementedError(
-                f'Resource type "{resourceType}" is not supported')
+                f'Resource type "{resource_type}" is not supported')
 
-        entity_cls = CloudFormationEntityMeta.mapping[resourceType]
+        entity_cls = CloudFormationEntityMeta.mapping[resource_type]
         entity = entity_cls(name, attributes)
         template.add(entity)
 

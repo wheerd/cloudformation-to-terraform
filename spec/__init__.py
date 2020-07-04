@@ -5,19 +5,20 @@ import functools
 
 
 class GlobalRef(object):
-    def __init__(self, ref):
-        self.ref = ref
+    def __init__(self, reference):
+        self.reference = reference
 
 class NoValue(object):
     def __init__(self):
         self.ref = None
+        self.reference = 'null'
 
 global_references = {
     'AWS::AccountId': GlobalRef('data.aws_caller_identity.current.account_id'),
     'AWS::Region': GlobalRef('data.aws_region.current.name'),
     'AWS::URLSuffix': GlobalRef('data.aws_partition.current.dns_suffix'),
     'AWS::Partition': GlobalRef('data.aws_partition.current.partition'),
-    'AWS:NoValue': NoValue()
+    'AWS::NoValue': NoValue()
 }
 
 global_template = """
@@ -33,6 +34,8 @@ class CloudFormationTemplate(object):
         self.variables = {}
         self.resources = {}
         self.outputs = {}
+        self.conditions = {}
+        self.mappings = {}
 
     def add(self, entity):
         if hasattr(entity, 'name'):
@@ -40,11 +43,23 @@ class CloudFormationTemplate(object):
                 self.resources[entity.name] = entity
             elif isinstance(entity, CloudFormationParameter):
                 self.variables[entity.name] = entity
+            elif isinstance(entity, CloudFormationCondition):
+                self.conditions[entity.name] = entity
+            elif isinstance(entity, CloudFormationMapping):
+                self.mappings[entity.name] = entity
             self.references[entity.name] = entity
         entity.template = self
 
     def write(self, writer):
         writer.write_raw(global_template)
+        if len(self.conditions) > 0:
+            with writer.block('# Conditions\nlocals'):
+                for condition in self.conditions.values():
+                    condition.write(writer)
+        if len(self.mappings) > 0:
+            with writer.block('# Mappings\nlocals'):
+                for mapping in self.mappings.values():
+                    mapping.write(writer)
         for variable in self.variables.values():
             variable.write(writer)
         for resource in self.resources.values():
@@ -135,6 +150,47 @@ class CloudFormationProperty(CloudFormationEntityBase):
         self.spec = attributes
         super().__init__(attributes, attributes)
 
+
+class CloudFormationCondition(CloudFormationEntityBase):
+    def __init__(self, name, expression):
+        self.name = name
+        self.expression = expression
+        super().__init__({}, {})
+
+    def write(self, writer):
+        converted_expression = BasicValueConverter().convert(self.template, self.expression)
+        writer.write_line(f'cond_{self.name} = {converted_expression}')
+
+    @property
+    def reference(self):
+        return f'local.cond_{self.name}'
+
+
+class CloudFormationMapping(CloudFormationEntityBase):
+    def __init__(self, name, mapping):
+        self.name = name
+        super().__init__({}, mapping)
+
+    def write(self, writer):
+        first_group = next(iter(self.properties.values()))
+        first_value = next(iter(first_group.values()))
+        if isinstance(first_value, str):
+            value_converter = StringValueConverter()
+        elif isinstance(first_value, list):
+            value_converter = ListValueConverter(BasicValueConverter)
+        else: 
+            value_converter = BasicValueConverter()
+        with writer.block(f'map_{self.name} ='):
+            for group_name, group in self.properties.items():
+                with writer.block(f'{group_name} ='):
+                    for name, value in group.items():
+                        converted_value = value_converter.convert(self.template, value)
+                        writer.write_line(f'{name} = {converted_value}')
+        
+    @property
+    def reference(self):
+        return f'local.map_{self.name}'
+
 class ResourceTag(CloudFormationProperty):
     def __init__(self):
         pass
@@ -146,28 +202,34 @@ class CloudFormationExpression(object):
     def __str__(self):
         return self.expr
 
+class TerraformString(CloudFormationExpression):
+    def __init__(self, string):
+        super().__init__(escape_tf_string(string))
+        self.raw_string = string
+
 class ValueConverter(object):
     def convert(self, template, value):
         if value is None:
             return None
-        value = self.evaluate(template, value)
+        value = self.evaluate(template, value, converter=self)
         return self.do_convert(template, value)
 
-    def evaluate(self, template, value):
+    def evaluate(self, template, value, converter=None):
         if isinstance(value, dict):
             if len(value) == 1:
                 func, args = list(value.items())[0]
-                if func == 'Ref':
-                    entity = template.references.get(args)
-                    if entity is None:
-                        raise AttributeError(f'Cannot find the reference "{args}"')
-                    return CloudFormationExpression(entity.reference)
+                if func in cfn_functions:
+                    if isinstance(args, list):
+                        return cfn_functions[func](template, converter, *args)
+                    return cfn_functions[func](template, converter, args)
                 elif '::' in func:
                     return CloudFormationExpression(f'"TODO: Not supported yet: {func}"')
-            value = { k: self.evaluate(template, v) for k, v in value.items() }
+            value_converter = converter.item_type if isinstance(converter, MapValueConverter) else None
+            value = { k: self.evaluate(template, v, converter=value_converter) for k, v in value.items() }
             return value
         elif isinstance(value, list):
-            value = [self.evaluate(template, v) for v in value]
+            value_converter = converter.item_type if isinstance(converter, ListValueConverter) else None
+            value = [self.evaluate(template, v, converter=value_converter) for v in value]
             return value
         return value
     
@@ -190,27 +252,32 @@ def escape_tf_string(value):
 
 class StringValueConverter(ValueConverter):
     def do_convert(self, template, value):
-        return escape_tf_string(value) if not isinstance(value, CloudFormationExpression) else value.expr
+        return TerraformString(value) if not isinstance(value, CloudFormationExpression) else value.expr
 
 class CloudFormationJsonEncoder(json.JSONEncoder):
+    expr_tokens = {}
+
     def default(self, obj):
         if isinstance(obj, CloudFormationExpression):
-            return obj.expr
+            placeholder = f'$${uuid4()}$$'
+            self.expr_tokens[placeholder] = obj.expr
+            return placeholder
         return super().default(obj)
 
 class JsonValueConverter(ValueConverter):
-
     def convert(self, template, value):
         if value is None:
             return None
         value = self.evaluate(template, value)
         value = json.dumps(value, indent=2, cls=CloudFormationJsonEncoder)
-        return escape_tf_string(value)
+        for placeholder, expr in CloudFormationJsonEncoder.expr_tokens.items():
+            value = value.replace(f'"{placeholder}"', f'${{{expr}}}')
+        return TerraformString(value)
 
 
 class BasicValueConverter(ValueConverter):
     def do_convert(self, template, value):
-        return str(value)
+        return CloudFormationExpression(str(value))
 
 
 class ListValueConverter(ValueConverter):
@@ -218,14 +285,17 @@ class ListValueConverter(ValueConverter):
         self.item_type = item_type
 
     def do_convert(self, template, value):
+        if isinstance(value, CloudFormationExpression):
+            return value
         if not isinstance(value, list):
             value = [value]
 
         if inspect.isclass(self.item_type):
-            converted_values = [self.item_type().convert(template, x) for x in value]
-            return f"[{', '.join(converted_values)}]"
+            converter = self.item_type()
+            converted_values = [str(converter.convert(template, x)) for x in value]
+            return  CloudFormationExpression(f"[{', '.join(converted_values)}]")
 
-        return f"[{', '.join(self.item_type.convert(template, x) for x in value)}]"
+        return CloudFormationExpression(f"[{', '.join(str(self.item_type.convert(template, x)) for x in value)}]")
 
 class MapValueConverter(ValueConverter):
     def __init__(self, item_type):
@@ -233,7 +303,77 @@ class MapValueConverter(ValueConverter):
 
     def do_convert(self, template, value):
         entries = [f"{x['Name']} = {self.item_type.convert(template, x['Value'])}" for x in value]
-        return f"{{{', '.join(entries)}}}"
+        return  CloudFormationExpression(f"{{{', '.join(entries)}}}")
+
+def cloudformation_ref(template, converter, name):
+    entity = template.references.get(name)
+    if entity is None:
+        raise AttributeError(f'Cannot find the reference "{name}"')
+    return CloudFormationExpression(entity.reference)
+
+def cloudformation_condition(template, converter, name):
+    condition = template.conditions.get(name)
+    if condition is None:
+        raise AttributeError(f'Cannot find the condition "{name}"')
+    return CloudFormationExpression(condition.reference)
+
+def cloudformation_find_in_map(template, converter, name, group, key):
+    mapping = template.mappings.get(name)
+    if mapping is None:
+        raise AttributeError(f'Cannot find the condition "{name}"')
+    converter = StringValueConverter() if converter is None else converter
+    group = converter.convert(template, group)
+    key = converter.convert(template, key)
+    return CloudFormationExpression(f'{mapping.reference}[{group}][{key}]')
+
+def cloudformation_get_att(template, converter, name, attr):
+    resource = template.resources.get(name)
+    if resource is None:
+        raise AttributeError(f'Cannot find the resource "{name}"')
+    if attr not in resource.attrs:
+        return CloudFormationExpression(f'"TODO: Unsupported attribute {attr} on {name}"')
+    attr_name = resource.attrs[attr]
+    return CloudFormationExpression(f'{resource.tf_type}.{name}.{attr_name}')
+
+def cloudformation_if(template, converter, condition_name, true_expression, false_expression):
+    condition = template.conditions.get(condition_name)
+    if condition is None:
+        raise AttributeError(f'Cannot find the condition "{condition_name}"')
+    converter = BasicValueConverter() if converter is None else converter
+    true_converted = converter.convert(template, true_expression)
+    false_converted = converter.convert(template, false_expression)
+    return CloudFormationExpression(f'{condition.reference} ? {true_converted} : {false_converted}')
+
+def cloudformation_join(template, converter, delimiter, values):
+    converted_delimiter = escape_tf_string(delimiter)
+    converted_values = ListValueConverter(StringValueConverter).convert(template, values)
+    return CloudFormationExpression(f'join({converted_delimiter}, {converted_values})')
+
+def cloudformation_bin_op(operator, converter_override=None):
+    def op(template, converter, left, right):
+        converter = converter_override or (BasicValueConverter() if converter is None else converter)
+        left = converter.convert(template, left)
+        right = converter.convert(template, right)
+        return CloudFormationExpression(f'({left} {operator} {right})')
+    return op
+
+def cloudformation_not(template, converter, expression):
+    converter = BasicValueConverter() if converter is None else converter
+    expression = converter.convert(template, expression)
+    return CloudFormationExpression(f'!({expression})')
+
+cfn_functions = {
+    "Ref": cloudformation_ref,
+    "Condition": cloudformation_condition,
+    "Fn::GetAtt": cloudformation_get_att,
+    "Fn::FindInMap": cloudformation_find_in_map,
+    "Fn::Join": cloudformation_join,
+    "Fn::If": cloudformation_if,
+    "Fn::Or": cloudformation_bin_op('||'),
+    "Fn::And": cloudformation_bin_op('&&'),
+    "Fn::Equals": cloudformation_bin_op('==', StringValueConverter()),
+    "Fn::Not": cloudformation_not,
+}
 
 primitive_type_converters = {
     'String': StringValueConverter,
