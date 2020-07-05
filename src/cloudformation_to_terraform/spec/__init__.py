@@ -466,10 +466,10 @@ class CloudFormationParameter(CloudFormationEntityBase):
 
 
 class OutputWriter(object):
-    def __init__(self, file_name):
+    def __init__(self, file_name=None, outfile=None):
         self.file_name = file_name
         self.indent_level = 0
-        self.outfile = None
+        self.outfile = outfile
 
     def __enter__(self):
         self.outfile = open(self.file_name, 'w', encoding='utf-8')
