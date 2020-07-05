@@ -2,7 +2,7 @@ from uuid import uuid4
 import inspect
 import json
 import functools
-
+import re
 
 class GlobalRef(object):
     def __init__(self, reference):
@@ -242,14 +242,17 @@ def escape_tf_string(value):
     if '\n' in value:
         marker = f'EOT_{str(uuid4())[:8]}'
         return f'<<{marker}\n{value}\n{marker}'
-    return '"' + value.translate(
+    return '"' + raw_escape_tf_string(value) + '"'
+
+def raw_escape_tf_string(value):
+    return value.translate(
         str.maketrans({
             "\"":  r"\\\"",
             "\\": r"\\",
             "\n": r"\\n",
             "\t": r"\\t"
         })
-    ) + '"'
+    )
 
 class StringValueConverter(ValueConverter):
     def do_convert(self, template, value):
@@ -381,6 +384,22 @@ def cloudformation_get_azs(template, converter, region):
         return CloudFormationExpression(f'(\ndata.aws_availability_zones.all.names # TODO: check region filtering: {json.dumps(region)} \n)')
     return CloudFormationExpression(f'data.aws_availability_zones.all.names')
 
+def cloudformation_sub(template, converter, string, sub=None):
+    parts = re.split(r'\$\{([^}]+)\}', string)
+    var_names = parts[1::2]
+    if sub is None:
+        sub = { name: { 'Ref': name } for name in var_names}
+    converter = StringValueConverter()
+    sub = { name: converter.convert(template, value) for name, value in sub.items()}
+    result_string = '"'
+    for i, part in enumerate(parts):
+        if i % 2 == 0:
+            result_string += raw_escape_tf_string(part)
+        else:
+            result_string += f'${{{sub[part]}}}' 
+    result_string += '"'
+    return CloudFormationExpression(result_string)
+
 cfn_functions = {
     "Ref": cloudformation_ref,
     "Condition": cloudformation_condition,
@@ -395,7 +414,8 @@ cfn_functions = {
     "Fn::Base64": cloudformation_simple_func('base64encode') ,
     "Fn::Split": cloudformation_simple_func('split') ,
     "Fn::Select": cloudformation_select,
-    "Fn::GetAZs": cloudformation_get_azs
+    "Fn::GetAZs": cloudformation_get_azs,
+    "Fn::Sub": cloudformation_sub
 }
 
 primitive_type_converters = {
