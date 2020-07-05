@@ -25,6 +25,7 @@ global_template = """
 data "aws_caller_identity" "current" {}
 data "aws_region" "current" {}
 data "aws_partition" "current" {}
+data "aws_availability_zones" "all" {}
 """
 
 
@@ -326,6 +327,12 @@ def cloudformation_find_in_map(template, converter, name, group, key):
     key = converter.convert(template, key)
     return CloudFormationExpression(f'{mapping.reference}[{group}][{key}]')
 
+def cloudformation_select(template, converter, index, expr):
+    converter = StringValueConverter() if converter is None else converter
+    expr = ListValueConverter(converter).convert(template, expr)
+    index = BasicValueConverter().convert(template, index)
+    return CloudFormationExpression(f'({expr})[{index}]')
+
 def cloudformation_get_att(template, converter, name, attr):
     resource = template.resources.get(name)
     if resource is None:
@@ -362,6 +369,18 @@ def cloudformation_not(template, converter, expression):
     expression = converter.convert(template, expression)
     return CloudFormationExpression(f'!({expression})')
 
+def cloudformation_simple_func(name, converter_override=None):
+    def op(template, converter, *args):
+        converter = converter_override or (BasicValueConverter() if converter is None else converter)
+        args = [str(converter.convert(template, arg)) for arg in args]
+        return CloudFormationExpression(f'{name}({", ".join(args)})')
+    return op
+
+def cloudformation_get_azs(template, converter, region):
+    if region != '':
+        return CloudFormationExpression(f'(\ndata.aws_availability_zones.all.names # TODO: check region filtering: {json.dumps(region)} \n)')
+    return CloudFormationExpression(f'data.aws_availability_zones.all.names')
+
 cfn_functions = {
     "Ref": cloudformation_ref,
     "Condition": cloudformation_condition,
@@ -373,6 +392,10 @@ cfn_functions = {
     "Fn::And": cloudformation_bin_op('&&'),
     "Fn::Equals": cloudformation_bin_op('==', StringValueConverter()),
     "Fn::Not": cloudformation_not,
+    "Fn::Base64": cloudformation_simple_func('base64encode') ,
+    "Fn::Split": cloudformation_simple_func('split') ,
+    "Fn::Select": cloudformation_select,
+    "Fn::GetAZs": cloudformation_get_azs
 }
 
 primitive_type_converters = {
