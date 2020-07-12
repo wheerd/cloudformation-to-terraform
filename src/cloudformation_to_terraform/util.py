@@ -15,7 +15,6 @@ cnf_abbreviation_fixes = {
     's_s_m': 'ssm',
     'r_d_s': 'rds',
     'e_c_s': 'e_c_s',
-    's_s_m': 'ssm',
     'io_t': 'iot',
     'wa_fv2': 'waf_v2',
     'elastic_load_balancing': 'elb'
@@ -48,22 +47,21 @@ def topological_sort(source):
     :arg source: list of ``(name, [list of dependancies])`` pairs
     :returns: list of names, with dependancies listed first
     """
-    pending = [(name, set(deps) - set([name])) for name, deps in source] # copy deps so we can modify set in-place       
+    pending = [(name, set(deps) - set([name])) for name, deps in source]     
     emitted = []        
     while pending:
         next_pending = []
         next_emitted = []
         for entry in pending:
             name, deps = entry
-            deps.difference_update(emitted) # remove deps we emitted last pass
-            if deps: # still has deps? recheck during next pass
+            deps.difference_update(emitted)
+            if deps:
                 next_pending.append(entry) 
-            else: # no more deps? time to emit
+            else:
                 yield name 
-                emitted.append(name) # <-- not required, but helps preserve original ordering
-                next_emitted.append(name) # remember what we emitted for difference_update() in next pass
-        if not next_emitted: # all entries have unmet deps, one of two things is wrong...
-            # raise ValueError("cyclic or missing dependancy detected: %r" % (next_pending,))
+                emitted.append(name)
+                next_emitted.append(name)
+        if not next_emitted:
             for name, _ in next_pending:
                 yield name
             return 

@@ -4,15 +4,16 @@ import pkgutil
 import inspect
 import re
 import functools
+import pathlib
 import numpy
 from uuid import uuid4
 from fuzzywuzzy import process
 from scipy.sparse import csr_matrix
 from scipy.optimize import linear_sum_assignment
 
-from util import camel_case_to_snake_case, snake_case_with_abbreviation_fix, import_submodules, topological_sort
-from spec import CloudFormationEntityMeta, StringValueConverter, BasicValueConverter, primitive_type_converters
-from tf_spec import cf_to_tf_resource_mapping
+from cloudformation_to_terraform.util import camel_case_to_snake_case, snake_case_with_abbreviation_fix, import_submodules, topological_sort
+from cloudformation_to_terraform.spec import CloudFormationEntityMeta, StringValueConverter, BasicValueConverter, primitive_type_converters
+from _tf_spec import cf_to_tf_resource_mapping
 
 class TypeDefinition(object):
 
@@ -229,11 +230,12 @@ def generate_best_name_matches(input_names, defined_names, input_mapper, score_c
     return {input_names[i]: defined_names[j] for i, j in zip(best_row, best_col) if scores[i,j] <= -score_cutoff}
 
 def regenerate_resource_mapping():
-    with open('terraform-schema.json', encoding='utf-8') as json_file:
+    directory = pathlib.Path(__file__).parent.absolute()
+    with open(f'{directory}/terraform-schema.json', encoding='utf-8') as json_file:
         spec = json.load(json_file)
         tf_schemas = spec['provider_schemas']['aws']['resource_schemas']
 
-    with open('CloudFormationResourceSpecification.json', encoding='utf-8') as json_file:
+    with open(f'{directory}/CloudFormationResourceSpecification.json', encoding='utf-8') as json_file:
         cfn_spec = json.load(json_file)
 
     tf_block_names = sorted(tf_schemas.keys())
@@ -244,16 +246,17 @@ def regenerate_resource_mapping():
 
     cfn_resource_matches = generate_best_name_matches(cfn_resource_names, tf_block_names, name_mapper, score_cutoff=85)
 
-    with open('tf_spec.py', 'w', encoding='utf-8') as output_file:
+    with open(f'{directory}/_tf_spec.py', 'w', encoding='utf-8') as output_file:
         formatted_spec = repr(cfn_resource_matches).replace(",", ",\n").replace("{", "{\n").replace("}", "\n}")
         print(f'cf_to_tf_resource_mapping = {formatted_spec}', file=output_file)
 
 
 def main():
-    with open('CloudFormationResourceSpecification.json', encoding='utf-8') as json_file:
+    directory = pathlib.Path(__file__).parent.absolute()
+    with open(f'{directory}/CloudFormationResourceSpecification.json', encoding='utf-8') as json_file:
         spec = json.load(json_file)
 
-    with open('terraform-schema.json', encoding='utf-8') as json_file:
+    with open(f'{directory}/terraform-schema.json', encoding='utf-8') as json_file:
         tf_schemas = json.load(json_file)['provider_schemas']['aws']['resource_schemas']
 
     definitions = {}
@@ -285,7 +288,7 @@ def main():
     for namespace, file_definitions in definitions.items():
         definitions_by_name = { definition.cls_name: definition for definition in file_definitions }
         dependencies = [(name, cls.get_dependencies()) for name, cls in definitions_by_name.items()]
-        with open(f'generated-spec/{namespace}.py', 'w', encoding='utf-8') as spec_file:
+        with open(f'{directory}/{namespace}.py', 'w', encoding='utf-8') as spec_file:
             spec_file.write('from . import *\n\n')
             for cls_name in topological_sort(dependencies):
                 definitions_by_name[cls_name].write(spec_file)
