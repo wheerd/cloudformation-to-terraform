@@ -14,7 +14,7 @@ import inspect
 import re
 import functools
 from uuid import uuid4
-from util import import_submodules
+from .util import import_submodules
 
 import_submodules('cloudformation_to_terraform.spec')
 

@@ -96,6 +96,13 @@ class CloudFormationEntityBase(metaclass=CloudFormationEntityMeta):
             value = value.get(parts.pop(0))
         return value
 
+    def property_as_comment(self, writer, cf_name):  
+        value = self._get_value(cf_name)
+        if value is not None:
+            value = json.dumps(value, indent=2)
+            if '\n' in value:
+                value = '\n# ' + value.replace('\n', '\n# ')
+            writer.write_line(f'# {cf_name}: {value}')
 
     def property(self, writer, cf_name, tf_name, converter):  
         value = self._get_value(cf_name)
@@ -220,6 +227,8 @@ class ValueConverter(object):
             if len(value) == 1:
                 func, args = list(value.items())[0]
                 if func in cfn_functions:
+                    if inspect.isclass(converter):
+                        converter = converter()
                     if isinstance(args, list):
                         return cfn_functions[func](template, converter, *args)
                     return cfn_functions[func](template, converter, args)
@@ -312,6 +321,8 @@ class MapValueConverter(ValueConverter):
 def cloudformation_ref(template, converter, name):
     entity = template.references.get(name)
     if entity is None:
+        if 'AWS::' in name:
+            return TerraformString(f'TODO: Unsupported "{name}"')
         raise AttributeError(f'Cannot find the reference "{name}"')
     return CloudFormationExpression(entity.reference)
 
