@@ -21,20 +21,6 @@ class AWS_CloudFront_Distribution_OriginGroupMember(CloudFormationProperty):
       self.property(w, "OriginId", "origin_id", StringValueConverter())
 
 
-class AWS_CloudFront_StreamingDistribution_TrustedSigners(CloudFormationProperty):
-  def write(self, w):
-    with w.block("trusted_signers"):
-      self.property(w, "Enabled", "enabled", BasicValueConverter())
-      self.property(w, "AwsAccountNumbers", "aws_account_numbers", ListValueConverter(StringValueConverter()))
-
-
-class AWS_CloudFront_StreamingDistribution_S3Origin(CloudFormationProperty):
-  def write(self, w):
-    with w.block("s3_origin"):
-      self.property(w, "DomainName", "domain_name", StringValueConverter())
-      self.property(w, "OriginAccessIdentity", "origin_access_identity", StringValueConverter())
-
-
 class AWS_CloudFront_Distribution_StatusCodes(CloudFormationProperty):
   def write(self, w):
     with w.block("status_codes"):
@@ -64,12 +50,6 @@ class AWS_CloudFront_Distribution_CustomOriginConfig(CloudFormationProperty):
       self.property(w, "OriginSSLProtocols", "origin_ssl_protocols", ListValueConverter(StringValueConverter()))
       self.property(w, "HTTPPort", "http_port", BasicValueConverter())
       self.property(w, "OriginProtocolPolicy", "origin_protocol_policy", StringValueConverter())
-
-
-class AWS_CloudFront_CloudFrontOriginAccessIdentity_CloudFrontOriginAccessIdentityConfig(CloudFormationProperty):
-  def write(self, w):
-    with w.block("cloud_front_origin_access_identity_config"):
-      self.property(w, "Comment", "comment", StringValueConverter())
 
 
 class AWS_CloudFront_Distribution_OriginGroupMembers(CloudFormationProperty):
@@ -120,46 +100,12 @@ class AWS_CloudFront_Distribution_CustomErrorResponse(CloudFormationProperty):
       self.property(w, "ResponsePagePath", "response_page_path", StringValueConverter())
 
 
-class AWS_CloudFront_StreamingDistribution_Logging(CloudFormationProperty):
-  def write(self, w):
-    with w.block("logging"):
-      self.property(w, "Bucket", "bucket", StringValueConverter())
-      self.property(w, "Enabled", "enabled", BasicValueConverter())
-      self.property(w, "Prefix", "prefix", StringValueConverter())
-
-
 class AWS_CloudFront_Distribution_Logging(CloudFormationProperty):
   def write(self, w):
-    with w.block("logging"):
+    with w.block("logging_config"):
       self.property(w, "IncludeCookies", "include_cookies", BasicValueConverter())
       self.property(w, "Bucket", "bucket", StringValueConverter())
       self.property(w, "Prefix", "prefix", StringValueConverter())
-
-
-class AWS_CloudFront_StreamingDistribution_StreamingDistributionConfig(CloudFormationProperty):
-  def write(self, w):
-    with w.block("streaming_distribution_config"):
-      self.block(w, "Logging", AWS_CloudFront_StreamingDistribution_Logging)
-      self.property(w, "Comment", "comment", StringValueConverter())
-      self.property(w, "PriceClass", "price_class", StringValueConverter())
-      self.block(w, "S3Origin", AWS_CloudFront_StreamingDistribution_S3Origin)
-      self.property(w, "Enabled", "enabled", BasicValueConverter())
-      self.property(w, "Aliases", "aliases", ListValueConverter(StringValueConverter()))
-      self.block(w, "TrustedSigners", AWS_CloudFront_StreamingDistribution_TrustedSigners)
-
-
-class AWS_CloudFront_StreamingDistribution(CloudFormationResource):
-  cfn_type = "AWS::CloudFront::StreamingDistribution"
-  tf_type = "aws_cloud_front_streaming_distribution" # TODO: Most likely not working
-  ref = "arn"
-  attrs = {
-    "DomainName": "domain_name",
-  }
-
-  def write(self, w):
-    with self.resource_block(w):
-      self.block(w, "StreamingDistributionConfig", AWS_CloudFront_StreamingDistribution_StreamingDistributionConfig)
-      self.property(w, "Tags", "tags", ListValueConverter(ResourceTag()))
 
 
 class AWS_CloudFront_CloudFrontOriginAccessIdentity(CloudFormationResource):
@@ -173,7 +119,7 @@ class AWS_CloudFront_CloudFrontOriginAccessIdentity(CloudFormationResource):
 
   def write(self, w):
     with self.resource_block(w):
-      self.block(w, "CloudFrontOriginAccessIdentityConfig", AWS_CloudFront_CloudFrontOriginAccessIdentity_CloudFrontOriginAccessIdentityConfig) # TODO: Probably not the correct mapping
+      self.property(w, "CloudFrontOriginAccessIdentityConfig.Comment", "comment", StringValueConverter())
 
 
 class AWS_CloudFront_Distribution_CacheBehavior(CloudFormationProperty):
@@ -249,23 +195,22 @@ class AWS_CloudFront_Distribution_OriginGroups(CloudFormationProperty):
 
 class AWS_CloudFront_Distribution_DistributionConfig(CloudFormationProperty):
   def write(self, w):
-    with w.block("distribution_config"):
-      self.block(w, "Logging", AWS_CloudFront_Distribution_Logging)
-      self.property(w, "Comment", "comment", StringValueConverter())
-      self.property(w, "DefaultRootObject", "default_root_object", StringValueConverter())
-      self.repeated_block(w, "Origins", AWS_CloudFront_Distribution_Origin)
-      self.block(w, "ViewerCertificate", AWS_CloudFront_Distribution_ViewerCertificate)
-      self.property(w, "PriceClass", "price_class", StringValueConverter())
-      self.block(w, "DefaultCacheBehavior", AWS_CloudFront_Distribution_DefaultCacheBehavior)
-      self.repeated_block(w, "CustomErrorResponses", AWS_CloudFront_Distribution_CustomErrorResponse)
-      self.block(w, "OriginGroups", AWS_CloudFront_Distribution_OriginGroups)
-      self.property(w, "Enabled", "enabled", BasicValueConverter())
-      self.property(w, "Aliases", "aliases", ListValueConverter(StringValueConverter()))
-      self.property(w, "IPV6Enabled", "ipv6_enabled", BasicValueConverter())
-      self.property(w, "WebACLId", "web_acl_id", StringValueConverter())
-      self.property(w, "HttpVersion", "http_version", StringValueConverter())
-      self.block(w, "Restrictions", AWS_CloudFront_Distribution_Restrictions)
-      self.repeated_block(w, "CacheBehaviors", AWS_CloudFront_Distribution_CacheBehavior)
+    self.block(w, "Logging", AWS_CloudFront_Distribution_Logging)
+    self.property(w, "Comment", "comment", StringValueConverter())
+    self.property(w, "DefaultRootObject", "default_root_object", StringValueConverter())
+    self.repeated_block(w, "Origins", AWS_CloudFront_Distribution_Origin)
+    self.block(w, "ViewerCertificate", AWS_CloudFront_Distribution_ViewerCertificate)
+    self.property(w, "PriceClass", "price_class", StringValueConverter())
+    self.block(w, "DefaultCacheBehavior", AWS_CloudFront_Distribution_DefaultCacheBehavior)
+    self.repeated_block(w, "CustomErrorResponses", AWS_CloudFront_Distribution_CustomErrorResponse)
+    self.block(w, "OriginGroups", AWS_CloudFront_Distribution_OriginGroups)
+    self.property(w, "Enabled", "enabled", BasicValueConverter())
+    self.property(w, "Aliases", "aliases", ListValueConverter(StringValueConverter()))
+    self.property(w, "IPV6Enabled", "ipv6_enabled", BasicValueConverter())
+    self.property(w, "WebACLId", "web_acl_id", StringValueConverter())
+    self.property(w, "HttpVersion", "http_version", StringValueConverter())
+    self.block(w, "Restrictions", AWS_CloudFront_Distribution_Restrictions)
+    self.repeated_block(w, "CacheBehaviors", AWS_CloudFront_Distribution_CacheBehavior)
 
 
 class AWS_CloudFront_Distribution(CloudFormationResource):

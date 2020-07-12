@@ -321,7 +321,7 @@ class AWS_S3_Bucket_RoutingRule(CloudFormationProperty):
 
 class AWS_S3_Bucket_WebsiteConfiguration(CloudFormationProperty):
   def write(self, w):
-    with w.block("website_configuration"):
+    with w.block("website"):
       self.property(w, "ErrorDocument", "error_document", StringValueConverter())
       self.property(w, "IndexDocument", "index_document", StringValueConverter())
       self.block(w, "RedirectAllRequestsTo", AWS_S3_Bucket_RedirectAllRequestsTo)
@@ -436,7 +436,7 @@ class AWS_S3_Bucket(CloudFormationResource):
   def write(self, w):
     with self.resource_block(w):
       self.block(w, "AccelerateConfiguration", AWS_S3_Bucket_AccelerateConfiguration) # TODO: Probably not the correct mapping
-      self.property(w, "AccessControl", "access_control", StringValueConverter()) # TODO: Probably not the correct mapping
+      self.property(w, "AccessControl", "acl", StringValueConverter()) # TODO: Probably not the correct mapping
       self.repeated_block(w, "AnalyticsConfigurations", AWS_S3_Bucket_AnalyticsConfiguration) # TODO: Probably not the correct mapping
       self.block(w, "BucketEncryption", AWS_S3_Bucket_BucketEncryption)
       self.property(w, "BucketName", "bucket_name", StringValueConverter()) # TODO: Probably not the correct mapping
