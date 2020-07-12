@@ -1,7 +1,6 @@
 from uuid import uuid4
 import inspect
 import json
-import functools
 import re
 
 
@@ -417,7 +416,7 @@ def cloudformation_get_azs(template, converter, region):
         return CloudFormationExpression(
             f"(\ndata.aws_availability_zones.all.names # TODO: check region filtering: {json.dumps(region)} \n)"
         )
-    return CloudFormationExpression(f"data.aws_availability_zones.all.names")
+    return CloudFormationExpression("data.aws_availability_zones.all.names")
 
 
 def cloudformation_sub(template, converter, string, sub=None):

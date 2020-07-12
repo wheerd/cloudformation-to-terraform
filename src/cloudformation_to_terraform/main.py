@@ -8,15 +8,7 @@ import sys
 import logging
 
 import json
-import importlib
-import pkgutil
-import inspect
-import re
-import functools
-from uuid import uuid4
 from .util import import_submodules
-
-import_submodules("cloudformation_to_terraform.spec")
 
 from cloudformation_to_terraform.spec import (
     CloudFormationEntityMeta,
@@ -27,6 +19,8 @@ from cloudformation_to_terraform.spec import (
     CloudFormationMapping,
 )
 from cloudformation_to_terraform import __version__
+
+import_submodules("cloudformation_to_terraform.spec")
 
 __author__ = "wheerd"
 __copyright__ = "wheerd"

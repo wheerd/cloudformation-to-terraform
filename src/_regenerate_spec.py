@@ -1,28 +1,15 @@
 import json
-import importlib
-import pkgutil
-import inspect
-import re
-import functools
 import pathlib
 import numpy
-from uuid import uuid4
 from fuzzywuzzy import process
 from scipy.sparse import csr_matrix
 from scipy.optimize import linear_sum_assignment
 
 from cloudformation_to_terraform.util import (
-    camel_case_to_snake_case,
     snake_case_with_abbreviation_fix,
-    import_submodules,
     topological_sort,
 )
-from cloudformation_to_terraform.spec import (
-    CloudFormationEntityMeta,
-    StringValueConverter,
-    BasicValueConverter,
-    primitive_type_converters,
-)
+from cloudformation_to_terraform.spec import primitive_type_converters
 from _tf_spec import cf_to_tf_resource_mapping
 
 
@@ -45,12 +32,12 @@ class TypeDefinition(object):
             )
         if "Type" in spec and spec["Type"] is not None:
             if spec["Type"] == "List":
-                item_type, _ = self.get_type({"Type": spec.get("ItemType"), "PrimitiveType": spec.get("PrimitiveItemType"),})
+                item_type, _ = self.get_type({"Type": spec.get("ItemType"), "PrimitiveType": spec.get("PrimitiveItemType")})
                 if item_type.startswith("AWS_"):
                     return item_type, "repeated_block"
                 return f"ListValueConverter({item_type})", "property"
             if spec["Type"] == "Map":
-                item_type, _ = self.get_type({"Type": spec.get("ItemType"), "PrimitiveType": spec.get("PrimitiveItemType"),})
+                item_type, _ = self.get_type({"Type": spec.get("ItemType"), "PrimitiveType": spec.get("PrimitiveItemType")})
                 return f"MapValueConverter({item_type})", "property"
             if spec["Type"] == "Tag":
                 return "ResourceTag()", "property"
@@ -95,16 +82,16 @@ class ApproximateResourceTypeDefinition(TypeDefinition):
         ref = "arn" if "Arn" not in attrs else "id"
         spec_file.write(f'  ref = "{ref}"\n')
         if len(attrs) > 0:
-            spec_file.write(f"  attrs = {{\n")
+            spec_file.write("  attrs = {\n")
             for attr in attrs:
                 mapped_name = snake_case_with_abbreviation_fix(attr)
                 spec_file.write(f'    "{attr}": "{mapped_name}",\n')
-            spec_file.write(f"  }}\n")
+            spec_file.write("  }\n")
         else:
-            spec_file.write(f"  attrs = {{}}\n")
-        spec_file.write(f"\n")
-        spec_file.write(f"  def write(self, w):\n")
-        spec_file.write(f"    with self.resource_block(w):\n")
+            spec_file.write("  attrs = {}\n")
+        spec_file.write("\n")
+        spec_file.write("  def write(self, w):\n")
+        spec_file.write("    with self.resource_block(w):\n")
         properties = list(self.spec["Properties"].items())
         for prop_name, prop_spec in properties:
             prop_type, meta_type = self.get_type(prop_spec)
@@ -114,8 +101,8 @@ class ApproximateResourceTypeDefinition(TypeDefinition):
                 tf_prop_name = snake_case_with_abbreviation_fix(prop_name)
                 spec_file.write(f'      self.{meta_type}(w, "{prop_name}", "{tf_prop_name}", {prop_type})\n')
         if not properties:
-            spec_file.write(f"      pass\n")
-        spec_file.write(f"\n\n")
+            spec_file.write("      pass\n")
+        spec_file.write("\n\n")
 
 
 class TerraformResourceTypeDefinition(TypeDefinition):
@@ -164,12 +151,12 @@ class TerraformResourceTypeDefinition(TypeDefinition):
         ref = self.ref
         comment = " # TODO: Probably not the correct mapping" if ref not in ("arn", "id", "name") else ""
         if ref == "":
-            spec_file.write(f"  ref = None # TODO: Could not determine the ref automatically\n")
+            spec_file.write("  ref = None # TODO: Could not determine the ref automatically\n")
         elif ref is not None:
             spec_file.write(f'  ref = "{ref}"{comment}\n')
 
         if len(self.cf_attrs) > 0:
-            spec_file.write(f"  attrs = {{\n")
+            spec_file.write("  attrs = {\n")
             for attr in self.cf_attrs:
                 if attr in self.attribute_names:
                     mapped_name = self.attribute_names[attr]
@@ -180,18 +167,18 @@ class TerraformResourceTypeDefinition(TypeDefinition):
             remaining_tf_names = sorted(set(self.tf_attrs) - set(self.attribute_names.values()) - set([ref or ""]))
             if len(remaining_tf_names) > 0:
                 spec_file.write(f'    # Additional TF attributes: {", ".join(remaining_tf_names)}\n')
-            spec_file.write(f"  }}\n")
+            spec_file.write("  }\n")
         else:
             remaining_tf_names = sorted(set(self.tf_attrs) - set([ref or ""]))
             if len(remaining_tf_names) > 0:
                 spec_file.write(f'  attrs = {{}} # Additional TF attributes: {", ".join(remaining_tf_names)}\n')
             else:
-                spec_file.write(f"  attrs = {{}}\n")
+                spec_file.write("  attrs = {}\n")
 
-        spec_file.write(f"\n")
+        spec_file.write("\n")
 
-        spec_file.write(f"  def write(self, w):\n")
-        spec_file.write(f"    with self.resource_block(w):\n")
+        spec_file.write("  def write(self, w):\n")
+        spec_file.write("    with self.resource_block(w):\n")
         properties = list(self.spec["Properties"].items())
         for prop_name, prop_spec in properties:
             prop_type, meta_type = self.get_type(prop_spec)
@@ -206,8 +193,8 @@ class TerraformResourceTypeDefinition(TypeDefinition):
             else:
                 spec_file.write(f'      self.{meta_type}(w, "{prop_name}", "{tf_prop_name}", {prop_type}){comment}\n')
         if not properties:
-            spec_file.write(f"      pass\n")
-        spec_file.write(f"\n\n")
+            spec_file.write("      pass\n")
+        spec_file.write("\n\n")
 
 
 class PropertyTypeDefinition(TypeDefinition):
@@ -222,7 +209,7 @@ class PropertyTypeDefinition(TypeDefinition):
 
     def write(self, spec_file):
         spec_file.write(f"class {self.cls_name}(CloudFormationProperty):\n")
-        spec_file.write(f"  def write(self, w):\n")
+        spec_file.write("  def write(self, w):\n")
         spec_file.write(f'    with w.block("{self.tf_block_type}"):\n')
         properties = list(self.spec.get("Properties", {}).items())
         for prop_name, prop_spec in properties:
@@ -233,8 +220,8 @@ class PropertyTypeDefinition(TypeDefinition):
                 tf_prop_name = snake_case_with_abbreviation_fix(prop_name)
                 spec_file.write(f'      self.{meta_type}(w, "{prop_name}", "{tf_prop_name}", {prop_type})\n')
         if not properties:
-            spec_file.write(f"      pass\n")
-        spec_file.write(f"\n\n")
+            spec_file.write("      pass\n")
+        spec_file.write("\n\n")
 
 
 def generate_best_name_matches(input_names, defined_names, input_mapper, score_cutoff=70):
