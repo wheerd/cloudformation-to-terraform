@@ -259,6 +259,37 @@ def regenerate_resource_mapping():
         formatted_spec = repr(cfn_resource_matches).replace(",", ",\n").replace("{", "{\n").replace("}", "\n}")
         print(f"cf_to_tf_resource_mapping = {formatted_spec}", file=output_file)
 
+    
+def enumerate_cf_properties(resource_name, definition, cf_spec):
+    for name, prop_spec in definition.get("Properties", {}).items():
+        if "Type" in prop_spec and prop_spec["Type"] is not None:
+            prop_type = prop_spec["Type"]
+            full_prop_type = f"{resource_name}.{prop_type}" 
+            if prop_type == "List" and "ItemType" in prop_spec:
+                item_type = f"{resource_name}.{prop_spec['ItemType']}" 
+                if item_type in cf_spec["PropertyTypes"]:
+                    for sub_property in enumerate_cf_properties(resource_name, cf_spec["PropertyTypes"][item_type], cf_spec):
+                        yield f"{name}.*.{sub_property}"
+                    continue
+            elif full_prop_type in cf_spec["PropertyTypes"]:
+                for sub_property in enumerate_cf_properties(resource_name, cf_spec["PropertyTypes"][full_prop_type], cf_spec):
+                    yield f"{name}.{sub_property}"
+                continue
+        yield name
+
+
+def enumerate_tf_properties(definition):
+    for name, sub_block in definition.get("block_types", {}).items():
+        if sub_block["nesting_mode"] in ("list", "set"):
+            path = f"{name}.*."
+        else:
+            path = f"{name}."
+        for sub_property in enumerate_tf_properties(sub_block["block"]):
+            yield f"{path}{sub_property}"
+    
+    for name in definition.get("attributes", {}).keys():
+        yield name
+
 
 def main():
     directory = pathlib.Path(__file__).parent.absolute()
